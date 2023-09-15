@@ -25,6 +25,12 @@ import {
     ConnectionStatusFromJSONTyped,
     ConnectionStatusToJSON,
 } from './ConnectionStatus';
+import type { CredentialStatus } from './CredentialStatus';
+import {
+    CredentialStatusFromJSON,
+    CredentialStatusFromJSONTyped,
+    CredentialStatusToJSON,
+} from './CredentialStatus';
 import type { EnvironmentType } from './EnvironmentType';
 import {
     EnvironmentTypeFromJSON,
@@ -122,6 +128,24 @@ export interface ConnectionModel {
      * @memberof ConnectionModel
      */
     ionStatus: RemoteServiceStatus;
+    /**
+     * 
+     * @type {RemoteServiceStatus}
+     * @memberof ConnectionModel
+     */
+    m3ConnectorStatus: RemoteServiceStatus;
+    /**
+     * 
+     * @type {CredentialStatus}
+     * @memberof ConnectionModel
+     */
+    mdpCredentialStatus: CredentialStatus;
+    /**
+     * 
+     * @type {CredentialStatus}
+     * @memberof ConnectionModel
+     */
+    m3CredentialStatus: CredentialStatus;
 }
 
 /**
@@ -138,6 +162,9 @@ export function instanceOfConnectionModel(value: object): boolean {
     isInstance = isInstance && "status" in value;
     isInstance = isInstance && "mdpStatus" in value;
     isInstance = isInstance && "ionStatus" in value;
+    isInstance = isInstance && "m3ConnectorStatus" in value;
+    isInstance = isInstance && "mdpCredentialStatus" in value;
+    isInstance = isInstance && "m3CredentialStatus" in value;
 
     return isInstance;
 }
@@ -165,6 +192,9 @@ export function ConnectionModelFromJSONTyped(json: any, ignoreDiscriminator: boo
         'status': ConnectionStatusFromJSON(json['status']),
         'mdpStatus': RemoteServiceStatusFromJSON(json['mdpStatus']),
         'ionStatus': RemoteServiceStatusFromJSON(json['ionStatus']),
+        'm3ConnectorStatus': RemoteServiceStatusFromJSON(json['m3ConnectorStatus']),
+        'mdpCredentialStatus': CredentialStatusFromJSON(json['mdpCredentialStatus']),
+        'm3CredentialStatus': CredentialStatusFromJSON(json['m3CredentialStatus']),
     };
 }
 
@@ -190,6 +220,9 @@ export function ConnectionModelToJSON(value?: ConnectionModel | null): any {
         'status': ConnectionStatusToJSON(value.status),
         'mdpStatus': RemoteServiceStatusToJSON(value.mdpStatus),
         'ionStatus': RemoteServiceStatusToJSON(value.ionStatus),
+        'm3ConnectorStatus': RemoteServiceStatusToJSON(value.m3ConnectorStatus),
+        'mdpCredentialStatus': CredentialStatusToJSON(value.mdpCredentialStatus),
+        'm3CredentialStatus': CredentialStatusToJSON(value.m3CredentialStatus),
     };
 }
 

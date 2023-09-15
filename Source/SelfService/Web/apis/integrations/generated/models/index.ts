@@ -10,6 +10,7 @@ export * from './ConnectionModel';
 export * from './ConnectionModelArrayResult';
 export * from './ConnectionModelResult';
 export * from './ConnectionStatus';
+export * from './CredentialStatus';
 export * from './DescribedJqDto';
 export * from './DescribedLinqDto';
 export * from './EnvironmentType';

@@ -23,49 +23,48 @@ import {
 /**
  * 
  * @export
- * @interface RemoteServiceStatus
+ * @interface CredentialStatus
  */
-export interface RemoteServiceStatus {
-    /**
-     * 
-     * @type {StatusMessage}
-     * @memberof RemoteServiceStatus
-     */
-    statusMessage?: StatusMessage;
+export interface CredentialStatus {
     /**
      * 
      * @type {string}
-     * @memberof RemoteServiceStatus
+     * @memberof CredentialStatus
      */
-    readonly name: string;
+    name?: string;
+    /**
+     * 
+     * @type {StatusMessage}
+     * @memberof CredentialStatus
+     */
+    statusMessage?: StatusMessage;
 }
 
 /**
- * Check if a given object implements the RemoteServiceStatus interface.
+ * Check if a given object implements the CredentialStatus interface.
  */
-export function instanceOfRemoteServiceStatus(value: object): boolean {
+export function instanceOfCredentialStatus(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "name" in value;
 
     return isInstance;
 }
 
-export function RemoteServiceStatusFromJSON(json: any): RemoteServiceStatus {
-    return RemoteServiceStatusFromJSONTyped(json, false);
+export function CredentialStatusFromJSON(json: any): CredentialStatus {
+    return CredentialStatusFromJSONTyped(json, false);
 }
 
-export function RemoteServiceStatusFromJSONTyped(json: any, ignoreDiscriminator: boolean): RemoteServiceStatus {
+export function CredentialStatusFromJSONTyped(json: any, ignoreDiscriminator: boolean): CredentialStatus {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
+        'name': !exists(json, 'name') ? undefined : json['name'],
         'statusMessage': !exists(json, 'statusMessage') ? undefined : StatusMessageFromJSON(json['statusMessage']),
-        'name': json['name'],
     };
 }
 
-export function RemoteServiceStatusToJSON(value?: RemoteServiceStatus | null): any {
+export function CredentialStatusToJSON(value?: CredentialStatus | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -74,6 +73,7 @@ export function RemoteServiceStatusToJSON(value?: RemoteServiceStatus | null): a
     }
     return {
         
+        'name': value.name,
         'statusMessage': StatusMessageToJSON(value.statusMessage),
     };
 }

@@ -33,6 +33,7 @@ models/ConnectionModel.ts
 models/ConnectionModelArrayResult.ts
 models/ConnectionModelResult.ts
 models/ConnectionStatus.ts
+models/CredentialStatus.ts
 models/DescribedJqDto.ts
 models/DescribedLinqDto.ts
 models/EnvironmentType.ts
