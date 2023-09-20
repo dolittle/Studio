@@ -158,7 +158,7 @@ export function getRuntimes(): LatestRuntimeInfo[] {
         {
             image: 'dolittle/runtime:6.2.4',
             changelog: 'https://github.com/dolittle/Runtime/releases/tag/v6.2.4',
-        }
+        },
     ];
 };
 
@@ -169,7 +169,7 @@ export async function getMicroservices(applicationId: string): Promise<HttpRespo
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
 
     const jsonResult: HttpResponseMicroservices = await result.json();
@@ -184,7 +184,7 @@ export async function deleteMicroservice(applicationId: string, environment: str
         url,
         {
             method: 'DELETE',
-            mode: 'cors'
+            mode: 'cors',
         });
 
     return result.status === 200;
@@ -200,20 +200,20 @@ export async function saveMicroservice(input: any): Promise<any> {
             body: JSON.stringify(input),
             mode: 'cors',
             headers: {
-                'content-type': 'application/json'
-            }
+                'content-type': 'application/json',
+            },
         });
 
     const text = await response.text();
 
     if (!response.ok) {
         let jsonResponse;
+
         try {
             jsonResponse = JSON.parse(text);
         } catch (error) {
             throw new Exception(`Couldn't parse the error message. The error was ${error}. Response Status ${response.status}. Response Body ${text}`);
-        }
-        throw new Exception(jsonResponse.message);
+        } throw new Exception(jsonResponse.message);
     };
 
     return JSON.parse(text);
@@ -226,7 +226,7 @@ export async function restartMicroservice(applicationId: string, environment: st
         url,
         {
             method: 'DELETE',
-            mode: 'cors'
+            mode: 'cors',
         });
 
     return response.status === 200;
@@ -239,7 +239,7 @@ export async function getPodStatus(applicationId: string, environment: string, m
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
 
     const jsonResult: HttpResponsePodStatus = await result.json();
@@ -258,7 +258,7 @@ export async function getPodLogs(applicationId: string, podName: string, contain
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
 
     const jsonResult: HttpResponsePodLog = await result.json();
@@ -273,7 +273,7 @@ export async function getEnvironmentVariables(applicationId: string, environment
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
 
     const data = await response.json();
@@ -285,7 +285,7 @@ export async function updateEnvironmentVariables(applicationId: string, environm
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/environment-variables`;
 
     const data = {
-        data: input
+        data: input,
     } as HttpInputEnvironmentVariables;
 
     const response = await fetch(
@@ -295,8 +295,8 @@ export async function updateEnvironmentVariables(applicationId: string, environm
             body: JSON.stringify(data),
             mode: 'cors',
             headers: {
-                'content-type': 'application/json'
-            }
+                'content-type': 'application/json',
+            },
         });
 
     return response.status === 200;
@@ -333,12 +333,11 @@ export async function updateConfigFile(applicationId: string, environment: strin
     return response.status === 200 ? { success: true } : { success: false, error: parsedResponse.message };
 };
 
-
 export async function deleteConfigFile(applicationId: string, environment: string, microserviceId: string, fileName: string): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`;
 
     const data = {
-        key: fileName
+        key: fileName,
     } as HttpInputDeleteConfigFile;
 
     const response = await fetch(
@@ -346,7 +345,7 @@ export async function deleteConfigFile(applicationId: string, environment: strin
         {
             method: 'DELETE',
             mode: 'cors',
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         });
 
     return response.status === 200;
@@ -357,12 +356,12 @@ export async function parseJSONResponse(response: any): Promise<any> {
 
     if (!response.ok) {
         let jsonResponse;
+
         try {
             jsonResponse = JSON.parse(text);
         } catch (error) {
             throw Error(`Couldn't parse the error message. The error was ${error}. Response Status ${response.status}. Response Body ${text}`);
-        }
-        throw Error(jsonResponse.message);
+        } throw Error(jsonResponse.message);
     };
 
     const data = JSON.parse(text);
