@@ -4,7 +4,6 @@
 import { Image } from '@fluentui/react';
 import { getServerUrlPrefix } from './api';
 
-
 export type HTTPResponseImages = {
     url: string,
     images: string[]
@@ -54,6 +53,7 @@ export async function getTagsInContainerRegistry(applicationId: string, image: s
             method: 'GET',
             mode: 'cors'
         });
+
     const jsonResult = await result.json() as HTTPResponseTags;
 
     const items = jsonResult.tags.map(n => {
@@ -81,12 +81,15 @@ export async function getReposInContainerRegistry(applicationId: string): Promis
             method: 'GET',
             mode: 'cors'
         });
+
     const jsonResult = await result.json() as HTTPResponseImages;
+
     const theResult = jsonResult.images.map(n => {
         return {
             name: n
         };
     });
+
     return {
         url: jsonResult.url,
         images: theResult

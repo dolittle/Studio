@@ -1,9 +1,9 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { writable } from 'use-svelte-store';
-import {
-    getPersonalisedInfo,
-} from '../../apis/solutions/application';
+
+import { getPersonalisedInfo } from '../../apis/solutions/application';
 
 export interface Info {
     containerRegistryName: string;
@@ -70,5 +70,3 @@ export const load = (applicationId: string) => {
         isLoaded.set(true);
     });
 };
-
-
