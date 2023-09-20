@@ -25,7 +25,7 @@ export async function getStudioConfig(customerID: string): Promise<Studio> {
 
 export async function saveStudioConfig(customerID: string, config: Studio): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/studio/customer/${customerID}`;
-    console.log(JSON.stringify(config));
+
     const response = await fetch(
         url,
         {
