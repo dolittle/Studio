@@ -152,7 +152,7 @@ export async function getApplicationsListing(): Promise<HttpResponseApplications
         canCreateApplication: applicationsWithEnvironment.canCreateApplication,
         applications: Array.from(uniqueApplications.values()),
     };
-}
+};
 
 export async function getApplication(applicationId: string): Promise<HttpResponseApplication> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}`;
@@ -169,7 +169,7 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
 
     jsonResult.environments.map(environment => {
         environment.connections = environment.connections || {
-            m3Connector: false
+            m3Connector: false,
         };
 
         return environment;
