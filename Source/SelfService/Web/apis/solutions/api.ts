@@ -105,6 +105,12 @@ export type SimpleIngressPath = {
     pathType: string;
 };
 
+export type InputEditMicroservice = {
+    displayName: string;
+    headImage: string;
+    runtimeImage: string;
+};
+
 export type InputEnvironmentVariable = {
     name: string;
     value: string;
@@ -177,19 +183,6 @@ export async function getMicroservices(applicationId: string): Promise<HttpRespo
     return jsonResult;
 };
 
-export async function deleteMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
-    const url = `${getServerUrlPrefix()}/application/${applicationId}/environment/${environment}/microservice/${microserviceId}`;
-
-    const result = await fetch(
-        url,
-        {
-            method: 'DELETE',
-            mode: 'cors',
-        });
-
-    return result.status === 200;
-};
-
 export async function saveMicroservice(input: any): Promise<any> {
     const url = `${getServerUrlPrefix()}/microservice`;
 
@@ -219,6 +212,23 @@ export async function saveMicroservice(input: any): Promise<any> {
     return JSON.parse(text);
 };
 
+export async function editMicroservice(applicationId: string, environment: string, microserviceId: string, input: InputEditMicroservice): Promise<boolean> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/environment/${environment}/microservice/${microserviceId}`;
+
+    const response = await fetch(
+        url,
+        {
+            method: 'PATCH',
+            body: JSON.stringify(input),
+            mode: 'cors',
+            headers: {
+                'content-type': 'application/json',
+            },
+        });
+
+    return response.status === 200;
+};
+
 export async function restartMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/restart`;
 
@@ -230,6 +240,19 @@ export async function restartMicroservice(applicationId: string, environment: st
         });
 
     return response.status === 200;
+};
+
+export async function deleteMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
+    const url = `${getServerUrlPrefix()}/application/${applicationId}/environment/${environment}/microservice/${microserviceId}`;
+
+    const result = await fetch(
+        url,
+        {
+            method: 'DELETE',
+            mode: 'cors',
+        });
+
+    return result.status === 200;
 };
 
 export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {
