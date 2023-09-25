@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box } from '@mui/material';
 
-import { Accordion, AlertDialog, Button, Form, FullPageLoadingSpinner } from '@dolittle/design-system';
+import { AlertDialog, Button, Form, FullPageLoadingSpinner } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
@@ -122,36 +122,34 @@ export const SetupSection = ({ application, currentMicroservice }: SetupSectionP
                 handleSuccess={() => window.location.reload()}
             />
 
-            <Accordion id='setup-accordion' title='Configuration Setup' defaultExpanded>
-                <Form<MicroserviceFormParameters>
-                    initialValues={{
-                        microserviceName,
-                        developmentEnvironment: microserviceEnvironment,
-                        runtimeVersion: currentRuntimeImageNumber,
-                        headImage: microserviceInfo?.headImage,
-                        headPort: microserviceInfo?.headPort,
-                        entrypoint: '',
-                        isPublic: hasPublicUrl,
-                        headArguments: headArgumentValues,
-                        ingressPath: cleanedIngressPath,
-                        hasM3Connector: hasM3ConnectorOption,
-                    }}
-                    onSubmit={handleMicroserviceEdit}
-                    sx={{ '& .MuiFormControl-root': { my: 1 } }}
-                >
-                    <Box sx={{ 'mb': 3, '& button': { 'mr': 2, ':last-of-type': { mr: 0 } } }}>
-                        <Button label='edit' disabled={editMicroserviceMode} startWithIcon='EditRounded' onClick={() => setEditMicroserviceMode(true)} />
-                        <Button label='save' type='submit' disabled={!editMicroserviceMode} startWithIcon='SaveRounded' onClick={() => setEditMicroserviceMode(false)} />
-                        <Button label='Restart Microservice' startWithIcon='RestartAltRounded' onClick={() => setRestartDialogIsOpen(true)} />
-                        <Button label='Delete Microservice' startWithIcon='DeleteRounded' onClick={() => setDeleteDialogIsOpen(true)} />
-                    </Box>
+            <Form<MicroserviceFormParameters>
+                initialValues={{
+                    microserviceName,
+                    developmentEnvironment: microserviceEnvironment,
+                    runtimeVersion: currentRuntimeImageNumber,
+                    headImage: microserviceInfo?.headImage,
+                    headPort: microserviceInfo?.headPort,
+                    entrypoint: '',
+                    isPublic: hasPublicUrl,
+                    headArguments: headArgumentValues,
+                    ingressPath: cleanedIngressPath,
+                    hasM3Connector: hasM3ConnectorOption,
+                }}
+                onSubmit={handleMicroserviceEdit}
+                sx={{ 'ml': 2, '& .MuiFormControl-root': { my: 1 } }}
+            >
+                <Box sx={{ 'mb': 3, '& button': { 'mr': 2, ':last-of-type': { mr: 0 } } }}>
+                    <Button label='edit' disabled={editMicroserviceMode} startWithIcon='EditRounded' onClick={() => setEditMicroserviceMode(true)} />
+                    <Button label='save' type='submit' disabled={!editMicroserviceMode} startWithIcon='SaveRounded' onClick={() => setEditMicroserviceMode(false)} />
+                    <Button label='Restart Microservice' startWithIcon='RestartAltRounded' onClick={() => setRestartDialogIsOpen(true)} />
+                    <Button label='Delete Microservice' startWithIcon='DeleteRounded' onClick={() => setDeleteDialogIsOpen(true)} />
+                </Box>
 
-                    <SetupFields environments={availableEnvironments} hasDashedBorder isEditMode={!editMicroserviceMode} isDisabled />
-                    <ContainerImageFields hasDashedBorder isEditMode={!editMicroserviceMode} isDisabled />
-                    <PublicUrlFields hasDashedBorder hasPublicUrl={hasPublicUrl} isDisabled />
-                    {hasM3ConnectorOption && <HasM3ConnectorField isDisabled />}
-                </Form>
-            </Accordion>
+                <SetupFields environments={availableEnvironments} hasDashedBorder isEditMode={!editMicroserviceMode} isDisabled />
+                <ContainerImageFields hasDashedBorder isEditMode={!editMicroserviceMode} isDisabled />
+                <PublicUrlFields hasDashedBorder hasPublicUrl={hasPublicUrl} isDisabled />
+                {hasM3ConnectorOption && <HasM3ConnectorField isDisabled />}
+            </Form>
         </>
     );
 };
