@@ -6,11 +6,14 @@ import React, { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 
-import { Accordion, AlertDialog, Form, FullPageLoadingSpinner } from '@dolittle/design-system';
+import { Box } from '@mui/material';
+
+import { Accordion, AlertDialog, Button, Form, FullPageLoadingSpinner } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../../../apis/solutions/application';
+import { editMicroservice, InputEditMicroservice } from '../../../../../apis/solutions/api';
 import { MicroserviceFormParameters } from '../../../../../apis/solutions/index';
 
 import { ContainerImageFields } from '../../../components/form/containerImageFields';
@@ -19,7 +22,6 @@ import { PublicUrlFields } from '../../../components/form/publicUrlFields';
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
 import { SetupFields } from '../../../components/form/setupFields';
 
-import { HeaderButtons } from './headerButtons';
 import { getRuntimeNumberFromString } from '../../../../../utils/helpers';
 
 export type SetupSectionProps = {
@@ -33,7 +35,7 @@ export const SetupSection = ({ application, currentMicroservice }: SetupSectionP
 
     const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState(false);
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
-    const [formIsNotEditable, setFormIsNotEditable] = useState(true);
+    const [editMicroserviceMode, setEditMicroserviceMode] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const applicationId = application.id;
@@ -56,6 +58,29 @@ export const SetupSection = ({ application, currentMicroservice }: SetupSectionP
     const cleanedIngressPath = microserviceInfo?.ingress?.path?.replace(/\//, '') || '';
     // Convert the head arguments to the format that the form expects.
     const headArgumentValues = microserviceInfo?.headCommand?.args?.map((arg: string) => ({ value: arg })) || [];
+
+    const handleMicroserviceEdit = async ({ microserviceName, headImage, runtimeVersion }: MicroserviceFormParameters) => {
+        if (microserviceName === currentMicroservice.name && headImage === microserviceInfo?.headImage && runtimeVersion === currentRuntimeImageNumber.value) {
+            return;
+        }
+
+        setIsLoading(true);
+
+        const editedMicroservice: InputEditMicroservice = {
+            displayName: microserviceName,
+            headImage,
+            runtimeImage: runtimeVersion,
+        };
+
+        try {
+            await editMicroservice(applicationId, microserviceEnvironment, microserviceId, editedMicroservice);
+            enqueueSnackbar(`Microservice '${microserviceName}' has been updated.`);
+        } catch (error) {
+            enqueueSnackbar(`Failed to update microservice '${microserviceName}'.`, { variant: 'error' });
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const handleMicroserviceDelete = async () => {
         setIsLoading(true);
@@ -106,12 +131,6 @@ export const SetupSection = ({ application, currentMicroservice }: SetupSectionP
             />
 
             <Accordion id='setup-accordion' title='Configuration Setup' defaultExpanded>
-                <HeaderButtons
-                    handleRestartDialog={() => setRestartDialogIsOpen(true)}
-                    handleDeleteDialog={() => setDeleteDialogIsOpen(true)}
-                    disabled={formIsNotEditable}
-                />
-
                 <Form<MicroserviceFormParameters>
                     initialValues={{
                         microserviceName,
@@ -125,15 +144,20 @@ export const SetupSection = ({ application, currentMicroservice }: SetupSectionP
                         ingressPath: cleanedIngressPath,
                         hasM3Connector: hasM3ConnectorOption,
                     }}
+                    onSubmit={handleMicroserviceEdit}
                     sx={{ '& .MuiFormControl-root': { my: 1 } }}
                 >
-                    <SetupFields environments={availableEnvironments} hasDashedBorder isDisabled={formIsNotEditable} />
+                    <Box sx={{ 'mb': 3, '& button': { 'mr': 2, ':last-of-type': { mr: 0 } } }}>
+                        <Button label='edit' disabled={editMicroserviceMode} startWithIcon='EditRounded' onClick={() => setEditMicroserviceMode(true)} />
+                        <Button label='save' type='submit' disabled={!editMicroserviceMode} startWithIcon='SaveRounded' onClick={() => setEditMicroserviceMode(false)} />
+                        <Button label='Restart Microservice' startWithIcon='RestartAltRounded' onClick={() => setRestartDialogIsOpen(true)} />
+                        <Button label='Delete Microservice' startWithIcon='DeleteRounded' onClick={() => setDeleteDialogIsOpen(true)} />
+                    </Box>
 
-                    <ContainerImageFields hasDashedBorder isDisabled={formIsNotEditable} />
-
-                    <PublicUrlFields hasDashedBorder hasPublicUrl={hasPublicUrl} isDisabled={formIsNotEditable} />
-
-                    {hasM3ConnectorOption && <HasM3ConnectorField isDisabled={formIsNotEditable} />}
+                    <SetupFields environments={availableEnvironments} hasDashedBorder isEditMode={!editMicroserviceMode} isDisabled />
+                    <ContainerImageFields hasDashedBorder isEditMode={!editMicroserviceMode} isDisabled />
+                    <PublicUrlFields hasDashedBorder hasPublicUrl={hasPublicUrl} isDisabled />
+                    {hasM3ConnectorOption && <HasM3ConnectorField isDisabled />}
                 </Form>
             </Accordion>
         </>

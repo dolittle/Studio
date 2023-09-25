@@ -27,10 +27,11 @@ const EntrypointDescription = () =>
 
 export type ContainerImageFieldsProps = {
     hasDashedBorder?: boolean;
+    isEditMode?: boolean;
     isDisabled?: boolean;
 };
 
-export const ContainerImageFields = ({ hasDashedBorder, isDisabled }: ContainerImageFieldsProps) =>
+export const ContainerImageFields = ({ hasDashedBorder, isEditMode, isDisabled }: ContainerImageFieldsProps) =>
     <Stack sx={{ mb: 4 }}>
         <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
 
@@ -39,7 +40,7 @@ export const ContainerImageFields = ({ hasDashedBorder, isDisabled }: ContainerI
                 id='headImage'
                 label='Image Name'
                 dashedBorder={hasDashedBorder}
-                disabled={isDisabled}
+                disabled={isEditMode}
                 required='Provide an image name.'
                 sx={{ width: 1, maxWidth: 500, minWidth: 220 }}
             />

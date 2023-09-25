@@ -28,11 +28,12 @@ const runtimeDescription = `By using the Dolittle runtime you'll have access to 
 export type SetupFieldsProps = {
     environments: string[];
     hasDashedBorder?: boolean;
+    isEditMode?: boolean;
     isDisabled?: boolean;
     onEnvironmentSelect?: (environment: string) => void;
 };
 
-export const SetupFields = ({ environments, hasDashedBorder, isDisabled, onEnvironmentSelect }: SetupFieldsProps) => {
+export const SetupFields = ({ environments, hasDashedBorder, isEditMode, isDisabled, onEnvironmentSelect }: SetupFieldsProps) => {
     const [showEnvironmentInfo, setShowEnvironmentInfo] = useState(false);
     const [showEntrypointInfo, setShowEntrypointInfo] = useState(false);
 
@@ -80,7 +81,7 @@ export const SetupFields = ({ environments, hasDashedBorder, isDisabled, onEnvir
                     options={runtimeNumberOptions}
                     onOpen={() => setShowEntrypointInfo(true)}
                     required
-                    disabled={isDisabled}
+                    disabled={isEditMode}
                     sx={hasDashedBorder ? { '& fieldset': { borderStyle: 'dashed' } } : {}}
                 />
             </Tooltip>
