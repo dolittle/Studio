@@ -22,8 +22,6 @@ import { PublicUrlFields } from '../../../components/form/publicUrlFields';
 import { RestartMicroserviceDialog } from '../../../components/restartMicroserviceDialog';
 import { SetupFields } from '../../../components/form/setupFields';
 
-import { getRuntimeNumberFromString } from '../../../../../utils/helpers';
-
 export type SetupSectionProps = {
     application: HttpResponseApplication;
     currentMicroservice: MicroserviceStore;
@@ -43,15 +41,11 @@ export const SetupSection = ({ application, currentMicroservice }: SetupSectionP
     const microserviceEnvironment = currentMicroservice.environment;
     const microserviceName = currentMicroservice.name;
     const microserviceInfo = currentMicroservice.edit?.extra;
+
     const canDelete = canDeleteMicroservice(application.environments, microserviceEnvironment, microserviceId);
-
-    const currentRuntimeImageNumber = {
-        value: microserviceInfo?.runtimeImage,
-        displayValue: getRuntimeNumberFromString(microserviceInfo?.runtimeImage)
-    };
-
     const availableEnvironments = application.environments.map(env => env.name);
 
+    const currentRuntimeImageNumber = microserviceInfo?.runtimeImage;
     const hasPublicUrl = microserviceInfo?.isPublic || false;
     const hasM3ConnectorOption = application.environments.find(env => env.name === microserviceEnvironment)?.connections?.m3Connector || false;
     // Remove extra slash from ingress path as it is there already with startAdornment.
@@ -60,7 +54,7 @@ export const SetupSection = ({ application, currentMicroservice }: SetupSectionP
     const headArgumentValues = microserviceInfo?.headCommand?.args?.map((arg: string) => ({ value: arg })) || [];
 
     const handleMicroserviceEdit = async ({ microserviceName, headImage, runtimeVersion }: MicroserviceFormParameters) => {
-        if (microserviceName === currentMicroservice.name && headImage === microserviceInfo?.headImage && runtimeVersion === currentRuntimeImageNumber.value) {
+        if (microserviceName === currentMicroservice.name && headImage === microserviceInfo?.headImage && runtimeVersion === currentRuntimeImageNumber) {
             return;
         }
 
@@ -83,26 +77,24 @@ export const SetupSection = ({ application, currentMicroservice }: SetupSectionP
     };
 
     const handleMicroserviceDelete = async () => {
-        setIsLoading(true);
-        setDeleteDialogIsOpen(false);
-
         if (!canDelete) {
             enqueueSnackbar('Deleting microservice is disabled.', { variant: 'error' });
             return;
         }
 
-        const success = await deleteMicroservice(applicationId, microserviceEnvironment, microserviceId);
+        setIsLoading(true);
+        setDeleteDialogIsOpen(false);
 
-        if (!success) {
+        try {
+            await deleteMicroservice(applicationId, microserviceEnvironment, microserviceId);
+            enqueueSnackbar(`Microservice '${microserviceName}' has been deleted.`);
+            const href = `/microservices/application/${applicationId}/overview`;
+            navigate(href);
+        } catch (error) {
             enqueueSnackbar(`Failed to delete microservice '${microserviceName}'.`, { variant: 'error' });
+        } finally {
             setIsLoading(false);
-            return;
         }
-
-        enqueueSnackbar(`Microservice '${microserviceName}' has been deleted.`);
-        const href = `/microservices/application/${applicationId}/overview`;
-        navigate(href);
-        setIsLoading(false);
     };
 
     return (
@@ -135,7 +127,7 @@ export const SetupSection = ({ application, currentMicroservice }: SetupSectionP
                     initialValues={{
                         microserviceName,
                         developmentEnvironment: microserviceEnvironment,
-                        runtimeVersion: currentRuntimeImageNumber.value,
+                        runtimeVersion: currentRuntimeImageNumber,
                         headImage: microserviceInfo?.headImage,
                         headPort: microserviceInfo?.headPort,
                         entrypoint: '',
