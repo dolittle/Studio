@@ -5,7 +5,7 @@ import React, { useMemo, useState } from 'react';
 
 import { MicroserviceStore } from '../../../stores/microservice';
 
-import { AlertBox, AlertBoxErrorMessage, Button, FullPageLoadingSpinner, Graph } from '@dolittle/design-system';
+import { AlertBox, AlertBoxErrorMessage, Button, Graph } from '@dolittle/design-system';
 
 import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../../apis/solutions/api';
 

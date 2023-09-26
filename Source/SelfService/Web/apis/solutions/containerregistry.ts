@@ -4,15 +4,14 @@
 import { Image } from '@fluentui/react';
 import { getServerUrlPrefix } from './api';
 
-
 export type HTTPResponseImages = {
     url: string,
-    images: string[]
+    images: string[],
 };
 
 export type ContainerRegistryImages = {
     url: string,
-    images: Image[]
+    images: Image[],
 };
 
 export type Image = {
@@ -24,12 +23,12 @@ export type Tag = {
     createdTime: Date,
     lastUpdateTime: Date,
     digest: string,
-    signed: boolean
+    signed: boolean,
 };
 
 export type ContainerRegistryTags = {
     name: string,
-    tags: Tag[]
+    tags: Tag[],
 };
 
 export type HTTPResponseTag = {
@@ -37,12 +36,12 @@ export type HTTPResponseTag = {
     createdTime: string,
     lastUpdateTime: string,
     digest: string,
-    signed: boolean
+    signed: boolean,
 };
 
 export type HTTPResponseTags = {
     name: string,
-    tags: HTTPResponseTag[]
+    tags: HTTPResponseTag[],
 };
 
 export async function getTagsInContainerRegistry(applicationId: string, image: string): Promise<ContainerRegistryTags> {
@@ -52,8 +51,9 @@ export async function getTagsInContainerRegistry(applicationId: string, image: s
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
+
     const jsonResult = await result.json() as HTTPResponseTags;
 
     const items = jsonResult.tags.map(n => {
@@ -62,7 +62,7 @@ export async function getTagsInContainerRegistry(applicationId: string, image: s
             createdTime: new Date(n.createdTime),
             lastUpdateTime: new Date(n.lastUpdateTime),
             digest: n.digest,
-            signed: n.signed
+            signed: n.signed,
         };
     });
 
@@ -70,7 +70,7 @@ export async function getTagsInContainerRegistry(applicationId: string, image: s
         name: image,
         tags: items,
     };
-}
+};
 
 export async function getReposInContainerRegistry(applicationId: string): Promise<ContainerRegistryImages> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}/containerregistry/images`;
@@ -79,16 +79,19 @@ export async function getReposInContainerRegistry(applicationId: string): Promis
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
+
     const jsonResult = await result.json() as HTTPResponseImages;
+
     const theResult = jsonResult.images.map(n => {
         return {
-            name: n
+            name: n,
         };
     });
+
     return {
         url: jsonResult.url,
-        images: theResult
+        images: theResult,
     };
-}
+};

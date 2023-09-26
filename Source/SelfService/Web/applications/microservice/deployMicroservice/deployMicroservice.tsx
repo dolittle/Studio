@@ -10,7 +10,7 @@ import { Guid } from '@dolittle/rudiments';
 
 import { Typography } from '@mui/material';
 
-import { Button, Form, FullPageLoadingSpinner } from '@dolittle/design-system';
+import { Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
 
 import { saveSimpleMicroservice } from '../../stores/microservice';
 
@@ -91,7 +91,8 @@ export const DeployMicroservice = ({ application }: DeployMicroserviceProps) => 
 
     return (
         <>
-            {isLoading && <FullPageLoadingSpinner />}
+            {isLoading && <LoadingSpinnerFullPage />}
+
             <Typography variant='h1' sx={{ mt: 3, mb: 4 }}>Deploy Base Microservice</Typography>
 
             <Form<MicroserviceFormParameters>

@@ -17,15 +17,15 @@ export async function getStudioConfig(customerID: string): Promise<Studio> {
         url,
         {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
         });
 
     return parseJSONResponse(response);
-}
+};
 
 export async function saveStudioConfig(customerID: string, config: Studio): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/studio/customer/${customerID}`;
-    console.log(JSON.stringify(config));
+
     const response = await fetch(
         url,
         {
@@ -34,8 +34,8 @@ export async function saveStudioConfig(customerID: string, config: Studio): Prom
             body: JSON.stringify(config),
             headers: {
                 'content-type': 'application/json'
-            }
+            },
         });
 
     return response.status === 200;
-}
+};

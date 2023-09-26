@@ -78,7 +78,6 @@ export async function getPersonalisedInfo(applicationId: string): Promise<any> {
     return jsonResult;
 };
 
-
 export async function createApplication(input: HttpApplicationRequest): Promise<JobInfo | any> {
     const url = `${getServerUrlPrefix()}/application`;
 
@@ -142,7 +141,6 @@ export async function getApplications(): Promise<HttpResponseApplications> {
     return jsonResult;
 };
 
-
 export async function getApplicationsListing(): Promise<HttpResponseApplicationsListing> {
     const applicationsWithEnvironment = await getApplications();
 
@@ -154,7 +152,7 @@ export async function getApplicationsListing(): Promise<HttpResponseApplications
         canCreateApplication: applicationsWithEnvironment.canCreateApplication,
         applications: Array.from(uniqueApplications.values()),
     };
-}
+};
 
 export async function getApplication(applicationId: string): Promise<HttpResponseApplication> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}`;
@@ -171,7 +169,7 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
 
     jsonResult.environments.map(environment => {
         environment.connections = environment.connections || {
-            m3Connector: false
+            m3Connector: false,
         };
 
         return environment;
@@ -179,7 +177,6 @@ export async function getApplication(applicationId: string): Promise<HttpRespons
 
     return jsonResult;
 };
-
 
 export async function getAdminApplicationAccess(customerId: string, applicationId: string): Promise<HttpResponseApplicationAccess> {
     const url = `${getServerUrlPrefix()}/admin/customer/${customerId}/application/${applicationId}/access/users`;

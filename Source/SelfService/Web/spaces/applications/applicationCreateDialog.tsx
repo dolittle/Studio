@@ -9,7 +9,7 @@ import { Guid } from '@dolittle/rudiments';
 
 import { Stack, Typography } from '@mui/material';
 
-import { Checkbox, DialogForm, FullPageLoadingSpinner, Input } from '@dolittle/design-system';
+import { Checkbox, DialogForm, LoadingSpinnerFullPage, Input } from '@dolittle/design-system';
 
 import { createApplication, HttpApplicationRequest } from '../../apis/solutions/application';
 
@@ -90,7 +90,7 @@ export const ApplicationCreateDialog = ({ isOpen, onClose }: ApplicationCreateDi
             onCancel={onClose}
             onConfirm={handleSpaceCreate}
         >
-            {isLoading && <FullPageLoadingSpinner />}
+            {isLoading && <LoadingSpinnerFullPage />}
 
             <Typography variant='body1' sx={{ my: 2 }}>Provide a name for your new application.</Typography>
             <Input
