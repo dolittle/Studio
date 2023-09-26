@@ -1,3 +1,29 @@
+# [3.18.0] - 2023-9-26 [PR: #472](https://github.com/dolittle/Studio/pull/472)
+## Summary
+
+Added functionality to edit the microservice.
+
+<img width="775" alt="Screenshot 2023-09-26 at 15 02 32" src="https://github.com/dolittle/Studio/assets/19160439/964724f5-c07a-43bf-8181-de5bad9adc23">
+
+### Added
+
+- 'editMicroservice' API
+- "Position: relative" to the body
+- LoadingSpinnerFullPage component
+
+### Changed
+
+- Comment out unused code
+
+### Fixed
+
+- Made LoadingSpinnerFullPage to fill up the entire screen
+
+### Removed
+
+- 'Accordion' from Microservice Configuration Setup
+
+
 # [3.17.0] - 2023-9-8 [PR: #471](https://github.com/dolittle/Studio/pull/471)
 ## Summary
 - Fix wrongly inverted boolean being passed into the switch to hide unselected rows in the message mapping table
