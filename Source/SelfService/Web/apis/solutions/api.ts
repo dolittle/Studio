@@ -3,6 +3,8 @@
 
 import { Exception } from '@dolittle/rudiments';
 
+import { MicroserviceSimple } from './index';
+
 export type JobInfo = {
     jobId: string;
 };
@@ -32,25 +34,13 @@ export type ImageInfo = {
     name: string;
 };
 
-export type MicroserviceExtra = {
-    extra?: {
-        ingress: SimpleIngressPath;
-        headPort: number;
-        isPublic: boolean;
-        headImage: string;
-        runtimeImage: string;
-        headCommand: string;
-        connections: any;
-    };
-};
-
 export type MicroserviceObject = {
     id: string;
     name: string;
     kind: string;
     environment: string;
     live: MicroserviceInfo;
-    edit: MicroserviceExtra;
+    edit: MicroserviceSimple;
 };
 
 export type MicroserviceInfo = {
