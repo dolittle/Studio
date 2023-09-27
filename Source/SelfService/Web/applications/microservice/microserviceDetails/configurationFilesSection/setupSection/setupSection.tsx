@@ -58,6 +58,7 @@ export const SetupSection = ({ application, currentMicroservice }: SetupSectionP
             return;
         }
 
+        setEditMicroserviceMode(false);
         setIsLoading(true);
 
         const editedMicroservice: InputEditMicroservice = {
@@ -140,7 +141,7 @@ export const SetupSection = ({ application, currentMicroservice }: SetupSectionP
             >
                 <Box sx={{ 'mb': 3, '& button': { 'mr': 2, ':last-of-type': { mr: 0 } } }}>
                     <Button label='edit' disabled={editMicroserviceMode} startWithIcon='EditRounded' onClick={() => setEditMicroserviceMode(true)} />
-                    <Button label='save' type='submit' disabled={!editMicroserviceMode} startWithIcon='SaveRounded' onClick={() => setEditMicroserviceMode(false)} />
+                    <Button label='save' type='submit' disabled={!editMicroserviceMode} startWithIcon='SaveRounded' />
                     <Button label='Restart Microservice' startWithIcon='RestartAltRounded' onClick={() => setRestartDialogIsOpen(true)} />
                     <Button label='Delete Microservice' startWithIcon='DeleteRounded' onClick={() => setDeleteDialogIsOpen(true)} />
                 </Box>
