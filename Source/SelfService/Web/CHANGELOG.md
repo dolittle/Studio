@@ -1,3 +1,19 @@
+# [3.18.1] - 2023-9-27 [PR: #473](https://github.com/dolittle/Studio/pull/473)
+## Summary
+
+Fixed API call for 'edit microservice'.
+
+### Changed
+
+- Updated Microservice types
+
+### Fixed
+
+- Display Microservice info when there is no 'edit' data
+
+- 'editMicroservice' Form submit action
+
+
 # [3.18.0] - 2023-9-26 [PR: #472](https://github.com/dolittle/Studio/pull/472)
 ## Summary
 
