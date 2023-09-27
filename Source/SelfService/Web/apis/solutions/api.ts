@@ -3,6 +3,8 @@
 
 import { Exception } from '@dolittle/rudiments';
 
+import { MicroserviceSimple } from './index';
+
 export type JobInfo = {
     jobId: string;
 };
@@ -32,25 +34,13 @@ export type ImageInfo = {
     name: string;
 };
 
-export type MicroserviceExtra = {
-    extra?: {
-        ingress: SimpleIngressPath;
-        headPort: number;
-        isPublic: boolean;
-        headImage: string;
-        runtimeImage: string;
-        headCommand: string;
-        connections: any;
-    };
-};
-
 export type MicroserviceObject = {
     id: string;
     name: string;
     kind: string;
     environment: string;
     live: MicroserviceInfo;
-    edit: MicroserviceExtra;
+    edit: MicroserviceSimple;
 };
 
 export type MicroserviceInfo = {
@@ -226,7 +216,19 @@ export async function editMicroservice(applicationId: string, environment: strin
             },
         });
 
-    return response.status === 200;
+    const text = await response.text();
+
+    if (!response.ok) {
+        let jsonResponse;
+
+        try {
+            jsonResponse = JSON.parse(text);
+        } catch (error) {
+            throw new Exception(`Couldn't parse the error message. The error was ${error}. Response Status ${response.status}. Response Body ${text}`);
+        } throw new Exception(jsonResponse.message);
+    };
+
+    return JSON.parse(text);
 };
 
 export async function restartMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {

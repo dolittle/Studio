@@ -4,13 +4,12 @@
 import React from 'react';
 
 import { useHref, useNavigate } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 
 import { MicroserviceObject } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
 import { useReadable } from 'use-svelte-store';
-import { canEditMicroservices, microservices } from '../../stores/microservice';
+import { microservices } from '../../stores/microservice';
 
 import { Typography } from '@mui/material';
 
@@ -25,15 +24,7 @@ export type MicroserviceProps = {
 
 export const Microservice = ({ application }: MicroserviceProps) => {
     const navigate = useNavigate();
-    const { enqueueSnackbar } = useSnackbar();
     const $microservices = useReadable(microservices) as MicroserviceObject[];
-
-    // TODO ENV: How to handle this?
-    //const canEdit = canEditMicroservices(application.environments, environment);
-    // if (!canEdit) {
-    //     enqueueSnackbar('Currently disabled. Please reach out via freshdesk or teams.', { variant: 'error' });
-    //     return;
-    // }
 
     // TODO: Make this a button with 'href'.
     const href = `/microservices/application/${application.id}/create`;

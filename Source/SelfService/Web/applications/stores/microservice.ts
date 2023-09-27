@@ -7,7 +7,6 @@ import {
     deleteMicroservice as apiDeleteMicroservice,
     saveMicroservice as apiSaveMicroservice,
     MicroserviceInfo,
-    MicroserviceExtra,
     getMicroservices,
     HttpResponseMicroservices,
 } from '../../apis/solutions/api';
@@ -21,7 +20,7 @@ export type MicroserviceStore = {
     kind: string;
     environment: string;
     live: MicroserviceInfo;
-    edit: any; // MicroserviceExtra
+    edit: MicroserviceSimple;
 };
 
 const data = {

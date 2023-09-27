@@ -69,7 +69,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             setSelectedKey('config');
                         }}
                     >
-                        <ConfigView microservice={currentMicroservice.edit} />
+                        {/* <ConfigView microservice={currentMicroservice.edit} /> */}
                     </PivotItem>
 
                     <PivotItem
@@ -79,7 +79,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                             setSelectedKey('webhooks');
                         }}
                     >
-                        <Webhooks microservice={currentMicroservice.edit} />
+                        {/* <Webhooks microservice={currentMicroservice.edit} /> */}
                     </PivotItem>
 
                     <PivotItem
