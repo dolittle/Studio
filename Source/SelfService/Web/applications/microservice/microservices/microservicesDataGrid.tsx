@@ -14,6 +14,8 @@ import { DataGridWrapper, dataGridDefaultProps } from '@dolittle/design-system';
 
 import { microservicesDataGridColumns } from './microservicesDataGridColumns';
 
+import { getMicroserviceInfo } from '../utils/getMicroserviceInfo';
+
 export type MicroservicesDataGridProps = {
     application: HttpResponseApplication;
     microservices: MicroserviceObject[];
@@ -29,13 +31,16 @@ export const MicroservicesDataGrid = ({ application, microservices }: Microservi
         setIsLoadingRows(true);
 
         Promise.all(microservices.map(async microservice => {
+            const microserviceInfo = getMicroserviceInfo(application, microservice);
             const status = await getMicroserviceStatus(microservice.id, microservice.environment);
 
             return {
                 ...microservice,
+                edit: microserviceInfo,
                 phase: status[0]?.phase,
             } as MicroserviceObject;
-        })).then(data => setMicroserviceRows(data))
+        }))
+            .then(setMicroserviceRows)
             .finally(() => setIsLoadingRows(false));
     }, [microservices]);
 
