@@ -21,18 +21,19 @@ import { RouteNotFound } from './components/notfound';
 import { Problem } from './components/problem';
 import { LandingPageDecider } from './components/layout/landingPageDecider';
 
-import { BackupsScreen } from './applications/backupsScreen';
-import { SetupScreen } from './applications/setupScreen';
-import { MicroservicesScreen } from './applications/microservicesScreen';
-import { ContainerRegistryScreen } from './applications/containerRegistryScreen';
-import { M3ConnectorScreen } from './applications/m3connectorScreen';
-import { LogsScreen } from './applications/logsScreen';
+import { BackupsIndex } from './applications/backup';
+import { ContainerRegistryIndex } from './applications/containerregistry';
+import { LogsIndex } from './applications/logging';
+import { MicroservicesIndex } from './applications/microservice';
+import { M3ConnectorIndex } from './applications/m3connector';
+import { SetupIndex } from './applications/setup';
 
-import { ApplicationsScreen } from './spaces/applications/applicationsScreen';
-import { Screen as AdminScreen } from './admin/adminScreen';
-import { ApplicationBuilding } from './spaces/applications/applicationBuilding';
-import { HomeScreen } from './home/homeScreen';
+import { AdminIndex } from './admin';
+import { HomeIndex } from './home';
 import { IntegrationsIndex } from './integrations';
+
+import { ApplicationsIndex } from './spaces/applications';
+import { ApplicationBuilding } from './spaces/applications/applicationBuilding';
 
 // Set license info for MUI components
 LicenseInfo.setLicenseKey(process.env.MUI_LICENSE_KEY!);
@@ -54,31 +55,18 @@ export const App = () => {
                     >
                         <Routes>
                             <Route path='/' element={<LandingPageDecider />} />
-
-                            <Route path='/home' element={<HomeScreen />} />
-
-                            <Route path='/applications' element={<ApplicationsScreen />} />
-
-                            <Route path='/microservices/application/:applicationId/*' element={<MicroservicesScreen />} />
-
-                            <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
-
-                            <Route path='/containerregistry/application/:applicationId/*' element={<ContainerRegistryScreen />} />
-
-                            <Route path='/m3connector/application/:applicationId/*' element={<M3ConnectorScreen />} />
-
-                            <Route path='/logs/application/:applicationId' element={<LogsScreen />} />
-
-                            <Route path='/setup/application/:applicationId/*' element={<SetupScreen />} />
-
+                            <Route path='/home' element={<HomeIndex />} />
+                            <Route path='/applications' element={<ApplicationsIndex />} />
+                            <Route path='/microservices/application/:applicationId/*' element={<MicroservicesIndex />} />
+                            <Route path='/backups/application/:applicationId/*' element={<BackupsIndex />} />
+                            <Route path='/containerregistry/application/:applicationId/*' element={<ContainerRegistryIndex />} />
+                            <Route path='/m3connector/application/:applicationId/*' element={<M3ConnectorIndex />} />
+                            <Route path='/logs/application/:applicationId' element={<LogsIndex />} />
+                            <Route path='/setup/application/:applicationId/*' element={<SetupIndex />} />
                             <Route path='/integrations/*' element={<IntegrationsIndex />} />
-
-                            <Route path='/admin/*' element={<AdminScreen />} />
-
+                            <Route path='/admin/*' element={<AdminIndex />} />
                             <Route path='/building' element={<ApplicationBuilding />} />
-
                             <Route path='/problem' element={<Problem />} />
-
                             <Route path='*' element={<RouteNotFound redirectUrl='/' auto={true} />} />
                         </Routes>
                     </SnackbarProvider>
