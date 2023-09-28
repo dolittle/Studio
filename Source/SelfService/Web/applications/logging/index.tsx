@@ -27,7 +27,7 @@ import { withRouteApplicationState } from '../../spaces/applications/withRouteAp
  */
 const DAY = 86_400_000_000_000n;
 
-export const LogsScreen = withRouteApplicationState(({ routeApplicationParams }) => {
+export const LogsIndex = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 

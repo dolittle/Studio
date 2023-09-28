@@ -18,7 +18,7 @@ import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceL
 import { BackupsList } from './backupsList';
 import { BackupsListView } from './backupsListView';
 
-export const BackupsScreen = () => {
+export const BackupsIndex = () => {
     const navigate = useNavigate();
     const { currentEnvironment } = useGlobalContext();
 

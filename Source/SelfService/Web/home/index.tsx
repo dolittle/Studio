@@ -13,7 +13,7 @@ import { Typography } from '@mui/material';
 import { WorkSpaceLayout } from '../components/layout/workSpaceLayout';
 import { HomeScreenCardGridItems } from './homeScreenCardGridItems';
 
-export const HomeScreen = () => {
+export const HomeIndex = () => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
     const { currentApplicationId } = useGlobalContext();

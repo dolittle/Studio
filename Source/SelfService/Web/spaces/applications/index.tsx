@@ -1,7 +1,7 @@
 // Copyright (c) Dolittle. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useGlobalContext } from '../../context/globalContext';
 import { useSnackbar } from 'notistack';
@@ -18,7 +18,7 @@ import { LoginWrapper } from '../../components/layout/loginWrapper';
 import { ApplicationCreateDialog } from './applicationCreateDialog';
 import { usePageTitle } from '../../utils/usePageTitle';
 
-export const ApplicationsScreen = () => {
+export const ApplicationsIndex = () => {
     usePageTitle('Applications');
     const { enqueueSnackbar } = useSnackbar();
     const { currentApplicationId, hasOneCustomer } = useGlobalContext();

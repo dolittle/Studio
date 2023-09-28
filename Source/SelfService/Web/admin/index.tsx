@@ -30,7 +30,7 @@ const welcome = (
     </>
 );
 
-export const Screen = () =>
+export const AdminIndex = () =>
     <WorkSpaceLayoutWithSidePanel pageTitle='Administrator' sidePanelMode='applications'>
         <Routes>
             <Route path='/' element={welcome} />

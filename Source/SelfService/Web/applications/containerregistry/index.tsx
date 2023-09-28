@@ -15,7 +15,7 @@ import { RouteNotFound } from '../../components/notfound';
 
 import { withRouteApplicationState } from '../../spaces/applications/withRouteApplicationState';
 
-export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplicationParams }) => {
+export const ContainerRegistryIndex = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);

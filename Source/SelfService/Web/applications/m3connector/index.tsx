@@ -13,7 +13,7 @@ import { Container } from './container';
 
 import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
 
-export const M3ConnectorScreen = () => {
+export const M3ConnectorIndex = () => {
     const navigate = useNavigate();
     const routeApplicationProps = useRouteApplicationParams();
 
