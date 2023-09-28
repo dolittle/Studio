@@ -8,11 +8,11 @@ import { useReadable } from 'use-svelte-store';
 
 import { Typography } from '@mui/material';
 
-import { HttpResponseApplication } from '../../apis/solutions/application';
+import { HttpResponseApplication } from '../../../apis/solutions/application';
 
-import { microservices, MicroserviceStore } from '../stores/microservice';
+import { microservices, MicroserviceStore } from '../../stores/microservice';
 
-import { MicroserviceDetails } from './microserviceDetails/microserviceDetails';
+import { MicroserviceDetails } from './microserviceDetails';
 
 export type MicroserviceViewScreenProps = {
     application: HttpResponseApplication;

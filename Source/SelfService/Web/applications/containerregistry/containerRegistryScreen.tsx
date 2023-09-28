@@ -7,13 +7,13 @@ import { Route, useNavigate, Routes } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
 
-import { getApplication, getApplicationsListing, HttpResponseApplication } from '../apis/solutions/application';
+import { getApplication, getApplicationsListing, HttpResponseApplication } from '../../apis/solutions/application';
 
-import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
-import { RegistryContainer } from './containerregistry/registryContainer';
-import { RouteNotFound } from '../components/notfound';
+import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { RegistryContainer } from './registryContainer';
+import { RouteNotFound } from '../../components/notfound';
 
-import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
+import { withRouteApplicationState } from '../../spaces/applications/withRouteApplicationState';
 
 export const ContainerRegistryScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();

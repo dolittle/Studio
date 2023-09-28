@@ -21,12 +21,12 @@ import { RouteNotFound } from './components/notfound';
 import { Problem } from './components/problem';
 import { LandingPageDecider } from './components/layout/landingPageDecider';
 
-import { BackupsScreen } from './applications/backupsScreen';
-import { SetupScreen } from './applications/setupScreen';
-import { MicroservicesScreen } from './applications/microservicesScreen';
-import { ContainerRegistryScreen } from './applications/containerRegistryScreen';
-import { M3ConnectorScreen } from './applications/m3connectorScreen';
-import { LogsScreen } from './applications/logsScreen';
+import { BackupsScreen } from './applications/backup/backupsScreen';
+import { SetupScreen } from './applications/setup/setupScreen';
+import { MicroservicesScreen } from './applications/microservice/microservicesScreen';
+import { ContainerRegistryScreen } from './applications/containerregistry/containerRegistryScreen';
+import { M3ConnectorScreen } from './applications/m3connector/m3connectorScreen';
+import { LogsScreen } from './applications/logging/logsScreen';
 
 import { ApplicationsScreen } from './spaces/applications/applicationsScreen';
 import { Screen as AdminScreen } from './admin/adminScreen';

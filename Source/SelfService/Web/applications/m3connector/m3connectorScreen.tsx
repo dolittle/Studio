@@ -7,11 +7,11 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
 
-import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
-import { useRouteApplicationParams } from '../utils/route';
-import { Container } from './m3connector/container';
+import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
+import { useRouteApplicationParams } from '../../utils/route';
+import { Container } from './container';
 
-import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
 
 export const M3ConnectorScreen = () => {
     const navigate = useNavigate();

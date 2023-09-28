@@ -8,19 +8,19 @@ import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
 
-import { HttpResponseMicroservices, getMicroservices } from '../apis/solutions/api';
-import { HttpResponseApplication, getApplicationsListing, getApplication } from '../apis/solutions/application';
+import { HttpResponseMicroservices, getMicroservices } from '../../apis/solutions/api';
+import { HttpResponseApplication, getApplicationsListing, getApplication } from '../../apis/solutions/application';
 
-import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
+import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 
-import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
-import { LogFilterMicroservice, LogFilterPanel } from './logging/logFilter/logFilterPanel';
-import { useLogFilters } from './logging/logFilter/useLogFilters';
-import { LogsInRange } from './logging/logsInRange';
-import { LogsFromLast } from './logging/logsFromLast';
-import { LogPanel } from './logging/logPanel';
+import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { LogFilterMicroservice, LogFilterPanel } from './logFilter/logFilterPanel';
+import { useLogFilters } from './logFilter/useLogFilters';
+import { LogsInRange } from './logsInRange';
+import { LogsFromLast } from './logsFromLast';
+import { LogPanel } from './logPanel';
 
-import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
+import { withRouteApplicationState } from '../../spaces/applications/withRouteApplicationState';
 
 /**
  * A day in Loki (log backend) time. Nanoseconds.

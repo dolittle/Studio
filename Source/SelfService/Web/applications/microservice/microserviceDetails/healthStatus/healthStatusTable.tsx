@@ -8,7 +8,7 @@ import { DataGridPro, GridRowId, GridRowParams } from '@mui/x-data-grid-pro';
 
 import { Icon } from '@dolittle/design-system';
 
-import { PodLogScreen } from '../../podLogScreen';
+import { PodLogScreen } from './podLogScreen';
 import { columns } from './healthStatusTableColumns';
 
 const styles = {

@@ -8,11 +8,11 @@ import { useSnackbar } from 'notistack';
 
 import { Typography } from '@mui/material';
 
-import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
+import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
-import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
-import { SetupContainerScreen } from './setup/setupContainerScreen';
-import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
+import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { SetupContainerScreen } from './setupContainerScreen';
+import { withRouteApplicationState } from '../../spaces/applications/withRouteApplicationState';
 
 export const SetupScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();

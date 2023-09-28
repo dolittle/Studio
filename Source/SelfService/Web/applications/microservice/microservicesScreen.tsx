@@ -8,18 +8,18 @@ import { useSnackbar } from 'notistack';
 
 import { Typography } from '@mui/material';
 
-import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from './stores/microservice';
+import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 
-import { getMicroservices } from '../apis/solutions/api';
-import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
+import { getMicroservices } from '../../apis/solutions/api';
+import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
-import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
-import { Microservice } from './microservice/microservices/microservices';
-import { MicroserviceNewScreen } from './microservice/microserviceNewScreen';
-import { MicroserviceViewScreen } from './microservice/microserviceViewScreen';
-import { RouteNotFound } from '../components/notfound';
+import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { Microservice } from './microservices/microservices';
+import { MicroserviceNewScreen } from './deployMicroservice/microserviceNewScreen';
+import { MicroserviceViewScreen } from './microserviceDetails/microserviceViewScreen';
+import { RouteNotFound } from '../../components/notfound';
 
-import { withRouteApplicationState } from '../spaces/applications/withRouteApplicationState';
+import { withRouteApplicationState } from '../../spaces/applications/withRouteApplicationState';
 
 export const MicroservicesScreen = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();

@@ -4,19 +4,19 @@
 import React, { useEffect, useState } from 'react';
 
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useGlobalContext } from '../context/globalContext';
+import { useGlobalContext } from '../../context/globalContext';
 
 import { Typography } from '@mui/material';
 
 import { LoadingSpinner } from '@dolittle/design-system';
 
-import { useRouteApplicationParams } from '../utils/route';
-import { getApplication, HttpResponseApplication } from '../apis/solutions/application';
-import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../apis/solutions/backups';
+import { useRouteApplicationParams } from '../../utils/route';
+import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
+import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../../apis/solutions/backups';
 
-import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
-import { BackupsList } from './backup/backupsList';
-import { BackupsListView } from './backup/backupsListView';
+import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { BackupsList } from './backupsList';
+import { BackupsListView } from './backupsListView';
 
 export const BackupsScreen = () => {
     const navigate = useNavigate();

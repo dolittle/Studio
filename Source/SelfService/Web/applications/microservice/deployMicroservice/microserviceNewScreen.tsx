@@ -9,9 +9,9 @@ import { Typography } from '@mui/material';
 
 import { SimpleCardGrid, SimpleCardProps } from '@dolittle/design-system';
 
-import { HttpResponseApplication } from '../../apis/solutions/application';
+import { HttpResponseApplication } from '../../../apis/solutions/application';
 
-import { DeployMicroservice } from './deployMicroservice/deployMicroservice';
+import { DeployMicroservice } from './deployMicroservice';
 
 type DeployableMicroservices = SimpleCardProps & {
     kind: string;
