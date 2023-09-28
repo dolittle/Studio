@@ -38,7 +38,6 @@ export const RegistryTags = ({ applicationId, url }: RegistryTagsProps) => {
             });
     }, []);
 
-    // TODO ENV: Removed environment from path. Dunno what that changes.
     const msCreatePath = `/microservices/application/${applicationId}/create?kind=dolittle-microservice`;
 
     if (!isLoaded) return null;

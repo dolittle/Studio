@@ -3,11 +3,11 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Route, useNavigate, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
 
-import { getApplication, getApplicationsListing, HttpResponseApplication } from '../../apis/solutions/application';
+import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
 import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
 import { RegistryContainer } from './registryContainer';
@@ -26,27 +26,26 @@ export const ContainerRegistryIndex = withRouteApplicationState(({ routeApplicat
     useEffect(() => {
         if (!currentApplicationId) return;
 
-        Promise.all([
-            getApplicationsListing(),
-            getApplication(currentApplicationId),
-        ]).then(values => {
-            const applicationData = values[1];
+        Promise.all([getApplication(currentApplicationId)])
+            .then(values => {
+                const applicationData = values[0];
 
-            if (!applicationData?.id) {
-                const href = `/problem`;
-                navigate(href);
-                return;
-            }
+                if (!applicationData?.id) {
+                    const href = `/problem`;
+                    navigate(href);
+                    return;
+                }
 
-            setApplication(applicationData);
-            setIsLoaded(true);
-        }).catch(error => console.log(error));
+                setApplication(applicationData);
+                setIsLoaded(true);
+            })
+            .catch(error => console.log(error));
     }, [currentApplicationId]);
 
     if (!isLoaded) return null;
 
     if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application not found</Typography>;
+        return <Typography variant='h1' my={2}>Application not found.</Typography>;
     }
 
     return (

@@ -57,11 +57,10 @@ export const LogsIndex = withRouteApplicationState(({ routeApplicationParams }) 
         if (!currentApplicationId) return;
 
         Promise.all([
-            getApplicationsListing(),
             getApplication(currentApplicationId),
             getMicroservices(currentApplicationId),
         ]).then(values => {
-            const applicationData = values[1];
+            const applicationData = values[0];
 
             if (!applicationData.id) {
                 const href = `/problem`;
@@ -72,7 +71,7 @@ export const LogsIndex = withRouteApplicationState(({ routeApplicationParams }) 
             setApplication(applicationData);
             mergeMicroservicesFromGit(applicationData.microservices);
 
-            const microservicesData = values[2] as HttpResponseMicroservices;
+            const microservicesData = values[1] as HttpResponseMicroservices;
 
             mergeMicroservicesFromK8s(microservicesData.microservices);
             setIsLoaded(true);

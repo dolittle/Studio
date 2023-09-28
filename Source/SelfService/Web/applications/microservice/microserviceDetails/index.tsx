@@ -2,8 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 
+import { useNavigate, useParams } from 'react-router-dom';
 import { useReadable } from 'use-svelte-store';
 
 import { Typography } from '@mui/material';
@@ -12,13 +12,13 @@ import { HttpResponseApplication } from '../../../apis/solutions/application';
 
 import { microservices, MicroserviceStore } from '../../stores/microservice';
 
-import { MicroserviceDetails } from './microserviceDetails';
+import { MicroserviceViewIndex } from './microserviceView';
 
-export type MicroserviceViewIndexProps = {
+export type MicroserviceDetailsIndexProps = {
     application: HttpResponseApplication;
 };
 
-export const MicroserviceViewIndex = ({ application }: MicroserviceViewIndexProps) => {
+export const MicroserviceDetailsIndex = ({ application }: MicroserviceDetailsIndexProps) => {
     const navigate = useNavigate();
     const $microservices = useReadable(microservices) as any;
     const { microserviceId, environment } = useParams() as any;
@@ -38,7 +38,7 @@ export const MicroserviceViewIndex = ({ application }: MicroserviceViewIndexProp
     switch (subView) {
         case 'simple':
             return (
-                <MicroserviceDetails application={application} currentMicroservice={currentMicroservice} />
+                <MicroserviceViewIndex application={application} currentMicroservice={currentMicroservice} />
             );
         default:
             return (

@@ -16,7 +16,7 @@ import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../../apis
 
 import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
 import { BackupsList } from './backupsList';
-import { BackupsListView } from './backupsListView';
+import { BackupsDetailView } from './BackupsDetailView';
 
 export const BackupsIndex = () => {
     const navigate = useNavigate();
@@ -51,7 +51,7 @@ export const BackupsIndex = () => {
 
         Promise.all(environments.map(environment =>
             getLatestBackupLinkByApplication(application.id, environment.name)))
-            .then(values => setBackupLinksForEnvironment(values));
+            .then(setBackupLinksForEnvironment);
     }, [environments]);
 
     if (isLoading) return <LoadingSpinner />;
@@ -64,7 +64,7 @@ export const BackupsIndex = () => {
         <WorkSpaceLayoutWithSidePanel pageTitle='Backups | Applications' sidePanelMode='applications'>
             <Routes>
                 <Route path='overview' element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
-                <Route path='list' element={<BackupsListView application={application} environment={currentEnvironment} />} />
+                <Route path='list' element={<BackupsDetailView application={application} environment={currentEnvironment} />} />
                 <Route element={<Typography variant='h1' my={2}>Something has gone wrong: backups.</Typography>} />
             </Routes>
         </WorkSpaceLayoutWithSidePanel>

@@ -3,41 +3,22 @@
 
 import React from 'react';
 
-import { Link, Route, Routes } from 'react-router-dom';
-
-import { Typography } from '@mui/material';
-
-import { Button } from '@dolittle/design-system';
+import { Route, Routes } from 'react-router-dom';
 
 import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
-import { Create as CreateCustomer } from './customer/create';
-import { ViewAll as ViewAllCustomers } from './customer/viewAll';
-import { View as ViewCustomer } from './customer/view';
-import { View as ViewApplicationAccess } from './application/view';
-
-const welcome = (
-    <>
-        <Typography variant='h1' my={2}>Hello Admin</Typography>
-        <Button
-            label='Take me to the Customers'
-            variant='filled'
-            endWithIcon='KeyboardDoubleArrowRight'
-            overrides={{
-                component: Link,
-                to: '/admin/customers'
-            }}
-        />
-    </>
-);
+import { Welcome } from './Welcome';
+import { CreateCustomer } from './customer/CreateCustomer';
+import { AllCustomersView } from './customer/AllCustomersView';
+import { CustomerView } from './customer/CustomerView';
+import { ApplicationAccessView } from './application/ApplicationAccessView';
 
 export const AdminIndex = () =>
     <WorkSpaceLayoutWithSidePanel pageTitle='Administrator' sidePanelMode='applications'>
         <Routes>
-            <Route path='/' element={welcome} />
-            <Route path='/customers' element={<ViewAllCustomers />} />
+            <Route path='/' element={<Welcome />} />
+            <Route path='/customers' element={<AllCustomersView />} />
             <Route path='/customer/create' element={<CreateCustomer />} />
-            <Route path='/customer/:customerId' element={<ViewCustomer />} />
-            <Route path='/customer/:customerId/application/:applicationId/user/access' element={<ViewApplicationAccess />} />
+            <Route path='/customer/:customerId' element={<CustomerView />} />
+            <Route path='/customer/:customerId/application/:applicationId/user/access' element={<ApplicationAccessView />} />
         </Routes>
     </WorkSpaceLayoutWithSidePanel>;
-

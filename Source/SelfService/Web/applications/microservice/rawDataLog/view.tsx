@@ -18,7 +18,7 @@ import { HttpResponsePodStatus } from '../../../apis/solutions/api';
 import { Webhooks } from './webhooks';
 import { ConfigView } from './config/configView';
 
-import { HealthStatus } from '../microserviceDetails/healthStatus/healthStatus';
+import { HealthStatusIndex } from '../microserviceDetails/microserviceView/healthStatus';
 
 const stackTokens = { childrenGap: 15 };
 
@@ -85,7 +85,7 @@ export const View: React.FunctionComponent<Props> = (props) => {
                     <PivotItem
                         itemKey="healthStatus"
                         headerText="Health Status">
-                        <HealthStatus applicationId={applicationId} currentMicroservice={currentMicroservice} data={podsData} />
+                        <HealthStatusIndex applicationId={applicationId} currentMicroservice={currentMicroservice} data={podsData} />
                     </PivotItem>
                 </Pivot>
             </Stack>

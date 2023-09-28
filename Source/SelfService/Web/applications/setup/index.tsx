@@ -12,6 +12,7 @@ import { getApplication, HttpResponseApplication } from '../../apis/solutions/ap
 
 import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
 import { SetupContainerScreen } from './setupContainerScreen';
+
 import { withRouteApplicationState } from '../../spaces/applications/withRouteApplicationState';
 
 export const SetupIndex = withRouteApplicationState(({ routeApplicationParams }) => {

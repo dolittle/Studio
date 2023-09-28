@@ -8,10 +8,13 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
-import { useRouteApplicationParams } from '../../utils/route';
-import { Container } from './container';
 
 import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { Overview } from './overview';
+import { DetailsView } from './DetailsView';
+import { SetupView } from './SetupView';
+
+import { useRouteApplicationParams } from '../../utils/route';
 
 export const M3ConnectorIndex = () => {
     const navigate = useNavigate();
@@ -23,7 +26,6 @@ export const M3ConnectorIndex = () => {
     const applicationId = routeApplicationProps.applicationId;
 
     useEffect(() => {
-        // TODO ENV: getApplication should be getApplicationsListing?
         Promise.all([getApplication(applicationId)])
             .then(values => {
                 const applicationData = values[0];
@@ -47,8 +49,11 @@ export const M3ConnectorIndex = () => {
 
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='M3 Connector | Applications' sidePanelMode='applications'>
+            <Typography variant='h1' my={2}>M3 Connector</Typography>
             <Routes>
-                <Route path='/*' element={<Container application={application} />} />
+                <Route path='/overview' element={<Overview application={application} />} />
+                <Route path='/:environment/setup' element={<SetupView application={application} />} />
+                <Route path='/:environment/details' element={<DetailsView applicationId={application.id} />} />
             </Routes>
         </WorkSpaceLayoutWithSidePanel>
     );

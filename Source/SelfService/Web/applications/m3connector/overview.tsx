@@ -16,18 +16,18 @@ type EnvironmentInfo = {
     connected: boolean;
 };
 
-export type M3ConnectorOverviewProps = {
+export type OverviewProps = {
     application: HttpResponseApplication;
 };
 
-export const View = ({ application }: M3ConnectorOverviewProps) => {
+export const Overview = ({ application }: OverviewProps) => {
     const navigate = useNavigate();
 
     const applicationId = application.id;
 
-    const environments = application.environments.map(_environment => ({
-        name: _environment.name,
-        connected: _environment.connections.m3Connector,
+    const environments = application.environments.map(env => ({
+        name: env.name,
+        connected: env.connections.m3Connector,
     })) as EnvironmentInfo[];
 
     return (
