@@ -81,7 +81,7 @@ export const HealthStatusDataGrid = ({ rows }: HealthStatusDataGridProps) => {
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
     return (
-        <DataGridWrapper>
+        <DataGridWrapper sx={{ mb: 2 }}>
             <DataGridPro
                 rows={rows}
                 columns={healthStatusDataGridColumns}
