@@ -18,11 +18,11 @@ import { Button } from '@dolittle/design-system';
 import { NoMicroservices } from './noMicroservices';
 import { MicroservicesDataGrid } from './microservicesDataGrid';
 
-export type MicroserviceProps = {
+export type MicroservicesOverviewIndexProps = {
     application: HttpResponseApplication;
 };
 
-export const Microservice = ({ application }: MicroserviceProps) => {
+export const MicroservicesOverviewIndex = ({ application }: MicroservicesOverviewIndexProps) => {
     const navigate = useNavigate();
     const $microservices = useReadable(microservices) as MicroserviceObject[];
 

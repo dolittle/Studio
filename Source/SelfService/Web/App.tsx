@@ -23,7 +23,7 @@ import { LandingPageDecider } from './components/layout/landingPageDecider';
 
 import { BackupsScreen } from './applications/backup/backupsScreen';
 import { SetupScreen } from './applications/setup/setupScreen';
-import { MicroservicesScreen } from './applications/microservice/microservicesScreen';
+import { MicroservicesIndex } from './applications/microservice';
 import { ContainerRegistryScreen } from './applications/containerregistry/containerRegistryScreen';
 import { M3ConnectorScreen } from './applications/m3connector/m3connectorScreen';
 import { LogsScreen } from './applications/logging/logsScreen';
@@ -58,8 +58,7 @@ export const App = () => {
                             <Route path='/home' element={<HomeScreen />} />
 
                             <Route path='/applications' element={<ApplicationsScreen />} />
-
-                            <Route path='/microservices/application/:applicationId/*' element={<MicroservicesScreen />} />
+                            <Route path='/microservices/application/:applicationId/*' element={<MicroservicesIndex />} />
 
                             <Route path='/backups/application/:applicationId/*' element={<BackupsScreen />} />
 

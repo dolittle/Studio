@@ -14,11 +14,11 @@ import { microservices, MicroserviceStore } from '../../stores/microservice';
 
 import { MicroserviceDetails } from './microserviceDetails';
 
-export type MicroserviceViewScreenProps = {
+export type MicroserviceViewIndexProps = {
     application: HttpResponseApplication;
 };
 
-export const MicroserviceViewScreen = ({ application }: MicroserviceViewScreenProps) => {
+export const MicroserviceViewIndex = ({ application }: MicroserviceViewIndexProps) => {
     const navigate = useNavigate();
     const $microservices = useReadable(microservices) as any;
     const { microserviceId, environment } = useParams() as any;

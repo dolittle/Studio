@@ -14,14 +14,14 @@ import { getMicroservices } from '../../apis/solutions/api';
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
 import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
-import { Microservice } from './microservices/microservices';
-import { MicroserviceNewScreen } from './deployMicroservice/microserviceNewScreen';
-import { MicroserviceViewScreen } from './microserviceDetails/microserviceViewScreen';
+import { MicroservicesOverviewIndex } from './microservices';
+import { MicroserviceNewIndex } from './deployMicroservice';
+import { MicroserviceViewIndex } from './microserviceDetails';
 import { RouteNotFound } from '../../components/notfound';
 
 import { withRouteApplicationState } from '../../spaces/applications/withRouteApplicationState';
 
-export const MicroservicesScreen = withRouteApplicationState(({ routeApplicationParams }) => {
+export const MicroservicesIndex = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -70,9 +70,9 @@ export const MicroservicesScreen = withRouteApplicationState(({ routeApplication
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='Microservices | Applications' sidePanelMode='applications'>
             <Routes>
-                <Route path='/overview' element={<Microservice application={application} />} />
-                <Route path='/create' element={<MicroserviceNewScreen application={application} />} />
-                <Route path='view/:microserviceId/:environment' element={<MicroserviceViewScreen application={application} />} />
+                <Route path='/overview' element={<MicroservicesOverviewIndex application={application} />} />
+                <Route path='/create' element={<MicroserviceNewIndex application={application} />} />
+                <Route path='view/:microserviceId/:environment' element={<MicroserviceViewIndex application={application} />} />
                 <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />
             </Routes>
         </WorkSpaceLayoutWithSidePanel>

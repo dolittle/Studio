@@ -17,11 +17,11 @@ type DeployableMicroservices = SimpleCardProps & {
     kind: string;
 };
 
-export type MicroserviceNewScreenProps = {
+export type MicroserviceNewIndexProps = {
     application: HttpResponseApplication;
 };
 
-export const MicroserviceNewScreen = ({ application }: MicroserviceNewScreenProps) => {
+export const MicroserviceNewIndex = ({ application }: MicroserviceNewIndexProps) => {
     const navigate = useNavigate();
     const location = useLocation();
 
