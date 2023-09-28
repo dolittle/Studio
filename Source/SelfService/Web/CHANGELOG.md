@@ -1,3 +1,9 @@
+# [3.18.2] - 2023-9-28 [PR: #475](https://github.com/dolittle/Studio/pull/475)
+## Summary
+
+Updated architecture and refactored code. Some filenames have been changed for better understanding.
+
+
 # [3.18.1] - 2023-9-27 [PR: #473](https://github.com/dolittle/Studio/pull/473)
 ## Summary
 
