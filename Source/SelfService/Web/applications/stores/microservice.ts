@@ -117,7 +117,6 @@ export async function deleteMicroservice(applicationId: string, environment: str
 
     let data = get(microservices);
 
-    // I dont think we need to care about environment etc, if we trigger reload between
     data = data.filter(ms => ms.id !== microserviceId);
     microservices.set(data);
 
