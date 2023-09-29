@@ -47,6 +47,10 @@ export const BackupsIndex = () => {
             });
     }, []);
 
+    if (application.id === '') {
+        return <Typography variant='h1' my={2}>Application not found.</Typography>;
+    }
+
     useEffect(() => {
         if (!environments) return;
 
@@ -57,10 +61,6 @@ export const BackupsIndex = () => {
     }, [environments]);
 
     if (isLoading || isLoadingBackups) return <LoadingSpinner />;
-
-    if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application not found.</Typography>;
-    }
 
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='Backups | Applications' sidePanelMode='applications'>
