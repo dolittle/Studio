@@ -7,7 +7,6 @@ import { Route, Routes } from 'react-router-dom';
 
 import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { Welcome } from './Welcome';
-import { CreateCustomer } from './CreateCustomer';
 import { AllCustomersView } from './AllCustomersView';
 import { CustomerView } from './CustomerView';
 import { ApplicationAccessView } from './ApplicationAccessView';
@@ -17,7 +16,6 @@ export const AdminIndex = () =>
         <Routes>
             <Route path='/' element={<Welcome />} />
             <Route path='/customers' element={<AllCustomersView />} />
-            <Route path='/customer/create' element={<CreateCustomer />} />
             <Route path='/customer/:customerId' element={<CustomerView />} />
             <Route path='/customer/:customerId/application/:applicationId/user/access' element={<ApplicationAccessView />} />
         </Routes>
