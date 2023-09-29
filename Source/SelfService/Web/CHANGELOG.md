@@ -1,3 +1,9 @@
+# [3.18.3] - 2023-9-29 [PR: #476](https://github.com/dolittle/Studio/pull/476)
+## Summary
+
+Improve the architecture
+
+
 # [3.18.2] - 2023-9-28 [PR: #475](https://github.com/dolittle/Studio/pull/475)
 ## Summary
 
