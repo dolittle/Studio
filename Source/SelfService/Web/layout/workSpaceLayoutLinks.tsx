@@ -140,7 +140,7 @@ const SidePanelApplicationItems = () => {
             overrides: {
                 component: Link,
                 to: `/setup/application/${currentApplicationId}/overview`,
-                selected: location.pathname.includes('/documentation'),
+                selected: location.pathname.includes('/setup'),
             },
         },
     ];
