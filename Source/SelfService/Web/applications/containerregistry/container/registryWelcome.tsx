@@ -5,9 +5,9 @@ import React, { useEffect, useState } from 'react';
 
 import { Typography } from '@mui/material';
 
-import { getPersonalisedInfo } from '../../apis/solutions/application';
+import { getPersonalisedInfo } from '../../../apis/solutions/application';
 
-import { AccessContainerRegistry } from '../setup/accessContainerRegistry';
+import { AccessContainerRegistry } from '../../setup/cicd/accessContainerRegistry';
 
 export type RegistryWelcomeProps = {
     applicationId: string;

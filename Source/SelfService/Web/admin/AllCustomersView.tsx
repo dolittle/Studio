@@ -10,7 +10,7 @@ import { ListItem, Typography } from '@mui/material';
 
 import { Button } from '@dolittle/design-system';
 
-import { getCustomers, Customers } from '../../apis/solutions/customer';
+import { getCustomers, Customers } from '../apis/solutions/customer';
 
 export const AllCustomersView = () => {
     const { enqueueSnackbar } = useSnackbar();

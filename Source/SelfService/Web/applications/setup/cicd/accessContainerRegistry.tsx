@@ -7,9 +7,9 @@ import ReactMarkdown from 'react-markdown';
 
 import gfm from 'remark-gfm';
 
-import { Info } from '../stores/documentationInfo';
+import { Info } from '../../stores/documentationInfo';
 
-import { getContainerRegistry } from '../../apis/solutions/cicd';
+import { getContainerRegistry } from '../../../apis/solutions/cicd';
 
 export type DockerCredentials = {
     repoUrl: string

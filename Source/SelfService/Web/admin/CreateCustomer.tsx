@@ -8,10 +8,10 @@ import { useSnackbar } from 'notistack';
 
 import { Box, Grid, Step, Stepper, StepContent, StepLabel, Typography } from '@mui/material';
 
-import { TextField as ThemedTextField } from '../../components/theme-legacy/textField';
+import { TextField as ThemedTextField } from '../components/theme-legacy/textField';
 import { Button } from '@dolittle/design-system';
 
-import { createCustomer, HttpCustomerRequest } from '../../apis/solutions/customer';
+import { createCustomer, HttpCustomerRequest } from '../apis/solutions/customer';
 
 const styles = {
     root: {

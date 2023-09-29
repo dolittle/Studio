@@ -7,7 +7,7 @@ import { useNavigate, generatePath } from 'react-router-dom';
 
 import { Paper, Table, TableContainer, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 
-import { ContainerRegistryImages } from '../../apis/solutions/containerregistry';
+import { ContainerRegistryImages } from '../../../apis/solutions/containerregistry';
 
 export type RegistryImagesProps = {
     applicationId: string;

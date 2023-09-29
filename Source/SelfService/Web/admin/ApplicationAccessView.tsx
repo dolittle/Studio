@@ -16,8 +16,8 @@ import {
     HttpInputApplicationAccess,
     adminApplicationAccessRemoveUser,
     HttpResponseApplicationAccess,
-} from '../../apis/solutions/application';
-import { Customer, getCustomer } from '../../apis/solutions/customer';
+} from '../apis/solutions/application';
+import { Customer, getCustomer } from '../apis/solutions/customer';
 
 type ViewParams = {
     customerId: string;

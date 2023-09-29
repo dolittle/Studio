@@ -7,7 +7,7 @@ import { useParams, Link as RouterLink } from 'react-router-dom';
 
 import { Link, Paper, Table, TableContainer, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 
-import { ContainerRegistryTags, getTagsInContainerRegistry } from '../../apis/solutions/containerregistry';
+import { ContainerRegistryTags, getTagsInContainerRegistry } from '../../../apis/solutions/containerregistry';
 
 type ViewParams = {
     image: string;

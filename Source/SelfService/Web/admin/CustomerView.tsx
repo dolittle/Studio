@@ -10,8 +10,8 @@ import { ListItem, Typography } from '@mui/material';
 
 import { Button } from '@dolittle/design-system';
 
-import { getCustomer, CustomerDetailed } from '../../apis/solutions/customer';
-import { saveStudioConfig, Studio } from '../../apis/solutions/studio';
+import { getCustomer, CustomerDetailed } from '../apis/solutions/customer';
+import { saveStudioConfig, Studio } from '../apis/solutions/studio';
 
 const displayDisabledEnvironments = (environments: string[]) => {
     if (!environments.length) return 'none';
