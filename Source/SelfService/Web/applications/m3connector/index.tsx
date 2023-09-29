@@ -9,7 +9,7 @@ import { Typography } from '@mui/material';
 
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
-import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
 import { Overview } from './overview';
 import { DetailsView } from './DetailsView';
 import { SetupView } from './SetupView';

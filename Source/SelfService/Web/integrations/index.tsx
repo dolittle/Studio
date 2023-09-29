@@ -15,7 +15,7 @@ import { buildQueryClient } from '../apis/integrations/queryClient';
 
 import { routes } from './routes';
 
-import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../layout/workSpaceLayout';
 import { DebugRouter } from '../components/debugRouter';
 
 export const IntegrationsIndex = () => {

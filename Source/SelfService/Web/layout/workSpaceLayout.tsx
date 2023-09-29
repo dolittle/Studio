@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Layout } from '@dolittle/design-system';
 
-import { usePageTitle } from '../../utils/usePageTitle';
+import { usePageTitle } from '../utils/usePageTitle';
 
 import { applicationsSidePanel, integrationsSidePanel, mainNavigationItems } from './workSpaceLayoutLinks';
 

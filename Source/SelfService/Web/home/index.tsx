@@ -10,7 +10,7 @@ import { useGlobalContext } from '../context/globalContext';
 
 import { Typography } from '@mui/material';
 
-import { WorkSpaceLayout } from '../components/layout/workSpaceLayout';
+import { WorkSpaceLayout } from '../layout/workSpaceLayout';
 import { HomeScreenCardGridItems } from './homeScreenCardGridItems';
 
 export const HomeIndex = () => {

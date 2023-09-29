@@ -13,7 +13,7 @@ import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/
 import { getMicroservices } from '../../apis/solutions/api';
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
-import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
 import { MicroservicesOverviewIndex } from './microservicesOverview';
 import { MicroserviceCreateIndex } from './microserviceCreate';
 import { MicroserviceDetailsIndex } from './microserviceDetails';

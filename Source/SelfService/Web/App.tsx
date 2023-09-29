@@ -19,7 +19,7 @@ import { useViewportResize } from './utils/useViewportResize';
 
 import { RouteNotFound } from './components/notfound';
 import { Problem } from './components/problem';
-import { LandingPageDecider } from './components/layout/landingPageDecider';
+import { LandingPageDecider } from './layout/landingPageDecider';
 
 import { BackupsIndex } from './applications/backup';
 import { ContainerRegistryIndex } from './applications/containerregistry';

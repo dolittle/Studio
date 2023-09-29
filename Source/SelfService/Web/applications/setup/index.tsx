@@ -10,7 +10,7 @@ import { Typography } from '@mui/material';
 
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
-import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
 import { SetupContainerScreen } from './cicd/setupContainerScreen';
 
 import { withRouteApplicationState } from '../../spaces/applications/withRouteApplicationState';

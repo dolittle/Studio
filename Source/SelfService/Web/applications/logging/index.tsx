@@ -13,7 +13,7 @@ import { HttpResponseApplication, getApplicationsListing, getApplication } from 
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 
-import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
 import { LogFilterMicroservice, LogFilterPanel } from './logFilter/logFilterPanel';
 import { useLogFilters } from './logFilter/useLogFilters';
 import { LogsInRange } from './logsInRange';

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useConnectionsGet, useConnectionsIdPost } from '../../apis/integrations/connectionsApi.hooks';
 
-import { Page } from '../../components/layout/page';
+import { Page } from '../../layout/page';
 import { NoConnections } from './noConnections';
 import { ConnectionsTable } from './connectionsTable';
 import { CreateConnectionButton } from './createConnectionButton';

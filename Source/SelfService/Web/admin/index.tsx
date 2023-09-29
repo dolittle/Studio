@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 
-import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../layout/workSpaceLayout';
 import { Welcome } from './Welcome';
 import { AllCustomersView } from './AllCustomersView';
 import { CustomerView } from './CustomerView';

@@ -11,7 +11,7 @@ import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.h
 import { useConnectionIdFromRoute } from '../../routes.hooks';
 
 
-import { Page } from '../../../components/layout/page';
+import { Page } from '../../../layout/page';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 import { getIndicatorStatusFromStatusMessage } from '../../statusHelpers';
 

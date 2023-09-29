@@ -14,7 +14,7 @@ import { ShortInfo } from '../../apis/solutions/api';
 import { getApplicationsListing, getLiveApplications } from '../../apis/solutions/application';
 
 import { ApplicationsList } from './applicationsList';
-import { LoginWrapper } from '../../components/layout/loginWrapper';
+import { LoginWrapper } from '../../layout/loginWrapper';
 import { ApplicationCreateDialog } from './applicationCreateDialog';
 import { usePageTitle } from '../../utils/usePageTitle';
 

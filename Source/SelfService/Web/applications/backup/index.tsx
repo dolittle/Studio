@@ -14,7 +14,7 @@ import { useRouteApplicationParams } from '../../utils/route';
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../../apis/solutions/backups';
 
-import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
 import { BackupsList } from './backupsList/backupsList';
 import { BackupsDetailView } from './backupsDetail/BackupsDetailView';
 
