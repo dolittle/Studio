@@ -4,12 +4,12 @@
 import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { useGlobalContext } from '../../context/globalContext';
+import { useGlobalContext } from '../../../context/globalContext';
 
 import { SimpleCard } from '@dolittle/design-system';
 
-import { HttpResponseApplication } from '../../apis/solutions/application';
-import { getLatestBackupLinkByApplication } from '../../apis/solutions/backups';
+import { HttpResponseApplication } from '../../../apis/solutions/application';
+import { getLatestBackupLinkByApplication } from '../../../apis/solutions/backups';
 
 export type BackupsListItemsProps = {
     application: HttpResponseApplication;

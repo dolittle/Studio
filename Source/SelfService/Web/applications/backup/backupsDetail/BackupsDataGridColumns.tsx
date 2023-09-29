@@ -9,7 +9,7 @@ import { GridColDef } from '@mui/x-data-grid-pro';
 
 import { IconButton } from '@dolittle/design-system';
 
-import { BackupsDetailsList, getBackupShareLink } from './utils/getBackupShareLink';
+import { BackupsDetailsList, getBackupShareLink } from '../utils/getBackupShareLink';
 
 type BackupsTableRows = {
     row: BackupsDetailsList;

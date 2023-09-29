@@ -7,19 +7,19 @@ import { Route, Routes, useNavigate, useHref } from 'react-router-dom';
 
 import { useReadable } from 'use-svelte-store';
 
-import { info, load, isLoaded } from '../stores/documentationInfo';
+import { info, load, isLoaded } from '../../stores/documentationInfo';
 
 import { Box, List, Typography } from '@mui/material';
 
 import { Button, Link } from '@dolittle/design-system';
 
-import { HttpResponseApplication } from '../../apis/solutions/application';
+import { HttpResponseApplication } from '../../../apis/solutions/application';
 
 import { VerifyKubernetesAccess } from './verifyKubernetesAccess';
 import { AccessContainerRegistry } from './accessContainerRegistry';
-import { SetupAzurePipelines } from './cicd/setupAzurePipelines';
+import { SetupAzurePipelines } from './setupAzurePipelines';
 
-import { RouteNotFound } from '../../components/notfound';
+import { RouteNotFound } from '../../../components/notfound';
 
 export type SetupContainerScreenProps = {
     application: HttpResponseApplication;

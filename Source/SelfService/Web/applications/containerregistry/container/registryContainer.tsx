@@ -7,8 +7,8 @@ import { useNavigate, Routes, Route } from 'react-router-dom';
 
 import { Box, Typography } from '@mui/material';
 
-import { HttpResponseApplication } from '../../apis/solutions/application';
-import { getReposInContainerRegistry, ContainerRegistryImages } from '../../apis/solutions/containerregistry';
+import { HttpResponseApplication } from '../../../apis/solutions/application';
+import { getReposInContainerRegistry, ContainerRegistryImages } from '../../../apis/solutions/containerregistry';
 
 import { RegistryImages } from './registryImages';
 import { RegistryWelcome } from './registryWelcome';

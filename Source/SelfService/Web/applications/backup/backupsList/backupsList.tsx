@@ -5,8 +5,8 @@ import React from 'react';
 
 import { Grid, Typography } from '@mui/material';
 
-import { HttpResponseApplication } from '../../apis/solutions/application';
-import { BackupLinkWithName } from '../../apis/solutions/backups';
+import { HttpResponseApplication } from '../../../apis/solutions/application';
+import { BackupLinkWithName } from '../../../apis/solutions/backups';
 
 import { BackupsListItems } from './backupsListItems';
 

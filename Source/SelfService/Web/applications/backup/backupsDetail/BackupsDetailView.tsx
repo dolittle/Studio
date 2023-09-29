@@ -7,12 +7,12 @@ import { Typography } from '@mui/material';
 
 import { LoadingSpinner } from '@dolittle/design-system';
 
-import { HttpResponseApplication } from '../../apis/solutions/application';
-import { BackupsForApplication, getBackupsByApplication } from '../../apis/solutions/backups';
+import { HttpResponseApplication } from '../../../apis/solutions/application';
+import { BackupsForApplication, getBackupsByApplication } from '../../../apis/solutions/backups';
 
 import { BackupsDataGrid, BackupsDetailsList } from './backupsDataGrid';
 
-import { getDateFromFileName } from './utils/getDateFromFileName';
+import { getDateFromFileName } from '../utils/getDateFromFileName';
 
 export type BackupsDetailViewProps = {
     application: HttpResponseApplication;

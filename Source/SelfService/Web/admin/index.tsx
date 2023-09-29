@@ -7,10 +7,10 @@ import { Route, Routes } from 'react-router-dom';
 
 import { WorkSpaceLayoutWithSidePanel } from '../components/layout/workSpaceLayout';
 import { Welcome } from './Welcome';
-import { CreateCustomer } from './customer/CreateCustomer';
-import { AllCustomersView } from './customer/AllCustomersView';
-import { CustomerView } from './customer/CustomerView';
-import { ApplicationAccessView } from './application/ApplicationAccessView';
+import { CreateCustomer } from './CreateCustomer';
+import { AllCustomersView } from './AllCustomersView';
+import { CustomerView } from './CustomerView';
+import { ApplicationAccessView } from './ApplicationAccessView';
 
 export const AdminIndex = () =>
     <WorkSpaceLayoutWithSidePanel pageTitle='Administrator' sidePanelMode='applications'>

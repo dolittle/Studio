@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown';
 
 import gfm from 'remark-gfm';
 
-import { Info, SubjectRulesReviewStatus } from '../stores/documentationInfo';
+import { Info, SubjectRulesReviewStatus } from '../../stores/documentationInfo';
 
 export type Vars = {
     clusterName: string;

@@ -15,8 +15,8 @@ import { getApplication, HttpResponseApplication } from '../../apis/solutions/ap
 import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../../apis/solutions/backups';
 
 import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
-import { BackupsList } from './backupsList';
-import { BackupsDetailView } from './BackupsDetailView';
+import { BackupsList } from './backupsList/backupsList';
+import { BackupsDetailView } from './backupsDetail/BackupsDetailView';
 
 export const BackupsIndex = () => {
     const navigate = useNavigate();
