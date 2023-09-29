@@ -11,7 +11,7 @@ import {
     HttpResponseMicroservices,
 } from '../../apis/solutions/api';
 
-import { MicroserviceSimple, MicroserviceDolittle, MicroserviceRawDataLogIngestor } from '../../apis/solutions/index';
+import { MicroserviceSimple, MicroserviceDolittle } from '../../apis/solutions/index';
 import { getApplication, HttpInputApplicationEnvironment } from '../../apis/solutions/application';
 
 export type MicroserviceStore = {
@@ -150,7 +150,8 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
 };
 
 export const saveSimpleMicroservice = (input: MicroserviceSimple) => saveMicroservice(input.kind, input);
-export const saveRawDataLogIngestorMicroservice = (input: MicroserviceRawDataLogIngestor) => saveMicroservice(input.kind, input);
+
+//export const saveRawDataLogIngestorMicroservice = (input: MicroserviceRawDataLogIngestor) => saveMicroservice(input.kind, input);
 
 export const canEditMicroservices = (environments: HttpInputApplicationEnvironment[], environment: string): boolean =>
     environments.some(info => info.name === environment && info.automationEnabled);
