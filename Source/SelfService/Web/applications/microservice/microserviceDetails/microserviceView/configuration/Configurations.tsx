@@ -10,7 +10,7 @@ import { Box } from '@mui/material';
 
 import { AlertDialog, Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
 
-import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
+import { canDeleteMicroservice, deleteMicroservice, loadMicroservices, MicroserviceStore } from '../../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../../../apis/solutions/application';
 import { editMicroservice, InputEditMicroservice } from '../../../../../apis/solutions/api';
@@ -70,13 +70,20 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
             runtimeImage: runtimeVersion,
         };
 
+        // TODO ERROR: Temporary solution to hide response error.
         try {
             await editMicroservice(applicationId, microserviceEnvironment, microserviceId, editedMicroservice);
             enqueueSnackbar(`Microservice '${microserviceName}' has been updated.`);
         } catch (error) {
-            enqueueSnackbar(`Failed to update microservice '${microserviceName}'.`, { variant: 'error' });
+            //enqueueSnackbar(`Failed to update microservice '${microserviceName}'.`, { variant: 'error' });
+            enqueueSnackbar('We are having issues with this feature. We apologize for the inconvenience.');
         } finally {
             setIsLoading(false);
+
+            // Remove these lines when the edit microservice API is fixed.
+            loadMicroservices(applicationId);
+            const href = `/microservices/application/${applicationId}/overview`;
+            navigate(href);
         }
     };
 
@@ -89,16 +96,23 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
         setIsLoading(true);
         setDeleteDialogIsOpen(false);
 
-        try {
-            await deleteMicroservice(applicationId, microserviceEnvironment, microserviceId);
+        const result = await deleteMicroservice(applicationId, microserviceEnvironment, microserviceId);
+
+        // TODO ERROR: Temporary solution to hide response error.
+        if (result) {
             enqueueSnackbar(`Microservice '${microserviceName}' has been deleted.`);
             const href = `/microservices/application/${applicationId}/overview`;
             navigate(href);
-        } catch (error) {
-            enqueueSnackbar(`Failed to delete microservice '${microserviceName}'.`, { variant: 'error' });
-        } finally {
-            setIsLoading(false);
+        } else {
+            //enqueueSnackbar(`Failed to delete microservice '${microserviceName}'.`, { variant: 'error' });
+
+            // Remove these lines when the delete microservice API is fixed.
+            enqueueSnackbar('We are having issues with this feature. We apologize for the inconvenience.');
+            const href = `/microservices/application/${applicationId}/overview`;
+            navigate(href);
         }
+
+        //setIsLoading(false);
     };
 
     return (
@@ -108,7 +122,7 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
             <AlertDialog
                 id='delete-microservice'
                 title='Delete microservice?'
-                description='This action cannot be undone. Click delete if you would like to delete the mircroservice.'
+                description='This action cannot be undone. Click delete if you would like to delete the microservice.'
                 confirmBtnColor='error'
                 confirmBtnText='Delete'
                 isOpen={deleteDialogIsOpen}

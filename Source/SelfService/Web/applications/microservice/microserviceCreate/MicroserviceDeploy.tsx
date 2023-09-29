@@ -12,7 +12,7 @@ import { Typography } from '@mui/material';
 
 import { Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
 
-import { saveSimpleMicroservice } from '../../stores/microservice';
+import { loadMicroservices, saveSimpleMicroservice } from '../../stores/microservice';
 
 import { MicroserviceSimple, MicroserviceFormParameters } from '../../../apis/solutions/index';
 import { getLatestRuntimeInfo } from '../../../apis/solutions/api';
@@ -34,8 +34,8 @@ export const MicroserviceDeploy = ({ application }: MicroserviceDeployProps) => 
 
     const availableEnvironments = application.environments.map(env => env.name);
 
-    const [isLoading, setIsLoading] = useState(false);
     const [selectedEnvironment, setSelectedEnvironment] = useState(availableEnvironments[0]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const environmentInfo = application.environments.find(env => env.name === selectedEnvironment);
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector;
@@ -77,15 +77,20 @@ export const MicroserviceDeploy = ({ application }: MicroserviceDeployProps) => 
             },
         };
 
-        try {
-            await saveSimpleMicroservice(newMicroservice);
+        const result = await saveSimpleMicroservice(newMicroservice, application);
+
+        if (result) {
             enqueueSnackbar(`Microservice '${values.microserviceName}' has been deployed.`);
             const href = `/microservices/application/${application.id}/view/${microserviceId}/${values.developmentEnvironment}}`;
             navigate(href);
-        } catch (error) {
-            enqueueSnackbar('Something went wrong when saving microservice.', { variant: 'error' });
-        } finally {
-            setIsLoading(false);
+        } else {
+            //enqueueSnackbar('Something went wrong when saving microservice.', { variant: 'error' });
+
+            // Remove these lines when the deploy microservice API is fixed.
+            enqueueSnackbar('We are having issues with this feature.We apologize for the inconvenience.');
+            loadMicroservices(application.id);
+            const href = `/microservices/application/${application.id}/overview`;
+            navigate(href);
         }
     };
 
