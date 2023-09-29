@@ -1,3 +1,22 @@
+# [3.18.4] - 2023-9-29 [PR: #477](https://github.com/dolittle/Studio/pull/477)
+## Summary
+
+Removed unused code, components and corresponding types.
+
+### Removed
+
+- Breadcrumbs.tsx
+- TextField.tsx
+- ButtonLink.tsx
+- BasicAuthComponent.tsx
+- BearerAuthComponent.tsx
+- BreadCrumbWithRedirect.tsx
+- Container.tsx
+- CreateCustomer.tsx
+- RawDataLog folder
+- Corresponding types
+
+
 # [3.18.3] - 2023-9-29 [PR: #476](https://github.com/dolittle/Studio/pull/476)
 ## Summary
 
