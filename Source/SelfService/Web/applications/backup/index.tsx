@@ -25,6 +25,7 @@ export const BackupsIndex = () => {
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<BackupLinkWithName[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingBackups, setIsLoadingBackups] = useState(true);
 
     const routeApplicationProps = useRouteApplicationParams();
     const applicationId = routeApplicationProps.applicationId;
@@ -51,10 +52,11 @@ export const BackupsIndex = () => {
 
         Promise.all(environments.map(environment =>
             getLatestBackupLinkByApplication(application.id, environment.name)))
-            .then(setBackupLinksForEnvironment);
+            .then(setBackupLinksForEnvironment)
+            .finally(() => setIsLoadingBackups(false));
     }, [environments]);
 
-    if (isLoading) return <LoadingSpinner />;
+    if (isLoading || isLoadingBackups) return <LoadingSpinner />;
 
     if (application.id === '') {
         return <Typography variant='h1' my={2}>Application not found.</Typography>;
