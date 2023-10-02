@@ -3,15 +3,8 @@
 
 import { get, writable } from 'use-svelte-store';
 
-import {
-    deleteMicroservice as apiDeleteMicroservice,
-    saveMicroservice as apiSaveMicroservice,
-    MicroserviceInfo,
-    getMicroservices,
-    HttpResponseMicroservices,
-} from '../../apis/solutions/api';
-
-import { MicroserviceSimple, MicroserviceDolittle } from '../../apis/solutions/index';
+import { MicroserviceDolittle, MicroserviceSimple } from '../../apis/solutions/index';
+import { deleteMicroservice, getMicroservices, HttpResponseMicroservices, MicroserviceInfo, saveMicroservice } from '../../apis/solutions/api';
 import { getApplication, HttpResponseApplication, HttpInputApplicationEnvironment } from '../../apis/solutions/application';
 
 export type MicroserviceStore = {
@@ -110,25 +103,12 @@ export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
     microservices.set(data);
 };
 
-export async function deleteMicroserviceWithStore(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
-    const response = await apiDeleteMicroservice(applicationId, environment, microserviceId);
-
-    if (!response) return response;
-
-    let data = get(microservices);
-
-    data = data.filter(ms => ms.id !== microserviceId);
-    microservices.set(data);
-
-    return response;
-};
-
 const saveMicroserviceWithStore = async (kind: string, input: MicroserviceSimple, application: HttpResponseApplication): Promise<boolean> => {
     let response: boolean;
 
     switch (kind) {
         case 'simple':
-            response = await apiSaveMicroservice(input);
+            response = await saveMicroservice(input);
             break;
         default:
             alert(`Saving via store failed. Kind: ${kind} not supported.`);
@@ -173,4 +153,17 @@ export const canDeleteMicroservice = (environments: HttpInputApplicationEnvironm
     if (!currentMicroservice) return false;
 
     return canEditMicroservices(environments, environment);
+};
+
+export async function deleteMicroserviceWithStore(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
+    const response = await deleteMicroservice(applicationId, environment, microserviceId);
+
+    if (!response) return response;
+
+    let data = get(microservices);
+
+    data = data.filter(ms => ms.id !== microserviceId);
+    microservices.set(data);
+
+    return response;
 };
