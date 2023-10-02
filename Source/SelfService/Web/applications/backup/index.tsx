@@ -60,10 +60,11 @@ export const BackupsIndex = () => {
             .finally(() => setIsLoadingBackups(false));
     }, [environments]);
 
-    if (isLoading || isLoadingBackups) return <LoadingSpinner />;
+    if (isLoading) return <LoadingSpinner />;
 
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='Backups | Applications' sidePanelMode='applications'>
+            {isLoadingBackups && <LoadingSpinner />}
             <Routes>
                 <Route path='overview' element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
                 <Route path='list' element={<BackupsDetailView application={application} environment={currentEnvironment} />} />
