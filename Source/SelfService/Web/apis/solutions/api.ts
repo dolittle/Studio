@@ -190,7 +190,7 @@ export async function saveMicroservice(input: MicroserviceSimple): Promise<boole
     return response.status === 200;
 };
 
-export async function editMicroservice(applicationId: string, environment: string, microserviceId: string, input: InputEditMicroservice): Promise<any> {
+export async function editMicroservice(applicationId: string, environment: string, microserviceId: string, input: InputEditMicroservice): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}/environment/${environment}/microservice/${microserviceId}`;
 
     const response = await fetch(
@@ -204,19 +204,7 @@ export async function editMicroservice(applicationId: string, environment: strin
             },
         });
 
-    const text = await response.text();
-
-    if (!response.ok) {
-        let jsonResponse;
-
-        try {
-            jsonResponse = JSON.parse(text);
-        } catch (error) {
-            throw new Exception(`Couldn't parse the error message. The error was ${error}. Response Status ${response.status}. Response Body ${text}`);
-        } throw new Exception(jsonResponse.message);
-    };
-
-    return JSON.parse(text);
+    return response.status === 200;
 };
 
 export async function restartMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
