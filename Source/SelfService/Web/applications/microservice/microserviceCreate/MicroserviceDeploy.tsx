@@ -12,7 +12,7 @@ import { Typography } from '@mui/material';
 
 import { Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
 
-import { loadMicroservices, saveSimpleMicroservice } from '../../stores/microservice';
+import { saveSimpleMicroservice } from '../../stores/microservice';
 
 import { MicroserviceSimple, MicroserviceFormParameters } from '../../../apis/solutions/index';
 import { getLatestRuntimeInfo } from '../../../apis/solutions/api';
@@ -89,7 +89,6 @@ export const MicroserviceDeploy = ({ application }: MicroserviceDeployProps) => 
 
             // Remove these lines when the deploy microservice API is fixed.
             enqueueSnackbar('We are having issues with this feature.We apologize for the inconvenience.');
-            loadMicroservices(application.id);
             const href = `/microservices/application/${application.id}/overview`;
             navigate(href);
         }

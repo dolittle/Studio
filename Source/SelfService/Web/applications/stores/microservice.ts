@@ -12,7 +12,7 @@ import {
 } from '../../apis/solutions/api';
 
 import { MicroserviceSimple, MicroserviceDolittle } from '../../apis/solutions/index';
-import { getApplication, HttpInputApplicationEnvironment } from '../../apis/solutions/application';
+import { getApplication, HttpResponseApplication, HttpInputApplicationEnvironment } from '../../apis/solutions/application';
 
 export type MicroserviceStore = {
     id: string;
@@ -123,18 +123,20 @@ export async function deleteMicroservice(applicationId: string, environment: str
     return response;
 };
 
-const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
-    let response: Promise<any>;
+const saveMicroservice = async (kind: string, input: MicroserviceSimple, application: HttpResponseApplication): Promise<boolean> => {
+    let response: boolean;
 
     switch (kind) {
         case 'simple':
             response = await apiSaveMicroservice(input);
             break;
         default:
-            alert(`saving via store failed, kind: ${kind} not supported`);
+            alert(`Saving via store failed. Kind: ${kind} not supported.`);
             return false;
     };
 
+    // TODO ERROR: Temporarily commented out because of error in API.
+    //if (!response) return response;
 
     mergeMicroservicesFromGit(application.microservices);
     const liveMicroservices = await getMicroservices(application.id);
@@ -143,9 +145,8 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
     return response;
 };
 
-export const saveSimpleMicroservice = (input: MicroserviceSimple) => saveMicroservice(input.kind, input);
-
-//export const saveRawDataLogIngestorMicroservice = (input: MicroserviceRawDataLogIngestor) => saveMicroservice(input.kind, input);
+export const saveSimpleMicroservice = (input: MicroserviceSimple, application: HttpResponseApplication) =>
+    saveMicroservice(input.kind, input, application);
 
 export const canEditMicroservices = (environments: HttpInputApplicationEnvironment[], environment: string): boolean =>
     environments.some(info => info.name === environment && info.automationEnabled);
