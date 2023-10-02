@@ -45,7 +45,7 @@ export const loadMicroservices = (applicationId: string) => {
         });
 };
 
-export const mergeMicroservicesFromGit = items => {
+export const mergeMicroservicesFromGit = (items: MicroserviceSimple[]) => {
     let data = get(microservices);
 
     items.forEach(element => {
