@@ -88,7 +88,7 @@ export const MicroserviceDeploy = ({ application }: MicroserviceDeployProps) => 
             //enqueueSnackbar('Something went wrong when saving microservice.', { variant: 'error' });
 
             // Remove these lines when the deploy microservice API is fixed.
-            enqueueSnackbar('We are having issues with this feature.We apologize for the inconvenience.');
+            //enqueueSnackbar('This feature may not work properly at this time. We apologize for the inconvenience.');
             const href = `/microservices/application/${application.id}/overview`;
             navigate(href);
         }

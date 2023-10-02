@@ -76,7 +76,7 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
         } else {
             // TODO ERROR: Temporary solution to hide response error.
             //enqueueSnackbar(`Failed to update microservice '${microserviceName}'.`, { variant: 'error' });
-            enqueueSnackbar('We are having issues with this feature. We apologize for the inconvenience.');
+            //enqueueSnackbar('We are having issues with this feature. We apologize for the inconvenience.');
         }
 
         setIsLoading(false);
@@ -102,7 +102,7 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
             //enqueueSnackbar(`Failed to delete microservice '${microserviceName}'.`, { variant: 'error' });
 
             // Remove these lines when the delete microservice API is fixed.
-            enqueueSnackbar('We are having issues with this feature. We apologize for the inconvenience.');
+            //enqueueSnackbar('This feature may not work properly at this time. We apologize for the inconvenience.');
             const href = `/microservices/application/${applicationId}/overview`;
             navigate(href);
         }
