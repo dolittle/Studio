@@ -12,7 +12,7 @@ import { Typography } from '@mui/material';
 
 import { Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
 
-import { saveSimpleMicroservice } from '../../stores/microservice';
+import { saveSimpleMicroserviceWithStore } from '../../stores/microservice';
 
 import { MicroserviceSimple, MicroserviceFormParameters } from '../../../apis/solutions/index';
 import { getLatestRuntimeInfo } from '../../../apis/solutions/api';
@@ -77,7 +77,7 @@ export const MicroserviceDeploy = ({ application }: MicroserviceDeployProps) => 
             },
         };
 
-        const result = await saveSimpleMicroservice(newMicroservice, application);
+        const result = await saveSimpleMicroserviceWithStore(newMicroservice, application);
 
         // TODO ERROR: Temporary solution to hide response error.
         if (result) {

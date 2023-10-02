@@ -10,7 +10,7 @@ import { Box } from '@mui/material';
 
 import { AlertDialog, Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
 
-import { canDeleteMicroservice, deleteMicroservice, loadMicroservices, MicroserviceStore } from '../../../../stores/microservice';
+import { canDeleteMicroservice, deleteMicroserviceWithStore, loadMicroservices, MicroserviceStore } from '../../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../../../apis/solutions/application';
 import { editMicroservice, InputEditMicroservice } from '../../../../../apis/solutions/api';
@@ -96,7 +96,7 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
         setIsLoading(true);
         setDeleteDialogIsOpen(false);
 
-        const result = await deleteMicroservice(applicationId, microserviceEnvironment, microserviceId);
+        const result = await deleteMicroserviceWithStore(applicationId, microserviceEnvironment, microserviceId);
 
         // TODO ERROR: Temporary solution to hide response error.
         if (result) {

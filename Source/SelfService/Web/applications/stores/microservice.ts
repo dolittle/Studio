@@ -110,7 +110,7 @@ export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
     microservices.set(data);
 };
 
-export async function deleteMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
+export async function deleteMicroserviceWithStore(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
     const response = await apiDeleteMicroservice(applicationId, environment, microserviceId);
 
     if (!response) return response;
@@ -123,7 +123,7 @@ export async function deleteMicroservice(applicationId: string, environment: str
     return response;
 };
 
-const saveMicroservice = async (kind: string, input: MicroserviceSimple, application: HttpResponseApplication): Promise<boolean> => {
+const saveMicroserviceWithStore = async (kind: string, input: MicroserviceSimple, application: HttpResponseApplication): Promise<boolean> => {
     let response: boolean;
 
     switch (kind) {
@@ -145,8 +145,8 @@ const saveMicroservice = async (kind: string, input: MicroserviceSimple, applica
     return response;
 };
 
-export const saveSimpleMicroservice = (input: MicroserviceSimple, application: HttpResponseApplication) =>
-    saveMicroservice(input.kind, input, application);
+export const saveSimpleMicroserviceWithStore = (input: MicroserviceSimple, application: HttpResponseApplication) =>
+    saveMicroserviceWithStore(input.kind, input, application);
 
 export const canEditMicroservices = (environments: HttpInputApplicationEnvironment[], environment: string): boolean =>
     environments.some(info => info.name === environment && info.automationEnabled);
