@@ -10,10 +10,10 @@ import { Box } from '@mui/material';
 
 import { AlertDialog, Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
 
-import { canDeleteMicroservice, deleteMicroserviceWithStore, loadMicroservices, MicroserviceStore } from '../../../../stores/microservice';
+import { canDeleteMicroservice, deleteMicroserviceWithStore, editMicroserviceWithStore, MicroserviceStore } from '../../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../../../apis/solutions/application';
-import { editMicroservice, InputEditMicroservice } from '../../../../../apis/solutions/api';
+import { InputEditMicroservice } from '../../../../../apis/solutions/api';
 import { MicroserviceFormParameters } from '../../../../../apis/solutions/index';
 
 import { ContainerImageFields } from '../../../components/form/containerImageFields';
@@ -70,21 +70,17 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
             runtimeImage: runtimeVersion,
         };
 
-        // TODO ERROR: Temporary solution to hide response error.
-        try {
-            await editMicroservice(applicationId, microserviceEnvironment, microserviceId, editedMicroservice);
+        const response = await editMicroserviceWithStore(applicationId, microserviceEnvironment, microserviceId, editedMicroservice);
+
+        if (response) {
             enqueueSnackbar(`Microservice '${microserviceName}' has been updated.`);
-        } catch (error) {
+        } else {
+            // TODO ERROR: Temporary solution to hide response error.
             //enqueueSnackbar(`Failed to update microservice '${microserviceName}'.`, { variant: 'error' });
             enqueueSnackbar('We are having issues with this feature. We apologize for the inconvenience.');
-        } finally {
-            setIsLoading(false);
-
-            // Remove these lines when the edit microservice API is fixed.
-            loadMicroservices(applicationId);
-            const href = `/microservices/application/${applicationId}/overview`;
-            navigate(href);
         }
+
+        setIsLoading(false);
     };
 
     const handleMicroserviceDelete = async () => {
@@ -112,7 +108,7 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
             navigate(href);
         }
 
-        //setIsLoading(false);
+        setIsLoading(false);
     };
 
     return (

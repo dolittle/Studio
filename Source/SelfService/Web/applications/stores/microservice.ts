@@ -4,7 +4,7 @@
 import { get, writable } from 'use-svelte-store';
 
 import { MicroserviceDolittle, MicroserviceSimple } from '../../apis/solutions/index';
-import { deleteMicroservice, getMicroservices, HttpResponseMicroservices, MicroserviceInfo, saveMicroservice } from '../../apis/solutions/api';
+import { deleteMicroservice, editMicroservice, getMicroservices, HttpResponseMicroservices, InputEditMicroservice, MicroserviceInfo, saveMicroservice } from '../../apis/solutions/api';
 import { getApplication, HttpResponseApplication, HttpInputApplicationEnvironment } from '../../apis/solutions/application';
 
 export type MicroserviceStore = {
@@ -146,6 +146,17 @@ export const canEditMicroservice = (environments: HttpInputApplicationEnvironmen
     if (id === '' || kind === '' || kind === 'unknown') return false;
 
     return true;
+};
+
+export const editMicroserviceWithStore = async (applicationId: string, environment: string, microserviceId: string, input: InputEditMicroservice): Promise<boolean> => {
+    const response = await editMicroservice(applicationId, environment, microserviceId, input);
+
+    // TODO ERROR: Temporarily commented out because of error in API.
+    //if (!response) return response;
+
+    loadMicroservices(applicationId);
+
+    return response;
 };
 
 export const canDeleteMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
