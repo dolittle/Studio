@@ -158,7 +158,8 @@ export const canDeleteMicroservice = (environments: HttpInputApplicationEnvironm
 export async function deleteMicroserviceWithStore(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
     const response = await deleteMicroservice(applicationId, environment, microserviceId);
 
-    if (!response) return response;
+    // TODO ERROR: Temporarily commented out because of error in API.
+    //if (!response) return response;
 
     let data = get(microservices);
 
