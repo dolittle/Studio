@@ -43,21 +43,20 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
     const microserviceEnvironment = currentMicroservice.environment;
     const microserviceName = currentMicroservice.name;
     const microserviceInfo = getMicroserviceInfo(application, currentMicroservice);
-    const microserviceInfoExtra = microserviceInfo.extra;
+    const { runtimeImage, isPublic, ingress, headCommand, headImage, headPort } = microserviceInfo.extra;
 
     const canDelete = canDeleteMicroservice(application.environments, microserviceEnvironment, microserviceId);
     const availableEnvironments = application.environments.map(env => env.name);
 
-    const currentRuntimeImageNumber = microserviceInfoExtra?.runtimeImage;
-    const hasPublicUrl = microserviceInfoExtra?.isPublic || false;
+    const hasPublicUrl = isPublic || false;
     const hasM3ConnectorOption = application.environments.find(env => env.name === microserviceEnvironment)?.connections?.m3Connector || false;
     // Remove extra slash from ingress path as it is there already with startAdornment.
-    const cleanedIngressPath = microserviceInfoExtra?.ingress?.path?.replace(/\//, '') || '';
+    const cleanedIngressPath = ingress?.path?.replace(/\//, '') || '';
     // Convert the head arguments to the format that the form expects.
-    const headArgumentValues = microserviceInfoExtra?.headCommand?.args?.map((arg: string) => ({ value: arg })) || [];
+    const headArgumentValues = headCommand?.args?.map((arg: string) => ({ value: arg })) || [];
 
     const handleMicroserviceEdit = async ({ microserviceName, headImage, runtimeVersion }: MicroserviceFormParameters) => {
-        if (microserviceName === currentMicroservice.name && headImage === microserviceInfoExtra?.headImage && runtimeVersion === currentRuntimeImageNumber) {
+        if (microserviceName === currentMicroservice.name && headImage === headImage && runtimeVersion === runtimeImage) {
             return;
         }
 
@@ -140,9 +139,9 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
                 initialValues={{
                     microserviceName,
                     developmentEnvironment: microserviceEnvironment,
-                    runtimeVersion: currentRuntimeImageNumber,
-                    headImage: microserviceInfoExtra?.headImage,
-                    headPort: microserviceInfoExtra?.headPort,
+                    runtimeVersion: runtimeImage,
+                    headImage,
+                    headPort,
                     entrypoint: '',
                     isPublic: hasPublicUrl,
                     headArguments: headArgumentValues,

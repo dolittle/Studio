@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 
 import { Paper, Typography, SxProps, type TypographyProps } from '@mui/material';
 
-import { Button, MaxWidthBlock, MaxWidthTextBlock } from '@dolittle/design-system';
+import { Button, MaxWidthBlock } from '@dolittle/design-system';
 
 export type TextCopyBoxProps = {
     /**
@@ -70,9 +70,21 @@ export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMa
     }, [instructions]);
 
     return (
-        <>{withMaxWidth
-            ? <MaxWidthBlock>
-                <TextCopyContent
+        <>
+            {withMaxWidth
+                ? <MaxWidthBlock>
+                    <TextCopyContent
+                        instructions={instructions}
+                        sx={sx}
+                        handleTextCopy={handleTextCopy}
+                        handleTextDownload={handleTextDownload}
+                        downloadableFileName={downloadableFileName}
+                        variant={variant}
+                    >
+                        {children}
+                    </TextCopyContent>
+                </MaxWidthBlock>
+                : <TextCopyContent
                     instructions={instructions}
                     sx={sx}
                     handleTextCopy={handleTextCopy}
@@ -82,18 +94,7 @@ export const TextCopyBox = ({ instructions, instructionsToCopy, children, withMa
                 >
                     {children}
                 </TextCopyContent>
-            </MaxWidthBlock>
-            : <TextCopyContent
-                instructions={instructions}
-                sx={sx}
-                handleTextCopy={handleTextCopy}
-                handleTextDownload={handleTextDownload}
-                downloadableFileName={downloadableFileName}
-                variant={variant}
-            >
-                {children}
-            </TextCopyContent>
-        }
+            }
         </>
     );
 };
@@ -103,33 +104,35 @@ type TextCopyContentProps = TextCopyBoxProps & {
     handleTextDownload: () => string;
 };
 
-const TextCopyContent = ({ instructions, children, sx, downloadableFileName, handleTextCopy, handleTextDownload }: TextCopyContentProps) => <>
-    <Paper elevation={0} sx={{ 'mt': 3, 'p': 2, '& p': { mb: 3 }, ...sx }}>
-        <InstructionContent instructions={instructions}>{children}</InstructionContent>
-        <Button
-            label='Copy content'
-            startWithIcon='CopyAllRounded'
-            onClick={handleTextCopy}
-        />
-        {downloadableFileName &&
+const TextCopyContent = ({ instructions, children, sx, downloadableFileName, handleTextCopy, handleTextDownload }: TextCopyContentProps) =>
+    <>
+        <Paper elevation={0} sx={{ 'mt': 3, 'p': 2, '& p': { mb: 3 }, ...sx }}>
+            <InstructionContent instructions={instructions}>{children}</InstructionContent>
             <Button
-                label={`Download ${downloadableFileName}`}
-                startWithIcon='DownloadRounded'
-                href={handleTextDownload()}
-                overrides={{ download: downloadableFileName }}
+                label='Copy content'
+                startWithIcon='CopyAllRounded'
+                onClick={handleTextCopy}
             />
-        }
-    </Paper>
-
-</>;
+            {downloadableFileName &&
+                <Button
+                    label={`Download ${downloadableFileName}`}
+                    startWithIcon='DownloadRounded'
+                    href={handleTextDownload()}
+                    overrides={{ download: downloadableFileName }}
+                />
+            }
+        </Paper>
+    </>;
 
 type RenderContentsProps = Pick<TextCopyBoxProps, 'instructions' | 'children' | 'variant'>;
 
-const InstructionContent = ({ instructions, children, variant }: RenderContentsProps) => <>
-    {children
-        ? <>{children}</>
-        : <>{Array.isArray(instructions)
-            ? instructions.map((instruction, index) => <Typography key={index} variant={variant}>{instruction}</Typography>)
-            : <Typography>{instructions}</Typography>
-        }</>
-    }</>;
+const InstructionContent = ({ instructions, children, variant }: RenderContentsProps) =>
+    <>
+        {children
+            ? <>{children}</>
+            : <>{Array.isArray(instructions)
+                ? instructions.map((instruction, index) => <Typography key={index} variant={variant}>{instruction}</Typography>)
+                : <Typography>{instructions}</Typography>
+            }</>
+        }
+    </>;
