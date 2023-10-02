@@ -79,6 +79,7 @@ export const MicroserviceDeploy = ({ application }: MicroserviceDeployProps) => 
 
         const result = await saveSimpleMicroservice(newMicroservice, application);
 
+        // TODO ERROR: Temporary solution to hide response error.
         if (result) {
             enqueueSnackbar(`Microservice '${values.microserviceName}' has been deployed.`);
             const href = `/microservices/application/${application.id}/view/${microserviceId}/${values.developmentEnvironment}}`;

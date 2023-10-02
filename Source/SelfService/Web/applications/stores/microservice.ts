@@ -135,17 +135,12 @@ const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
             return false;
     };
 
-    // Add to store
-    // Hairy stuff trying to keep track of the edit and the live
-    const applicationId = input.dolittle.applicationId;
-    const application = await getApplication(applicationId);
+
     mergeMicroservicesFromGit(application.microservices);
-    const liveMicroservices = await getMicroservices(applicationId);
-    //const filteredMicroservices = liveMicroservices.microservices.filter(microservice => microservice.environment === environment);
+    const liveMicroservices = await getMicroservices(application.id);
     mergeMicroservicesFromK8s(liveMicroservices.microservices);
 
-    // TODO change to microserviceID
-    return true;
+    return response;
 };
 
 export const saveSimpleMicroservice = (input: MicroserviceSimple) => saveMicroservice(input.kind, input);
