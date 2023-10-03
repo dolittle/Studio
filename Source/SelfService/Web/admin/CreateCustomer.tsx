@@ -69,9 +69,9 @@ export const CreateCustomer = () => {
 
             <Grid container direction='row' justifyContent='flex-start' alignItems='center'>
                 <TextField
-                    required
                     id='customerName'
                     label='Name'
+                    isRequired
                     value={customerName}
                     onValueChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                         setCustomerName(event.target.value!);

@@ -20,6 +20,8 @@ const TextFieldAdornment = ({ icon, color, size, position }: TextFieldAdornmentP
     </InputAdornment>;
 
 export type TextFieldProps = {
+    id: string;
+
     /**
      * The label content displayed above the `TextField`.
      */
@@ -51,6 +53,8 @@ export type TextFieldProps = {
      * @default false
      */
     isDisabled?: boolean;
+
+    isRequired?: boolean;
 
     /**
      * If true, the `TextField` element will take up the full width of its container.
@@ -93,16 +97,18 @@ export type TextFieldProps = {
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
-} & MuiTextFieldProps;
+};
 
-export const TextField = ({ label, value, size = 'small', placeholder, helperText, isDisabled, isFullWidth, startIcon, endIcon, iconColor, onValueChange, variant = 'outlined', sx }: TextFieldProps) =>
+export const TextField = ({ id, label, value, size = 'small', placeholder, helperText, isDisabled, isRequired, isFullWidth, startIcon, endIcon, iconColor, onValueChange, variant = 'outlined', sx }: TextFieldProps) =>
     <MuiTextField
+        id={id}
         label={label}
         value={value}
         size={size}
         placeholder={placeholder}
         helperText={helperText}
         disabled={isDisabled}
+        required={isRequired}
         fullWidth={isFullWidth}
         InputProps={{
             startAdornment: startIcon &&
