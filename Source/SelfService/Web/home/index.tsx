@@ -10,7 +10,8 @@ import { useGlobalContext } from '../context/globalContext';
 
 import { Typography } from '@mui/material';
 
-import { WorkSpaceLayout } from '../components/layout/workSpaceLayout';
+import { WorkSpaceLayout } from '../layout/workSpaceLayout';
+import { PageTitle } from '../layout/PageTitle';
 import { HomeScreenCardGridItems } from './homeScreenCardGridItems';
 
 export const HomeIndex = () => {
@@ -34,7 +35,7 @@ export const HomeIndex = () => {
 
     return (
         <WorkSpaceLayout pageTitle='Home'>
-            <Typography variant='h1' sx={{ my: 3 }}>Welcome to Aigonix!</Typography>
+            <PageTitle title='Welcome to Aigonix!' />
 
             <Typography variant='subtitle1' sx={{ maxWidth: 1018, mb: 4 }}>
                 Aigonix is a decentralized, distributed, event-driven, microservice platform built to harness the power of events.

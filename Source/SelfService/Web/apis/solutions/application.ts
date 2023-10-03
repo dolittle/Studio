@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { getServerUrlPrefix, JobInfo, parseJSONResponse, ShortInfoWithEnvironment, HttpResponseMessage, ShortInfo } from './api';
+import { MicroserviceSimple } from './index';
 
 export type HttpInputApplicationAccess = {
     email: string;
@@ -51,7 +52,7 @@ export type HttpResponseApplication = {
     customerId: string;
     customerName: string;
     environments: HttpInputApplicationEnvironment[];
-    microservices: any[]; // Not great
+    microservices: MicroserviceSimple[]; // any[];
 };
 
 export type HttpResponseApplicationAccess = {

@@ -10,10 +10,10 @@ import { Box } from '@mui/material';
 
 import { AlertDialog, Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
 
-import { canDeleteMicroservice, deleteMicroservice, MicroserviceStore } from '../../../../stores/microservice';
+import { canDeleteMicroservice, deleteMicroserviceWithStore, editMicroserviceWithStore, MicroserviceStore } from '../../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../../../apis/solutions/application';
-import { editMicroservice, InputEditMicroservice } from '../../../../../apis/solutions/api';
+import { InputEditMicroservice } from '../../../../../apis/solutions/api';
 import { MicroserviceFormParameters } from '../../../../../apis/solutions/index';
 
 import { ContainerImageFields } from '../../../components/form/containerImageFields';
@@ -43,21 +43,20 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
     const microserviceEnvironment = currentMicroservice.environment;
     const microserviceName = currentMicroservice.name;
     const microserviceInfo = getMicroserviceInfo(application, currentMicroservice);
-    const microserviceInfoExtra = microserviceInfo.extra;
+    const { runtimeImage, isPublic, ingress, headCommand, headImage, headPort } = microserviceInfo.extra;
 
     const canDelete = canDeleteMicroservice(application.environments, microserviceEnvironment, microserviceId);
     const availableEnvironments = application.environments.map(env => env.name);
 
-    const currentRuntimeImageNumber = microserviceInfoExtra?.runtimeImage;
-    const hasPublicUrl = microserviceInfoExtra?.isPublic || false;
+    const hasPublicUrl = isPublic || false;
     const hasM3ConnectorOption = application.environments.find(env => env.name === microserviceEnvironment)?.connections?.m3Connector || false;
     // Remove extra slash from ingress path as it is there already with startAdornment.
-    const cleanedIngressPath = microserviceInfoExtra?.ingress?.path?.replace(/\//, '') || '';
+    const cleanedIngressPath = ingress?.path?.replace(/\//, '') || '';
     // Convert the head arguments to the format that the form expects.
-    const headArgumentValues = microserviceInfoExtra?.headCommand?.args?.map((arg: string) => ({ value: arg })) || [];
+    const headArgumentValues = headCommand?.args?.map((arg: string) => ({ value: arg })) || [];
 
     const handleMicroserviceEdit = async ({ microserviceName, headImage, runtimeVersion }: MicroserviceFormParameters) => {
-        if (microserviceName === currentMicroservice.name && headImage === microserviceInfoExtra?.headImage && runtimeVersion === currentRuntimeImageNumber) {
+        if (microserviceName === currentMicroservice.name && headImage === headImage && runtimeVersion === runtimeImage) {
             return;
         }
 
@@ -70,14 +69,15 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
             runtimeImage: runtimeVersion,
         };
 
-        try {
-            await editMicroservice(applicationId, microserviceEnvironment, microserviceId, editedMicroservice);
+        const response = await editMicroserviceWithStore(applicationId, microserviceEnvironment, microserviceId, editedMicroservice);
+
+        if (response) {
             enqueueSnackbar(`Microservice '${microserviceName}' has been updated.`);
-        } catch (error) {
+        } else {
             enqueueSnackbar(`Failed to update microservice '${microserviceName}'.`, { variant: 'error' });
-        } finally {
-            setIsLoading(false);
         }
+
+        setIsLoading(false);
     };
 
     const handleMicroserviceDelete = async () => {
@@ -89,16 +89,17 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
         setIsLoading(true);
         setDeleteDialogIsOpen(false);
 
-        try {
-            await deleteMicroservice(applicationId, microserviceEnvironment, microserviceId);
+        const result = await deleteMicroserviceWithStore(applicationId, microserviceEnvironment, microserviceId);
+
+        if (result) {
             enqueueSnackbar(`Microservice '${microserviceName}' has been deleted.`);
             const href = `/microservices/application/${applicationId}/overview`;
             navigate(href);
-        } catch (error) {
+        } else {
             enqueueSnackbar(`Failed to delete microservice '${microserviceName}'.`, { variant: 'error' });
-        } finally {
-            setIsLoading(false);
         }
+
+        setIsLoading(false);
     };
 
     return (
@@ -108,7 +109,7 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
             <AlertDialog
                 id='delete-microservice'
                 title='Delete microservice?'
-                description='This action cannot be undone. Click delete if you would like to delete the mircroservice.'
+                description='This action cannot be undone. Click delete if you would like to delete the microservice.'
                 confirmBtnColor='error'
                 confirmBtnText='Delete'
                 isOpen={deleteDialogIsOpen}
@@ -130,9 +131,9 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
                 initialValues={{
                     microserviceName,
                     developmentEnvironment: microserviceEnvironment,
-                    runtimeVersion: currentRuntimeImageNumber,
-                    headImage: microserviceInfoExtra?.headImage,
-                    headPort: microserviceInfoExtra?.headPort,
+                    runtimeVersion: runtimeImage,
+                    headImage,
+                    headPort,
                     entrypoint: '',
                     isPublic: hasPublicUrl,
                     headArguments: headArgumentValues,

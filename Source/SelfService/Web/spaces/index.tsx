@@ -3,20 +3,20 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useGlobalContext } from '../../context/globalContext';
+import { useGlobalContext } from '../context/globalContext';
 import { useSnackbar } from 'notistack';
 
 import { Box, Stack, Typography } from '@mui/material';
 
 import { Button, Link } from '@dolittle/design-system';
 
-import { ShortInfo } from '../../apis/solutions/api';
-import { getApplicationsListing, getLiveApplications } from '../../apis/solutions/application';
+import { ShortInfo } from '../apis/solutions/api';
+import { getApplicationsListing, getLiveApplications } from '../apis/solutions/application';
 
 import { ApplicationsList } from './applicationsList';
-import { LoginWrapper } from '../../components/layout/loginWrapper';
-import { ApplicationCreateDialog } from './applicationCreateDialog';
-import { usePageTitle } from '../../utils/usePageTitle';
+import { LoginWrapper } from '../layout/loginWrapper';
+import { ApplicationCreateDialog } from '../components/applicationCreateDialog';
+import { usePageTitle } from '../utils/usePageTitle';
 
 export const ApplicationsIndex = () => {
     usePageTitle('Applications');
@@ -75,7 +75,7 @@ export const ApplicationsIndex = () => {
             <Stack sx={{ mt: 12, gap: 4 }}>
                 {!hasOneCustomer &&
                     <Box>
-                        <Button label='Back to Customers' color='subtle' startWithIcon='ArrowBack' href='/.auth/cookies/initiate' />
+                        <Button label='Back to organizations' color='subtle' startWithIcon='ArrowBack' href='/.auth/cookies/initiate' />
                     </Box>
                 }
 

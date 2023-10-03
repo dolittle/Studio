@@ -19,7 +19,7 @@ import { useViewportResize } from './utils/useViewportResize';
 
 import { RouteNotFound } from './components/notfound';
 import { Problem } from './components/problem';
-import { LandingPageDecider } from './components/layout/landingPageDecider';
+import { LandingPageDecider } from './layout/landingPageDecider';
 
 import { BackupsIndex } from './applications/backup';
 import { ContainerRegistryIndex } from './applications/containerregistry';
@@ -32,8 +32,8 @@ import { AdminIndex } from './admin';
 import { HomeIndex } from './home';
 import { IntegrationsIndex } from './integrations';
 
-import { ApplicationsIndex } from './spaces/applications';
-import { ApplicationBuilding } from './spaces/applications/applicationBuilding';
+import { ApplicationsIndex } from './spaces';
+import { ApplicationBuilding } from './components/applicationBuilding';
 
 // Set license info for MUI components
 LicenseInfo.setLicenseKey(process.env.MUI_LICENSE_KEY!);

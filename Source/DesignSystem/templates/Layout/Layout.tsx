@@ -13,7 +13,7 @@ const styles: SxProps = {
     'flexDirection': 'column',
     'flexGrow': 1,
     'm': 4,
-    'mt': 8,
+    'mt': 10.5,
     '& .MuiToolbar-root': { p: 0 },
 };
 

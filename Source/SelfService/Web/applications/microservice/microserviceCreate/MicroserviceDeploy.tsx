@@ -8,16 +8,15 @@ import { useSnackbar } from 'notistack';
 
 import { Guid } from '@dolittle/rudiments';
 
-import { Typography } from '@mui/material';
-
 import { Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
 
-import { saveSimpleMicroservice } from '../../stores/microservice';
+import { saveSimpleMicroserviceWithStore } from '../../stores/microservice';
 
 import { MicroserviceSimple, MicroserviceFormParameters } from '../../../apis/solutions/index';
 import { getLatestRuntimeInfo } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
+import { PageTitle } from '../../../layout/PageTitle';
 import { ContainerImageFields } from '../components/form/containerImageFields';
 import { HasM3ConnectorField } from '../components/form/hasM3ConnectorField';
 import { PublicUrlFields } from '../components/form/publicUrlFields';
@@ -34,8 +33,8 @@ export const MicroserviceDeploy = ({ application }: MicroserviceDeployProps) => 
 
     const availableEnvironments = application.environments.map(env => env.name);
 
-    const [isLoading, setIsLoading] = useState(false);
     const [selectedEnvironment, setSelectedEnvironment] = useState(availableEnvironments[0]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const environmentInfo = application.environments.find(env => env.name === selectedEnvironment);
     const hasM3ConnectorOption = environmentInfo?.connections?.m3Connector;
@@ -77,23 +76,23 @@ export const MicroserviceDeploy = ({ application }: MicroserviceDeployProps) => 
             },
         };
 
-        try {
-            await saveSimpleMicroservice(newMicroservice);
+        const result = await saveSimpleMicroserviceWithStore(newMicroservice, application);
+
+        if (result) {
             enqueueSnackbar(`Microservice '${values.microserviceName}' has been deployed.`);
             const href = `/microservices/application/${application.id}/view/${microserviceId}/${values.developmentEnvironment}}`;
             navigate(href);
-        } catch (error) {
+        } else {
             enqueueSnackbar('Something went wrong when saving microservice.', { variant: 'error' });
-        } finally {
-            setIsLoading(false);
         }
+
+        setIsLoading(false);
     };
 
     return (
         <>
             {isLoading && <LoadingSpinnerFullPage />}
-
-            <Typography variant='h1' sx={{ mt: 3, mb: 4 }}>Deploy Base Microservice</Typography>
+            <PageTitle title='Deploy Microservice' />
 
             <Form<MicroserviceFormParameters>
                 initialValues={{

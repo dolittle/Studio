@@ -3,15 +3,14 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Box, Typography } from '@mui/material';
-
-import { StatusIndicator, Tabs } from '@dolittle/design-system';
+import { Tabs } from '@dolittle/design-system';
 
 import { MicroserviceStore } from '../../../stores/microservice';
 
 import { getPodStatus, HttpResponsePodStatus } from '../../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../../apis/solutions/application';
 
+import { PageTitle } from '../../../../layout/PageTitle';
 import { ConfigurationIndex } from './configuration';
 import { HealthStatusIndex } from './healthStatus';
 import { useTerminalAvailable } from './terminal/useTerminal';
@@ -72,13 +71,9 @@ export const MicroserviceViewIndex = ({ application, currentMicroservice }: Micr
     }
 
     return (
-        <Box sx={{ mr: 3 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', my: 3 }}>
-                <Typography variant='h1' sx={{ mr: 3 }}>{microserviceName}</Typography>
-                <StatusIndicator variantFilled status={microserviceHealthStatus.status} label={microserviceHealthStatus.label} />
-            </Box>
-
+        <section>
+            <PageTitle title={microserviceName} healthStatus={microserviceHealthStatus.status} healthStatusLabel={microserviceHealthStatus.label} />
             <Tabs id='microservice-details-tabs' selectedTab={getLastOpenTab} tabs={tabs} />
-        </Box>
+        </section>
     );
 };

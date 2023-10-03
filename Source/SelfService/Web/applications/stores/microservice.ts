@@ -3,16 +3,9 @@
 
 import { get, writable } from 'use-svelte-store';
 
-import {
-    deleteMicroservice as apiDeleteMicroservice,
-    saveMicroservice as apiSaveMicroservice,
-    MicroserviceInfo,
-    getMicroservices,
-    HttpResponseMicroservices,
-} from '../../apis/solutions/api';
-
-import { MicroserviceSimple, MicroserviceDolittle } from '../../apis/solutions/index';
-import { getApplication, HttpInputApplicationEnvironment } from '../../apis/solutions/application';
+import { MicroserviceDolittle, MicroserviceSimple } from '../../apis/solutions/index';
+import { deleteMicroservice, editMicroservice, getMicroservices, HttpResponseMicroservices, InputEditMicroservice, MicroserviceInfo, saveMicroservice } from '../../apis/solutions/api';
+import { getApplication, HttpResponseApplication, HttpInputApplicationEnvironment } from '../../apis/solutions/application';
 
 export type MicroserviceStore = {
     id: string;
@@ -45,7 +38,7 @@ export const loadMicroservices = (applicationId: string) => {
         });
 };
 
-export const mergeMicroservicesFromGit = items => {
+export const mergeMicroservicesFromGit = (items: MicroserviceSimple[]) => {
     let data = get(microservices);
 
     items.forEach(element => {
@@ -110,48 +103,29 @@ export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
     microservices.set(data);
 };
 
-export async function deleteMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
-    const response = await apiDeleteMicroservice(applicationId, environment, microserviceId);
+const saveMicroserviceWithStore = async (kind: string, input: MicroserviceSimple, application: HttpResponseApplication): Promise<boolean> => {
+    let response: boolean;
+
+    switch (kind) {
+        case 'simple':
+            response = await saveMicroservice(input);
+            break;
+        default:
+            alert(`Saving via store failed. Kind: ${kind} not supported.`);
+            return false;
+    };
 
     if (!response) return response;
 
-    let data = get(microservices);
-
-    // I dont think we need to care about environment etc, if we trigger reload between
-    data = data.filter(ms => ms.id !== microserviceId);
-    microservices.set(data);
+    mergeMicroservicesFromGit(application.microservices);
+    const liveMicroservices = await getMicroservices(application.id);
+    mergeMicroservicesFromK8s(liveMicroservices.microservices);
 
     return response;
 };
 
-const saveMicroservice = async (kind: string, input: any): Promise<boolean> => {
-    let response: Promise<any>;
-
-    switch (kind) {
-        case 'simple':
-            response = await apiSaveMicroservice(input);
-            break;
-        default:
-            alert(`saving via store failed, kind: ${kind} not supported`);
-            return false;
-    };
-
-    // Add to store
-    // Hairy stuff trying to keep track of the edit and the live
-    const applicationId = input.dolittle.applicationId;
-    const application = await getApplication(applicationId);
-    mergeMicroservicesFromGit(application.microservices);
-    const liveMicroservices = await getMicroservices(applicationId);
-    //const filteredMicroservices = liveMicroservices.microservices.filter(microservice => microservice.environment === environment);
-    mergeMicroservicesFromK8s(liveMicroservices.microservices);
-
-    // TODO change to microserviceID
-    return true;
-};
-
-export const saveSimpleMicroservice = (input: MicroserviceSimple) => saveMicroservice(input.kind, input);
-
-//export const saveRawDataLogIngestorMicroservice = (input: MicroserviceRawDataLogIngestor) => saveMicroservice(input.kind, input);
+export const saveSimpleMicroserviceWithStore = (input: MicroserviceSimple, application: HttpResponseApplication) =>
+    saveMicroserviceWithStore(input.kind, input, application);
 
 export const canEditMicroservices = (environments: HttpInputApplicationEnvironment[], environment: string): boolean =>
     environments.some(info => info.name === environment && info.automationEnabled);
@@ -173,9 +147,32 @@ export const canEditMicroservice = (environments: HttpInputApplicationEnvironmen
     return true;
 };
 
+export const editMicroserviceWithStore = async (applicationId: string, environment: string, microserviceId: string, input: InputEditMicroservice): Promise<boolean> => {
+    const response = await editMicroservice(applicationId, environment, microserviceId, input);
+
+    if (!response) return response;
+
+    loadMicroservices(applicationId);
+
+    return response;
+};
+
 export const canDeleteMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
     const currentMicroservice: MicroserviceStore = findCurrentMicroservice(microserviceId);
     if (!currentMicroservice) return false;
 
     return canEditMicroservices(environments, environment);
+};
+
+export async function deleteMicroserviceWithStore(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
+    const response = await deleteMicroservice(applicationId, environment, microserviceId);
+
+    if (!response) return response;
+
+    let data = get(microservices);
+
+    data = data.filter(ms => ms.id !== microserviceId);
+    microservices.set(data);
+
+    return response;
 };

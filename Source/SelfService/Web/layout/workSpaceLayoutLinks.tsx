@@ -5,11 +5,11 @@ import React from 'react';
 
 import { Link, useLocation } from 'react-router-dom';
 
-import { useGlobalContext } from '../../context/globalContext';
+import { useGlobalContext } from '../context/globalContext';
 
 import { getPrimaryNavigationItems, getSecondaryNavigationItems, getSidePanelItems, LayoutProps, MenuListProps, MenuItemProps } from '@dolittle/design-system';
 
-import { ApplicationChanger } from '../../spaces/applications/applicationChanger';
+import { ApplicationChanger } from './applicationChanger';
 
 const PrimaryNavigation = () => {
     const location = useLocation();
@@ -75,7 +75,7 @@ const SecondaryNavigation = () => {
         // Put before log out link if there is more than one customer.
         secondaryNavigationItems.splice(secondaryNavigationItems.length - 1, 0, {
             id: 'change-organization',
-            label: 'Change Customer',
+            label: 'Change organization',
             icon: 'SupervisedUserCircleRounded',
             overrides: {
                 component: 'a',
@@ -140,7 +140,7 @@ const SidePanelApplicationItems = () => {
             overrides: {
                 component: Link,
                 to: `/setup/application/${currentApplicationId}/overview`,
-                selected: location.pathname.includes('/documentation'),
+                selected: location.pathname.includes('/setup'),
             },
         },
     ];

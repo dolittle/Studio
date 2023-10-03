@@ -10,8 +10,7 @@ import { microservices } from '../../stores/microservice';
 import { MicroserviceObject } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
-import { Typography } from '@mui/material';
-
+import { PageTitle } from '../../../layout/PageTitle';
 import { MicroservicesList } from './microservicesList/MicroservicesList';
 import { NoMicroservices } from './noMicroservices';
 
@@ -25,7 +24,7 @@ export const MicroservicesOverviewIndex = ({ application }: MicroservicesOvervie
 
     return (
         <>
-            <Typography variant='h1' sx={{ my: 3 }}>Microservices</Typography>
+            <PageTitle title='Microservices' />
 
             {$microservices.length > 0
                 ? <MicroservicesList application={application} microservices={$microservices} />

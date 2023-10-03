@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useConnectionsGet, useConnectionsIdPost } from '../../apis/integrations/connectionsApi.hooks';
 
-import { Page } from '../../components/layout/page';
+import { PageTitle } from '../../layout/PageTitle';
 import { NoConnections } from './noConnections';
 import { ConnectionsTable } from './connectionsTable';
 import { CreateConnectionButton } from './createConnectionButton';
@@ -56,7 +56,9 @@ export const Connections = () => {
     };
 
     return (
-        <Page title='Connections' sx={{ mb: 4 }}>
+        <>
+            <PageTitle title='Connections' />
+
             {isError
                 ? `We can't show your connections at this time. Please try again later.`
                 : isLoading || connections.length
@@ -69,6 +71,6 @@ export const Connections = () => {
                         <NoConnections onCreateNew={() => handleCreateNew()} />
                     )
             }
-        </Page>
+        </>
     );
 };

@@ -3,13 +3,13 @@
 
 import React from 'react';
 
-import { useHref, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ListItem } from '@mui/material';
 
 import { Button } from '@dolittle/design-system';
 
-import { ShortInfo } from '../../apis/solutions/api';
+import { ShortInfo } from '../apis/solutions/api';
 
 // Makes ListItem buttons as wide as the longest one.
 const styles = {
@@ -25,9 +25,7 @@ export type ApplicationsListItemProps = {
 
 export const ApplicationsListItem = ({ application, liveApplicationsList }: ApplicationsListItemProps) => {
     const navigate = useNavigate();
-    //const microservicesHref = useHref(`/microservices/application/${application.id}/overview`);
 
-    // TODO ENV: We should also check if application even works.
     const handleApplicationChange = () => {
         if (liveApplicationsList.some(app => app.id === application.id)) {
             navigate(`/microservices/application/${application.id}/overview`);
@@ -43,7 +41,6 @@ export const ApplicationsListItem = ({ application, liveApplicationsList }: Appl
                 label={`${application.name}`}
                 isFullWidth
                 onClick={handleApplicationChange}
-                //href={microservicesHref}
                 sx={styles}
             />
         </ListItem>

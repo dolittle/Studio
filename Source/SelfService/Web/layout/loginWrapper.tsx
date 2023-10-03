@@ -7,7 +7,7 @@ import { Box } from '@mui/material';
 
 import { Icon } from '@dolittle/design-system';
 
-import Symbol from '../../assets/logos/symbol.svg?url';
+import Symbol from '../assets/logos/symbol.svg?url';
 
 const styles = {
     backgroundSymbol: {

@@ -9,7 +9,7 @@ import { Input, Select, Tooltip } from '@dolittle/design-system';
 
 import { getRuntimes } from '../../../../apis/solutions/api';
 
-import { getRuntimeNumberFromString } from '../../../../utils/helpers';
+import { getRuntimeNumberFromString, lowerCaseHyphenRegex } from '../../../../utils/helpers';
 
 const runtimeNumberOptions = [
     ...getRuntimes().map(runtimeInfo => ({
@@ -47,6 +47,10 @@ export const SetupFields = ({ environments, hasDashedBorder, isEditMode, isDisab
                 dashedBorder={hasDashedBorder}
                 disabled={isDisabled}
                 required='Provide a microservice name.'
+                pattern={{
+                    value: lowerCaseHyphenRegex,
+                    message: `Only lowercase letters, numbers and - in the middle are allowed.`,
+                }}
             />
 
             <Tooltip

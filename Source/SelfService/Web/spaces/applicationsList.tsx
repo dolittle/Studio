@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { ShortInfo } from '../../apis/solutions/api';
+import { ShortInfo } from '../apis/solutions/api';
 
 import { List } from '@mui/material';
 

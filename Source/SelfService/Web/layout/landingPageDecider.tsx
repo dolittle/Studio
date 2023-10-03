@@ -3,11 +3,11 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useGlobalContext } from '../../context/globalContext';
+import { useGlobalContext } from '../context/globalContext';
 import { useSnackbar } from 'notistack';
 import { Navigate } from 'react-router-dom';
 
-import { getApplicationsListing } from '../../apis/solutions/application';
+import { getApplicationsListing } from '../apis/solutions/application';
 
 export const LandingPageDecider = () => {
     const { currentApplicationId, setCurrentApplicationId } = useGlobalContext();

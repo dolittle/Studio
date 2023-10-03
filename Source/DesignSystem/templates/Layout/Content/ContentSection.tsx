@@ -23,7 +23,7 @@ export const ContentSection = ({ title = '', hideDivider, hideHeader, headerProp
     <>
         {!hideDivider && <ContentDivider />}
         {beforeHeaderSlot}
-        <Box sx={{ ...{ my: noSpace ? 0 : 3 }, ...sx }}>
+        <Box sx={{ ...{ py: noSpace ? 0 : 3 }, ...sx }}>
             {!hideHeader && <ContentHeader title={title} titleTextVariant='subtitle' {...headerProps} sx={{ mb: noSpace ? 0 : 2 }} />}
             {children}
         </Box>

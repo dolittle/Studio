@@ -10,10 +10,10 @@ import { Typography } from '@mui/material';
 
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
-import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
 import { SetupContainerScreen } from './cicd/setupContainerScreen';
 
-import { withRouteApplicationState } from '../../spaces/applications/withRouteApplicationState';
+import { withRouteApplicationState } from '../../utils/withRouteApplicationState';
 
 export const SetupIndex = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
@@ -50,7 +50,7 @@ export const SetupIndex = withRouteApplicationState(({ routeApplicationParams })
     if (!isLoaded) return null;
 
     if (application.id === '') {
-        return <Typography variant='h1' sx={{ my: 2 }}>Application not found.</Typography>;
+        return <Typography variant='h1' sx={{ m: 2 }}>Application not found.</Typography>;
     }
 
     return (

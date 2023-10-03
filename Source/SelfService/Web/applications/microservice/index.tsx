@@ -13,13 +13,13 @@ import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/
 import { getMicroservices } from '../../apis/solutions/api';
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
-import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
 import { MicroservicesOverviewIndex } from './microservicesOverview';
 import { MicroserviceCreateIndex } from './microserviceCreate';
 import { MicroserviceDetailsIndex } from './microserviceDetails';
 import { RouteNotFound } from '../../components/notfound';
 
-import { withRouteApplicationState } from '../../spaces/applications/withRouteApplicationState';
+import { withRouteApplicationState } from '../../utils/withRouteApplicationState';
 
 export const MicroservicesIndex = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();
@@ -64,7 +64,7 @@ export const MicroservicesIndex = withRouteApplicationState(({ routeApplicationP
     if (!isLoaded) return null;
 
     if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application not found.</Typography>;
+        return <Typography variant='h1' sx={{ m: 2 }}>Application not found.</Typography>;
     }
 
     return (

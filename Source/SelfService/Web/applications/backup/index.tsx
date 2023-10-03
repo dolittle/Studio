@@ -14,7 +14,7 @@ import { useRouteApplicationParams } from '../../utils/route';
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 import { BackupLinkWithName, getLatestBackupLinkByApplication } from '../../apis/solutions/backups';
 
-import { WorkSpaceLayoutWithSidePanel } from '../../components/layout/workSpaceLayout';
+import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
 import { BackupsList } from './backupsList/backupsList';
 import { BackupsDetailView } from './backupsDetail/BackupsDetailView';
 
@@ -25,6 +25,7 @@ export const BackupsIndex = () => {
     const [application, setApplication] = useState({} as HttpResponseApplication);
     const [backupLinksForEnvironment, setBackupLinksForEnvironment] = useState<BackupLinkWithName[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingBackups, setIsLoadingBackups] = useState(true);
 
     const routeApplicationProps = useRouteApplicationParams();
     const applicationId = routeApplicationProps.applicationId;
@@ -46,22 +47,24 @@ export const BackupsIndex = () => {
             });
     }, []);
 
+    if (application.id === '') {
+        return <Typography variant='h1' sx={{ m: 2 }}>Application not found.</Typography>;
+    }
+
     useEffect(() => {
         if (!environments) return;
 
         Promise.all(environments.map(environment =>
             getLatestBackupLinkByApplication(application.id, environment.name)))
-            .then(setBackupLinksForEnvironment);
+            .then(setBackupLinksForEnvironment)
+            .finally(() => setIsLoadingBackups(false));
     }, [environments]);
 
     if (isLoading) return <LoadingSpinner />;
 
-    if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application not found.</Typography>;
-    }
-
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='Backups | Applications' sidePanelMode='applications'>
+            {isLoadingBackups && <LoadingSpinner />}
             <Routes>
                 <Route path='overview' element={<BackupsList data={backupLinksForEnvironment} application={application} />} />
                 <Route path='list' element={<BackupsDetailView application={application} environment={currentEnvironment} />} />

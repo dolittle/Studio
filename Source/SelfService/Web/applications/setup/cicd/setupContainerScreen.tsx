@@ -69,7 +69,7 @@ export const SetupContainerScreen = ({ application }: SetupContainerScreenProps)
 
                 <Route path='/container-registry-info' element={
                     <>
-                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} sx={{ mt: 2 }} />
+                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} />
                         <Typography variant='h1'>Container Registry Info</Typography>
                         <AccessContainerRegistry info={$info} />
                     </>
@@ -77,7 +77,7 @@ export const SetupContainerScreen = ({ application }: SetupContainerScreenProps)
 
                 <Route path='/verify-kubernetes-access' element={
                     <>
-                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} sx={{ mt: 2 }} />
+                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} />
                         <Typography variant='h1'>Verify access to kubernetes</Typography>
                         <VerifyKubernetesAccess info={$info} />
                     </>
@@ -85,7 +85,7 @@ export const SetupContainerScreen = ({ application }: SetupContainerScreenProps)
 
                 <Route path='/ci-cd/azure-pipelines' element={
                     <>
-                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} sx={{ mt: 2 }} />
+                        <Button label='Back to setup' startWithIcon='ArrowBack' color='subtle' onClick={handleBackClick} />
                         <Typography variant='h1'>Setup Azure Pipelines</Typography>
                         <SetupAzurePipelines info={$info} />
                     </>
