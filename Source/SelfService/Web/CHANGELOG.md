@@ -1,3 +1,19 @@
+# [3.18.6] - 2023-10-3 [PR: #478](https://github.com/dolittle/Studio/pull/478)
+## Summary
+
+Overall appearance improvements, but mainly how the Microservice 'edit', 'delete' and 'update' functions work.
+
+### Added
+
+- LoadingSpinner to Backups page when page is loading
+- Call the 'editMicroservice' API via the Store
+- PageTitle component that is used on every page and also has a status label option
+
+### Fixed
+
+- Layout spacing
+
+
 # [3.18.4] - 2023-9-29 [PR: #477](https://github.com/dolittle/Studio/pull/477)
 ## Summary
 
