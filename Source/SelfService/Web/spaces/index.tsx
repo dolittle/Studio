@@ -75,7 +75,7 @@ export const ApplicationsIndex = () => {
             <Stack sx={{ mt: 12, gap: 4 }}>
                 {!hasOneCustomer &&
                     <Box>
-                        <Button label='Back to Customers' color='subtle' startWithIcon='ArrowBack' href='/.auth/cookies/initiate' />
+                        <Button label='Back to organizations' color='subtle' startWithIcon='ArrowBack' href='/.auth/cookies/initiate' />
                     </Box>
                 }
 
