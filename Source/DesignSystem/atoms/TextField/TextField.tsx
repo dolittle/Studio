@@ -20,7 +20,7 @@ const TextFieldAdornment = ({ icon, color, size, position }: TextFieldAdornmentP
     </InputAdornment>;
 
 export type TextFieldProps = {
-    id: string;
+    id?: string;
 
     /**
      * The label content displayed above the `TextField`.
