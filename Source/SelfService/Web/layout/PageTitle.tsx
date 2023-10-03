@@ -3,11 +3,33 @@
 
 import React from 'react';
 
-import { Typography } from '@mui/material';
+import { Box, SxProps, Typography } from '@mui/material';
+
+import { StatusIndicator, StatusIndicatorProps } from '@dolittle/design-system';
+
+const styles = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: { xs: 'center', sm: 'flex-start' },
+    mb: 2.5,
+};
+
+const WithHealthStatus = ({ title, healthStatus, healthStatusLabel, healthStatusMessage, sx }: PageTitleProps) =>
+    <Box component='header' sx={{ ...styles, ...sx }}>
+        <Typography variant='h1' sx={{ mr: healthStatus ? 3 : 0 }}>{title}</Typography>
+        {healthStatus && <StatusIndicator status={healthStatus} label={healthStatusLabel} message={healthStatusMessage} variantFilled />}
+    </Box>;
 
 export type PageTitleProps = {
     title: string;
+    healthStatus?: StatusIndicatorProps['status'];
+    healthStatusLabel?: StatusIndicatorProps['label'];
+    healthStatusMessage?: StatusIndicatorProps['message'];
+    children?: React.ReactNode;
+    sx?: SxProps;
 };
 
-export const PageTitle = ({ title }: PageTitleProps) =>
-    <Typography variant='h1' sx={{ mb: 4 }}>{title}</Typography>;
+export const PageTitle = ({ title, healthStatus, healthStatusLabel, healthStatusMessage, sx }: PageTitleProps) =>
+    healthStatus
+        ? <WithHealthStatus title={title} healthStatus={healthStatus} healthStatusLabel={healthStatusLabel} healthStatusMessage={healthStatusMessage} />
+        : <Typography variant='h1' sx={{ mb: 4, ...sx }}>{title}</Typography>;

@@ -9,8 +9,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useSnackbar } from 'notistack';
 import { useGlobalContext } from '../context/globalContext';
 
-import { Box } from '@mui/material';
-
 import { buildQueryClient } from '../apis/integrations/queryClient';
 
 import { routes } from './routes';
@@ -41,8 +39,6 @@ export const IntegrationsIndex = () => {
 
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='Connections | Integrations'>
-            {/* Temporary replacement for breadcrumbs */}
-            <Box sx={{ minHeight: 16 }} />
             <QueryClientProvider client={queryClient}>
                 <DebugRouter>
                     {routesElement}

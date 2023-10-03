@@ -5,12 +5,11 @@ import React, { useEffect, useState } from 'react';
 
 import { useLocation, useNavigate } from 'react-router';
 
-import { Typography } from '@mui/material';
-
 import { SimpleCardGrid, SimpleCardProps } from '@dolittle/design-system';
 
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
+import { PageTitle } from '../../../layout/PageTitle';
 import { MicroserviceDeploy } from './MicroserviceDeploy';
 
 type DeployableMicroservices = SimpleCardProps & {
@@ -68,7 +67,7 @@ export const MicroserviceCreateIndex = ({ application }: MicroserviceCreateIndex
     if (microserviceTypeState === '') {
         return (
             <>
-                <Typography variant='h1' my={3}>Microservices</Typography>
+                <PageTitle title='Create microservice' />
                 <SimpleCardGrid simpleCardItems={deployableMicroservices} />
             </>
         );

@@ -9,11 +9,12 @@ import { useSnackbar } from 'notistack';
 import { Box, Typography } from '@mui/material';
 
 import { HttpResponseMicroservices, getMicroservices } from '../../apis/solutions/api';
-import { HttpResponseApplication, getApplicationsListing, getApplication } from '../../apis/solutions/application';
+import { HttpResponseApplication, getApplication } from '../../apis/solutions/application';
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 
 import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
+import { PageTitle } from '../../layout/PageTitle';
 import { LogFilterMicroservice, LogFilterPanel } from './logFilter/logFilterPanel';
 import { useLogFilters } from './logFilter/useLogFilters';
 import { LogsInRange } from './logsInRange';
@@ -83,12 +84,12 @@ export const LogsIndex = withRouteApplicationState(({ routeApplicationParams }) 
     if (!isLoaded) return null;
 
     if (application.id === '') {
-        return <Typography variant='h1' my={2}>Application  not found.</Typography>;
+        return <Typography variant='h1' sx={{ m: 2 }}>Application  not found.</Typography>;
     }
 
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='Logs | Applications' sidePanelMode='applications'>
-            <Typography variant='h1' sx={{ my: 3 }}>Logs</Typography>
+            <PageTitle title='Logs' />
 
             <Box sx={{ minWidth: 640, mt: 3 }}>
                 <LogFilterPanel

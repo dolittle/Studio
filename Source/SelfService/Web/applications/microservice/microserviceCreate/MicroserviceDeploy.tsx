@@ -8,8 +8,6 @@ import { useSnackbar } from 'notistack';
 
 import { Guid } from '@dolittle/rudiments';
 
-import { Typography } from '@mui/material';
-
 import { Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
 
 import { saveSimpleMicroserviceWithStore } from '../../stores/microservice';
@@ -18,6 +16,7 @@ import { MicroserviceSimple, MicroserviceFormParameters } from '../../../apis/so
 import { getLatestRuntimeInfo } from '../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
+import { PageTitle } from '../../../layout/PageTitle';
 import { ContainerImageFields } from '../components/form/containerImageFields';
 import { HasM3ConnectorField } from '../components/form/hasM3ConnectorField';
 import { PublicUrlFields } from '../components/form/publicUrlFields';
@@ -97,8 +96,7 @@ export const MicroserviceDeploy = ({ application }: MicroserviceDeployProps) => 
     return (
         <>
             {isLoading && <LoadingSpinnerFullPage />}
-
-            <Typography variant='h1' sx={{ mt: 3, mb: 4 }}>Deploy Base Microservice</Typography>
+            <PageTitle title='Deploy Microservice' />
 
             <Form<MicroserviceFormParameters>
                 initialValues={{

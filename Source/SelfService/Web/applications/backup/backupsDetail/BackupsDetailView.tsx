@@ -10,6 +10,7 @@ import { LoadingSpinner } from '@dolittle/design-system';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 import { BackupsForApplication, getBackupsByApplication } from '../../../apis/solutions/backups';
 
+import { PageTitle } from '../../../layout/PageTitle';
 import { BackupsDataGrid, BackupsDetailsList } from './backupsDataGrid';
 
 import { getDateFromFileName } from '../utils/getDateFromFileName';
@@ -45,8 +46,8 @@ export const BackupsDetailView = ({ application, environment }: BackupsDetailVie
 
     return (
         <>
-            <Typography variant='h1' sx={{ mt: 3 }}>{application.name}</Typography>
-            <Typography variant='subtitle1' sx={{ my: 2 }}>{`${environment} Environment`}</Typography>
+            <PageTitle title={application.name} />
+            <Typography variant='subtitle1' sx={{ mb: 2 }}>{`${environment} Environment`}</Typography>
             <BackupsDataGrid backupsDataGridRows={backups} applicationId={application.id} />
         </>
     );

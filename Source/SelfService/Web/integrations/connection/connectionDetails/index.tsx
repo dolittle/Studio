@@ -3,18 +3,16 @@
 
 import React from 'react';
 
-import { Link, Location, Outlet, Navigate, useLocation } from 'react-router-dom';
+import { Link, Location, Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { Tabs } from '@dolittle/design-system';
 
 import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionIdFromRoute } from '../../routes.hooks';
 
-
-import { Page } from '../../../layout/page';
+import { PageTitle } from '../../../layout/PageTitle';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 import { getIndicatorStatusFromStatusMessage } from '../../statusHelpers';
-
 
 export const childRoutePaths = ['/configuration', '/messages', '/consume-data-rest-api', '/consume-data-event-streams'];
 
@@ -77,16 +75,11 @@ export const ConnectionDetails = () => {
         <>
             {redirectPath
                 ? <Navigate to={redirectPath} replace={true} />
-                : <Page
-                    title={pageTitle}
-                    healthStatus={status?.status}
-                    healthStatusLabel={status?.label}
-                    healthStatusMessage={status?.message}
-                    sx={{ mb: 4 }}
-                >
+                : <>
+                    <PageTitle title={pageTitle} healthStatus={status?.status} healthStatusLabel={status?.label} healthStatusMessage={status?.message} />
                     <Tabs selectedTab={getSelectedTab(location)} tabs={tabs} />
                     <Outlet />
-                </Page>
+                </>
             }
         </>
     );

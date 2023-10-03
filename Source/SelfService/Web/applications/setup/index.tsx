@@ -50,7 +50,7 @@ export const SetupIndex = withRouteApplicationState(({ routeApplicationParams })
     if (!isLoaded) return null;
 
     if (application.id === '') {
-        return <Typography variant='h1' sx={{ my: 2 }}>Application not found.</Typography>;
+        return <Typography variant='h1' sx={{ m: 2 }}>Application not found.</Typography>;
     }
 
     return (

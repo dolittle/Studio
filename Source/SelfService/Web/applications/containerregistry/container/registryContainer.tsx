@@ -5,11 +5,12 @@ import React, { useEffect, useState } from 'react';
 
 import { useNavigate, Routes, Route } from 'react-router-dom';
 
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 import { getReposInContainerRegistry, ContainerRegistryImages } from '../../../apis/solutions/containerregistry';
 
+import { PageTitle } from '../../../layout/PageTitle';
 import { RegistryImages } from './registryImages';
 import { RegistryWelcome } from './registryWelcome';
 import { RegistryTags } from './registryTags';
@@ -41,7 +42,7 @@ export const RegistryContainer = ({ application }: RegistryContainerProps) => {
 
     const hasImages = containerRegistryImages.images.length > 0;
 
-    // Force redirect if no images to the welcome screen
+    // Force redirect if no images to the welcome screen.
     if (!hasImages && !window.location.pathname.endsWith('/overview/welcome')) {
         const href = `/containerregistry/application/${applicationId}/overview/welcome`;
         navigate(href);
@@ -50,8 +51,7 @@ export const RegistryContainer = ({ application }: RegistryContainerProps) => {
 
     return (
         <Box sx={{ mr: 3 }}>
-            <Typography variant='h1' sx={{ my: 3 }}>Container Registry</Typography>
-
+            <PageTitle title='Container Registry' />
             <Routes>
                 <Route path='/' element={<RegistryImages applicationId={applicationId} data={containerRegistryImages} />} />
                 <Route path='/welcome' element={<RegistryWelcome applicationId={applicationId} />} />
