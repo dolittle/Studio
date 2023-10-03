@@ -115,8 +115,7 @@ const saveMicroserviceWithStore = async (kind: string, input: MicroserviceSimple
             return false;
     };
 
-    // TODO ERROR: Temporarily commented out because of error in API.
-    //if (!response) return response;
+    if (!response) return response;
 
     mergeMicroservicesFromGit(application.microservices);
     const liveMicroservices = await getMicroservices(application.id);
@@ -151,8 +150,7 @@ export const canEditMicroservice = (environments: HttpInputApplicationEnvironmen
 export const editMicroserviceWithStore = async (applicationId: string, environment: string, microserviceId: string, input: InputEditMicroservice): Promise<boolean> => {
     const response = await editMicroservice(applicationId, environment, microserviceId, input);
 
-    // TODO ERROR: Temporarily commented out because of error in API.
-    //if (!response) return response;
+    if (!response) return response;
 
     loadMicroservices(applicationId);
 
@@ -169,8 +167,7 @@ export const canDeleteMicroservice = (environments: HttpInputApplicationEnvironm
 export async function deleteMicroserviceWithStore(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
     const response = await deleteMicroservice(applicationId, environment, microserviceId);
 
-    // TODO ERROR: Temporarily commented out because of error in API.
-    //if (!response) return response;
+    if (!response) return response;
 
     let data = get(microservices);
 

@@ -187,7 +187,8 @@ export async function saveMicroservice(input: MicroserviceSimple): Promise<boole
             },
         });
 
-    return response.status === 200;
+    // TODO ERROR: Temporary solution to hide response error.
+    return response.status === 200 || response.status === 504;
 };
 
 export async function editMicroservice(applicationId: string, environment: string, microserviceId: string, input: InputEditMicroservice): Promise<boolean> {
@@ -204,7 +205,8 @@ export async function editMicroservice(applicationId: string, environment: strin
             },
         });
 
-    return response.status === 200;
+    // TODO ERROR: Temporary solution to hide response error.
+    return response.status === 200 || response.status === 504;
 };
 
 export async function restartMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
@@ -223,14 +225,15 @@ export async function restartMicroservice(applicationId: string, environment: st
 export async function deleteMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}/environment/${environment}/microservice/${microserviceId}`;
 
-    const result = await fetch(
+    const response = await fetch(
         url,
         {
             method: 'DELETE',
             mode: 'cors',
         });
 
-    return result.status === 200;
+    // TODO ERROR: Temporary solution to hide response error.
+    return response.status === 200 || response.status === 504;
 };
 
 export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {

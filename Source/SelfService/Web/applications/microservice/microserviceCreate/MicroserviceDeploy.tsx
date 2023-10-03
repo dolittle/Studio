@@ -78,19 +78,15 @@ export const MicroserviceDeploy = ({ application }: MicroserviceDeployProps) => 
 
         const result = await saveSimpleMicroserviceWithStore(newMicroservice, application);
 
-        // TODO ERROR: Temporary solution to hide response error.
         if (result) {
             enqueueSnackbar(`Microservice '${values.microserviceName}' has been deployed.`);
             const href = `/microservices/application/${application.id}/view/${microserviceId}/${values.developmentEnvironment}}`;
             navigate(href);
         } else {
-            //enqueueSnackbar('Something went wrong when saving microservice.', { variant: 'error' });
-
-            // Remove these lines when the deploy microservice API is fixed.
-            //enqueueSnackbar('This feature may not work properly at this time. We apologize for the inconvenience.');
-            const href = `/microservices/application/${application.id}/overview`;
-            navigate(href);
+            enqueueSnackbar('Something went wrong when saving microservice.', { variant: 'error' });
         }
+
+        setIsLoading(false);
     };
 
     return (
