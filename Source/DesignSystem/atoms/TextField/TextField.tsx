@@ -93,7 +93,7 @@ export type TextFieldProps = {
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
-};
+} & MuiTextFieldProps;
 
 export const TextField = ({ label, value, size = 'small', placeholder, helperText, isDisabled, isFullWidth, startIcon, endIcon, iconColor, onValueChange, variant = 'outlined', sx }: TextFieldProps) =>
     <MuiTextField
