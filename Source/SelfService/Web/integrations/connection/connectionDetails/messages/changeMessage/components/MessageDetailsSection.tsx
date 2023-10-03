@@ -8,7 +8,7 @@ import { Grid, Stack, Typography } from '@mui/material';
 import { ContentSection, Input } from '@dolittle/design-system';
 
 import { ViewModeProps } from '../ViewMode';
-import { alphaNumericCharsRegex } from '../../../../../../utils/validation/patterns';
+import { alphaNumericCharsRegex } from '../../../../../../utils/helpers/regex';
 
 export type MessageDetailsSectionProps = ViewModeProps & {};
 
@@ -17,7 +17,7 @@ export const MessageDetailsSection = (props: MessageDetailsSectionProps) =>
         <Grid container gap={4}>
             <Stack spacing={3}>
                 <Typography variant='subtitle2'>Provide a name for your message type</Typography>
-                <Input id='name' label='Message Type Name' required pattern={{value: alphaNumericCharsRegex, message: 'Can only contain characters or numbers'}}/>
+                <Input id='name' label='Message Type Name' required pattern={{ value: alphaNumericCharsRegex, message: 'Can only contain characters or numbers' }} />
             </Stack>
 
             <Stack spacing={3}>

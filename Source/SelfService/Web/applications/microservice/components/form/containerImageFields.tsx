@@ -8,7 +8,7 @@ import { Stack, Typography } from '@mui/material';
 import { Input, Link, Tooltip } from '@dolittle/design-system';
 
 import { HeadArguments } from './headArguments';
-import { alphaNumericLowerCasedCharsRegex } from '../../../../utils/validation/patterns';
+import { alphaNumericLowerCasedCharsRegex } from '../../../../utils/helpers/regex';
 
 const portDescription = `By default, your mircroservice will be hosted on port 80 within the secure Dolittle cluster,
 but this can be overridden if your image requires it.`;

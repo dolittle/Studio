@@ -8,7 +8,7 @@ import { alphanumericCharacter } from './regex';
  * @param str String to capitalize.
  * @returns Capitalized string.
  */
-export const capitalize = (str: string) => {
+const capitalize = (str: string) => {
     if (typeof str !== 'string') return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
 };
@@ -19,7 +19,7 @@ export const capitalize = (str: string) => {
  * @param remove Pattern to remove.
  * @returns String without pattern.
  */
-export const removeStringPattern = (str: string, remove: RegExp) => {
+const removeStringPattern = (str: string, remove: RegExp) => {
     if (typeof str !== 'string') return '';
     return str.replace(remove, '');
 };
@@ -30,7 +30,7 @@ export const removeStringPattern = (str: string, remove: RegExp) => {
  * @param remove Pattern to remove.
  * @returns String without pattern and with first letter capitalized.
  */
-export const removeStringPatternAndCapitalize = (str: string, remove: RegExp) => {
+const removeStringPatternAndCapitalize = (str: string, remove: RegExp) => {
     if (typeof str !== 'string') return '';
     return capitalize(removeStringPattern(str, remove));
 };
@@ -52,10 +52,10 @@ export const getRuntimeNumberFromString = (str: string) => {
  * @param str String to trim prefix from.
  * @param prefix Prefix to trim.
  */
-export const trimPrefix = (str: string, prefix: string) => {
-    if (str.startsWith(prefix)) return str.slice(prefix.length);
-    else return str;
-};
+// export const trimPrefix = (str: string, prefix: string) => {
+//     if (str.startsWith(prefix)) return str.slice(prefix.length);
+//     else return str;
+// };
 
 /**
  * Remove a specified suffix from the end of a string, if it is present.
@@ -64,10 +64,10 @@ export const trimPrefix = (str: string, prefix: string) => {
  * @param str String to trim suffix from.
  * @param suffix Suffix to trim.
  */
-export const trimSuffix = (str: string, suffix: string) => {
-    if (str.endsWith(suffix)) return str.slice(0, -(suffix.length));
-    else return str;
-};
+// export const trimSuffix = (str: string, suffix: string) => {
+//     if (str.endsWith(suffix)) return str.slice(0, -(suffix.length));
+//     else return str;
+// };
 
 /**
  * Converts any string to PascalCase. Source: https://quickref.me/convert-a-string-to-pascal-case

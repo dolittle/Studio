@@ -6,4 +6,4 @@ export { formatTime, formatStartingDate } from './dates';
 export { getContainerStatus, getPodHealthStatus } from './connectionStatuses';
 export { DownloadLogs } from './downloads';
 export { formatBytes } from './numbers';
-export { isAlphaNumeric } from './regex';
+export * from './regex';
