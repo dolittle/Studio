@@ -1,3 +1,9 @@
+# [3.18.7] - 2023-10-3 [PR: #479](https://github.com/dolittle/Studio/pull/479)
+## Summary
+
+Put back CreateCustomer component.
+
+
 # [3.18.6] - 2023-10-3 [PR: #478](https://github.com/dolittle/Studio/pull/478)
 ## Summary
 
