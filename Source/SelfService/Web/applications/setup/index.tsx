@@ -13,7 +13,7 @@ import { getApplication, HttpResponseApplication } from '../../apis/solutions/ap
 import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
 import { SetupContainerScreen } from './cicd/setupContainerScreen';
 
-import { withRouteApplicationState } from '../../spaces/applications/withRouteApplicationState';
+import { withRouteApplicationState } from '../../utils/withRouteApplicationState';
 
 export const SetupIndex = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();

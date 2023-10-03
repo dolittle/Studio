@@ -5,14 +5,14 @@ import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { useGlobalContext } from '../../context/globalContext';
+import { useGlobalContext } from '../context/globalContext';
 
 import { getSelectionMenuItems, DropdownMenuProps, MenuItemProps } from '@dolittle/design-system';
 
-import { ShortInfo } from '../../apis/solutions/api';
-import { getApplication, getApplicationsListing, getLiveApplications, HttpResponseApplication } from '../../apis/solutions/application';
+import { ShortInfo } from '../apis/solutions/api';
+import { getApplication, getApplicationsListing, getLiveApplications, HttpResponseApplication } from '../apis/solutions/application';
 
-import { ApplicationCreateDialog } from './applicationCreateDialog';
+import { ApplicationCreateDialog } from '../components/applicationCreateDialog';
 
 export const ApplicationChanger = () => {
     const navigate = useNavigate();

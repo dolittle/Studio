@@ -9,7 +9,7 @@ import { useGlobalContext } from '../context/globalContext';
 
 import { getPrimaryNavigationItems, getSecondaryNavigationItems, getSidePanelItems, LayoutProps, MenuListProps, MenuItemProps } from '@dolittle/design-system';
 
-import { ApplicationChanger } from '../spaces/applications/applicationChanger';
+import { ApplicationChanger } from './applicationChanger';
 
 const PrimaryNavigation = () => {
     const location = useLocation();

@@ -3,9 +3,9 @@
 
 import React, { useEffect, ComponentType } from 'react';
 
-import { useGlobalContext } from '../../context/globalContext';
+import { useGlobalContext } from '../context/globalContext';
 
-import { RouteApplicationParams, useRouteApplicationParams } from '../../utils/route';
+import { RouteApplicationParams, useRouteApplicationParams } from './route';
 
 export type WithRouteApplicationProps = {
     routeApplicationParams: RouteApplicationParams;

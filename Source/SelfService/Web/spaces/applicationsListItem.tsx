@@ -9,7 +9,7 @@ import { ListItem } from '@mui/material';
 
 import { Button } from '@dolittle/design-system';
 
-import { ShortInfo } from '../../apis/solutions/api';
+import { ShortInfo } from '../apis/solutions/api';
 
 // Makes ListItem buttons as wide as the longest one.
 const styles = {

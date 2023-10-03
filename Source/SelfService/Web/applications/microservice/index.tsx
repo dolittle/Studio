@@ -19,7 +19,7 @@ import { MicroserviceCreateIndex } from './microserviceCreate';
 import { MicroserviceDetailsIndex } from './microserviceDetails';
 import { RouteNotFound } from '../../components/notfound';
 
-import { withRouteApplicationState } from '../../spaces/applications/withRouteApplicationState';
+import { withRouteApplicationState } from '../../utils/withRouteApplicationState';
 
 export const MicroservicesIndex = withRouteApplicationState(({ routeApplicationParams }) => {
     const navigate = useNavigate();

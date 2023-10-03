@@ -11,9 +11,9 @@ import { Stack, Typography } from '@mui/material';
 
 import { Checkbox, DialogForm, LoadingSpinnerFullPage, Input } from '@dolittle/design-system';
 
-import { createApplication, HttpApplicationRequest } from '../../apis/solutions/application';
+import { createApplication, HttpApplicationRequest } from '../apis/solutions/application';
 
-import { alphaNumericLowerCasedCharsRegex } from '../../utils/helpers/regex';
+import { alphaNumericLowerCasedCharsRegex } from '../utils/helpers/regex';
 
 type ApplicationCreateParameters = {
     name: string;
