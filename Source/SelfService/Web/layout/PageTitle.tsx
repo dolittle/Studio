@@ -20,15 +20,41 @@ const WithHealthStatus = ({ title, healthStatus, healthStatusLabel, healthStatus
         {healthStatus && <StatusIndicator status={healthStatus} label={healthStatusLabel} message={healthStatusMessage} variantFilled />}
     </Box>;
 
+/**
+ * The props for a {@link PageTitleProps} component.
+ */
 export type PageTitleProps = {
+    /**
+     * The title of the page.
+     */
     title: string;
+
+    /**
+     * The health status of the page.
+     */
     healthStatus?: StatusIndicatorProps['status'];
+
+    /**
+     * The health status label of the page.
+     */
     healthStatusLabel?: StatusIndicatorProps['label'];
+
+    /**
+     * The health status message of the page.
+     */
     healthStatusMessage?: StatusIndicatorProps['message'];
-    children?: React.ReactNode;
+
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
     sx?: SxProps;
 };
 
+/**
+ * The page title component is the header component that contains the title and optional status of the page.
+ * @param {PageTitleProps} props - The {@link PageTitleProps}.
+ * @returns A {@link PageTitle} component.
+ */
 export const PageTitle = ({ title, healthStatus, healthStatusLabel, healthStatusMessage, sx }: PageTitleProps) =>
     healthStatus
         ? <WithHealthStatus title={title} healthStatus={healthStatus} healthStatusLabel={healthStatusLabel} healthStatusMessage={healthStatusMessage} />
