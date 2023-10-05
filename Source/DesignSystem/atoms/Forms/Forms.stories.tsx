@@ -13,7 +13,6 @@ type FormData = {
     switchedValue: boolean;
 };
 
-
 type FormUIProps = {
     inputProps?: Partial<React.ComponentProps<typeof Input>>;
     selectProps?: Partial<React.ComponentProps<typeof Select>>;

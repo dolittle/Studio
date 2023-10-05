@@ -88,4 +88,3 @@ export const AccordionList = ({ singleExpandMode, items, expandedModel, onExpand
         </>
     );
 };
-

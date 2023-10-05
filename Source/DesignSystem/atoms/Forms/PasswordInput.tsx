@@ -14,7 +14,6 @@ import { Input, InputProps } from './Input';
 export type PasswordInputProps = InputProps & {
 };
 
-
 /**
  * Creates a password input field to be used in a {@link Form}.
  * By default, the input will be masked with an option to show the password.
