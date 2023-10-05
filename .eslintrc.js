@@ -16,7 +16,7 @@ const allowTsxPascalParameters =
 module.exports = {
     extends: [
         '@dolittle',
-        'plugin:react/recommended'
+        'plugin:react/recommended',
     ],
     root: true,
     parserOptions: {
@@ -26,8 +26,8 @@ module.exports = {
     },
     settings: {
         react: {
-            version: 'detect'
-        }
+            version: 'detect',
+        },
     },
     rules: {
         '@typescript-eslint/unified-signatures': 'off',
