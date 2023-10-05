@@ -33,7 +33,7 @@ module.exports = {
         '@typescript-eslint/unified-signatures': 'off',
         'import/no-extraneous-dependencies': 'off',
         'eol-last': 'error',
-        'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
+        //'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
         'header/header': [
             2,
             'line',
