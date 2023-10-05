@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { useEffect, useMemo, useState } from 'react';
@@ -8,7 +8,7 @@ import { isAvailable } from './ttyd';
 export const useTTYdUrl = (applicationId: string, environment: string, microserviceId: string): string => {
     const url = useMemo(
         () => `/proxy/${applicationId}/${environment}/${microserviceId}/shell`
-    , [applicationId, environment, microserviceId]);
+        , [applicationId, environment, microserviceId]);
 
     return url;
 };

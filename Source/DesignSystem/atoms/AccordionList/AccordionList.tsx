@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useState } from 'react';
@@ -67,7 +67,7 @@ export const AccordionList = ({ singleExpandMode, items, expandedModel, onExpand
 
     useEffect(() => {
         if (expandedModel &&
-            (expandedModel.length !== [...expanded].length|| !expandedModel.every(model => expanded.has(model)))
+            (expandedModel.length !== [...expanded].length || !expandedModel.every(model => expanded.has(model)))
         ) {
             setExpanded(new Set(expandedModel));
         }
@@ -88,4 +88,3 @@ export const AccordionList = ({ singleExpandMode, items, expandedModel, onExpand
         </>
     );
 };
-

@@ -1,14 +1,14 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { Configuration } from './generated';
 
 export const getBridgeServerUrlPrefix = () => {
-    return '/selfservice/api/bridge';
+  return '/selfservice/api/bridge';
 };
 
 export const API_CONFIGURATION = new Configuration({
-    basePath: getBridgeServerUrlPrefix(),
+  basePath: getBridgeServerUrlPrefix(),
 });
 
 export async function generateStatusErrorMessage(status: number, body: string): Promise<string>;

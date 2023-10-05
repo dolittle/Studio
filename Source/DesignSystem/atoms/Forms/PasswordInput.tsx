@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { forwardRef } from 'react';
@@ -13,7 +13,6 @@ import { Input, InputProps } from './Input';
  */
 export type PasswordInputProps = InputProps & {
 };
-
 
 /**
  * Creates a password input field to be used in a {@link Form}.

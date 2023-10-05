@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useReducer } from 'react';
@@ -29,8 +29,8 @@ export const ActionToolbar = ({ connectionId, connectorName, onEditAction, onDel
     return (
         <Box sx={{ display: 'flex', gap: 2 }}>
             {canEdit
-                ? <Button label={'Cancel'} startWithIcon='CancelRounded' onClick={onCancelAction} type='reset' disabled={alwaysEdit}/>
-                : <Button label='Edit' startWithIcon='EditRounded' onClick={onEditAction} disabled={alwaysEdit}/>}
+                ? <Button label={'Cancel'} startWithIcon='CancelRounded' onClick={onCancelAction} type='reset' disabled={alwaysEdit} />
+                : <Button label='Edit' startWithIcon='EditRounded' onClick={onEditAction} disabled={alwaysEdit} />}
             <Button
                 label='Save'
                 startWithIcon='SaveRounded'

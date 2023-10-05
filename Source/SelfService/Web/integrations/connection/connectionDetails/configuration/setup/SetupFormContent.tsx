@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useEffect, useMemo } from 'react';
@@ -79,7 +79,7 @@ export const SetupFormContent = ({
             children: <M3BasicAuthenticationCredentials canEdit={canEdit} />,
             statusLevel: basicAuthenticationCredentialsStatus?.status,
             statusLabel: basicAuthenticationCredentialsStatus?.label,
-            statusMessage: basicAuthenticationCredentialsStatus?.message ,
+            statusMessage: basicAuthenticationCredentialsStatus?.message,
             sx: { mt: 8 },
         };
 

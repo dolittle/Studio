@@ -1,22 +1,22 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 const allowTsxPascalParameters =
     require('@dolittle/eslint-config')
-    .rules['@typescript-eslint/naming-convention']
-    .map(option => {
-        if (option.selector !== 'parameter') return option;
-        const { format, ...rest } = option;
-        return {
-            format: [...format, 'PascalCase'],
-            ...rest,
-        };
-    });
+        .rules['@typescript-eslint/naming-convention']
+        .map(option => {
+            if (option.selector !== 'parameter') return option;
+            const { format, ...rest } = option;
+            return {
+                format: [...format, 'PascalCase'],
+                ...rest,
+            };
+        });
 
 module.exports = {
     extends: [
         '@dolittle',
-        'plugin:react/recommended'
+        'plugin:react/recommended',
     ],
     root: true,
     parserOptions: {
@@ -26,23 +26,22 @@ module.exports = {
     },
     settings: {
         react: {
-            version: 'detect'
-        }
+            version: 'detect',
+        },
     },
     rules: {
         '@typescript-eslint/unified-signatures': 'off',
         'import/no-extraneous-dependencies': 'off',
         'eol-last': 'error',
-        // 'no-multiple-empty-lines': ['error', {max: 1, maxEOF: 0 }],
-        // 'header/header': [
-        //     2,
-        //     'line',
-        //     [
-        //         ' Copyright (c) Dolittle. All rights reserved.',
-        //         ' Licensed under the MIT license. See LICENSE file in the project root for full license information.',
-        //     ],
-        //     2
-        // ],
+        //'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
+        'header/header': [
+            2,
+            'line',
+            [
+                ' Copyright (c) Aigonix. All rights reserved.',
+                ' Licensed under the MIT license. See LICENSE file in the project root for full license information.',
+            ],
+        ],
         'jsdoc/require-param-name': 'error',
         // 'jsdoc/require-param-type': 'error',
         'jsdoc/check-alignment': 'error',

@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
@@ -12,7 +12,6 @@ type FormData = {
     checkedValue: boolean;
     switchedValue: boolean;
 };
-
 
 type FormUIProps = {
     inputProps?: Partial<React.ComponentProps<typeof Input>>;

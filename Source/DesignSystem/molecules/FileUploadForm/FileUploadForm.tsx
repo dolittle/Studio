@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { DragEvent, FormEvent, useImperativeHandle, useState, useRef } from 'react';
@@ -108,7 +108,7 @@ export const FileUploadForm = React.forwardRef<FileUploadFormRef, FileUploadForm
             formRef?.current?.dispatchEvent(event);
         },
         clearSelected: () => { handleFileDelete(); },
-    }),[formRef, fileInputRef]);
+    }), [formRef, fileInputRef]);
 
     const handleFileDrag = (event: DragEvent) => {
         event.preventDefault();

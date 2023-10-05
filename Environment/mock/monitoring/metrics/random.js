@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 const { EqlSingle, Neq } = require('@prometheus-io/lezer-promql');
@@ -12,7 +12,7 @@ const microservices = [
             microservice: 'Welcome',
             microservice_id: '7e78b802-e246-467b-9946-1deabf8042ef',
         },
-        containers: [ 'head', 'runtime' ],
+        containers: ['head', 'runtime'],
     }
 ];
 
@@ -62,7 +62,7 @@ const createMetricsFor = (microservices, perContainer) =>
     (
         perContainer
             ? microservices.flatMap(({ labels, containers }) => containers.map(container => ({ container, ...labels })))
-            : microservices.map(({labels}) => labels)
+            : microservices.map(({ labels }) => labels)
     ).map(labels => ({ metric: labels }));
 
 exports.queryInstant = (query, time) => {
@@ -74,7 +74,7 @@ exports.queryInstant = (query, time) => {
             ...metric,
             value: [
                 time,
-                (spec.range[0] + Math.random()*(spec.range[1]-spec.range[0])).toString(),
+                (spec.range[0] + Math.random() * (spec.range[1] - spec.range[0])).toString(),
             ]
         }));
 
@@ -98,7 +98,7 @@ exports.queryRange = (query, start, end, step) => {
             const values = [];
 
             let time = start;
-            let value = spec.range[0] + Math.random()*(spec.range[1]-spec.range[0]);
+            let value = spec.range[0] + Math.random() * (spec.range[1] - spec.range[0]);
             while (time <= end) {
                 values.push([
                     time,
@@ -107,7 +107,7 @@ exports.queryRange = (query, start, end, step) => {
 
                 time += step;
 
-                value += Math.random()*spec.rate - spec.rate/2;
+                value += Math.random() * spec.rate - spec.rate / 2;
                 value = Math.max(spec.range[0], Math.min(spec.range[1], value))
             }
 

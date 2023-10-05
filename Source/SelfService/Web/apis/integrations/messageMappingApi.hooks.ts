@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { useQuery, useMutation, UseMutationOptions } from '@tanstack/react-query';
@@ -62,7 +62,7 @@ export const useConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPost
         });
     };
 
-    export const useConnectionsIdMessageMappingsDeployPost =
+export const useConnectionsIdMessageMappingsDeployPost =
     (options?: UseMutationOptions<string[], unknown, ConnectionsIdMessageMappingsDeployPostRequest, unknown>) => {
         const api = getOrCreateApi();
         return useMutation({
@@ -73,12 +73,12 @@ export const useConnectionsIdMessageMappingsTablesTableMessagesMessageDeployPost
         });
     };
 
-    /**
-     * Hook to Delete multiple message mappings.
-     * @param options Options for the mutation
-     * @returns UseMutationResult for the query
-     */
-    export const useConnectionsIdMessageMappingsDeleteMultiplePost =
+/**
+ * Hook to Delete multiple message mappings.
+ * @param options Options for the mutation
+ * @returns UseMutationResult for the query
+ */
+export const useConnectionsIdMessageMappingsDeleteMultiplePost =
     (options?: UseMutationOptions<string[], unknown, ConnectionsIdMessageMappingsDeleteMultiplePostRequest, unknown>) => {
         const api = getOrCreateApi();
         return useMutation({

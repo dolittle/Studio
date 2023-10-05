@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { createElement, useRef, ComponentProps, JSXElementConstructor } from 'react';
@@ -61,7 +61,7 @@ export const componentStories = <TComponent extends Component>(component: TCompo
 
     addActionsToArgTypes(argTypes, config?.actions);
 
-    const decorators = config?.decorator !== undefined ? [ config.decorator ] : [];
+    const decorators = config?.decorator !== undefined ? [config.decorator] : [];
 
     const metadata: ComponentMeta<TComponent> = {
         component,
