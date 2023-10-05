@@ -1,3 +1,9 @@
+# [3.18.8] - 2023-10-5 [PR: #480](https://github.com/dolittle/Studio/pull/480)
+## Summary
+
+Change header copyright information from 'Dolittle' to 'Aigonix'.
+
+
 # [3.18.7] - 2023-10-3 [PR: #479](https://github.com/dolittle/Studio/pull/479)
 ## Summary
 
