@@ -24,12 +24,9 @@ module.exports = {
             'line',
             [
                 ' Copyright (c) Aigonix. All rights reserved.',
-                ' Licensed under the MIT license. See LICENSE file in the project root for full license information.'
-            ]
+                ' Licensed under the MIT license. See LICENSE file in the project root for full license information.',
+            ],
         ],
-
-
-
         // eslint
         'brace-style': ['error', '1tbs', { allowSingleLine: true }],
         'constructor-super': 'error',
@@ -52,7 +49,7 @@ module.exports = {
             { name: 'setInterval' },
             { name: 'clearInterval' },
             { name: 'setImmediate' },
-            { name: 'clearImmediate' }
+            { name: 'clearImmediate' },
         ],
         'no-sparse-arrays': 'error',
         'no-template-curly-in-string': 'error',
@@ -68,6 +65,6 @@ module.exports = {
         'quote-props': ['error', 'consistent-as-needed'],
         'space-in-parens': 'error',
         'unicode-bom': ['error', 'never'],
-        'use-isnan': 'error'
-    }
-}
+        'use-isnan': 'error',
+    },
+};
