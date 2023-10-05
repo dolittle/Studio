@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { forwardRef } from 'react';
@@ -46,7 +46,7 @@ export type InputProps = {
      * If true, the `Input` element will take up the full width of its container.
      * @default false
      */
-        isFullWidth?: boolean;
+    isFullWidth?: boolean;
 
     /**
      * Whether the input should be multiline.
@@ -79,13 +79,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ autoFocus, star
             variant='outlined'
             size='small'
             sx={{
-                'width': isFullWidth ? undefined :  220,
+                'width': isFullWidth ? undefined : 220,
                 'mb': { sm: 0, xs: 2.5 },
                 '& fieldset': { borderStyle: dashedBorder ? 'dashed' : 'solid' },
                 ...sx,
             }}
             fullWidth={isFullWidth}
-            >
+        >
             <InputLabel
                 htmlFor={fieldProps.id}
                 required={isRequired(fieldProps.required)}

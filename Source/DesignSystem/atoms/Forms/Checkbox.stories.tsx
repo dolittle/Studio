@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React from 'react';
@@ -17,7 +17,8 @@ const { metadata, createStory } = componentStories(Checkbox, {
 
 metadata.parameters = {
     docs: {
-        description: { component: `A checkbox is an input control that allows a user to select one or more options from a number of choices, 
+        description: {
+            component: `A checkbox is an input control that allows a user to select one or more options from a number of choices, 
 including sub-selections, or to turn an item on or off in a desktop environment. Checkboxes should be used instead of switches if multiple options can be selected from a list. 
 There are three variants of a checkbox: selected, unselected, and indeterminate. Always provide a succinct, yet clear label, as to what the checkbox is for. If only one selection is allowed, use a radio button instead.
 

@@ -1,8 +1,8 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState } from 'react';
-import { enqueueSnackbar} from 'notistack';
+import { enqueueSnackbar } from 'notistack';
 import { Button, StatusIndicator } from '@dolittle/design-system';
 import { TableToolbarButton } from './TableToolbarButton';
 

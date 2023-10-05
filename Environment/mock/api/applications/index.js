@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 const { Router } = require('express');
@@ -239,7 +239,7 @@ const liveApplicationEnvironmentPodstatuses = {
         },
         prod: {
             'f2a36f3e-4052-4007-bb22-c6ae56cde1b3': {
-            // '7e78b802-e246-467b-9946-1deabf8042ef': {
+                // '7e78b802-e246-467b-9946-1deabf8042ef': {
                 namespace: 'application-11b6cf47-5d9f-438f-8116-0d9828654657',
                 microservice: {
                     name: 'Welcome',
@@ -287,7 +287,7 @@ const liveMicroservicesConfigFiles = {
         },
         Prod: {
             'f2a36f3e-4052-4007-bb22-c6ae56cde1b3': {
-            // '7e78b802-e246-467b-9946-1deabf8042ef': {
+                // '7e78b802-e246-467b-9946-1deabf8042ef': {
                 data: [],
             },
         },
@@ -315,7 +315,7 @@ routes.post('/application', (req, res) => {
     console.log('Creating application', application);
 
     if (application.name === 'fail') {
-        res.status(500).json({ message: 'Mock failing intentionally for application name "fail"'}).end();
+        res.status(500).json({ message: 'Mock failing intentionally for application name "fail"' }).end();
         return;
     }
 
@@ -334,7 +334,7 @@ routes.get('/live/application/:id/microservices', (req, res) => {
 });
 
 routes.get('/live/application/:applicationId/environment/:environmentId/microservice/:microserviceId/podstatus', (req, res) => {
-    const {applicationId, environmentId, microserviceId} = req.params;
+    const { applicationId, environmentId, microserviceId } = req.params;
 
     console.log('Getting live microservice Pod status', applicationId, environmentId, microserviceId);
     if (applicationId in liveApplicationEnvironmentPodstatuses) {
@@ -363,8 +363,8 @@ routes.get('/live/application/:applicationId/environment/:environmentId/microser
 });
 
 routes.get('/live/application/:applicationId/pod/:podName/logs', (req, res) => {
-    const {applicationId, podName} = req.params;
-    const {containerName} = req.query;
+    const { applicationId, podName } = req.params;
+    const { containerName } = req.query;
 
     console.warn('Getting live microservice Pod logs', applicationId, podName, containerName, '. This will only return empty data.');
     res.status(200).json({
@@ -376,7 +376,7 @@ routes.get('/live/application/:applicationId/pod/:podName/logs', (req, res) => {
 
 routes.get('/live/application/:applicationId/environment/:environmentId/microservice/:microserviceId/config-files/list', (req, res) => {
 
-    const {applicationId, environmentId, microserviceId} = req.params;
+    const { applicationId, environmentId, microserviceId } = req.params;
 
     console.log('Getting live microservice ConfigFiles', applicationId, environmentId, microserviceId);
     if (applicationId in liveMicroservicesConfigFiles) {
@@ -384,12 +384,12 @@ routes.get('/live/application/:applicationId/environment/:environmentId/microser
         if (environmentId in application) {
             const environment = application[environmentId];
             if (microserviceId in environment) {
-                const configFiles = { applicationId, microserviceId, environment: environmentId, ...environment[microserviceId]};
+                const configFiles = { applicationId, microserviceId, environment: environmentId, ...environment[microserviceId] };
                 res.status(200).json(configFiles).end();
                 return;
             }
         }
     }
 
-    res.status(500).json({ message: 'not-found'}).end();
+    res.status(500).json({ message: 'not-found' }).end();
 });

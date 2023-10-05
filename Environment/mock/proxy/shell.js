@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 const { Router } = require('express');
@@ -23,7 +23,7 @@ routes.ws('/ws', (ws, req) => {
     console.log('Opened Shell Proxy /ws');
 
     const send = (command, data) => {
-        ws.send(Buffer.from(command+data, 'utf8'));
+        ws.send(Buffer.from(command + data, 'utf8'));
     };
     const write = (data) => {
         send('0', data);
@@ -68,7 +68,7 @@ routes.ws('/ws', (ws, req) => {
 
             ws.on('message', (msg) => {
                 const str = msg.toString('utf8');
-                const command = str.slice(0,1);
+                const command = str.slice(0, 1);
                 const data = str.slice(1);
 
                 try {

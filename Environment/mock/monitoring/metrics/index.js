@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 const { Router } = require('express');
@@ -56,7 +56,7 @@ const parseQuery = (query) => {
 routes.get('/query', (req, res) => {
     console.log('Getting metrics');
     const query = parseQuery(req.query.query);
-    const result = queryInstant(query, parseFloat(req.query.time) ?? Date.now()/1000);
+    const result = queryInstant(query, parseFloat(req.query.time) ?? Date.now() / 1000);
     global.setTimeout(() => {
         res.status(200).json(result).end();
     }, 0);

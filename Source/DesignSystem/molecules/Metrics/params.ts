@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { useCallback, useMemo, useRef, RefObject } from 'react';
@@ -51,7 +51,7 @@ export const useSpecWithParams = (spec: TopLevelSpec, params: Parameter[]): [Vis
             : nameOrParams;
 
         view.modifyView(view => {
-            for (const {name, value} of paramsToSet) {
+            for (const { name, value } of paramsToSet) {
                 view.signal(name, value);
             }
             view.runAsync();

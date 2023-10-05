@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { useQuery, useMutation, QueryOptions, UseQueryOptions } from '@tanstack/react-query';
@@ -26,7 +26,7 @@ const getOrCreateApi = () => {
 export const useConnectionsIdKafkaServiceAccountsGet = (
     params: ConnectionsIdKafkaServiceAccountsGetRequest,
     options?: UseQueryOptions<KafkaServiceAccountListDto[], unknown, KafkaServiceAccountListDto[], string[]>
-    ) => {
+) => {
     const api = getOrCreateApi();
     return useQuery({
         queryKey: [CACHE_KEYS.ConnectionKafkaServiceAccounts_GET, params.id],

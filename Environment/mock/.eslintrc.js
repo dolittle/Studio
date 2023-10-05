@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
             2,
             'line',
             [
-                ' Copyright (c) Dolittle. All rights reserved.',
+                ' Copyright (c) Aigonix. All rights reserved.',
                 ' Licensed under the MIT license. See LICENSE file in the project root for full license information.'
             ]
         ],

@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { componentStories } from '@dolittle/design-system';
@@ -35,6 +35,6 @@ export const Empty = createStory({
     subtitle: 'Last 24 hours',
     unit: 'CPUs',
     data: [],
-    domain: [ data.first[0].time, data.first.slice(-1)[0].time ],
+    domain: [data.first[0].time, data.first.slice(-1)[0].time],
     range: [0, 2],
 });

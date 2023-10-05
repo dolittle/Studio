@@ -1,4 +1,4 @@
-// Copyright (c) Dolittle. All rights reserved.
+// Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import { InputMessages, OutputMessages } from './messages';
@@ -57,7 +57,7 @@ export const createFakeServer = (): TerminalStreams => {
                     break;
                 case '\u007F': // Backspace (DEL)
                     if (input.length > 0) {
-                        input = input.substring(0, input.length-1);
+                        input = input.substring(0, input.length - 1);
                         controller.enqueue({ type: 'output', data: '\b \b' });
                     }
                     break;
