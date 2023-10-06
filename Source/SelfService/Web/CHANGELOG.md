@@ -1,3 +1,13 @@
+# [3.18.9] - 2023-10-6 [PR: #481](https://github.com/dolittle/Studio/pull/481)
+## Summary
+
+Remove FluentUI as dependency.
+
+### Changed
+
+- Updated sass and sass-loader to latest version
+
+
 # [3.18.8] - 2023-10-5 [PR: #480](https://github.com/dolittle/Studio/pull/480)
 ## Summary
 
