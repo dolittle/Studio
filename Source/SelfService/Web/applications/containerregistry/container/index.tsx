@@ -15,11 +15,11 @@ import { RegistryImages } from './registryImages';
 import { RegistryWelcome } from './registryWelcome';
 import { RegistryTags } from './registryTags';
 
-export type RegistryContainerProps = {
+export type ContainerIndexProps = {
     application: HttpResponseApplication;
 };
 
-export const RegistryContainer = ({ application }: RegistryContainerProps) => {
+export const ContainerIndex = ({ application }: ContainerIndexProps) => {
     const navigate = useNavigate();
 
     const applicationId = application.id;

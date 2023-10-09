@@ -10,7 +10,7 @@ import { Typography } from '@mui/material';
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
 import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
-import { RegistryContainer } from './container/registryContainer';
+import { ContainerIndex } from './container';
 import { RouteNotFound } from '../../components/notfound';
 
 import { withRouteApplicationState } from '../../utils/withRouteApplicationState';
@@ -51,7 +51,7 @@ export const ContainerRegistryIndex = withRouteApplicationState(({ routeApplicat
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='Container Registry | Applications' sidePanelMode='applications'>
             <Routes>
-                <Route path='/overview/*' element={<RegistryContainer application={application} />} />
+                <Route path='/overview/*' element={<ContainerIndex application={application} />} />
                 <Route path='*' element={<RouteNotFound redirectUrl={'overview'} auto={true} />} />
             </Routes>
         </WorkSpaceLayoutWithSidePanel>
