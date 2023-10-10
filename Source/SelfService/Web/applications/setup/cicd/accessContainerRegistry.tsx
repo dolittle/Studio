@@ -9,6 +9,30 @@ import { Info } from '../../stores/documentationInfo';
 
 import { getContainerRegistry } from '../../../apis/solutions/cicd';
 
+// TODO: Move to DesignSystem
+type BadgeWithTitleProps = {
+    number: number;
+    text: string;
+};
+
+// TODO: Move to DesignSystem
+const BadgeWithText = ({ number, text }: BadgeWithTitleProps) =>
+    <Box sx={{ display: 'flex' }}>
+        <Badge badgeContent={number} color='primary' sx={{ top: '12px', mr: 3, ml: 1 }} />
+        <Typography variant='subtitle1'>{text}</Typography>
+    </Box>;
+
+// TODO: Move to DesignSystem
+type PreformattedTextBlockProps = {
+    text: string;
+};
+
+// TODO: Move to DesignSystem
+const PreformattedTextBlock = ({ text }: PreformattedTextBlockProps) =>
+    <Box sx={{ color: 'text.secondary', fontSize: 14, ml: 4 }}>
+        <pre style={{ margin: '8px 0' }}>{text}</pre>
+    </Box>;
+
 export type DockerCredentials = {
     repoUrl: string;
 };
@@ -52,68 +76,34 @@ export const AccessContainerRegistry = ({ info }: AccessContainerRegistryProps) 
     return (
         <Paper sx={{ p: 2 }}>
             <Box sx={{ mb: 3 }}>
-                <Box sx={{ display: 'flex', mb: 1 }}>
-                    <Badge badgeContent='1' color='primary' sx={{ top: '12px', mr: 3, ml: 1 }} />
-                    <Typography variant='subtitle1'>Login to Azure</Typography>
-                </Box>
-
-                <Box sx={{ color: 'text.secondary', fontSize: 14, ml: 4 }}>
-                    <code>az login</code>
-                </Box>
+                <BadgeWithText number={1} text='Login to Azure' />
+                <PreformattedTextBlock text={`az login`} />
             </Box>
 
             <Box sx={{ mb: 3 }}>
-                <Box sx={{ display: 'flex', mb: 1 }}>
-                    <Badge badgeContent='2' color='primary' sx={{ top: '12px', mr: 3, ml: 1 }} />
-                    <Typography variant='subtitle1'>Login to your registry</Typography>
-                </Box>
-
-                <Box sx={{ color: 'text.secondary', fontSize: 14, ml: 4 }}>
-                    <code>{`az acr login -n ${vars.acrId} --subscription ${vars.subscriptionId}`}</code>
-                </Box>
+                <BadgeWithText number={2} text='Login to your registry' />
+                <PreformattedTextBlock text={`az acr login -n ${vars.acrId} --subscription ${vars.subscriptionId}`} />
             </Box>
 
             <Box sx={{ mb: 3 }}>
-                <Box sx={{ display: 'flex', mb: 1 }}>
-                    <Badge badgeContent='3' color='primary' sx={{ top: '12px', mr: 3, ml: 1 }} />
-                    <Typography variant='subtitle1'>List images in acr</Typography>
-                </Box>
-
-                <Box sx={{ color: 'text.secondary', fontSize: 14, ml: 4 }}>
-                    <code>{`az acr repository list --name ${vars.acrId} -otable`}</code>
-                </Box>
+                <BadgeWithText number={3} text='List images in acr' />
+                <PreformattedTextBlock text={`az acr repository list --name ${vars.acrId} -otable`} />
             </Box>
 
             <Box>
-                <Box sx={{ display: 'flex', mb: 1 }}>
-                    <Badge badgeContent='4' color='primary' sx={{ top: '12px', mr: 3, ml: 1 }} />
-                    <Typography variant='subtitle1'>Push images</Typography>
-                </Box>
+                <BadgeWithText number={4} text='Push images' />
+                <PreformattedTextBlock text={`# pull down your example of choice
+# golang hello world
+git clone git@github.com:dolittle-entropy/go-hello-world
 
-                <Box sx={{ color: 'text.secondary', fontSize: 14, ml: 4 }}>
-                    <code>
-                        {`# pull down your example of choice`}
-                        <br />
-                        {`# golang hello world`}
-                        <br />
-                        git clone git@github.com:dolittle-entropy/go-hello-world
-                        <br />
-                        <br />
-                        # build go-hello-world docker image
-                        <br />
-                        docker build -t go-hello-world .
-                        <br />
-                        <br />
-                        # tag the image with the url to container registry
-                        <br />
-                        {`docker tag go-hello-world:latest ${vars.dockerCredentials.repoUrl}/go-hello-world:latest`}
-                        <br />
-                        <br />
-                        # push the image to container registry
-                        <br />
-                        {`docker push ${vars.dockerCredentials.repoUrl}/go-hello-world:latest`}
-                    </code>
-                </Box>
+# build go-hello-world docker image
+docker build -t go-hello-world .
+
+# tag the image with the url to container registry
+docker tag go-hello-world:latest ${vars.dockerCredentials.repoUrl}/go-hello-world:latest
+
+# push the image to container registry
+docker push ${vars.dockerCredentials.repoUrl} /go-hello-world:latest`} />
             </Box>
         </Paper>
     );
