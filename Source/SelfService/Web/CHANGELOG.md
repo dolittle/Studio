@@ -1,3 +1,9 @@
+# [3.18.10] - 2023-10-10 [PR: #482](https://github.com/dolittle/Studio/pull/482)
+## Summary
+
+Improve the appearance of the empty container registry page.
+
+
 # [3.18.9] - 2023-10-6 [PR: #481](https://github.com/dolittle/Studio/pull/481)
 ## Summary
 
