@@ -9,13 +9,13 @@ import { getPersonalisedInfo } from '../../../apis/solutions/application';
 
 import { AccessContainerRegistry } from '../../setup/cicd/accessContainerRegistry';
 
-export type RegistryWelcomeProps = {
+export type RegistryEmptyProps = {
     applicationId: string;
 };
 
-export const RegistryWelcome = ({ applicationId }: RegistryWelcomeProps) => {
+export const RegistryEmpty = ({ applicationId }: RegistryEmptyProps) => {
     const [info, setInfo] = useState({} as any);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         Promise.all([getPersonalisedInfo(applicationId)])
@@ -23,19 +23,16 @@ export const RegistryWelcome = ({ applicationId }: RegistryWelcomeProps) => {
                 const data = values[0];
                 data.applicationId = applicationId;
                 setInfo(data);
-                setIsLoaded(true);
+                setIsLoading(false);
             });
     }, []);
 
-    if (!isLoaded) return null;
+    if (isLoading) return null;
 
     return (
         <>
-            <Typography>Your container registry is empty</Typography>
-            <br />
-
-            <Typography variant='h1' my={2}>How to access and add an image to your container registry</Typography>
-            <br />
+            <Typography variant='h2'>Your container registry is empty...</Typography>
+            <Typography variant='h5' sx={{ my: 2 }}>How to access and add an image to your container registry</Typography>
 
             <AccessContainerRegistry info={info} />
         </>

@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState } from 'react';
 
-import { Paper, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { DataGridPro, GridRowId, GridRowParams } from '@mui/x-data-grid-pro';
 
 import { DataGridWrapper, Icon } from '@dolittle/design-system';
@@ -37,9 +37,7 @@ const CustomToolbar = (rows: HealthStatusDataGridRow[]) =>
     <Typography variant='body2' sx={styles.podTitle}>{`Pod: ${rows[0]?.podName || 'N/A'}`}</Typography>;
 
 const DetailPanelContent = ({ row }: { row: HealthStatusDataGridRow }) =>
-    <Paper>
-        <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />
-    </Paper>;
+    <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />;
 
 export type HealthStatusTableStats = {
     average: number;

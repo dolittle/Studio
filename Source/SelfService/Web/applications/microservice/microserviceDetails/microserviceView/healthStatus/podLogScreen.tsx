@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 
 import { LoadingSpinner } from '@dolittle/design-system';
 
@@ -26,7 +26,7 @@ export const PodLogScreen = ({ applicationId, podName, containerName }: any) => 
     };
 
     return (
-        <>
+        <Paper>
             {!data.logs ?
                 <Typography variant="body2" sx={{ pl: 7.5, py: 1 }}>
                     There are no logs printed for this microservice.
@@ -36,6 +36,6 @@ export const PodLogScreen = ({ applicationId, podName, containerName }: any) => 
                     {data.logs}
                 </pre>
             }
-        </>
+        </Paper>
     );
 };

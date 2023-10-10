@@ -3,62 +3,44 @@
 
 import React, { useEffect, useState } from 'react';
 
-import ReactMarkdown from 'react-markdown';
-
-import gfm from 'remark-gfm';
+import { Badge, Box, Paper, Typography } from '@mui/material';
 
 import { Info } from '../../stores/documentationInfo';
 
 import { getContainerRegistry } from '../../../apis/solutions/cicd';
 
+// TODO: Move to DesignSystem
+type BadgeWithTitleProps = {
+    number: number;
+    text: string;
+};
+
+// TODO: Move to DesignSystem
+const BadgeWithText = ({ number, text }: BadgeWithTitleProps) =>
+    <Box sx={{ display: 'flex' }}>
+        <Badge badgeContent={number} color='primary' sx={{ top: '12px', mr: 3, ml: 1 }} />
+        <Typography variant='subtitle1'>{text}</Typography>
+    </Box>;
+
+// TODO: Move to DesignSystem
+type PreformattedTextBlockProps = {
+    text: string;
+};
+
+// TODO: Move to DesignSystem
+const PreformattedTextBlock = ({ text }: PreformattedTextBlockProps) =>
+    <Box sx={{ color: 'text.secondary', fontSize: 14, ml: 4 }}>
+        <pre style={{ margin: '8px 0' }}>{text}</pre>
+    </Box>;
+
 export type DockerCredentials = {
-    repoUrl: string
+    repoUrl: string;
 };
 
 export type Vars = {
     acrId: string;
     subscriptionId: string;
     dockerCredentials: DockerCredentials;
-};
-
-function template(vars: Vars): string {
-    const markdown = `
-# Login to az
-
-~~~sh
-az login
-~~~
-
-# Login to your registry
-~~~sh
-az acr login -n ${vars.acrId} --subscription ${vars.subscriptionId}
-~~~
-
-
-# List images in acr
-~~~sh
-az acr repository list --name ${vars.acrId} -otable
-~~~
-
-
-# Push images
-~~~sh
-# pull down your exmaple of choice
-# golang hello world
-git clone git@github.com:dolittle-entropy/go-hello-world
-
-# build go-hello-world docker image
-docker build -t go-hello-world .
-
-# tag the image with the url to container registry
-docker tag go-hello-world:latest ${vars.dockerCredentials.repoUrl}/go-hello-world:latest
-
-# push the image to container registry
-docker push ${vars.dockerCredentials.repoUrl}/go-hello-world:latest
-~~~
-
-`;
-    return markdown.trim();
 };
 
 export type AccessContainerRegistryProps = {
@@ -91,11 +73,38 @@ export const AccessContainerRegistry = ({ info }: AccessContainerRegistryProps) 
         dockerCredentials: credentials
     } as Vars;
 
-    const data = template(vars);
-
     return (
-        <ReactMarkdown remarkPlugins={[gfm]}>
-            {data}
-        </ReactMarkdown>
+        <Paper sx={{ p: 2 }}>
+            <Box sx={{ mb: 3 }}>
+                <BadgeWithText number={1} text='Login to Azure' />
+                <PreformattedTextBlock text={`az login`} />
+            </Box>
+
+            <Box sx={{ mb: 3 }}>
+                <BadgeWithText number={2} text='Login to your registry' />
+                <PreformattedTextBlock text={`az acr login -n ${vars.acrId} --subscription ${vars.subscriptionId}`} />
+            </Box>
+
+            <Box sx={{ mb: 3 }}>
+                <BadgeWithText number={3} text='List images in acr' />
+                <PreformattedTextBlock text={`az acr repository list --name ${vars.acrId} -otable`} />
+            </Box>
+
+            <Box>
+                <BadgeWithText number={4} text='Push images' />
+                <PreformattedTextBlock text={`# pull down your example of choice
+# golang hello world
+git clone git@github.com:dolittle-entropy/go-hello-world
+
+# build go-hello-world docker image
+docker build -t go-hello-world .
+
+# tag the image with the url to container registry
+docker tag go-hello-world:latest ${vars.dockerCredentials.repoUrl}/go-hello-world:latest
+
+# push the image to container registry
+docker push ${vars.dockerCredentials.repoUrl} /go-hello-world:latest`} />
+            </Box>
+        </Paper>
     );
 };
