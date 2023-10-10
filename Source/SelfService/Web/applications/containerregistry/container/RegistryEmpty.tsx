@@ -9,11 +9,11 @@ import { getPersonalisedInfo } from '../../../apis/solutions/application';
 
 import { AccessContainerRegistry } from '../../setup/cicd/accessContainerRegistry';
 
-export type RegistryWelcomeProps = {
+export type RegistryEmptyProps = {
     applicationId: string;
 };
 
-export const RegistryWelcome = ({ applicationId }: RegistryWelcomeProps) => {
+export const RegistryEmpty = ({ applicationId }: RegistryEmptyProps) => {
     const [info, setInfo] = useState({} as any);
     const [isLoaded, setIsLoaded] = useState(false);
 

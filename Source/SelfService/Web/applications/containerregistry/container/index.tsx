@@ -12,7 +12,7 @@ import { getReposInContainerRegistry, ContainerRegistryImages } from '../../../a
 
 import { PageTitle } from '../../../layout/PageTitle';
 import { RegistryImages } from './registryImages';
-import { RegistryWelcome } from './registryWelcome';
+import { RegistryEmpty } from './RegistryEmpty';
 import { RegistryTags } from './registryTags';
 
 export type ContainerIndexProps = {
@@ -54,7 +54,7 @@ export const ContainerIndex = ({ application }: ContainerIndexProps) => {
             <PageTitle title='Container Registry' />
             <Routes>
                 <Route path='/' element={<RegistryImages applicationId={applicationId} data={containerRegistryImages} />} />
-                <Route path='/welcome' element={<RegistryWelcome applicationId={applicationId} />} />
+                <Route path='/welcome' element={<RegistryEmpty applicationId={applicationId} />} />
                 <Route path='/tags/:image' element={<RegistryTags url={containerRegistryImages.url} applicationId={applicationId} />} />
             </Routes>
         </Box>
