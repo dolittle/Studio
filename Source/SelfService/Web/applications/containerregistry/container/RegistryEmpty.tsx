@@ -15,7 +15,7 @@ export type RegistryEmptyProps = {
 
 export const RegistryEmpty = ({ applicationId }: RegistryEmptyProps) => {
     const [info, setInfo] = useState({} as any);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         Promise.all([getPersonalisedInfo(applicationId)])
@@ -23,11 +23,11 @@ export const RegistryEmpty = ({ applicationId }: RegistryEmptyProps) => {
                 const data = values[0];
                 data.applicationId = applicationId;
                 setInfo(data);
-                setIsLoaded(true);
+                setIsLoading(false);
             });
     }, []);
 
-    if (!isLoaded) return null;
+    if (isLoading) return null;
 
     return (
         <>
