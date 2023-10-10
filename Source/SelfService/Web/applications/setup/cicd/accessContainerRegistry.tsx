@@ -7,6 +7,8 @@ import ReactMarkdown from 'react-markdown';
 
 import gfm from 'remark-gfm';
 
+import { Badge, Box, Paper, Typography } from '@mui/material';
+
 import { Info } from '../../stores/documentationInfo';
 
 import { getContainerRegistry } from '../../../apis/solutions/cicd';
@@ -94,8 +96,75 @@ export const AccessContainerRegistry = ({ info }: AccessContainerRegistryProps) 
     const data = template(vars);
 
     return (
-        <ReactMarkdown remarkPlugins={[gfm]}>
-            {data}
-        </ReactMarkdown>
+        <Paper sx={{ p: 2 }}>
+            <Box sx={{ mb: 3 }}>
+                <Box sx={{ display: 'flex', mb: 1 }}>
+                    <Badge badgeContent='1' color='primary' sx={{ top: '12px', mr: 3, ml: 1 }} />
+                    <Typography variant='subtitle1'>Login to Azure</Typography>
+                </Box>
+
+                <Box sx={{ color: 'text.secondary', fontSize: 14, ml: 4 }}>
+                    <code>az login</code>
+                </Box>
+            </Box>
+
+            <Box sx={{ mb: 3 }}>
+                <Box sx={{ display: 'flex', mb: 1 }}>
+                    <Badge badgeContent='2' color='primary' sx={{ top: '12px', mr: 3, ml: 1 }} />
+                    <Typography variant='subtitle1'>Login to your registry</Typography>
+                </Box>
+
+                <Box sx={{ color: 'text.secondary', fontSize: 14, ml: 4 }}>
+                    <code>{`az acr login -n ${vars.acrId} --subscription ${vars.subscriptionId}`}</code>
+                </Box>
+            </Box>
+
+            <Box sx={{ mb: 3 }}>
+                <Box sx={{ display: 'flex', mb: 1 }}>
+                    <Badge badgeContent='3' color='primary' sx={{ top: '12px', mr: 3, ml: 1 }} />
+                    <Typography variant='subtitle1'>List images in acr</Typography>
+                </Box>
+
+                <Box sx={{ color: 'text.secondary', fontSize: 14, ml: 4 }}>
+                    <code>{`az acr repository list --name ${vars.acrId} -otable`}</code>
+                </Box>
+            </Box>
+
+            <Box>
+                <Box sx={{ display: 'flex', mb: 1 }}>
+                    <Badge badgeContent='4' color='primary' sx={{ top: '12px', mr: 3, ml: 1 }} />
+                    <Typography variant='subtitle1'>Push images</Typography>
+                </Box>
+
+                <Box sx={{ color: 'text.secondary', fontSize: 14, ml: 4 }}>
+                    <code>
+                        {`# pull down your example of choice`}
+                        <br />
+                        {`# golang hello world`}
+                        <br />
+                        git clone git@github.com:dolittle-entropy/go-hello-world
+                        <br />
+                        <br />
+                        # build go-hello-world docker image
+                        <br />
+                        docker build -t go-hello-world .
+                        <br />
+                        <br />
+                        # tag the image with the url to container registry
+                        <br />
+                        {`docker tag go-hello-world:latest ${vars.dockerCredentials.repoUrl}/go-hello-world:latest`}
+                        <br />
+                        <br />
+                        # push the image to container registry
+                        <br />
+                        {`docker push ${vars.dockerCredentials.repoUrl}/go-hello-world:latest`}
+                    </code>
+                </Box>
+            </Box>
+        </Paper>
     );
 };
+
+{/* <ReactMarkdown remarkPlugins={[gfm]}>
+    {data}
+</ReactMarkdown> */}

@@ -31,11 +31,8 @@ export const RegistryWelcome = ({ applicationId }: RegistryWelcomeProps) => {
 
     return (
         <>
-            <Typography>Your container registry is empty</Typography>
-            <br />
-
-            <Typography variant='h1' my={2}>How to access and add an image to your container registry</Typography>
-            <br />
+            <Typography variant='h2'>Your container registry is empty...</Typography>
+            <Typography variant='h5' sx={{ my: 2 }}>How to access and add an image to your container registry</Typography>
 
             <AccessContainerRegistry info={info} />
         </>
