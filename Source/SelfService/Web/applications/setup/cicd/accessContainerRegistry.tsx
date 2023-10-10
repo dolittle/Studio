@@ -3,10 +3,6 @@
 
 import React, { useEffect, useState } from 'react';
 
-import ReactMarkdown from 'react-markdown';
-
-import gfm from 'remark-gfm';
-
 import { Badge, Box, Paper, Typography } from '@mui/material';
 
 import { Info } from '../../stores/documentationInfo';
@@ -14,53 +10,13 @@ import { Info } from '../../stores/documentationInfo';
 import { getContainerRegistry } from '../../../apis/solutions/cicd';
 
 export type DockerCredentials = {
-    repoUrl: string
+    repoUrl: string;
 };
 
 export type Vars = {
     acrId: string;
     subscriptionId: string;
     dockerCredentials: DockerCredentials;
-};
-
-function template(vars: Vars): string {
-    const markdown = `
-# Login to az
-
-~~~sh
-az login
-~~~
-
-# Login to your registry
-~~~sh
-az acr login -n ${vars.acrId} --subscription ${vars.subscriptionId}
-~~~
-
-
-# List images in acr
-~~~sh
-az acr repository list --name ${vars.acrId} -otable
-~~~
-
-
-# Push images
-~~~sh
-# pull down your exmaple of choice
-# golang hello world
-git clone git@github.com:dolittle-entropy/go-hello-world
-
-# build go-hello-world docker image
-docker build -t go-hello-world .
-
-# tag the image with the url to container registry
-docker tag go-hello-world:latest ${vars.dockerCredentials.repoUrl}/go-hello-world:latest
-
-# push the image to container registry
-docker push ${vars.dockerCredentials.repoUrl}/go-hello-world:latest
-~~~
-
-`;
-    return markdown.trim();
 };
 
 export type AccessContainerRegistryProps = {
@@ -92,8 +48,6 @@ export const AccessContainerRegistry = ({ info }: AccessContainerRegistryProps) 
         subscriptionId: info.subscriptionId,
         dockerCredentials: credentials
     } as Vars;
-
-    const data = template(vars);
 
     return (
         <Paper sx={{ p: 2 }}>
@@ -164,7 +118,3 @@ export const AccessContainerRegistry = ({ info }: AccessContainerRegistryProps) 
         </Paper>
     );
 };
-
-{/* <ReactMarkdown remarkPlugins={[gfm]}>
-    {data}
-</ReactMarkdown> */}
