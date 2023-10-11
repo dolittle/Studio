@@ -3,4 +3,6 @@
 
 export { dataGridDefaultProps } from './DataGrid';
 export { DataGridWrapper } from './DataGridWrapper';
+export { DataGridCustomToolbar } from './DataGridCustomToolbar';
+export { DataGridDetailPanel } from './DataGridDetailPanel';
 export { EditCell, EditTextFieldCell } from './EditCell';
