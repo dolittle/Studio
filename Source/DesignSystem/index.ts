@@ -20,6 +20,7 @@ export { IconButton, IconButtonProps } from './atoms/IconButton';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
 export { LoadingSpinnerFullPage } from './atoms/LoadingSpinnerFullPage';
+export { PreformattedTextBlock, PreformattedTextBlockProps } from './atoms/PreformattedTextBlock';
 export { StatusIndicator, StatusIndicatorProps } from './atoms/StatusIndicator';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
