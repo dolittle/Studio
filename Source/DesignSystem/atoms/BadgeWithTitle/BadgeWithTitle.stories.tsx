@@ -7,6 +7,8 @@ import { BadgeWithTitle } from './BadgeWithTitle';
 
 const { metadata, createStory } = componentStories(BadgeWithTitle);
 
+metadata.title = 'Badge with Title';
+
 metadata.parameters = {
     docs: {
         description: {
