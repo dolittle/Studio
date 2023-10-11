@@ -29,7 +29,7 @@ export type DataGridDetailPanelProps = {
     /**
      * The text to display when there is no content.
      */
-    noContentText: string;
+    noContentMessage: string;
 
     /**
      * The content to display in the detail panel.
@@ -42,11 +42,11 @@ export type DataGridDetailPanelProps = {
  * @param {DataGridDetailPanelProps} props - The {@link DataGridDetailPanelProps}.
  * @returns A {@link DataGridDetailPanel} component.
  */
-export const DataGridDetailPanel = ({ noContent, noContentText, content }: DataGridDetailPanelProps) =>
+export const DataGridDetailPanel = ({ noContent, noContentMessage, content }: DataGridDetailPanelProps) =>
     <Paper>
         {noContent ?
             <Typography variant='body2' sx={{ pl: 7.5, py: 1 }}>
-                {noContentText}
+                {noContentMessage}
             </Typography> :
             <pre style={{ padding: '0.5rem 0.625rem 1.1875rem 3rem', margin: '0', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
                 {content}
