@@ -1,43 +1,53 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import { Typography } from '@mui/material';
 import { DataGridPro, GridRowId, GridRowParams } from '@mui/x-data-grid-pro';
 
-import { DataGridWrapper, Icon } from '@dolittle/design-system';
+import {
+    DataGridCustomToolbar,
+    dataGridDefaultProps,
+    DataGridDetailPanel,
+    DataGridWrapper,
+    DetailPanelExpandIcon,
+    DetailPanelCollapseIcon,
+    LoadingSpinner
+} from '@dolittle/design-system';
 
-import { PodLogScreen } from './podLogScreen';
+import { getPodLogs, HttpResponsePodLog } from '../../../../../apis/solutions/api';
+
 import { healthStatusDataGridColumns } from './healthStatusTableColumns';
 
 const styles = {
-    podTitle: {
-        letterSpacing: '0.17px',
-        minHeight: 5.75,
-        p: 1.25,
-        borderBottom: '1px solid rgba(226, 255, 97, 0.05)',
-    },
-    dataTableWrapper: {
-        'width': 1,
-        'mb': 3,
-        // Moves the Container-column header left, so that it covers the "detail expand icon" column as well.
-        '& .move-container-header-left': { left: -50 },
-    },
-    dataTable: {
-        '& .MuiDataGrid-row': { cursor: 'default' },
-        '& .MuiDataGrid-cell:focus-within': { outline: 'none' },
-    },
+    '& .MuiDataGrid-row': { cursor: 'default' },
+    '& .MuiDataGrid-cell:focus-within': { outline: 'none' },
 };
 
-const DetailPanelExpandIcon = () => <Icon icon='ExpandMore' size='medium' />;
-const DetailPanelCollapseIcon = () => <Icon icon='ExpandLess' size='medium' />;
+type DetailPanelContentProps = {
+    row: HealthStatusDataGridRow;
+};
 
-const CustomToolbar = (rows: HealthStatusDataGridRow[]) =>
-    <Typography variant='body2' sx={styles.podTitle}>{`Pod: ${rows[0]?.podName || 'N/A'}`}</Typography>;
+const DetailPanelContent = ({ row }: DetailPanelContentProps) => {
+    const [data, setData] = useState({ logs: '' } as HttpResponsePodLog);
+    const [isLoading, setLoading] = useState(true);
 
-const DetailPanelContent = ({ row }: { row: HealthStatusDataGridRow }) =>
-    <PodLogScreen applicationId={row.application} podName={row.podName} containerName={row.containerName} />;
+    useEffect(() => {
+        getPodLogs(row.application, row.podName, row.containerName)
+            .then(setData)
+            .finally(() => setLoading(false));
+    }, []);
+
+    if (isLoading) return <LoadingSpinner />;
+
+    return (
+        <DataGridDetailPanel
+            noContent={!data.logs}
+            noContentMessage='There are no logs printed for this microservice.'
+            content={data.logs}
+        />
+    );
+};
 
 export type HealthStatusTableStats = {
     average: number;
@@ -81,23 +91,18 @@ export const HealthStatusDataGrid = ({ rows }: HealthStatusDataGridProps) => {
     return (
         <DataGridWrapper sx={{ mb: 2 }}>
             <DataGridPro
+                {...dataGridDefaultProps}
                 rows={rows}
                 columns={healthStatusDataGridColumns}
-                getRowHeight={() => 'auto'}
-                autoHeight
-                headerHeight={46}
-                disableColumnMenu
-                hideFooter
-                disableSelectionOnClick
                 getDetailPanelContent={({ row }: GridRowParams<HealthStatusDataGridRow>) => <DetailPanelContent row={row} />}
                 getDetailPanelHeight={getDetailPanelHeight}
                 detailPanelExpandedRowIds={detailPanelExpandedRowIds}
                 onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
-                sx={styles.dataTable}
+                sx={styles}
                 components={{
                     DetailPanelExpandIcon,
                     DetailPanelCollapseIcon,
-                    Toolbar: () => CustomToolbar(rows),
+                    Toolbar: () => <DataGridCustomToolbar title={(`Pod: ${rows[0]?.podName || 'N/A'}`)} />,
                 }}
             />
         </DataGridWrapper>
