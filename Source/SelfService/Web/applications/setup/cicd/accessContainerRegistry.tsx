@@ -75,7 +75,7 @@ export const AccessContainerRegistry = ({ info }: AccessContainerRegistryProps) 
 
     return (
         <Paper sx={{ p: 2 }}>
-            <Box sx={{ mb: 3 }}>
+            <Box sx={{ mt: 1, mb: 3 }}>
                 <BadgeWithText number={1} text='Login to Azure' />
                 <PreformattedTextBlock text={`az login`} />
             </Box>
