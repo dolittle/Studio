@@ -3,35 +3,13 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Badge, Box, Paper, Typography } from '@mui/material';
+import { Box, Paper } from '@mui/material';
+
+import { BadgeWithTitle, PreformattedTextBlock } from '@dolittle/design-system';
 
 import { Info } from '../../stores/documentationInfo';
 
 import { getContainerRegistry } from '../../../apis/solutions/cicd';
-
-// TODO: Move to DesignSystem
-type BadgeWithTitleProps = {
-    number: number;
-    text: string;
-};
-
-// TODO: Move to DesignSystem
-const BadgeWithText = ({ number, text }: BadgeWithTitleProps) =>
-    <Box sx={{ display: 'flex' }}>
-        <Badge badgeContent={number} color='primary' sx={{ top: '12px', mr: 3, ml: 1 }} />
-        <Typography variant='subtitle1'>{text}</Typography>
-    </Box>;
-
-// TODO: Move to DesignSystem
-type PreformattedTextBlockProps = {
-    text: string;
-};
-
-// TODO: Move to DesignSystem
-const PreformattedTextBlock = ({ text }: PreformattedTextBlockProps) =>
-    <Box sx={{ color: 'text.secondary', fontSize: 14, ml: 4 }}>
-        <pre style={{ margin: '8px 0' }}>{text}</pre>
-    </Box>;
 
 export type DockerCredentials = {
     repoUrl: string;
@@ -76,22 +54,22 @@ export const AccessContainerRegistry = ({ info }: AccessContainerRegistryProps) 
     return (
         <Paper sx={{ p: 2 }}>
             <Box sx={{ mt: 1, mb: 3 }}>
-                <BadgeWithText number={1} text='Login to Azure' />
+                <BadgeWithTitle number={1} title='Login to Azure' />
                 <PreformattedTextBlock text={`az login`} />
             </Box>
 
             <Box sx={{ mb: 3 }}>
-                <BadgeWithText number={2} text='Login to your registry' />
+                <BadgeWithTitle number={2} title='Login to your registry' />
                 <PreformattedTextBlock text={`az acr login -n ${vars.acrId} --subscription ${vars.subscriptionId}`} />
             </Box>
 
             <Box sx={{ mb: 3 }}>
-                <BadgeWithText number={3} text='List images in acr' />
+                <BadgeWithTitle number={3} title='List images in acr' />
                 <PreformattedTextBlock text={`az acr repository list --name ${vars.acrId} -otable`} />
             </Box>
 
             <Box>
-                <BadgeWithText number={4} text='Push images' />
+                <BadgeWithTitle number={4} title='Push images' />
                 <PreformattedTextBlock text={`# pull down your example of choice
 # golang hello world
 git clone git@github.com:dolittle-entropy/go-hello-world
