@@ -41,11 +41,7 @@ const DetailPanelContent = ({ row }: DetailPanelContentProps) => {
     if (isLoading) return <LoadingSpinner />;
 
     return (
-        <DataGridDetailPanel
-            noContent={!data.logs}
-            noContentMessage='There are no logs printed for this microservice.'
-            content={data.logs}
-        />
+        <DataGridDetailPanel content={!data.logs ? 'There are no logs printed for this microservice.' : data.logs} />
     );
 };
 
@@ -89,7 +85,7 @@ export const HealthStatusDataGrid = ({ rows }: HealthStatusDataGridProps) => {
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
     return (
-        <DataGridWrapper sx={{ mb: 2 }}>
+        <DataGridWrapper>
             <DataGridPro
                 {...dataGridDefaultProps}
                 rows={rows}

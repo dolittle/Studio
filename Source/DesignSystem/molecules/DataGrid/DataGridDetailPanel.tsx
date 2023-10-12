@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Paper, Typography } from '@mui/material';
+import { Paper } from '@mui/material';
 
 import { Icon } from '../../index';
 
@@ -22,16 +22,6 @@ export const DetailPanelCollapseIcon = () => <Icon icon='ExpandLess' size='mediu
  */
 export type DataGridDetailPanelProps = {
     /**
-     * Whether or not there is content to display.
-     */
-    noContent: boolean;
-
-    /**
-     * The text to display when there is no content.
-     */
-    noContentMessage: string;
-
-    /**
      * The content to display in the detail panel.
      */
     content: string;
@@ -42,14 +32,9 @@ export type DataGridDetailPanelProps = {
  * @param {DataGridDetailPanelProps} props - The {@link DataGridDetailPanelProps}.
  * @returns A {@link DataGridDetailPanel} component.
  */
-export const DataGridDetailPanel = ({ noContent, noContentMessage, content }: DataGridDetailPanelProps) =>
-    <Paper>
-        {noContent ?
-            <Typography variant='body2' sx={{ pl: 7.5, py: 1 }}>
-                {noContentMessage}
-            </Typography> :
-            <pre style={{ padding: '0.5rem 0.625rem 1.1875rem 3rem', margin: '0', whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
-                {content}
-            </pre>
-        }
+export const DataGridDetailPanel = ({ content }: DataGridDetailPanelProps) =>
+    <Paper sx={{ pl: 7.5, py: 1 }}>
+        <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+            {content}
+        </pre>
     </Paper>;
