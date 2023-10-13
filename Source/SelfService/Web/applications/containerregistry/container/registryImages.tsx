@@ -87,6 +87,7 @@ const DetailPanelContent = ({ row }: GridRowParams) => {
                 {...dataGridDefaultProps}
                 rows={containerRegistryTags.tags}
                 columns={registryTagDataGridColumns}
+                getRowId={row => row.name}
             />
         </DataGridWrapper>
     );
@@ -173,6 +174,7 @@ export const RegistryImages = ({ applicationId, data }: RegistryImagesProps) => 
                     getDetailPanelHeight={getDetailPanelHeight}
                     detailPanelExpandedRowIds={detailPanelExpandedRowIds}
                     onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
+                    getRowId={row => row.name}
                     components={{
                         DetailPanelExpandIcon,
                         DetailPanelCollapseIcon,
