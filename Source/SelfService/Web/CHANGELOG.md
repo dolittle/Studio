@@ -1,3 +1,16 @@
+# [3.18.11] - 2023-10-13 [PR: #483](https://github.com/dolittle/Studio/pull/483)
+## Summary
+
+Added hard coded version of ContainerRegistry DataGrid under existing Data Table.
+
+### Added
+
+- DataGrid CustomToolbar to Design System
+- DataGrid DetailPanel to Design System
+- BadgeWithTitle to Design System
+- PreformattedTextBlock to Design System
+
+
 # [3.18.10] - 2023-10-10 [PR: #482](https://github.com/dolittle/Studio/pull/482)
 ## Summary
 
