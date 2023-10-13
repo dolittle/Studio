@@ -1,3 +1,9 @@
+# [3.18.12] - 2023-10-13 [PR: #484](https://github.com/dolittle/Studio/pull/484)
+## Summary
+
+Added missing Data Grid row ID-s.
+
+
 # [3.18.11] - 2023-10-13 [PR: #483](https://github.com/dolittle/Studio/pull/483)
 ## Summary
 
