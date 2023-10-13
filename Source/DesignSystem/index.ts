@@ -10,6 +10,7 @@ export * from './atoms/Accordion';
 export * from './atoms/AccordionList';
 export { AlertDialog, AlertDialogProps, DialogForm } from './atoms/AlertDialog';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
+export { BadgeWithTitle, BadgeWithTitleProps } from './atoms/BadgeWithTitle';
 export { Breadcrumbs, BreadcrumbsProps } from './atoms/Breadcrumbs';
 export { Button, ButtonProps } from './atoms/Button';
 export { Chip, ChipProps } from './atoms/Chip';
@@ -19,6 +20,7 @@ export { IconButton, IconButtonProps } from './atoms/IconButton';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
 export { LoadingSpinnerFullPage } from './atoms/LoadingSpinnerFullPage';
+export { PreformattedTextBlock, PreformattedTextBlockProps } from './atoms/PreformattedTextBlock';
 export { StatusIndicator, StatusIndicatorProps } from './atoms/StatusIndicator';
 export { Summary } from './atoms/Metrics';
 export { Tabs } from './atoms/Tabs';
@@ -29,7 +31,7 @@ export { Tooltip } from './atoms/Tooltip';
 export { TextField, TextFieldProps } from './atoms/TextField';
 
 // Molecules
-export { dataGridDefaultProps, DataGridWrapper, EditCell, EditTextFieldCell } from './molecules/DataGrid';
+export * from './molecules/DataGrid';
 export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecules/FileUploadForm';
 export { Graph } from './molecules/Metrics/Graph';
 export { DropdownMenu, DropdownMenuProps, MenuItemProps } from './molecules/DropdownMenu';
