@@ -1,3 +1,9 @@
+# [3.18.13] - 2023-10-13 [PR: #485](https://github.com/dolittle/Studio/pull/485)
+## Summary
+
+Comment out Container Registry page Data Grid because of errors.
+
+
 # [3.18.12] - 2023-10-13 [PR: #484](https://github.com/dolittle/Studio/pull/484)
 ## Summary
 
