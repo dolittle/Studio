@@ -66,7 +66,7 @@ const registryTagDataGridColumns: GridColDef[] = [
     },
 ];
 
-const DetailPanelContent = ({ row }: GridRowParams) => {
+/* const DetailPanelContent = ({ row }: GridRowParams) => {
     const [containerRegistryTags, setContainerRegistryTags] = useState({
         name: '',
         tags: [],
@@ -91,7 +91,7 @@ const DetailPanelContent = ({ row }: GridRowParams) => {
             />
         </DataGridWrapper>
     );
-};
+}; */
 
 const registryImagesDataGridColumns: GridColDef[] = [
     {
@@ -165,7 +165,7 @@ export const RegistryImages = ({ applicationId, data }: RegistryImagesProps) => 
                 </Table>
             </TableContainer>
 
-            <DataGridWrapper>
+            {/* <DataGridWrapper>
                 <DataGridPro
                     {...dataGridDefaultProps}
                     rows={data.images}
@@ -181,7 +181,7 @@ export const RegistryImages = ({ applicationId, data }: RegistryImagesProps) => 
                         Toolbar: () => <DataGridCustomToolbar title={data.url} />,
                     }}
                 />
-            </DataGridWrapper>
+            </DataGridWrapper> */}
         </>
     );
 };
