@@ -3,7 +3,7 @@
 
 import React, { MouseEventHandler } from 'react';
 
-import { IconButton as MuiIconButton, SxProps, Tooltip } from '@mui/material';
+import { ButtonTypeMap, ExtendButtonBase, IconButton as MuiIconButton, SxProps, Tooltip } from '@mui/material';
 
 import { Icon, SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
 
@@ -81,6 +81,11 @@ export type IconButtonProps = {
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
+
+    /**
+     * Override or extend the styles applied to the component.
+     */
+    overrides?: Partial<ExtendButtonBase<ButtonTypeMap>>; // TODO: How to extend the type here?
 };
 
 /**
@@ -88,7 +93,7 @@ export type IconButtonProps = {
  * @param {IconButtonProps} props - The {@link IconButtonProps}.
  * @returns A {@link IconButton} component.
  */
-export const IconButton = ({ tooltipText, tooltipPlacement, icon, color, size, edge, disabled, href, download, onClick, sx }: IconButtonProps) =>
+export const IconButton = ({ tooltipText, tooltipPlacement, icon, color, size, edge, disabled, href, download, onClick, sx, overrides }: IconButtonProps) =>
     <Tooltip title={tooltipText || ''} arrow placement={tooltipPlacement ?? 'top'}>
         <MuiIconButton
             color={color ?? 'inherit'}
@@ -101,6 +106,7 @@ export const IconButton = ({ tooltipText, tooltipPlacement, icon, color, size, e
             onClick={onClick}
             aria-label={tooltipText}
             sx={sx}
+            {...overrides}
         >
             <Icon icon={icon ?? 'CloseRounded'} />
         </MuiIconButton>
