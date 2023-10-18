@@ -11,13 +11,12 @@ import { ContainerRegistryImages } from '../../../../apis/solutions/containerreg
 
 import { DetailPanelIndex } from './detailPanel';
 
-// This header is hidden by default, but can be shown by removing the header height in the DataGridPro props.
 const registryImagesDataGridColumns: GridColDef[] = [
     {
         field: 'name',
-        headerName: 'Container Registry',
+        headerName: 'Container Images',
+        sortable: false,
         minWidth: 300,
-        flex: 1,
     },
 ];
 
@@ -51,7 +50,6 @@ export const RegistryImagesIndex = ({ applicationId, data }: RegistryImagesIndex
                 {...dataGridDefaultProps}
                 rows={data.images}
                 columns={registryImagesDataGridColumns}
-                headerHeight={0} // Hide header to prevent double header.
                 getDetailPanelContent={getDetailPanelContent}
                 getDetailPanelHeight={getDetailPanelHeight}
                 detailPanelExpandedRowIds={detailPanelExpandedRowIds}
