@@ -51,7 +51,7 @@ export const RegistryImagesIndex = ({ applicationId, data }: RegistryImagesIndex
             <IconButton
                 tooltipText='Need to add a new image? Instructions can be found under documentation.'
                 icon='InfoRounded'
-                sx={{ p: 1, m: 1 }}
+                sx={{ p: 1 }}
                 overrides={{
                     component: Link,
                     to: `/setup/application/${applicationId}/overview`,

@@ -6,6 +6,9 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 
 const styles = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     p: 1,
     letterSpacing: '0.17px',
     borderBottom: '1px solid rgba(226, 255, 97, 0.05)',
@@ -32,7 +35,7 @@ export type DataGridCustomToolbarProps = {
  * @returns A {@link DataGridCustomToolbar} component.
  */
 export const DataGridCustomToolbar = ({ title, children }: DataGridCustomToolbarProps) =>
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Typography variant='body2' sx={styles}>{title}</Typography>
+    <Box sx={styles}>
+        <Typography variant='body2'>{title}</Typography>
         {children}
     </Box>;
