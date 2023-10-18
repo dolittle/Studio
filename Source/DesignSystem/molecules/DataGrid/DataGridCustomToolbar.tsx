@@ -3,12 +3,14 @@
 
 import React from 'react';
 
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const styles = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    p: 1,
     letterSpacing: '0.17px',
-    py: 1.5,
-    px: 2,
     borderBottom: '1px solid rgba(226, 255, 97, 0.05)',
 };
 
@@ -20,6 +22,11 @@ export type DataGridCustomToolbarProps = {
      * The title to display in the custom toolbar.
      */
     title: string;
+
+    /**
+     * The children to display in the custom toolbar.
+     */
+    children?: React.ReactNode;
 };
 
 /**
@@ -27,5 +34,8 @@ export type DataGridCustomToolbarProps = {
  * @param {DataGridCustomToolbarProps} props - The {@link DataGridCustomToolbarProps}.
  * @returns A {@link DataGridCustomToolbar} component.
  */
-export const DataGridCustomToolbar = ({ title }: DataGridCustomToolbarProps) =>
-    <Typography variant='body2' sx={styles}>{title}</Typography>;
+export const DataGridCustomToolbar = ({ title, children }: DataGridCustomToolbarProps) =>
+    <Box sx={styles}>
+        <Typography variant='body2'>{title}</Typography>
+        {children}
+    </Box>;

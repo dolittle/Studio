@@ -221,7 +221,9 @@ const components: Components & DataGridProComponents = {
             cell: {
                 'whiteSpace': 'normal',
                 'wordWrap': 'break-word',
+                'wordBreak': 'break-word',
                 'borderColor': 'rgba(226, 255, 97, 0.05)',
+                ':focus-within': { outline: 'none' },
                 ':not(.MuiDataGrid-cell--editable)': {
                     ':focus': { outline: 'none' },
                 },
@@ -229,9 +231,6 @@ const components: Components & DataGridProComponents = {
             cellContent: {
                 paddingTop: 11,
                 paddingBottom: 11,
-            },
-            row: {
-                cursor: 'pointer',
             },
             footerContainer: {
                 borderColor: 'rgba(226, 255, 97, 0.05)',
