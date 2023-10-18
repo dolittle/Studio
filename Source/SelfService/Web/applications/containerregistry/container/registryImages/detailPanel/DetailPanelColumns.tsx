@@ -14,7 +14,7 @@ import { Tag } from '../../../../../apis/solutions/containerregistry';
 
 export const getDetailPanelColumns = (applicationId: string, image: string) => {
     const DeployMicroserviceCell = (row: Tag) => {
-        const microserviceHref = useHref(`/microservices/application/${applicationId}/create?kind=dolittle-microservice#head-image=${image}:${row.name}`);
+        const microserviceHref = useHref(`/microservices/application/${applicationId}/create?kind=dolittle-microservice#head-image=${image}:${row?.name}`);
 
         return (
             <Button label='Deploy new Microservice' variant='outlined' href={microserviceHref} />
@@ -25,7 +25,7 @@ export const getDetailPanelColumns = (applicationId: string, image: string) => {
         const { enqueueSnackbar } = useSnackbar();
 
         const handleImageCopy = () => {
-            navigator.clipboard.writeText(`${image}:${row.name}@${row?.digest}`);
+            navigator.clipboard.writeText(`${image}:${row?.name}@${row?.digest}`);
             enqueueSnackbar(`Tag '${row?.name}' has been copied to clipboard.`);
         };
 
@@ -46,7 +46,7 @@ export const getDetailPanelColumns = (applicationId: string, image: string) => {
             headerName: 'Created At',
             minWidth: 250,
             flex: 1,
-            valueFormatter: ({ value }) => value.toLocaleString(),
+            valueFormatter: ({ value }) => value?.toLocaleString() || 'N/A',
         },
         {
             field: 'digest',
