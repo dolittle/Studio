@@ -3,9 +3,11 @@
 
 import React, { useCallback, useState } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import { DataGridPro, DataGridProProps, GridColDef, GridRowId } from '@mui/x-data-grid-pro';
 
-import { dataGridDefaultProps, DataGridCustomToolbar, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon } from '@dolittle/design-system';
+import { dataGridDefaultProps, DataGridCustomToolbar, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon, IconButton } from '@dolittle/design-system';
 
 import { ContainerRegistryImages } from '../../../../apis/solutions/containerregistry';
 
@@ -44,6 +46,19 @@ export const RegistryImagesIndex = ({ applicationId, data }: RegistryImagesIndex
 
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
+    const Toolbar = () =>
+        <DataGridCustomToolbar title={`Host: ${data.url}`}>
+            <IconButton
+                tooltipText='Need to add a new image? Instructions can be found under documentation.'
+                icon='InfoRounded'
+                sx={{ p: 1, m: 1 }}
+                overrides={{
+                    component: Link,
+                    to: `/setup/application/${applicationId}/overview`,
+                }}
+            />
+        </DataGridCustomToolbar>;
+
     return (
         <DataGridWrapper>
             <DataGridPro
@@ -58,7 +73,7 @@ export const RegistryImagesIndex = ({ applicationId, data }: RegistryImagesIndex
                 components={{
                     DetailPanelExpandIcon,
                     DetailPanelCollapseIcon,
-                    Toolbar: () => <DataGridCustomToolbar title={`Host: ${data.url}`} />,
+                    Toolbar,
                 }}
             />
         </DataGridWrapper>
