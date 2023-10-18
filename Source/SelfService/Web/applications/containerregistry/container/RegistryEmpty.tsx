@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 
 import { Typography } from '@mui/material';
 
+import { LoadingSpinner } from '@dolittle/design-system';
+
 import { getPersonalisedInfo } from '../../../apis/solutions/application';
 
 import { AccessContainerRegistry } from '../../setup/cicd/accessContainerRegistry';
@@ -23,11 +25,11 @@ export const RegistryEmpty = ({ applicationId }: RegistryEmptyProps) => {
                 const data = values[0];
                 data.applicationId = applicationId;
                 setInfo(data);
-                setIsLoading(false);
-            });
+            })
+            .finally(() => setIsLoading(false));
     }, []);
 
-    if (isLoading) return null;
+    if (isLoading) return <LoadingSpinner />;
 
     return (
         <>

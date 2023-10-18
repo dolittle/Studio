@@ -7,7 +7,7 @@ import { useNavigate, Route, Routes } from 'react-router-dom';
 
 import { Box } from '@mui/material';
 
-import { LoadingSpinnerFullPage } from '@dolittle/design-system';
+import { LoadingSpinner } from '@dolittle/design-system';
 
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 import { ContainerRegistryImages, getReposInContainerRegistry } from '../../../apis/solutions/containerregistry';
@@ -35,7 +35,7 @@ export const ContainerIndex = ({ application }: ContainerIndexProps) => {
             .finally(() => setIsLoading(false));
     }, []);
 
-    if (isLoading) return <LoadingSpinnerFullPage />;
+    if (isLoading) return <LoadingSpinner />;
 
     const hasImages = containerRegistryImages.images.length > 0;
 

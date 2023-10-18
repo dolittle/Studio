@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Box, Paper } from '@mui/material';
 
-import { BadgeWithTitle, PreformattedTextBlock } from '@dolittle/design-system';
+import { BadgeWithTitle, LoadingSpinner, PreformattedTextBlock } from '@dolittle/design-system';
 
 import { Info } from '../../stores/documentationInfo';
 
@@ -26,18 +26,16 @@ export type AccessContainerRegistryProps = {
 };
 
 export const AccessContainerRegistry = ({ info }: AccessContainerRegistryProps) => {
-    const [loaded, setLoaded] = useState(false);
     const [containerRegistry, setContainerRegistry] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         Promise.all([getContainerRegistry(info.applicationId)])
-            .then(values => {
-                setContainerRegistry(values[0]);
-                setLoaded(true);
-            });
+            .then(values => setContainerRegistry(values[0]))
+            .finally(() => setIsLoading(false));
     }, []);
 
-    if (!loaded) return null;
+    if (isLoading) return <LoadingSpinner />;
 
     const auths = JSON.parse(atob(containerRegistry['.dockerconfigjson'])).auths;
     // Not great, but only one key for now
