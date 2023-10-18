@@ -23,8 +23,6 @@ export type ContainerIndexProps = {
 export const ContainerIndex = ({ application }: ContainerIndexProps) => {
     const navigate = useNavigate();
 
-    const applicationId = application.id;
-
     const [containerRegistryImages, setContainerRegistryImages] = useState({
         url: '',
         images: [],
@@ -32,7 +30,7 @@ export const ContainerIndex = ({ application }: ContainerIndexProps) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        Promise.all([getReposInContainerRegistry(applicationId)])
+        Promise.all([getReposInContainerRegistry(application.id)])
             .then(values => setContainerRegistryImages(values[0]))
             .finally(() => setIsLoading(false));
     }, []);
@@ -43,7 +41,7 @@ export const ContainerIndex = ({ application }: ContainerIndexProps) => {
 
     // Force redirect if no images to the welcome screen.
     if (!hasImages && !window.location.pathname.endsWith('/overview/welcome')) {
-        const href = `/containerregistry/application/${applicationId}/overview/welcome`;
+        const href = `/containerregistry/application/${application.id}/overview/welcome`;
         navigate(href);
         return null;
     }
@@ -52,8 +50,8 @@ export const ContainerIndex = ({ application }: ContainerIndexProps) => {
         <Box sx={{ mr: 3 }}>
             <PageTitle title='Container Registry' />
             <Routes>
-                <Route path='/' element={<RegistryImagesIndex applicationId={applicationId} data={containerRegistryImages} />} />
-                <Route path='/welcome' element={<RegistryEmpty applicationId={applicationId} />} />
+                <Route path='/' element={<RegistryImagesIndex applicationId={application.id} data={containerRegistryImages} />} />
+                <Route path='/welcome' element={<RegistryEmpty applicationId={application.id} />} />
             </Routes>
         </Box>
     );
