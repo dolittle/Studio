@@ -7,6 +7,8 @@ import { useNavigate, Route, Routes } from 'react-router-dom';
 
 import { Box } from '@mui/material';
 
+import { LoadingSpinnerFullPage } from '@dolittle/design-system';
+
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 import { ContainerRegistryImages, getReposInContainerRegistry } from '../../../apis/solutions/containerregistry';
 
@@ -27,17 +29,15 @@ export const ContainerIndex = ({ application }: ContainerIndexProps) => {
         url: '',
         images: [],
     } as ContainerRegistryImages);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         Promise.all([getReposInContainerRegistry(applicationId)])
-            .then(values => {
-                setContainerRegistryImages(values[0]);
-                setIsLoaded(true);
-            });
+            .then(values => setContainerRegistryImages(values[0]))
+            .finally(() => setIsLoading(false));
     }, []);
 
-    if (!isLoaded) return null;
+    if (isLoading) return <LoadingSpinnerFullPage />;
 
     const hasImages = containerRegistryImages.images.length > 0;
 
