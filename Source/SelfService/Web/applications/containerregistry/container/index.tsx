@@ -3,17 +3,16 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { useNavigate, Routes, Route } from 'react-router-dom';
+import { useNavigate, Route, Routes } from 'react-router-dom';
 
 import { Box } from '@mui/material';
 
 import { HttpResponseApplication } from '../../../apis/solutions/application';
-import { getReposInContainerRegistry, ContainerRegistryImages } from '../../../apis/solutions/containerregistry';
+import { ContainerRegistryImages, getReposInContainerRegistry } from '../../../apis/solutions/containerregistry';
 
 import { PageTitle } from '../../../layout/PageTitle';
-import { RegistryImages } from './registryImages';
 import { RegistryEmpty } from './RegistryEmpty';
-import { RegistryTags } from './registryTags';
+import { RegistryImagesIndex } from './registryImages';
 
 export type ContainerIndexProps = {
     application: HttpResponseApplication;
@@ -53,9 +52,8 @@ export const ContainerIndex = ({ application }: ContainerIndexProps) => {
         <Box sx={{ mr: 3 }}>
             <PageTitle title='Container Registry' />
             <Routes>
-                <Route path='/' element={<RegistryImages applicationId={applicationId} data={containerRegistryImages} />} />
+                <Route path='/' element={<RegistryImagesIndex applicationId={applicationId} data={containerRegistryImages} />} />
                 <Route path='/welcome' element={<RegistryEmpty applicationId={applicationId} />} />
-                <Route path='/tags/:image' element={<RegistryTags url={containerRegistryImages.url} applicationId={applicationId} />} />
             </Routes>
         </Box>
     );
