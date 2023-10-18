@@ -1,3 +1,18 @@
+# [3.18.15] - 2023-10-18 [PR: #487](https://github.com/dolittle/Studio/pull/487)
+## Summary
+
+Implement the latest design to the Container Registry page.
+
+### Changed
+
+- Improved DataGrid styles in Design System
+- Added more props to Design System components
+
+### Fixed
+
+- Removed extra space from Empty Container instructions
+
+
 # [3.18.13] - 2023-10-13 [PR: #485](https://github.com/dolittle/Studio/pull/485)
 ## Summary
 
