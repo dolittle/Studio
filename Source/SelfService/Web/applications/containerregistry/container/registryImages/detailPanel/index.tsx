@@ -3,7 +3,6 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Box, CircularProgress } from '@mui/material';
 import { DataGridPro } from '@mui/x-data-grid-pro';
 
 import { dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
@@ -35,13 +34,12 @@ export const DetailPanelIndex = ({ applicationId, image, row }: DetailPanelIndex
 
     return (
         <DataGridWrapper>
-            {isLoading && <Box sx={{ display: 'flex', justifyContent: 'center' }}><CircularProgress /></Box>}
-
             <DataGridPro
                 {...dataGridDefaultProps}
                 rows={containerRegistryTags.tags}
                 columns={detailPanelColumns}
                 getRowId={row => row.name}
+                loading={isLoading}
             />
         </DataGridWrapper>
     );
