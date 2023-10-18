@@ -40,6 +40,7 @@ export const DetailPanelIndex = ({ applicationId, image, row }: DetailPanelIndex
                 columns={detailPanelColumns}
                 getRowId={row => row.name}
                 loading={isLoading}
+                checkboxSelection
             />
         </DataGridWrapper>
     );

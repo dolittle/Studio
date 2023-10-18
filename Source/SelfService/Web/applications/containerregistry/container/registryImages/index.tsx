@@ -5,9 +5,10 @@ import React, { useCallback, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
+import { Tooltip } from '@mui/material';
 import { DataGridPro, DataGridProProps, GridColDef, GridRowId } from '@mui/x-data-grid-pro';
 
-import { dataGridDefaultProps, DataGridCustomToolbar, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon, IconButton } from '@dolittle/design-system';
+import { Button, dataGridDefaultProps, DataGridCustomToolbar, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon, IconButton } from '@dolittle/design-system';
 
 import { ContainerRegistryImages } from '../../../../apis/solutions/containerregistry';
 
@@ -48,15 +49,20 @@ export const RegistryImagesIndex = ({ applicationId, data }: RegistryImagesIndex
 
     const Toolbar = () =>
         <DataGridCustomToolbar title={`Host: ${data.url}`}>
-            <IconButton
-                tooltipText='Need to add a new image? Instructions can be found under documentation.'
-                icon='InfoRounded'
-                sx={{ p: 1 }}
-                overrides={{
-                    component: Link,
-                    to: `/setup/application/${applicationId}/overview`,
-                }}
-            />
+            <div>
+                <Tooltip title='Coming soon!' placement='top' arrow>
+                    <span><Button label='Delete image(s)' startWithIcon='DeleteRounded' disabled sx={{ mr: 1 }} /></span>
+                </Tooltip>
+                <IconButton
+                    tooltipText='Need to add a new image? Instructions can be found under documentation.'
+                    icon='InfoRounded'
+                    sx={{ p: 1 }}
+                    overrides={{
+                        component: Link,
+                        to: `/setup/application/${applicationId}/overview`,
+                    }}
+                />
+            </div>
         </DataGridCustomToolbar>;
 
     return (
