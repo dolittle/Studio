@@ -81,7 +81,7 @@ docker build -t go-hello-world .
 docker tag go-hello-world:latest ${vars.dockerCredentials.repoUrl}/go-hello-world:latest
 
 # push the image to container registry
-docker push ${vars.dockerCredentials.repoUrl} /go-hello-world:latest`} />
+docker push ${vars.dockerCredentials.repoUrl}/go-hello-world:latest`} />
             </Box>
         </Paper>
     );
