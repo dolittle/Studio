@@ -11,6 +11,8 @@ import { DataGridWrapper } from './DataGridWrapper';
  * Default props for the DataGrid component.
  *
  * Use these props on every DataGrid in the application.
+ *
+ * Custom styles for every Data Grid are applied in Theme.tsx.
  */
 export const dataGridDefaultProps: DataGridProProps = {
     columns: [],

@@ -21,7 +21,6 @@ import { healthStatusDataGridColumns } from './healthStatusTableColumns';
 
 const styles = {
     '& .MuiDataGrid-row': { cursor: 'default' },
-    '& .MuiDataGrid-cell:focus-within': { outline: 'none' },
 };
 
 type DetailPanelContentProps = {
