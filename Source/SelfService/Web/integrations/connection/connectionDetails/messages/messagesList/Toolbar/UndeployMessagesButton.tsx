@@ -44,7 +44,7 @@ export const UndeployMessagesButton = ({ connectionId, selectedMessageTypes, onA
             {!isLoading
                 ? <Button
                     label={`Undeploy message type${hasMany ? 's' : ''}`}
-                    startWithIcon='DeleteRounded'
+                    startWithIcon='ArchiveRounded'
                     onClick={handleUndeployMessages}
                     disabled={!hasSelectedMessages || disable}
                 />
