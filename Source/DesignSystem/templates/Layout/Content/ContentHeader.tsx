@@ -17,7 +17,7 @@ const styles = {
     },
     buttonGroup: {
         display: 'flex',
-        gap: 4,
+        gap: 2,
     },
 };
 
