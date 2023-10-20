@@ -27,7 +27,7 @@ export type ContentHeaderProps = {
     titleTextVariant?: 'title' | 'subtitle';
 
     /**
-     *  Show a status indeicator as part of the {@link ContentHeader}
+     *  Show a status indicator as part of the {@link ContentHeader}
      */
     status?: Pick<StatusIndicatorProps, 'status' | 'label' | 'message'>;
 
