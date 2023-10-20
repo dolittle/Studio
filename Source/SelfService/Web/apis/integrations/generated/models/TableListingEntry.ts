@@ -45,16 +45,10 @@ export interface TableListingEntry {
     numberOfColumns: number;
     /**
      * 
-     * @type {Date}
+     * @type {number}
      * @memberof TableListingEntry
      */
-    lastUsed?: Date | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TableListingEntry
-     */
-    webhookConnected: boolean;
+    totalImportance: number;
 }
 
 /**
@@ -66,7 +60,7 @@ export function instanceOfTableListingEntry(value: object): boolean {
     isInstance = isInstance && "description" in value;
     isInstance = isInstance && "summary" in value;
     isInstance = isInstance && "numberOfColumns" in value;
-    isInstance = isInstance && "webhookConnected" in value;
+    isInstance = isInstance && "totalImportance" in value;
 
     return isInstance;
 }
@@ -85,8 +79,7 @@ export function TableListingEntryFromJSONTyped(json: any, ignoreDiscriminator: b
         'description': json['description'],
         'summary': json['summary'],
         'numberOfColumns': json['numberOfColumns'],
-        'lastUsed': !exists(json, 'lastUsed') ? undefined : (json['lastUsed'] === null ? null : new Date(json['lastUsed'])),
-        'webhookConnected': json['webhookConnected'],
+        'totalImportance': json['totalImportance'],
     };
 }
 
@@ -103,8 +96,7 @@ export function TableListingEntryToJSON(value?: TableListingEntry | null): any {
         'description': value.description,
         'summary': value.summary,
         'numberOfColumns': value.numberOfColumns,
-        'lastUsed': value.lastUsed === undefined ? undefined : (value.lastUsed === null ? null : value.lastUsed.toISOString()),
-        'webhookConnected': value.webhookConnected,
+        'totalImportance': value.totalImportance,
     };
 }
 

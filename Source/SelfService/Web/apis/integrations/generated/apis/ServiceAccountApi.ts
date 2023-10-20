@@ -38,6 +38,9 @@ export interface ConnectionsIdServiceAccountsServiceAccountNamePostRequest {
     id: string;
     serviceAccountName: string;
     description?: string;
+    commandAccess?: boolean;
+    auditAccess?: boolean;
+    deleteAccess?: boolean;
 }
 
 /**
@@ -148,6 +151,18 @@ export class ServiceAccountApi extends runtime.BaseAPI {
 
         if (requestParameters.description !== undefined) {
             queryParameters['description'] = requestParameters.description;
+        }
+
+        if (requestParameters.commandAccess !== undefined) {
+            queryParameters['commandAccess'] = requestParameters.commandAccess;
+        }
+
+        if (requestParameters.auditAccess !== undefined) {
+            queryParameters['auditAccess'] = requestParameters.auditAccess;
+        }
+
+        if (requestParameters.deleteAccess !== undefined) {
+            queryParameters['deleteAccess'] = requestParameters.deleteAccess;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
