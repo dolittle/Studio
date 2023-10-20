@@ -46,6 +46,7 @@ export const DeleteMessagesButton = ({ connectionId, selectedMessageTypes, onAct
                     label={`Delete message type${hasMany ? 's' : ''}`}
                     startWithIcon='DeleteRounded'
                     onClick={handleDeleteMessages}
+                    color='error'
                     disabled={!hasSelectedMessages || disable}
                 />
                 : <StatusIndicator label={`Deleting message type${hasMany ? 's' : ''}...`} status='waiting' />
