@@ -8,6 +8,7 @@ import { ContentHeader } from '@dolittle/design-system';
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
 
 import { DeployMessagesButton } from './Toolbar/DeployMessagesButton';
+import { UndeployMessagesButton } from './Toolbar/UndeployMessagesButton';
 import { DeleteMessagesButton } from './Toolbar/DeleteMessagesButton';
 import { CopyMessagesButton } from './Toolbar/CopyMessagesButton';
 
@@ -41,12 +42,19 @@ export const MessagesHeader = (props: MessagesHeaderProps) => {
                         onActionExecuting={handleExecuting}
                         disable={isAnyActionExecuting}
                     />
-                    <CopyMessagesButton
+                    {/* <CopyMessagesButton
                         connectionId={props.connectionId}
                         selectedMessageTypes={props.selectedMessageTypes}
                         onActionCompleted={handleSuccess}
                         onActionExecuting={handleExecuting}
                         disable={true}
+                    /> */}
+                    <UndeployMessagesButton
+                        connectionId={props.connectionId}
+                        selectedMessageTypes={props.selectedMessageTypes}
+                        onActionCompleted={handleSuccess}
+                        onActionExecuting={handleExecuting}
+                        disable={isAnyActionExecuting}
                     />
                     <DeployMessagesButton
                         connectionId={props.connectionId}
