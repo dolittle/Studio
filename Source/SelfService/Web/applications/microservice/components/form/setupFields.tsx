@@ -53,7 +53,6 @@ export const SetupFields = ({ environments, runtimeVersion, hasDashedBorder, isE
             <Input
                 id='microserviceName'
                 label='Microservice Name'
-                dashedBorder={hasDashedBorder}
                 disabled={isDisabled}
                 required='Provide a microservice name.'
                 pattern={{
@@ -77,7 +76,6 @@ export const SetupFields = ({ environments, runtimeVersion, hasDashedBorder, isE
                     onChange={event => onEnvironmentSelect ? onEnvironmentSelect(event.target.value) : null}
                     disabled={isDisabled}
                     required
-                    sx={hasDashedBorder ? { '& fieldset': { borderStyle: 'dashed' } } : {}}
                 />
             </Tooltip>
 

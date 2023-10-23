@@ -152,7 +152,7 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
 
                 <SetupFields environments={availableEnvironments} runtimeVersion={runtimeImage} hasDashedBorder isEditMode={!editMicroserviceMode} isDisabled />
                 <ContainerImageFields hasDashedBorder isEditMode={!editMicroserviceMode} isDisabled />
-                <PublicUrlFields hasDashedBorder hasPublicUrl={hasPublicUrl} isDisabled />
+                <PublicUrlFields hasPublicUrl={hasPublicUrl} isDisabled />
                 {hasM3ConnectorOption && <HasM3ConnectorField isDisabled />}
             </Form>
         </>

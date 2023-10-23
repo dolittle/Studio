@@ -15,12 +15,11 @@ const PublicUrlFieldDescription = () =>
     </>;
 
 export type PublicUrlFieldsProps = {
-    hasDashedBorder?: boolean;
     hasPublicUrl?: boolean;
     isDisabled?: boolean;
 };
 
-export const PublicUrlFields = ({ hasDashedBorder, hasPublicUrl, isDisabled, }: PublicUrlFieldsProps) => {
+export const PublicUrlFields = ({ hasPublicUrl, isDisabled, }: PublicUrlFieldsProps) => {
     const [showPublicUrlInfo, setShowPublicUrlInfo] = useState(hasPublicUrl);
 
     return (
@@ -42,7 +41,6 @@ export const PublicUrlFields = ({ hasDashedBorder, hasPublicUrl, isDisabled, }: 
                         startAdornment='/'
                         placeholder='leave blank for default path'
                         disabled={isDisabled}
-                        dashedBorder={hasDashedBorder}
                         sx={{ width: 226 }}
                     />
                 </Tooltip>
