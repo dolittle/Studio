@@ -10,6 +10,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     p: 1,
+    gap: 2,
     letterSpacing: '0.17px',
     borderBottom: '1px solid rgba(226, 255, 97, 0.05)',
 };
