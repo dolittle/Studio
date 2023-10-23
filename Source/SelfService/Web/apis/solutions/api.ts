@@ -53,9 +53,27 @@ export type MicroserviceInfo = {
     ingressPaths: SimpleIngressPath[];
 };
 
+export type MicroserviceInfoWithPods = {
+    id: string;
+    name: string;
+    kind: string;
+    environment: string;
+    images: ImageInfo[];
+    ingressUrls: IngressURLWithCustomerTenantID[];
+    ingressPaths: SimpleIngressPath[];
+    phase: string;
+    pods: PodInfo[];
+};
+
+
 export type HttpResponseMicroservices = {
     application: ShortInfo;
     microservices: MicroserviceInfo[];
+};
+
+export type HttpResponseMicroservicesWithPods = {
+    application: ShortInfo;
+    microservices: MicroserviceInfoWithPods[];
 };
 
 export type PodInfo = {
@@ -169,6 +187,21 @@ export async function getMicroservices(applicationId: string): Promise<HttpRespo
         });
 
     const jsonResult: HttpResponseMicroservices = await result.json();
+
+    return jsonResult;
+};
+
+export async function getMicroservicesWithPods(applicationId: string): Promise<HttpResponseMicroservicesWithPods> {
+    const url = `${getServerUrlPrefix()}/live/application/${applicationId}/microserviceswithstatus`;
+
+    const result = await fetch(
+        url,
+        {
+            method: 'GET',
+            mode: 'cors',
+        });
+
+    const jsonResult: HttpResponseMicroservicesWithPods = await result.json();
 
     return jsonResult;
 };
