@@ -153,14 +153,14 @@ export type UpdateConfigFiles = {
 
 export function getServerUrlPrefix(): string {
     return '/selfservice/api';
-};
+}
 
 export function getLatestRuntimeInfo(): LatestRuntimeInfo {
     return {
         image: 'dolittle/runtime:9.1.2',
         changelog: 'https://github.com/dolittle/Runtime/releases/tag/v9.1.2',
     };
-};
+}
 
 export function getRuntimes(): LatestRuntimeInfo[] {
     return [
@@ -174,7 +174,7 @@ export function getRuntimes(): LatestRuntimeInfo[] {
             changelog: 'https://github.com/dolittle/Runtime/releases/tag/v6.2.4',
         },
     ];
-};
+}
 
 export async function getMicroservices(applicationId: string): Promise<HttpResponseMicroservices> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/microservices`;
@@ -189,7 +189,7 @@ export async function getMicroservices(applicationId: string): Promise<HttpRespo
     const jsonResult: HttpResponseMicroservices = await result.json();
 
     return jsonResult;
-};
+}
 
 export async function getMicroservicesWithPods(applicationId: string): Promise<HttpResponseMicroservicesWithPods> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/microserviceswithstatus`;
@@ -204,7 +204,7 @@ export async function getMicroservicesWithPods(applicationId: string): Promise<H
     const jsonResult: HttpResponseMicroservicesWithPods = await result.json();
 
     return jsonResult;
-};
+}
 
 export async function saveMicroservice(input: MicroserviceSimple): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/microservice`;
@@ -222,7 +222,7 @@ export async function saveMicroservice(input: MicroserviceSimple): Promise<boole
 
     // TODO ERROR: Temporary solution to hide response error.
     return response.status === 200 || response.status === 504;
-};
+}
 
 export async function editMicroservice(applicationId: string, environment: string, microserviceId: string, input: InputEditMicroservice): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}/environment/${environment}/microservice/${microserviceId}`;
@@ -240,7 +240,7 @@ export async function editMicroservice(applicationId: string, environment: strin
 
     // TODO ERROR: Temporary solution to hide response error.
     return response.status === 200 || response.status === 504;
-};
+}
 
 export async function restartMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/restart`;
@@ -253,7 +253,7 @@ export async function restartMicroservice(applicationId: string, environment: st
         });
 
     return response.status === 200;
-};
+}
 
 export async function deleteMicroservice(applicationId: string, environment: string, microserviceId: string): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/application/${applicationId}/environment/${environment}/microservice/${microserviceId}`;
@@ -267,7 +267,7 @@ export async function deleteMicroservice(applicationId: string, environment: str
 
     // TODO ERROR: Temporary solution to hide response error.
     return response.status === 200 || response.status === 504;
-};
+}
 
 export async function getPodStatus(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponsePodStatus> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment.toLowerCase()}/microservice/${microserviceId}/podstatus`;
@@ -282,14 +282,14 @@ export async function getPodStatus(applicationId: string, environment: string, m
     const jsonResult: HttpResponsePodStatus = await result.json();
 
     return jsonResult;
-};
+}
 
 export async function getPodLogs(applicationId: string, podName: string, containerName: string): Promise<HttpResponsePodLog> {
     let url = `${getServerUrlPrefix()}/live/application/${applicationId}/pod/${podName}/logs`;
 
     if (containerName !== '') {
         url = `${url}?containerName=${containerName}`;
-    };
+    }
 
     const result = await fetch(
         url,
@@ -301,7 +301,7 @@ export async function getPodLogs(applicationId: string, podName: string, contain
     const jsonResult: HttpResponsePodLog = await result.json();
 
     return jsonResult;
-};
+}
 
 export async function getEnvironmentVariables(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponseEnvironmentVariables> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/environment-variables`;
@@ -316,7 +316,7 @@ export async function getEnvironmentVariables(applicationId: string, environment
     const data = await response.json();
 
     return data;
-};
+}
 
 export async function updateEnvironmentVariables(applicationId: string, environment: string, microserviceId: string, input: InputEnvironmentVariable[]): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/environment-variables`;
@@ -337,7 +337,7 @@ export async function updateEnvironmentVariables(applicationId: string, environm
         });
 
     return response.status === 200;
-};
+}
 
 export async function getConfigFilesNamesList(applicationId: string, environment: string, microserviceId: string): Promise<HttpResponseConfigFilesNamesList> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files/list`;
@@ -352,7 +352,7 @@ export async function getConfigFilesNamesList(applicationId: string, environment
     const data: HttpResponseConfigFilesNamesList = await response.json();
 
     return data;
-};
+}
 
 export async function updateConfigFile(applicationId: string, environment: string, microserviceId: string, form: FormData): Promise<UpdateConfigFiles> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`;
@@ -368,7 +368,7 @@ export async function updateConfigFile(applicationId: string, environment: strin
     const parsedResponse = await response.json();
 
     return response.status === 200 ? { success: true } : { success: false, error: parsedResponse.message };
-};
+}
 
 export async function deleteConfigFile(applicationId: string, environment: string, microserviceId: string, fileName: string): Promise<boolean> {
     const url = `${getServerUrlPrefix()}/live/application/${applicationId}/environment/${environment}/microservice/${microserviceId}/config-files`;
@@ -386,7 +386,7 @@ export async function deleteConfigFile(applicationId: string, environment: strin
         });
 
     return response.status === 200;
-};
+}
 
 export async function parseJSONResponse(response: any): Promise<any> {
     const text = await response.text();
@@ -399,9 +399,9 @@ export async function parseJSONResponse(response: any): Promise<any> {
         } catch (error) {
             throw Error(`Couldn't parse the error message. The error was ${error}. Response Status ${response.status}. Response Body ${text}`);
         } throw Error(jsonResponse.message);
-    };
+    }
 
     const data = JSON.parse(text);
 
     return data;
-};
+}
