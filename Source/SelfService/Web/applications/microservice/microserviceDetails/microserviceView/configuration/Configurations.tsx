@@ -133,7 +133,7 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
                     developmentEnvironment: microserviceEnvironment,
                     runtimeVersion: runtimeImage,
                     headImage,
-                    headPort,
+                    headPort: headPort || 0,
                     entrypoint: '',
                     isPublic: hasPublicUrl,
                     headArguments: headArgumentValues,
