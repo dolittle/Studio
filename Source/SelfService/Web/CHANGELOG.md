@@ -1,3 +1,14 @@
+# [3.18.17] - 2023-10-23 [PR: #488](https://github.com/dolittle/Studio/pull/488)
+## Summary
+
+Added functionality for undeploying a message type.
+
+### Changed
+
+- 'Delete message type' button color to be red
+- 'ContentHeader' buttons gap from 32px to 16px
+
+
 # [3.18.15] - 2023-10-18 [PR: #487](https://github.com/dolittle/Studio/pull/487)
 ## Summary
 
