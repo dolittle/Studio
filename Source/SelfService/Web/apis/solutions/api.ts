@@ -167,7 +167,7 @@ export function getRuntimes(): LatestRuntimeInfo[] {
         getLatestRuntimeInfo(),
         {
             image: 'dolittle/runtime:8.9.5',
-            changelog: 'https://github.com/dolittle/Runtime/releases/tag/v8.9.4',
+            changelog: 'https://github.com/dolittle/Runtime/releases/tag/v8.9.5',
         },
         {
             image: 'dolittle/runtime:6.2.4',
