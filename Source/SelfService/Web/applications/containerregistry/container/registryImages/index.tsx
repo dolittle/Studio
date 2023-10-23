@@ -12,7 +12,7 @@ import { Button, dataGridDefaultProps, DataGridCustomToolbar, DataGridWrapper, D
 
 import { ContainerRegistryImages } from '../../../../apis/solutions/containerregistry';
 
-import { DetailPanelIndex } from './detailPanel';
+import { DetailPanelDataGrid } from './detailPanel/DetailPanelDataGrid';
 
 const registryImagesDataGridColumns: GridColDef[] = [
     {
@@ -43,7 +43,7 @@ export const RegistryImagesIndex = ({ applicationId, data }: RegistryImagesIndex
     };
 
     const getDetailPanelContent = useCallback<NonNullable<DataGridProProps['getDetailPanelContent']>>(({ row }) =>
-        <DetailPanelIndex applicationId={applicationId} row={row} image={`${data.url}/${row.name}`} />, []);
+        <DetailPanelDataGrid applicationId={applicationId} row={row} image={`${data.url}/${row.name}`} />, []);
 
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
