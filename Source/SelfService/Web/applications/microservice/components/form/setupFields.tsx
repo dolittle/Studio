@@ -9,7 +9,7 @@ import { Input, Select, Tooltip } from '@dolittle/design-system';
 
 import { getRuntimes } from '../../../../apis/solutions/api';
 
-import { getRuntimeNumberFromString, lowerCaseHyphenRegex } from '../../../../utils/helpers';
+import { getRuntimeNumberFromString, alphaNumericHyphenRegex } from '../../../../utils/helpers';
 
 const runtimeDescription = `By using the Dolittle runtime you'll have access to storage through event sourcing and be able to 
                             communicate with other microservices through the event horizon with the Dolittle SDK.`;
@@ -57,7 +57,7 @@ export const SetupFields = ({ environments, runtimeVersion, hasDashedBorder, isE
                 disabled={isDisabled}
                 required='Provide a microservice name.'
                 pattern={{
-                    value: lowerCaseHyphenRegex,
+                    value: alphaNumericHyphenRegex,
                     message: `Only lowercase letters, numbers and - in the middle are allowed.`,
                 }}
             />
