@@ -39,7 +39,7 @@ export const SetupFields = ({ environments, runtimeVersion, hasDashedBorder, isE
     ];
 
     // Push the current runtime version to the top of the 'runtimeNumberOptions' list.
-    if (runtimeVersion) {
+    if (runtimeVersion && runtimeNumberOptions.find(runtime => runtime.value === runtimeVersion) === undefined) {
         runtimeNumberOptions.unshift({
             value: runtimeVersion,
             displayValue: getRuntimeNumberFromString(runtimeVersion),
