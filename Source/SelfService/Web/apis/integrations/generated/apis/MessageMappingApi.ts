@@ -85,6 +85,17 @@ export interface ConnectionsIdMessageMappingsTablesTableMessagesMessagePostReque
     setMessageMappingRequestArguments?: SetMessageMappingRequestArguments;
 }
 
+export interface ConnectionsIdMessageMappingsTablesTableMessagesMessageUndeployPostRequest {
+    id: string;
+    table: string;
+    message: string;
+}
+
+export interface ConnectionsIdMessageMappingsUndeployMultiplePostRequest {
+    id: string;
+    mappingReference: Array<MappingReference>;
+}
+
 /**
  * 
  */
@@ -490,6 +501,104 @@ export class MessageMappingApi extends runtime.BaseAPI {
      */
     async connectionsIdMessageMappingsTablesTableMessagesMessagePost(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.connectionsIdMessageMappingsTablesTableMessagesMessagePostRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Undeploy the mapping of a table to a message.
+     */
+    async connectionsIdMessageMappingsTablesTableMessagesMessageUndeployPostRaw(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageUndeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageUndeployPost.');
+        }
+
+        if (requestParameters.table === null || requestParameters.table === undefined) {
+            throw new runtime.RequiredError('table','Required parameter requestParameters.table was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageUndeployPost.');
+        }
+
+        if (requestParameters.message === null || requestParameters.message === undefined) {
+            throw new runtime.RequiredError('message','Required parameter requestParameters.message was null or undefined when calling connectionsIdMessageMappingsTablesTableMessagesMessageUndeployPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("Bearer", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/connections/{id}/message-mappings/tables/{table}/messages/{message}/undeploy`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"table"}}`, encodeURIComponent(String(requestParameters.table))).replace(`{${"message"}}`, encodeURIComponent(String(requestParameters.message))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Undeploy the mapping of a table to a message.
+     */
+    async connectionsIdMessageMappingsTablesTableMessagesMessageUndeployPost(requestParameters: ConnectionsIdMessageMappingsTablesTableMessagesMessageUndeployPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.connectionsIdMessageMappingsTablesTableMessagesMessageUndeployPostRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Undeploy multiple message mappings. Each of the mappings must exist.  If any of the deletions fail a 400 is returned with the list of failures.  If all succeed a 200 is returned with the list of successes.
+     */
+    async connectionsIdMessageMappingsUndeployMultiplePostRaw(requestParameters: ConnectionsIdMessageMappingsUndeployMultiplePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<string>>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMessageMappingsUndeployMultiplePost.');
+        }
+
+        if (requestParameters.mappingReference === null || requestParameters.mappingReference === undefined) {
+            throw new runtime.RequiredError('mappingReference','Required parameter requestParameters.mappingReference was null or undefined when calling connectionsIdMessageMappingsUndeployMultiplePost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("Bearer", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/connections/{id}/message-mappings/undeploy-multiple`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.mappingReference.map(MappingReferenceToJSON),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse<any>(response);
+    }
+
+    /**
+     * Undeploy multiple message mappings. Each of the mappings must exist.  If any of the deletions fail a 400 is returned with the list of failures.  If all succeed a 200 is returned with the list of successes.
+     */
+    async connectionsIdMessageMappingsUndeployMultiplePost(requestParameters: ConnectionsIdMessageMappingsUndeployMultiplePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>> {
+        const response = await this.connectionsIdMessageMappingsUndeployMultiplePostRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
 }

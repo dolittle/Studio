@@ -4,9 +4,9 @@
 import React, { useMemo, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
-import { Box } from '@mui/material';
 import { AlertBox, ContentContainer, LoadingSpinner } from '@dolittle/design-system';
 
 import { useConnectionsIdMessageMappingsGet } from '../../../../../apis/integrations/messageMappingApi.hooks';
@@ -17,8 +17,6 @@ import { CreateMessagesButton } from './CreateMessagesButton';
 import { NoMessages } from './NoMessages';
 import { isDefaultEmptyDate } from './helpers';
 import { MessagesHeader } from './MessagesHeader';
-import { useQueryClient } from '@tanstack/react-query';
-
 
 export const MessagesListView = () => {
     const connectionId = useConnectionIdFromRoute();
@@ -50,6 +48,7 @@ export const MessagesListView = () => {
                     : b.deployedAt?.getTime()! - a.deployedAt?.getTime()!;
             };
         });
+
         return mappedRows;
     }, [data?.value]);
 

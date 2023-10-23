@@ -26,36 +26,27 @@ export const ActionToolbar = ({ connectionId, connectorName, onEditAction, onDel
     const initialDialogState: DeleteConnectorDialogState = { open: false, connectionId, connectorName, isLoading: false };
     const [dialogState, dispatch] = useReducer(deleteConnectorDialogReducer, initialDialogState);
 
+    const handleConnectionDelete = () => {
+        dispatch({
+            type: 'open',
+            payload: {
+                connectionId,
+                connectorName,
+            },
+        });
+    };
+
     return (
         <Box sx={{ display: 'flex', gap: 2 }}>
             {canEdit
                 ? <Button label={'Cancel'} startWithIcon='CancelRounded' onClick={onCancelAction} type='reset' disabled={alwaysEdit} />
-                : <Button label='Edit' startWithIcon='EditRounded' onClick={onEditAction} disabled={alwaysEdit} />}
-            <Button
-                label='Save'
-                startWithIcon='SaveRounded'
-                disabled={!canEdit || !isDirty || !isValid}
-                type='submit'
-            />
-            <Button
-                label='Delete Connection'
-                startWithIcon='DeleteRounded'
-                color='error'
-                onClick={
-                    () => dispatch({
-                        type: 'open',
-                        payload: {
-                            connectionId,
-                            connectorName
-                        }
-                    })
-                }
-            />
-            <DeleteConnectorDialog
-                dialogState={dialogState}
-                dispatch={dispatch}
-                handleDelete={() => onDeleteAction?.()}
-            />
+                : <Button label='Edit' startWithIcon='EditRounded' onClick={onEditAction} disabled={alwaysEdit} />
+            }
+
+            <Button label='Save' startWithIcon='SaveRounded' disabled={!canEdit || !isDirty || !isValid} type='submit' />
+            <Button label='Delete Connection' startWithIcon='DeleteRounded' color='error' onClick={handleConnectionDelete} />
+
+            <DeleteConnectorDialog dialogState={dialogState} dispatch={dispatch} handleDelete={() => onDeleteAction?.()} />
         </Box>
     );
 };

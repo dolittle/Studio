@@ -45,6 +45,24 @@ export interface ServiceAccountCreatedDto {
     createdAt?: Date;
     /**
      * 
+     * @type {boolean}
+     * @memberof ServiceAccountCreatedDto
+     */
+    commandAccess?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ServiceAccountCreatedDto
+     */
+    auditAccess?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ServiceAccountCreatedDto
+     */
+    deleteAccess?: boolean;
+    /**
+     * 
      * @type {string}
      * @memberof ServiceAccountCreatedDto
      */
@@ -74,6 +92,9 @@ export function ServiceAccountCreatedDtoFromJSONTyped(json: any, ignoreDiscrimin
         'token': !exists(json, 'token') ? undefined : json['token'],
         'createdBy': !exists(json, 'createdBy') ? undefined : json['createdBy'],
         'createdAt': !exists(json, 'createdAt') ? undefined : (new Date(json['createdAt'])),
+        'commandAccess': !exists(json, 'commandAccess') ? undefined : json['commandAccess'],
+        'auditAccess': !exists(json, 'auditAccess') ? undefined : json['auditAccess'],
+        'deleteAccess': !exists(json, 'deleteAccess') ? undefined : json['deleteAccess'],
         'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
@@ -91,6 +112,9 @@ export function ServiceAccountCreatedDtoToJSON(value?: ServiceAccountCreatedDto 
         'token': value.token,
         'createdBy': value.createdBy,
         'createdAt': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
+        'commandAccess': value.commandAccess,
+        'auditAccess': value.auditAccess,
+        'deleteAccess': value.deleteAccess,
         'description': value.description,
     };
 }

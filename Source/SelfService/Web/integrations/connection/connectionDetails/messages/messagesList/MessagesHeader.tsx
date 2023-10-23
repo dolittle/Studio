@@ -1,23 +1,25 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
+
 import { ContentHeader } from '@dolittle/design-system';
+
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
 
 import { DeployMessagesButton } from './Toolbar/DeployMessagesButton';
+import { UndeployMessagesButton } from './Toolbar/UndeployMessagesButton';
 import { DeleteMessagesButton } from './Toolbar/DeleteMessagesButton';
 import { CopyMessagesButton } from './Toolbar/CopyMessagesButton';
 
-export type MessagesHeadeProps = {
+export type MessagesHeaderProps = {
     connectionId: string;
     selectedMessageTypes: MessageMappingModel[];
-    onActionSuccess: () => void
+    onActionSuccess: () => void;
 };
 
-export const MessagesHeader = (props: MessagesHeadeProps) => {
-
-    const [isAnyActionExecuting, setIsAnyActionExecuting] = useState<boolean>(false);
+export const MessagesHeader = (props: MessagesHeaderProps) => {
+    const [isAnyActionExecuting, setIsAnyActionExecuting] = useState(false);
 
     const handleSuccess = () => {
         props.onActionSuccess();
@@ -40,12 +42,19 @@ export const MessagesHeader = (props: MessagesHeadeProps) => {
                         onActionExecuting={handleExecuting}
                         disable={isAnyActionExecuting}
                     />
-                    <CopyMessagesButton
+                    {/* <CopyMessagesButton
                         connectionId={props.connectionId}
                         selectedMessageTypes={props.selectedMessageTypes}
                         onActionCompleted={handleSuccess}
                         onActionExecuting={handleExecuting}
                         disable={true}
+                    /> */}
+                    <UndeployMessagesButton
+                        connectionId={props.connectionId}
+                        selectedMessageTypes={props.selectedMessageTypes}
+                        onActionCompleted={handleSuccess}
+                        onActionExecuting={handleExecuting}
+                        disable={isAnyActionExecuting}
                     />
                     <DeployMessagesButton
                         connectionId={props.connectionId}
@@ -60,5 +69,4 @@ export const MessagesHeader = (props: MessagesHeadeProps) => {
             sx={{ minHeight: 64 }}
         />
     );
-
 };

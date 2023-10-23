@@ -127,12 +127,6 @@ export interface ConnectionModel {
      * @type {RemoteServiceStatus}
      * @memberof ConnectionModel
      */
-    ionStatus: RemoteServiceStatus;
-    /**
-     * 
-     * @type {RemoteServiceStatus}
-     * @memberof ConnectionModel
-     */
     m3ConnectorStatus: RemoteServiceStatus;
     /**
      * 
@@ -161,7 +155,6 @@ export function instanceOfConnectionModel(value: object): boolean {
     isInstance = isInstance && "_configuration" in value;
     isInstance = isInstance && "status" in value;
     isInstance = isInstance && "mdpStatus" in value;
-    isInstance = isInstance && "ionStatus" in value;
     isInstance = isInstance && "m3ConnectorStatus" in value;
     isInstance = isInstance && "mdpCredentialStatus" in value;
     isInstance = isInstance && "m3CredentialStatus" in value;
@@ -191,7 +184,6 @@ export function ConnectionModelFromJSONTyped(json: any, ignoreDiscriminator: boo
         '_configuration': ConnectionConfigurationFromJSON(json['configuration']),
         'status': ConnectionStatusFromJSON(json['status']),
         'mdpStatus': RemoteServiceStatusFromJSON(json['mdpStatus']),
-        'ionStatus': RemoteServiceStatusFromJSON(json['ionStatus']),
         'm3ConnectorStatus': RemoteServiceStatusFromJSON(json['m3ConnectorStatus']),
         'mdpCredentialStatus': CredentialStatusFromJSON(json['mdpCredentialStatus']),
         'm3CredentialStatus': CredentialStatusFromJSON(json['m3CredentialStatus']),
@@ -219,7 +211,6 @@ export function ConnectionModelToJSON(value?: ConnectionModel | null): any {
         'configuration': ConnectionConfigurationToJSON(value._configuration),
         'status': ConnectionStatusToJSON(value.status),
         'mdpStatus': RemoteServiceStatusToJSON(value.mdpStatus),
-        'ionStatus': RemoteServiceStatusToJSON(value.ionStatus),
         'm3ConnectorStatus': RemoteServiceStatusToJSON(value.m3ConnectorStatus),
         'mdpCredentialStatus': CredentialStatusToJSON(value.mdpCredentialStatus),
         'm3CredentialStatus': CredentialStatusToJSON(value.m3CredentialStatus),
