@@ -33,20 +33,20 @@ export type MicroserviceViewIndexProps = {
 };
 
 export const MicroserviceViewIndex = ({ application, currentMicroservice }: MicroserviceViewIndexProps) => {
-    const [podsData, setPodsData] = useState(initialPodsData);
+    // const [podsData, setPodsData] = useState(initialPodsData);
 
     const applicationId = application.id;
     const microserviceId = currentMicroservice.id;
     const microserviceEnvironment = currentMicroservice.environment;
     const microserviceName = currentMicroservice.name;
 
-    useEffect(() => {
-        Promise.all([getPodStatus(applicationId, microserviceEnvironment, microserviceId)])
-            .then(values => setPodsData(values[0]));
-    }, []);
+    // useEffect(() => {
+    //     Promise.all([getPodStatus(applicationId, microserviceEnvironment, microserviceId)])
+    //         .then(values => setPodsData(values[0]));
+    // }, []);
 
     const getLastOpenTab = parseInt(sessionStorage.getItem('microservice-details-tabs') || '0');
-    const podsStatuses = () => podsData.pods.flatMap(pod => pod.containers.map(container => container.state));
+    const podsStatuses = () => currentMicroservice.live.pods.flatMap(pod => pod.containers.map(container => container.state));
     const microserviceHealthStatus = getContainerStatus(podsStatuses());
 
     const tabs = [
@@ -56,7 +56,7 @@ export const MicroserviceViewIndex = ({ application, currentMicroservice }: Micr
         },
         {
             label: 'Health Status',
-            render: () => <HealthStatusIndex applicationId={applicationId} currentMicroservice={currentMicroservice} data={podsData} />
+            render: () => <HealthStatusIndex applicationId={applicationId} currentMicroservice={currentMicroservice} />
         },
     ];
 

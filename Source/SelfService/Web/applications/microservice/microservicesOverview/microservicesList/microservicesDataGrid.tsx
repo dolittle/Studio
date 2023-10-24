@@ -15,10 +15,11 @@ import { HttpResponseApplication } from '../../../../apis/solutions/application'
 import { microservicesDataGridColumns } from './microservicesDataGridColumns';
 
 import { getMicroserviceInfo } from '../../utils/getMicroserviceInfo';
+import { MicroserviceStore } from '../../../stores/microservice';
 
 export type MicroservicesDataGridProps = {
     application: HttpResponseApplication;
-    microservices: MicroserviceObject[];
+    microservices: MicroserviceStore[];
 };
 
 export const MicroservicesDataGrid = ({ application, microservices }: MicroservicesDataGridProps) => {
@@ -32,12 +33,12 @@ export const MicroservicesDataGrid = ({ application, microservices }: Microservi
 
         Promise.all(microservices.map(async microservice => {
             const microserviceInfo = getMicroserviceInfo(application, microservice);
-            const status = await getMicroserviceStatus(microservice.id, microservice.environment);
+            // const status = await getMicroserviceStatus(microservice.id, microservice.environment);
 
             return {
                 ...microservice,
                 edit: microserviceInfo,
-                phase: status[0]?.phase,
+                phase: microservice.live.phase,
             } as MicroserviceObject;
         })).then(setMicroserviceRows)
             .finally(() => setIsLoading(false));

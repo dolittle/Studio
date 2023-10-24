@@ -4,7 +4,16 @@
 import { get, writable } from 'use-svelte-store';
 
 import { MicroserviceDolittle, MicroserviceSimple } from '../../apis/solutions/index';
-import { deleteMicroservice, editMicroservice, getMicroservices, HttpResponseMicroservices, InputEditMicroservice, MicroserviceInfo, saveMicroservice } from '../../apis/solutions/api';
+import {
+    deleteMicroservice,
+    editMicroservice,
+    getMicroservices, getMicroservicesWithPods,
+    HttpResponseMicroservices, HttpResponseMicroservicesWithPods,
+    InputEditMicroservice,
+    MicroserviceInfo,
+    MicroserviceInfoWithPods,
+    saveMicroservice
+} from '../../apis/solutions/api';
 import { getApplication, HttpResponseApplication, HttpInputApplicationEnvironment } from '../../apis/solutions/application';
 
 export type MicroserviceStore = {
@@ -12,12 +21,12 @@ export type MicroserviceStore = {
     name: string;
     kind: string;
     environment: string;
-    live: MicroserviceInfo;
+    live: MicroserviceInfoWithPods;
     edit: MicroserviceSimple;
 };
 
 const data = {
-    microservices: [] as MicroserviceInfo[],
+    microservices: [] as MicroserviceInfoWithPods[],
     isLoaded: false,
 };
 
@@ -31,7 +40,7 @@ export const loadMicroservices = (applicationId: string) => {
             const applicationData = values[0];
             mergeMicroservicesFromGit(applicationData.microservices);
 
-            const microservicesData = values[1] as HttpResponseMicroservices;
+            const microservicesData = values[1] as HttpResponseMicroservicesWithPods;
             mergeMicroservicesFromK8s(microservicesData.microservices);
 
             isLoaded.set(true);
@@ -74,7 +83,7 @@ export const mergeMicroservicesFromGit = (items: MicroserviceSimple[]) => {
     microservices.set(data);
 };
 
-export const mergeMicroservicesFromK8s = (items: MicroserviceInfo[]) => {
+export const mergeMicroservicesFromK8s = (items: MicroserviceInfoWithPods[]) => {
     let data = get(microservices);
 
     items.forEach(element => {
@@ -118,7 +127,7 @@ const saveMicroserviceWithStore = async (kind: string, input: MicroserviceSimple
     if (!response) return response;
 
     mergeMicroservicesFromGit(application.microservices);
-    const liveMicroservices = await getMicroservices(application.id);
+    const liveMicroservices = await getMicroservicesWithPods(application.id);
     mergeMicroservicesFromK8s(liveMicroservices.microservices);
 
     return response;

@@ -5,9 +5,10 @@ import { canEditMicroservice, MicroserviceStore } from '../../stores/microservic
 
 import { MicroserviceSimple } from '../../../apis/solutions/index';
 import { HttpResponseApplication } from '../../../apis/solutions/application';
+import { MicroserviceObject } from '../../../apis/solutions/api';
 
 // Check if there is microservice.edit data. If not, use microservice.live data.
-export const getMicroserviceInfo = (application: HttpResponseApplication, microservice: MicroserviceStore): MicroserviceSimple => {
+export const getMicroserviceInfo = (application: HttpResponseApplication, microservice: MicroserviceObject): MicroserviceSimple => {
     const canEdit = canEditMicroservice(application.environments, microservice.environment, microservice.id);
 
     if (canEdit) {

@@ -8,7 +8,11 @@ import { useSnackbar } from 'notistack';
 
 import { Box, Typography } from '@mui/material';
 
-import { HttpResponseMicroservices, getMicroservices } from '../../apis/solutions/api';
+import {
+    HttpResponseMicroservices,
+    getMicroservices,
+    HttpResponseMicroservicesWithPods, getMicroservicesWithPods
+} from '../../apis/solutions/api';
 import { HttpResponseApplication, getApplication } from '../../apis/solutions/application';
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
@@ -59,7 +63,7 @@ export const LogsIndex = withRouteApplicationState(({ routeApplicationParams }) 
 
         Promise.all([
             getApplication(currentApplicationId),
-            getMicroservices(currentApplicationId),
+            getMicroservicesWithPods(currentApplicationId),
         ]).then(values => {
             const applicationData = values[0];
 
@@ -72,7 +76,7 @@ export const LogsIndex = withRouteApplicationState(({ routeApplicationParams }) 
             setApplication(applicationData);
             mergeMicroservicesFromGit(applicationData.microservices);
 
-            const microservicesData = values[1] as HttpResponseMicroservices;
+            const microservicesData = values[1] as HttpResponseMicroservicesWithPods;
 
             mergeMicroservicesFromK8s(microservicesData.microservices);
             setIsLoaded(true);
