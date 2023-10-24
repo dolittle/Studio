@@ -41,6 +41,8 @@ export type MicroserviceObject = {
     environment: string;
     live: MicroserviceInfoWithPods;
     edit: MicroserviceSimple;
+    runtime: string;
+    head: string;
 };
 
 export type MicroserviceInfo = {

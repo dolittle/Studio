@@ -55,16 +55,14 @@ export const microservicesDataGridColumns: GridColDef[] = [
         headerName: 'Container Image',
         minWidth: 250,
         flex: 1,
-        valueGetter: ({ row }: HealthStatusTableRowProps) =>
-            `${row.edit?.extra?.headImage || 'N/A'}`,
+        valueGetter: ({ row }: HealthStatusTableRowProps) => `${row.head || 'N/A'}`,
     },
     {
         field: 'runtime',
         headerName: 'Runtime',
         minWidth: 150,
         flex: 1,
-        valueGetter: ({ row }: HealthStatusTableRowProps) =>
-            getRuntimeNumberFromString(row.edit?.extra?.runtimeImage || 'N/A'),
+        valueGetter: ({ row }: HealthStatusTableRowProps) => row.runtime || 'N/A',
     },
     {
         field: 'isPublic',

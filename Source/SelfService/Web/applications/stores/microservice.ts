@@ -14,13 +14,32 @@ import {
     MicroserviceInfoWithPods, MicroserviceObject,
     saveMicroservice
 } from '../../apis/solutions/api';
-import { getApplication, HttpResponseApplication, HttpInputApplicationEnvironment } from '../../apis/solutions/application';
+import {
+    getApplication,
+    HttpResponseApplication,
+    HttpInputApplicationEnvironment
+} from '../../apis/solutions/application';
+import { getRuntimeNumberFromString } from '../../utils/helpers';
 
 
 const data = {
     microservices: [] as MicroserviceInfoWithPods[],
-    isLoaded: false,
+    isLoaded: false
 };
+
+function trimDefaultRegistry(img: string): string {
+    if (img.startsWith('docker.io/')) {
+        return img.substring(10);
+    } else {
+        return img;
+    }
+}
+
+function getRuntimeVersion(image?: string){
+    if(image == null || image.length === 0 || image === 'N/A') return 'N/A';
+    const trimmed = trimDefaultRegistry(image);
+    return getRuntimeNumberFromString(trimmed);
+}
 
 // We do not use the same information from view to edit.
 export const microservices = writable(data.microservices);
@@ -43,7 +62,7 @@ export const mergeMicroservicesFromGit = (items: MicroserviceSimple[]) => {
     let data = get(microservices);
 
     items.forEach(element => {
-        const storeItem = {
+        const storeItem: MicroserviceObject = {
             id: (element.dolittle as MicroserviceDolittle).microserviceId,
             name: element.name,
             kind: element.kind,
@@ -57,7 +76,11 @@ export const mergeMicroservicesFromGit = (items: MicroserviceSimple[]) => {
                 images: [],
                 ingressUrls: [],
                 ingressPaths: [],
-            } as MicroserviceInfo,
+                pods: [],
+                phase: ''
+            } as MicroserviceInfoWithPods,
+            head: trimDefaultRegistry(element.extra.headImage),
+            runtime: getRuntimeVersion(element.extra.runtimeImage || 'N/A')
         };
 
         const index = data.findIndex(item => item.id === storeItem.id && item.environment === storeItem.environment);
@@ -78,15 +101,19 @@ export const mergeMicroservicesFromGit = (items: MicroserviceSimple[]) => {
 export const mergeMicroservicesFromK8s = (items: MicroserviceInfoWithPods[]) => {
     let data = get(microservices);
 
+
     items.forEach(element => {
-        const storeItem = {
+        const storeItem: MicroserviceObject = {
             id: element.id,
             name: element.name,
             kind: '', // TODO life would be so much simpler if we knew what this was, maybe adding the label for it.
             environment: element.environment,
             edit: {} as any,
             live: element,
+            head: trimDefaultRegistry(element.images.find(img => img.name === 'head')?.image || 'N/A'),
+            runtime: getRuntimeVersion(element.images.find(img => img.name === 'runtime')?.image || 'N/A')
         };
+
 
         const index = data.findIndex(item => item.id === storeItem.id && item.environment === storeItem.environment);
 
