@@ -9,33 +9,42 @@ import { Input, Select, Tooltip } from '@dolittle/design-system';
 
 import { getRuntimes } from '../../../../apis/solutions/api';
 
-import { getRuntimeNumberFromString, lowerCaseHyphenRegex } from '../../../../utils/helpers';
-
-const runtimeNumberOptions = [
-    ...getRuntimes().map(runtimeInfo => ({
-        value: runtimeInfo.image,
-        displayValue: getRuntimeNumberFromString(runtimeInfo.image),
-    })),
-    {
-        value: 'none',
-        displayValue: 'None',
-    },
-];
+import { getRuntimeNumberFromString, alphaNumericHyphenRegex } from '../../../../utils/helpers';
 
 const runtimeDescription = `By using the Dolittle runtime you'll have access to storage through event sourcing and be able to 
                             communicate with other microservices through the event horizon with the Dolittle SDK.`;
 
 export type SetupFieldsProps = {
     environments: string[];
+    runtimeVersion?: string;
     hasDashedBorder?: boolean;
     isEditMode?: boolean;
     isDisabled?: boolean;
     onEnvironmentSelect?: (environment: string) => void;
 };
 
-export const SetupFields = ({ environments, hasDashedBorder, isEditMode, isDisabled, onEnvironmentSelect }: SetupFieldsProps) => {
+export const SetupFields = ({ environments, runtimeVersion, hasDashedBorder, isEditMode, isDisabled, onEnvironmentSelect }: SetupFieldsProps) => {
     const [showEnvironmentInfo, setShowEnvironmentInfo] = useState(false);
     const [showEntrypointInfo, setShowEntrypointInfo] = useState(false);
+
+    const runtimeNumberOptions = [
+        ...getRuntimes().map(runtimeInfo => ({
+            value: runtimeInfo.image,
+            displayValue: getRuntimeNumberFromString(runtimeInfo.image),
+        })),
+        {
+            value: 'none',
+            displayValue: 'None',
+        },
+    ];
+
+    // Push the current runtime version to the top of the 'runtimeNumberOptions' list.
+    if (runtimeVersion && runtimeNumberOptions.find(runtime => runtime.value === runtimeVersion) === undefined) {
+        runtimeNumberOptions.unshift({
+            value: runtimeVersion,
+            displayValue: getRuntimeNumberFromString(runtimeVersion),
+        });
+    }
 
     return (
         <Stack sx={{ mb: 4 }}>
@@ -44,12 +53,11 @@ export const SetupFields = ({ environments, hasDashedBorder, isEditMode, isDisab
             <Input
                 id='microserviceName'
                 label='Microservice Name'
-                dashedBorder={hasDashedBorder}
                 disabled={isDisabled}
                 required='Provide a microservice name.'
                 pattern={{
-                    value: lowerCaseHyphenRegex,
-                    message: `Only lowercase letters, numbers and - in the middle are allowed.`,
+                    value: alphaNumericHyphenRegex,
+                    message: `Only letters, numbers and - in the middle are allowed.`,
                 }}
             />
 
@@ -68,7 +76,6 @@ export const SetupFields = ({ environments, hasDashedBorder, isEditMode, isDisab
                     onChange={event => onEnvironmentSelect ? onEnvironmentSelect(event.target.value) : null}
                     disabled={isDisabled}
                     required
-                    sx={hasDashedBorder ? { '& fieldset': { borderStyle: 'dashed' } } : {}}
                 />
             </Tooltip>
 

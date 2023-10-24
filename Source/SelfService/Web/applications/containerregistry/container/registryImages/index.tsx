@@ -5,14 +5,14 @@ import React, { useCallback, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { Tooltip } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
 import { DataGridPro, DataGridProProps, GridColDef, GridRowId } from '@mui/x-data-grid-pro';
 
 import { Button, dataGridDefaultProps, DataGridCustomToolbar, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon, IconButton } from '@dolittle/design-system';
 
 import { ContainerRegistryImages } from '../../../../apis/solutions/containerregistry';
 
-import { DetailPanelIndex } from './detailPanel';
+import { DetailPanelDataGrid } from './detailPanel/DetailPanelDataGrid';
 
 const registryImagesDataGridColumns: GridColDef[] = [
     {
@@ -43,13 +43,13 @@ export const RegistryImagesIndex = ({ applicationId, data }: RegistryImagesIndex
     };
 
     const getDetailPanelContent = useCallback<NonNullable<DataGridProProps['getDetailPanelContent']>>(({ row }) =>
-        <DetailPanelIndex applicationId={applicationId} row={row} image={`${data.url}/${row.name}`} />, []);
+        <DetailPanelDataGrid applicationId={applicationId} row={row} image={`${data.url}/${row.name}`} />, []);
 
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
     const Toolbar = () =>
         <DataGridCustomToolbar title={`Host: ${data.url}`}>
-            <div>
+            <Box sx={{ display: 'flex' }}>
                 <Tooltip title='Coming soon!' placement='top' arrow>
                     <span><Button label='Delete image(s)' startWithIcon='DeleteRounded' disabled sx={{ mr: 1 }} /></span>
                 </Tooltip>
@@ -62,7 +62,7 @@ export const RegistryImagesIndex = ({ applicationId, data }: RegistryImagesIndex
                         to: `/setup/application/${applicationId}/overview`,
                     }}
                 />
-            </div>
+            </Box>
         </DataGridCustomToolbar>;
 
     return (

@@ -133,7 +133,7 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
                     developmentEnvironment: microserviceEnvironment,
                     runtimeVersion: runtimeImage,
                     headImage,
-                    headPort,
+                    headPort: headPort || 0,
                     entrypoint: '',
                     isPublic: hasPublicUrl,
                     headArguments: headArgumentValues,
@@ -150,9 +150,9 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
                     <Button label='Delete Microservice' startWithIcon='DeleteRounded' onClick={() => setDeleteDialogIsOpen(true)} />
                 </Box>
 
-                <SetupFields environments={availableEnvironments} hasDashedBorder isEditMode={!editMicroserviceMode} isDisabled />
+                <SetupFields environments={availableEnvironments} runtimeVersion={runtimeImage} hasDashedBorder isEditMode={!editMicroserviceMode} isDisabled />
                 <ContainerImageFields hasDashedBorder isEditMode={!editMicroserviceMode} isDisabled />
-                <PublicUrlFields hasDashedBorder hasPublicUrl={hasPublicUrl} isDisabled />
+                <PublicUrlFields hasPublicUrl={hasPublicUrl} isDisabled />
                 {hasM3ConnectorOption && <HasM3ConnectorField isDisabled />}
             </Form>
         </>

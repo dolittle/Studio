@@ -9,10 +9,9 @@ import { Button, Input } from '@dolittle/design-system';
 
 type HeadArgumentsProps = {
     disabled?: boolean;
-    dashedBorder?: boolean;
 };
 
-export const HeadArguments = ({ disabled, dashedBorder }: HeadArgumentsProps) => {
+export const HeadArguments = ({ disabled }: HeadArgumentsProps) => {
     const { formState: { errors } } = useFormContext();
 
     // Name comes from the Form initial values and the name of the fields array.
@@ -33,7 +32,6 @@ export const HeadArguments = ({ disabled, dashedBorder }: HeadArgumentsProps) =>
                         autoFocus
                         disabled={disabled}
                         required
-                        dashedBorder={dashedBorder}
                         sx={{ width: 220 }}
                     />
                     <Button

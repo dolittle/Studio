@@ -50,7 +50,6 @@ export const ContainerImageFields = ({ hasDashedBorder, isEditMode, isDisabled }
             <Input
                 id='headPort'
                 label='Port'
-                dashedBorder={hasDashedBorder}
                 disabled={isDisabled}
                 required='Provide a port. Default is 80.'
                 pattern={{
@@ -64,10 +63,9 @@ export const ContainerImageFields = ({ hasDashedBorder, isEditMode, isDisabled }
             <Input
                 id='entrypoint'
                 label='Entrypoint'
-                dashedBorder={hasDashedBorder}
                 disabled={isDisabled}
             />
         </Tooltip>
 
-        <HeadArguments dashedBorder={hasDashedBorder} disabled={isDisabled} />
+        <HeadArguments disabled={isDisabled} />
     </Stack>;

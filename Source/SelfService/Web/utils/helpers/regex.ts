@@ -17,9 +17,9 @@ export const alphanumericCharacter = /[a-zA-Z0-9]+/g;
  */
 export const alphaNumericCharsRegex = /^[a-zA-Z0-9]*$/;
 
-// Regular expression for matching lower case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character.
-// (e.g. 'my-name',  or 'abc-123')
-export const lowerCaseHyphenRegex = /^([a-z]([-a-z0-9]*[a-z0-9])+)$/;
+// Regular expression for matching alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character.
+// (e.g. 'My-name',  or 'abc-123')
+export const alphaNumericHyphenRegex = /^([a-z]([-a-z0-9]*[a-zA-Z0-9])+)$/;
 
 /**
  * Regular expression for matching lower-cased alpha numeric characters.

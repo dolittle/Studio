@@ -11,13 +11,13 @@ import { ContainerRegistryTags, getTagsInContainerRegistry, Tag } from '../../..
 
 import { getDetailPanelColumns } from './DetailPanelColumns';
 
-export type DetailPanelIndexProps = {
+export type DetailPanelDataGridProps = {
     applicationId: string;
     image: string;
     row: Tag;
 };
 
-export const DetailPanelIndex = ({ applicationId, image, row }: DetailPanelIndexProps) => {
+export const DetailPanelDataGrid = ({ applicationId, image, row }: DetailPanelDataGridProps) => {
     const [containerRegistryTags, setContainerRegistryTags] = useState({
         name: '',
         tags: [],
@@ -40,7 +40,6 @@ export const DetailPanelIndex = ({ applicationId, image, row }: DetailPanelIndex
                 columns={detailPanelColumns}
                 getRowId={row => row.name}
                 loading={isLoading}
-                checkboxSelection
             />
         </DataGridWrapper>
     );
