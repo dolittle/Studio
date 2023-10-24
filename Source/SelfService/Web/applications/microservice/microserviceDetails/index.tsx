@@ -10,9 +10,10 @@ import { Typography } from '@mui/material';
 
 import { HttpResponseApplication } from '../../../apis/solutions/application';
 
-import { microservices, MicroserviceStore } from '../../stores/microservice';
+import { microservices } from '../../stores/microservice';
 
 import { MicroserviceViewIndex } from './microserviceView';
+import { MicroserviceObject } from '../../../apis/solutions/api';
 
 export type MicroserviceDetailsIndexProps = {
     application: HttpResponseApplication;
@@ -23,7 +24,7 @@ export const MicroserviceDetailsIndex = ({ application }: MicroserviceDetailsInd
     const $microservices = useReadable(microservices) as any;
     const { microserviceId, environment } = useParams() as any;
 
-    const currentMicroservice: MicroserviceStore = $microservices.find((microservice: MicroserviceStore) =>
+    const currentMicroservice: MicroserviceObject = $microservices.find((microservice: MicroserviceObject) =>
         microservice.id === microserviceId && microservice.environment === environment
     );
 
@@ -53,7 +54,7 @@ export const MicroserviceDetailsIndex = ({ application }: MicroserviceDetailsInd
     }
 };
 
-function whichSubView(currentMicroservice: MicroserviceStore): string {
+function whichSubView(currentMicroservice: MicroserviceObject): string {
     // Today we try and map subviews based on kind, its not perfect
     let kind = currentMicroservice.kind;
 

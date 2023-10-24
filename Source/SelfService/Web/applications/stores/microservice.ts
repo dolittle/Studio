@@ -11,19 +11,11 @@ import {
     HttpResponseMicroservices, HttpResponseMicroservicesWithPods,
     InputEditMicroservice,
     MicroserviceInfo,
-    MicroserviceInfoWithPods,
+    MicroserviceInfoWithPods, MicroserviceObject,
     saveMicroservice
 } from '../../apis/solutions/api';
 import { getApplication, HttpResponseApplication, HttpInputApplicationEnvironment } from '../../apis/solutions/application';
 
-export type MicroserviceStore = {
-    id: string;
-    name: string;
-    kind: string;
-    environment: string;
-    live: MicroserviceInfoWithPods;
-    edit: MicroserviceSimple;
-};
 
 const data = {
     microservices: [] as MicroserviceInfoWithPods[],
@@ -122,7 +114,7 @@ const saveMicroserviceWithStore = async (kind: string, input: MicroserviceSimple
         default:
             alert(`Saving via store failed. Kind: ${kind} not supported.`);
             return false;
-    };
+    }
 
     if (!response) return response;
 
@@ -139,7 +131,7 @@ export const saveSimpleMicroserviceWithStore = (input: MicroserviceSimple, appli
 export const canEditMicroservices = (environments: HttpInputApplicationEnvironment[], environment: string): boolean =>
     environments.some(info => info.name === environment && info.automationEnabled);
 
-export const findCurrentMicroservice = (microserviceId: string): MicroserviceStore => {
+export const findCurrentMicroservice = (microserviceId: string): MicroserviceObject => {
     const data = get(microservices);
     return data.find(ms => ms.id === microserviceId);
 };
@@ -147,7 +139,7 @@ export const findCurrentMicroservice = (microserviceId: string): MicroserviceSto
 export const canEditMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
     if (!canDeleteMicroservice(environments, environment, microserviceId)) return false;
 
-    const currentMicroservice: MicroserviceStore = findCurrentMicroservice(microserviceId);
+    const currentMicroservice: MicroserviceObject = findCurrentMicroservice(microserviceId);
     if (!currentMicroservice || !currentMicroservice?.edit?.dolittle) return false;
 
     const { id, kind } = currentMicroservice;
@@ -167,7 +159,7 @@ export const editMicroserviceWithStore = async (applicationId: string, environme
 };
 
 export const canDeleteMicroservice = (environments: HttpInputApplicationEnvironment[], environment: string, microserviceId: string): boolean => {
-    const currentMicroservice: MicroserviceStore = findCurrentMicroservice(microserviceId);
+    const currentMicroservice: MicroserviceObject = findCurrentMicroservice(microserviceId);
     if (!currentMicroservice) return false;
 
     return canEditMicroservices(environments, environment);
@@ -184,4 +176,4 @@ export async function deleteMicroserviceWithStore(applicationId: string, environ
     microservices.set(data);
 
     return response;
-};
+}

@@ -9,9 +9,14 @@ import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { Accordion, FileUploadForm, FileUploadFormRef } from '@dolittle/design-system';
 
-import { MicroserviceStore } from '../../../../../stores/microservice';
 
-import { getConfigFilesNamesList, getServerUrlPrefix, updateConfigFile, deleteConfigFile } from '../../../../../../apis/solutions/api';
+import {
+    getConfigFilesNamesList,
+    getServerUrlPrefix,
+    updateConfigFile,
+    deleteConfigFile,
+    MicroserviceObject
+} from '../../../../../../apis/solutions/api';
 
 import { isAlphaNumeric } from '../../../../../../utils/helpers';
 
@@ -28,7 +33,7 @@ const MAX_CONFIGMAP_ENTRY_SIZE = 3145728;
 
 export type ConfigurationFilesIndexProps = {
     applicationId: string;
-    currentMicroservice: MicroserviceStore;
+    currentMicroservice: MicroserviceObject;
 };
 
 export const ConfigurationFilesIndex = ({ applicationId, currentMicroservice }: ConfigurationFilesIndexProps) => {

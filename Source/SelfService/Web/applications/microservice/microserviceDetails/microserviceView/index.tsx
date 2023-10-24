@@ -1,13 +1,11 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { Tabs } from '@dolittle/design-system';
 
-import { MicroserviceStore } from '../../../stores/microservice';
-
-import { getPodStatus, HttpResponsePodStatus } from '../../../../apis/solutions/api';
+import { getPodStatus, HttpResponsePodStatus, MicroserviceObject } from '../../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../../apis/solutions/application';
 
 import { PageTitle } from '../../../../layout/PageTitle';
@@ -29,21 +27,15 @@ const initialPodsData: HttpResponsePodStatus = {
 
 export type MicroserviceViewIndexProps = {
     application: HttpResponseApplication;
-    currentMicroservice: MicroserviceStore;
+    currentMicroservice: MicroserviceObject;
 };
 
 export const MicroserviceViewIndex = ({ application, currentMicroservice }: MicroserviceViewIndexProps) => {
-    // const [podsData, setPodsData] = useState(initialPodsData);
 
     const applicationId = application.id;
     const microserviceId = currentMicroservice.id;
     const microserviceEnvironment = currentMicroservice.environment;
     const microserviceName = currentMicroservice.name;
-
-    // useEffect(() => {
-    //     Promise.all([getPodStatus(applicationId, microserviceEnvironment, microserviceId)])
-    //         .then(values => setPodsData(values[0]));
-    // }, []);
 
     const getLastOpenTab = parseInt(sessionStorage.getItem('microservice-details-tabs') || '0');
     const podsStatuses = () => currentMicroservice.live.pods.flatMap(pod => pod.containers.map(container => container.state));

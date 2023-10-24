@@ -1,7 +1,7 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { canEditMicroservice, MicroserviceStore } from '../../stores/microservice';
+import { canEditMicroservice } from '../../stores/microservice';
 
 import { MicroserviceSimple } from '../../../apis/solutions/index';
 import { HttpResponseApplication } from '../../../apis/solutions/application';

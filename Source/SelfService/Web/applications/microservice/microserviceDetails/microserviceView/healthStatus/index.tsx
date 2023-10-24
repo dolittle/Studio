@@ -3,11 +3,10 @@
 
 import React, { useMemo, useState } from 'react';
 
-import { MicroserviceStore } from '../../../../stores/microservice';
 
 import { AlertBox, AlertBoxErrorMessage, Button, Graph } from '@dolittle/design-system';
 
-import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../../../apis/solutions/api';
+import { ContainerStatusInfo, HttpResponsePodStatus, MicroserviceObject } from '../../../../../apis/solutions/api';
 
 import { Metric, useMetricsFromLast } from '../../../../metrics/useMetrics';
 import { HealthStatusDataGrid, HealthStatusTableStats } from './HealthStatusDataGrid';
@@ -25,7 +24,7 @@ const computeStats = (metric: Metric | undefined, scale: number): HealthStatusTa
 
 export type HealthStatusIndexProps = {
     applicationId: string;
-    currentMicroservice: MicroserviceStore;
+    currentMicroservice: MicroserviceObject;
 };
 
 export const HealthStatusIndex = ({ applicationId, currentMicroservice }: HealthStatusIndexProps) => {

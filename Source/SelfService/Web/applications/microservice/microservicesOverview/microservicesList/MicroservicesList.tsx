@@ -11,11 +11,10 @@ import { MicroserviceObject } from '../../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../../apis/solutions/application';
 
 import { MicroservicesDataGrid } from './microservicesDataGrid';
-import { MicroserviceStore } from '../../../stores/microservice';
 
 export type MicroservicesViewProps = {
     application: HttpResponseApplication;
-    microservices: MicroserviceStore[];
+    microservices: MicroserviceObject[];
 };
 
 export const MicroservicesList = ({ application, microservices }: MicroservicesViewProps) => {

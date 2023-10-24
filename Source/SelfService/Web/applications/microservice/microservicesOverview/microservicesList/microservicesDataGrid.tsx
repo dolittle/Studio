@@ -15,11 +15,10 @@ import { HttpResponseApplication } from '../../../../apis/solutions/application'
 import { microservicesDataGridColumns } from './microservicesDataGridColumns';
 
 import { getMicroserviceInfo } from '../../utils/getMicroserviceInfo';
-import { MicroserviceStore } from '../../../stores/microservice';
 
 export type MicroservicesDataGridProps = {
     application: HttpResponseApplication;
-    microservices: MicroserviceStore[];
+    microservices: MicroserviceObject[];
 };
 
 export const MicroservicesDataGrid = ({ application, microservices }: MicroservicesDataGridProps) => {

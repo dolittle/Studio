@@ -39,7 +39,7 @@ export type MicroserviceObject = {
     name: string;
     kind: string;
     environment: string;
-    live: MicroserviceInfo;
+    live: MicroserviceInfoWithPods;
     edit: MicroserviceSimple;
 };
 
