@@ -10,10 +10,10 @@ import { Box } from '@mui/material';
 
 import { AlertDialog, Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
 
-import { canDeleteMicroservice, deleteMicroserviceWithStore, editMicroserviceWithStore, MicroserviceStore } from '../../../../stores/microservice';
+import { canDeleteMicroservice, deleteMicroserviceWithStore, editMicroserviceWithStore } from '../../../../stores/microservice';
 
 import { HttpResponseApplication } from '../../../../../apis/solutions/application';
-import { InputEditMicroservice } from '../../../../../apis/solutions/api';
+import { InputEditMicroservice, MicroserviceObject } from '../../../../../apis/solutions/api';
 import { MicroserviceFormParameters } from '../../../../../apis/solutions/index';
 
 import { ContainerImageFields } from '../../../components/form/containerImageFields';
@@ -26,7 +26,7 @@ import { getMicroserviceInfo } from '../../../utils/getMicroserviceInfo';
 
 export type ConfigurationsIndexProps = {
     application: HttpResponseApplication;
-    currentMicroservice: MicroserviceStore;
+    currentMicroservice: MicroserviceObject;
 };
 
 export const ConfigurationsIndex = ({ application, currentMicroservice }: ConfigurationsIndexProps) => {

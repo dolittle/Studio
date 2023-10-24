@@ -5,15 +5,15 @@ import React from 'react';
 
 import { HttpResponseApplication } from '../../../../../apis/solutions/application';
 
-import { MicroserviceStore } from '../../../../stores/microservice';
 
 import { ConfigurationsIndex } from './Configurations';
 import { ConfigurationFilesIndex } from './configurationFiles';
 import { EnvironmentVariableIndex } from './environmentVariable';
+import { MicroserviceObject } from '../../../../../apis/solutions/api';
 
 export type ConfigurationIndexProps = {
     application: HttpResponseApplication;
-    currentMicroservice: MicroserviceStore;
+    currentMicroservice: MicroserviceObject;
 };
 
 export const ConfigurationIndex = ({ application, currentMicroservice }: ConfigurationIndexProps) => (

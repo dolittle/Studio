@@ -3,11 +3,10 @@
 
 import React, { useMemo, useState } from 'react';
 
-import { MicroserviceStore } from '../../../../stores/microservice';
 
 import { AlertBox, AlertBoxErrorMessage, Button, Graph } from '@dolittle/design-system';
 
-import { ContainerStatusInfo, HttpResponsePodStatus } from '../../../../../apis/solutions/api';
+import { ContainerStatusInfo, HttpResponsePodStatus, MicroserviceObject } from '../../../../../apis/solutions/api';
 
 import { Metric, useMetricsFromLast } from '../../../../metrics/useMetrics';
 import { HealthStatusDataGrid, HealthStatusTableStats } from './HealthStatusDataGrid';
@@ -25,11 +24,10 @@ const computeStats = (metric: Metric | undefined, scale: number): HealthStatusTa
 
 export type HealthStatusIndexProps = {
     applicationId: string;
-    currentMicroservice: MicroserviceStore;
-    data: HttpResponsePodStatus;
+    currentMicroservice: MicroserviceObject;
 };
 
-export const HealthStatusIndex = ({ applicationId, currentMicroservice, data }: HealthStatusIndexProps) => {
+export const HealthStatusIndex = ({ applicationId, currentMicroservice }: HealthStatusIndexProps) => {
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
 
     const microserviceId = currentMicroservice.id;
@@ -39,7 +37,7 @@ export const HealthStatusIndex = ({ applicationId, currentMicroservice, data }: 
     const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${microserviceEnvironment}", microservice_id="${microserviceId}"}`, 86_400, 60);
     const memory = useMetricsFromLast(`microservice:container_memory_working_set_bytes:max{application_id="${applicationId}", environment="${microserviceEnvironment}", microservice_id="${microserviceId}"}`, 86_400, 60);
 
-    const containerTables = data.pods?.map(pod => {
+    const containerTables = currentMicroservice.live.pods?.map(pod => {
         const rows = pod.containers.map((container: ContainerStatusInfo) => {
             const containerCPU = cpu.metrics.find(_ => _.labels.container === container.name);
             const containerMemory = memory.metrics.find(_ => _.labels.container === container.name);

@@ -10,7 +10,7 @@ import { Typography } from '@mui/material';
 
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 
-import { getMicroservices } from '../../apis/solutions/api';
+import { getMicroservices, getMicroservicesWithPods } from '../../apis/solutions/api';
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
 import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
@@ -39,7 +39,7 @@ export const MicroservicesIndex = withRouteApplicationState(({ routeApplicationP
 
         Promise.all([
             getApplication(currentApplicationId),
-            getMicroservices(currentApplicationId),
+            getMicroservicesWithPods(currentApplicationId),
         ]).then(values => {
             const applicationData = values[0];
 

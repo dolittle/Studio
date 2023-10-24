@@ -5,14 +5,18 @@ import React, { useEffect, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { MicroserviceStore } from '../../../../../stores/microservice';
-
 import { GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
 import { Box } from '@mui/material';
 
 import { Accordion, Button } from '@dolittle/design-system';
 
-import { getEnvironmentVariables, getServerUrlPrefix, InputEnvironmentVariable, updateEnvironmentVariables } from '../../../../../../apis/solutions/api';
+import {
+    getEnvironmentVariables,
+    getServerUrlPrefix,
+    InputEnvironmentVariable,
+    MicroserviceObject,
+    updateEnvironmentVariables
+} from '../../../../../../apis/solutions/api';
 
 import { EmptyDataTable } from '../../../../components/emptyDataTable';
 import { DataGrid, EnvironmentVariableTableRowParams } from './DataGrid';
@@ -30,7 +34,7 @@ const styles = {
 
 export type EnvironmentVariableIndexProps = {
     applicationId: string;
-    currentMicroservice: MicroserviceStore;
+    currentMicroservice: MicroserviceObject;
 };
 
 export const EnvironmentVariableIndex = ({ applicationId, currentMicroservice }: EnvironmentVariableIndexProps) => {
