@@ -1,3 +1,14 @@
+# [3.18.19] - 2023-10-24 [PR: #489](https://github.com/dolittle/Studio/pull/489)
+## Summary
+
+Improved UX and fixed bugs.
+
+### Fixed
+
+- Show current runtime version in Microservice 'configuration' page
+- Microservice 'name' input validation rule
+
+
 # [3.18.17] - 2023-10-23 [PR: #488](https://github.com/dolittle/Studio/pull/488)
 ## Summary
 
