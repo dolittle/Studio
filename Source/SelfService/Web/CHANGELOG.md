@@ -1,3 +1,11 @@
+# [3.18.20] - 2023-10-24 [PR: #490](https://github.com/dolittle/Studio/pull/490)
+## Summary
+
+Changed microservices to use the new endpoints which include pod status when listing services. This means each service does not need to individually call getpodstatus, and can render faster.
+
+The new endpoint also uses the images which are actually used by the running pod, which means there will no longer be a stale runtime version.
+
+
 # [3.18.19] - 2023-10-24 [PR: #489](https://github.com/dolittle/Studio/pull/489)
 ## Summary
 
