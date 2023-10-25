@@ -56,6 +56,7 @@ export const CredentialsTableGridIndex = ({ credentials, isLoading, connectionId
                 buttons: [
                     {
                         label: 'Delete',
+                        color: 'error',
                         startWithIcon: 'DeleteRounded',
                         disabled: !tableActionEnabled,
                         onClick: () => deleteDialogDispatch({ type: 'open', payload: { credentials: selectedIds } })
