@@ -1,8 +1,6 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { Exception } from '@dolittle/rudiments';
-
 import { MicroserviceSimple } from './index';
 
 export type JobInfo = {
@@ -159,14 +157,18 @@ export function getServerUrlPrefix(): string {
 
 export function getLatestRuntimeInfo(): LatestRuntimeInfo {
     return {
-        image: 'dolittle/runtime:9.1.2',
-        changelog: 'https://github.com/dolittle/Runtime/releases/tag/v9.1.2',
+        image: 'dolittle/runtime:9.2.0',
+        changelog: 'https://github.com/dolittle/Runtime/releases/tag/v9.2.0',
     };
 }
 
 export function getRuntimes(): LatestRuntimeInfo[] {
     return [
         getLatestRuntimeInfo(),
+        {
+            image: 'dolittle/runtime:9.1.2',
+            changelog: 'https://github.com/dolittle/Runtime/releases/tag/v9.1.2',
+        },
         {
             image: 'dolittle/runtime:8.9.5',
             changelog: 'https://github.com/dolittle/Runtime/releases/tag/v8.9.5',
