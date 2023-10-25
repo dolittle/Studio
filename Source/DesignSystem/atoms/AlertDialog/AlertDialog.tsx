@@ -86,6 +86,18 @@ export type AlertDialogProps = {
     confirmBtnText: string;
 
     /**
+     * The callback that is called when the dialog is confirmed.
+     */
+    onConfirm: any;
+
+    /**
+     * Whether or not to hide the submit button.
+     *
+     * @default false
+     */
+    hideSubmitButton?: boolean;
+
+    /**
      * The dialog will be open if this is set to true.
      *
      * Manage this state from the parent component.
@@ -99,20 +111,29 @@ export type AlertDialogProps = {
     isLoading?: boolean;
 
     /**
+     * Button text that dismisses the dialog.
+     *
+     * @default Cancel
+     */
+    cancelButtonLabel?: string;
+
+    /**
      * The callback that is called when the dialog is dismissed.
      */
     onCancel: () => void;
-
-    /**
-     * The callback that is called when the dialog is confirmed.
-     */
-    onConfirm: ((values: any) => Promise<void>) | (() => void);
 
     /**
      * The callback that is called when the dialog is closed.
      * @default onCancel
      */
     onClose?: () => void;
+
+    /**
+     * Whether or not to hide the cancel button.
+     *
+     * @default false
+     */
+    hideCancelButton?: boolean;
 };
 
 /**
@@ -120,7 +141,7 @@ export type AlertDialogProps = {
  * @param {AlertDialogProps} props - The {@link AlertDialogProps} that contains the properties for the alert dialog.
  * @returns A {@link AlertDialog} component.
  */
-export const AlertDialog = ({ id, title, description, children, confirmBtnColor, cancelBtnText, confirmBtnText, isOpen, onCancel, onConfirm, onClose }: AlertDialogProps) =>
+export const AlertDialog = ({ id, isOpen, title, description, children, cancelButtonLabel, onCancel, onClose, confirmBtnColor, confirmBtnText, onConfirm }: AlertDialogProps) =>
     <Dialog
         open={isOpen ?? false}
         onClose={onClose ?? onCancel}
@@ -143,13 +164,13 @@ export const AlertDialog = ({ id, title, description, children, confirmBtnColor,
         </DialogContent>
 
         <DialogActions sx={{ mr: 1 }}>
-            <Button onClick={onCancel} label={cancelBtnText ?? 'Cancel'} color='subtle' />
+            <Button onClick={onCancel} label={cancelButtonLabel ?? 'Cancel'} color='subtle' />
             <Button onClick={onConfirm} label={confirmBtnText} color={confirmBtnColor ?? 'primary'} />
         </DialogActions>
     </Dialog>;
 
 // TODO: Hack for now, remove when we have a better solution. Also add to stories.
-export const DialogForm = ({ id, formInitialValues, title, description, children, confirmBtnText, isOpen, isLoading, onCancel, onConfirm, onClose }: AlertDialogProps) =>
+export const DialogForm = ({ id, isOpen, title, description, isLoading, children, cancelButtonLabel, onCancel, onClose, hideCancelButton, confirmBtnText, onConfirm, hideSubmitButton, formInitialValues }: AlertDialogProps) =>
     <Dialog
         open={isOpen ?? false}
         onClose={onClose ?? onCancel}
@@ -175,8 +196,8 @@ export const DialogForm = ({ id, formInitialValues, title, description, children
             {isLoading ?
                 <LoadingSpinner size={20} /> :
                 <DialogActions sx={{ mr: 1 }}>
-                    <Button label='Cancel' color='subtle' onClick={onCancel} />
-                    <Button label={confirmBtnText} type='submit' />
+                    {!hideCancelButton && <Button label={cancelButtonLabel ? cancelButtonLabel : 'Cancel'} color='subtle' onClick={onCancel} />}
+                    {!hideSubmitButton && <Button label={confirmBtnText} type='submit' />}
                 </DialogActions>
             }
         </Form>
