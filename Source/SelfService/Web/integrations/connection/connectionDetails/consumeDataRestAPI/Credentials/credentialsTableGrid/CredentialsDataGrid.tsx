@@ -4,7 +4,8 @@
 import React from 'react';
 
 import { DataGridPro } from '@mui/x-data-grid-pro';
-import { Paper } from '@mui/material';
+
+import { DataGridWrapper, dataGridDefaultProps } from '@dolittle/design-system';
 
 import { ServiceAccountListDto } from '../../../../../../apis/integrations/generated';
 
@@ -17,23 +18,14 @@ export type CredentialsDataGridProps = {
 };
 
 export const CredentialsDataGrid = ({ items, isLoading, onSelectionChanged }: CredentialsDataGridProps) =>
-    <Paper sx={{ width: 1 }}>
+    <DataGridWrapper background='dark'>
         <DataGridPro
+            {...dataGridDefaultProps}
             rows={items}
             columns={CredentialsDataGridColumns}
-            autoHeight
-            disableSelectionOnClick
-            disableColumnMenu
-            disableColumnReorder
-            disableColumnResize
-            disableColumnSelector
-            disableMultipleSelection
-            checkboxSelection
-            getRowHeight={() => 'auto'}
-            headerHeight={46}
-            hideFooter
             loading={isLoading}
+            checkboxSelection
             getRowId={row => row.serviceAccountName!}
             onSelectionModelChange={model => onSelectionChanged(model as string[])}
         />
-    </Paper>;
+    </DataGridWrapper>;
