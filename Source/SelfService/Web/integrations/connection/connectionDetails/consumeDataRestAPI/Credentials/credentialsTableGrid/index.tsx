@@ -40,9 +40,9 @@ export const CredentialsTableGridIndex = ({ credentials, isLoading, connectionId
                 results.forEach((result, index) => {
                     const id = credentials[index];
                     if (result.status === 'fulfilled') {
-                        enqueueSnackbar(`Successfully deleted credential ${id}`);
+                        enqueueSnackbar(`Credential '${id}' successfully deleted.`);
                     } else {
-                        enqueueSnackbar(`Failed to delete credential ${id}: ${result.reason}.`, { variant: 'error' });
+                        enqueueSnackbar(`Failed to delete credential '${id}': ${result.reason}.`, { variant: 'error' });
                     }
                 });
                 queryClient.invalidateQueries([CACHE_KEYS.ConnectionServiceAccounts_GET, connectionId]);
