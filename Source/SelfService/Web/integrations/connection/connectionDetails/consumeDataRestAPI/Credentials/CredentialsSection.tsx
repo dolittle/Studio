@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useEffect, useMemo, useState } from 'react';
+
 import { Collapse } from '@mui/material';
 
 import { AlertBox, ContentParagraph, ContentSection } from '@dolittle/design-system';
@@ -9,19 +10,16 @@ import { AlertBox, ContentParagraph, ContentSection } from '@dolittle/design-sys
 import { useConnectionsIdServiceAccountsGet, } from '../../../../../apis/integrations/serviceAccountApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
-import { GenerateCredentialsForm } from './GenerateCredentialsForm';
-import { CredentialsTableSection } from './CredentialsTableSection';
+import { GenerateCredentialsIndex } from './generateCredentials';
+import { CredentialsTableGridIndex } from './credentialsTableGrid';
 
-export type CredentialsSectionProps = {};
-
-export const CredentialsSection = (props: CredentialsSectionProps) => {
+export const CredentialsSection = () => {
     const connectionId = useConnectionIdFromRoute();
+    const { data, isLoading, isError, error } = useConnectionsIdServiceAccountsGet({ id: connectionId });
 
     const [expandCredentials, setExpandCredentials] = useState(false);
     const [activeCredential, setActiveCredential] = useState<string | undefined>(undefined);
     const [resetForm, setResetForm] = useState(false);
-
-    const { data, isLoading, isError, error } = useConnectionsIdServiceAccountsGet({ id: connectionId });
 
     const credentials = useMemo(
         () => data?.filter(credential => credential.serviceAccountName?.toLowerCase() !== activeCredential?.toLowerCase() || '')
@@ -83,12 +81,11 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
                 ]
             }}
         >
-            <ContentParagraph>
-                Manage access tokens to be used as credentials in apps connecting to the Rest API service
-            </ContentParagraph>
+            <ContentParagraph>Manage access tokens to be used as credentials in apps connecting to the Rest API service</ContentParagraph>
+
             <Collapse in={expandCredentials}>
                 <ContentSection hideDivider={!expandCredentials} title='Generate New Credentials'>
-                    <GenerateCredentialsForm
+                    <GenerateCredentialsIndex
                         resetForm={resetForm}
                         connectionId={connectionId}
                         onFormComplete={handleTokenGenerated}
@@ -97,7 +94,8 @@ export const CredentialsSection = (props: CredentialsSectionProps) => {
                     />
                 </ContentSection>
             </Collapse>
-            <CredentialsTableSection credentials={credentials} isLoading={isLoading} connectionId={connectionId} />
+
+            <CredentialsTableGridIndex credentials={credentials} isLoading={isLoading} connectionId={connectionId} />
         </ContentSection>
     );
 };
