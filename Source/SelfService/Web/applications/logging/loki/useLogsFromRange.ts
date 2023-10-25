@@ -28,7 +28,7 @@ type State<T> = {
 export type LoadMoreLinesIfAvailable = (limit: number) => void;
 
 /**
- * Returnes log lines fetched from Loki from the specified time range.
+ * Returns log lines fetched from Loki from the specified time range.
  * The log lines are re-fetched whenever the arguments change.
  * @param from The beginning of the time range to fetch log lines from, in Unix epoch nanoseconds.
  * @param to The end of the time range to fetch log lines from, in Unix epoch nanoseconds.

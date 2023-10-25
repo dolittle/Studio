@@ -15,9 +15,9 @@ export const logFilterToLabelsAndPipeline = (applicationId: string, filters: Log
         job: 'microservice',
         application_id: applicationId,
         environment: filters.environment,
-        microservice_id:
+        microservice:
             filters.microservice !== undefined && filters.microservice.length > 0
-                ? filters.microservice.map(ms => ms.id)
+                ? filters.microservice.map(ms => ms.name)
                 : undefined,
     };
 
