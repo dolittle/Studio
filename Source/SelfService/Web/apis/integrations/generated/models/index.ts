@@ -52,6 +52,7 @@ export * from './RemoteServiceStatus';
 export * from './RestApiServiceStatus';
 export * from './RestApiStatusDto';
 export * from './RestApiTargetStatus';
+export * from './ServiceAccountAccess';
 export * from './ServiceAccountCreatedDto';
 export * from './ServiceAccountListDto';
 export * from './SetMessageMappingRequestArguments';

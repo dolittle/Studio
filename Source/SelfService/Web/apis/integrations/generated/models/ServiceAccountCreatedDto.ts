@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { ServiceAccountAccess } from './ServiceAccountAccess';
+import {
+    ServiceAccountAccessFromJSON,
+    ServiceAccountAccessFromJSONTyped,
+    ServiceAccountAccessToJSON,
+} from './ServiceAccountAccess';
+
 /**
  * 
  * @export
@@ -45,22 +52,10 @@ export interface ServiceAccountCreatedDto {
     createdAt?: Date;
     /**
      * 
-     * @type {boolean}
+     * @type {ServiceAccountAccess}
      * @memberof ServiceAccountCreatedDto
      */
-    commandAccess?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ServiceAccountCreatedDto
-     */
-    auditAccess?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ServiceAccountCreatedDto
-     */
-    deleteAccess?: boolean;
+    access?: ServiceAccountAccess;
     /**
      * 
      * @type {string}
@@ -92,9 +87,7 @@ export function ServiceAccountCreatedDtoFromJSONTyped(json: any, ignoreDiscrimin
         'token': !exists(json, 'token') ? undefined : json['token'],
         'createdBy': !exists(json, 'createdBy') ? undefined : json['createdBy'],
         'createdAt': !exists(json, 'createdAt') ? undefined : (new Date(json['createdAt'])),
-        'commandAccess': !exists(json, 'commandAccess') ? undefined : json['commandAccess'],
-        'auditAccess': !exists(json, 'auditAccess') ? undefined : json['auditAccess'],
-        'deleteAccess': !exists(json, 'deleteAccess') ? undefined : json['deleteAccess'],
+        'access': !exists(json, 'access') ? undefined : ServiceAccountAccessFromJSON(json['access']),
         'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
@@ -112,9 +105,7 @@ export function ServiceAccountCreatedDtoToJSON(value?: ServiceAccountCreatedDto 
         'token': value.token,
         'createdBy': value.createdBy,
         'createdAt': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
-        'commandAccess': value.commandAccess,
-        'auditAccess': value.auditAccess,
-        'deleteAccess': value.deleteAccess,
+        'access': ServiceAccountAccessToJSON(value.access),
         'description': value.description,
     };
 }
