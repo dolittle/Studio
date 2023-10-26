@@ -18,6 +18,7 @@ const styles = {
         cursor: 'move',
     },
     description: {
+        mb: 2,
         typography: 'body1',
         color: 'text.primary',
     },
