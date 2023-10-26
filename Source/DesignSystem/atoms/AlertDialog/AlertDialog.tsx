@@ -194,9 +194,9 @@ export const DialogForm = ({ id, isOpen, title, description, isLoading, children
                 {children}
             </DialogContent>
 
-            {isLoading ?
-                <LoadingSpinner size={20} /> :
-                <DialogActions sx={{ mr: 1 }}>
+            {isLoading
+                ? <LoadingSpinner />
+                : <DialogActions sx={{ mr: 1 }}>
                     {!hideCancelButton && <Button label={cancelButtonLabel ? cancelButtonLabel : 'Cancel'} color='subtle' onClick={onCancel} />}
                     {!hideSubmitButton && <Button label={confirmBtnText} type='submit' />}
                 </DialogActions>
