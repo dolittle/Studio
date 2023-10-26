@@ -1,7 +1,7 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
@@ -21,6 +21,13 @@ export type GenerateKafkaServiceAccountFormParameters = {
     description?: string;
     access?: AccountAccess;
 };
+
+const accessOptions = [
+    { displayValue: 'Default', value: '' },
+    { displayValue: 'Read', value: AccountAccess.Read },
+    { displayValue: 'Read & Write', value: AccountAccess.ReadWrite },
+    { displayValue: 'Debug', value: AccountAccess.Debug }
+];
 
 export type GenerateServiceAccountFormProps = {
     resetForm: boolean;
@@ -81,13 +88,6 @@ export const GenerateServiceAccountForm = (props: GenerateServiceAccountFormProp
     useEffect(() => {
         if (props.resetForm) resetForm();
     }, [props.resetForm]);
-
-    const accessOptions = [
-        { displayValue: 'Default', value: '' },
-        { displayValue: 'Read', value: AccountAccess.Read },
-        { displayValue: 'Read & Write', value: AccountAccess.ReadWrite },
-        { displayValue: 'Debug', value: AccountAccess.Debug }
-    ];
 
     return (
         <Form<GenerateKafkaServiceAccountFormParameters>
