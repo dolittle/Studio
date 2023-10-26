@@ -31,12 +31,15 @@ export const GenerateCredentialsDialogIndex = ({ connectionId, isDialogOpen, onD
     const { enqueueSnackbar } = useSnackbar();
     const queryClient = useQueryClient();
 
+    const [isLoading, setIsLoading] = useState(false);
     const [token, setToken] = useState<string | undefined>(undefined);
 
     const generateTokenMutation = useConnectionsIdServiceAccountsServiceAccountNamePost();
     const hasResult = !!token;
 
     const handleGenerate = (fieldValues: GenerateCredentialsFormParameters) => {
+        setIsLoading(true);
+
         generateTokenMutation.mutate({
             id: connectionId,
             serviceAccountName: fieldValues.name,
@@ -56,6 +59,7 @@ export const GenerateCredentialsDialogIndex = ({ connectionId, isDialogOpen, onD
                 }
                 enqueueSnackbar(message, { variant: 'error' });
             },
+            onSettled: () => setIsLoading(false),
         });
         onFormComplete(fieldValues.name);
     };
@@ -76,6 +80,7 @@ export const GenerateCredentialsDialogIndex = ({ connectionId, isDialogOpen, onD
             confirmBtnText='Generate Token'
             onConfirm={handleGenerate}
             hideSubmitButton={hasResult}
+            isLoading={isLoading}
             formInitialValues={{
                 name: '',
                 description: '',
