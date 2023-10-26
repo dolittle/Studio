@@ -1,3 +1,18 @@
+# [3.18.24] - 2023-10-26 [PR: #491](https://github.com/dolittle/Studio/pull/491)
+## Summary
+
+Add access rights dropdown selection for the Rest API credentials.
+
+### Added
+
+- DataGridEmptyState component to Design System
+- DataGridEmptyState to Rest API credentials DataGrid
+
+### Changed
+
+- Moved RestAPI 'Credentials' action buttons into its DataGrid header
+
+
 # [3.18.20] - 2023-10-24 [PR: #490](https://github.com/dolittle/Studio/pull/490)
 ## Summary
 
