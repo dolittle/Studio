@@ -15,6 +15,7 @@ import { CredentialsDataGridIndex } from './credentialsDataGrid';
 export const CredentialsIndex = () => {
     const connectionId = useConnectionIdFromRoute();
     const { data, isLoading, isError, error } = useConnectionsIdServiceAccountsGet({ id: connectionId });
+
     const [activeCredential, setActiveCredential] = useState<string | undefined>(undefined);
 
     const credentials = useMemo(

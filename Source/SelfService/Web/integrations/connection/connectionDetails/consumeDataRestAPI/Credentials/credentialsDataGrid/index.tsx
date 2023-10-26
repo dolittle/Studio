@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { DataGridPro } from '@mui/x-data-grid-pro';
 
-import { dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
+import { dataGridDefaultProps, DataGridEmptyState, DataGridWrapper } from '@dolittle/design-system';
 
 import { ServiceAccountListDto } from '../../../../../../apis/integrations/generated';
 
@@ -56,20 +56,37 @@ export const CredentialsDataGridIndex = ({ credentials, connectionId, isLoading,
                 credentialsToDelete={selectedIds}
             />
 
-            <DataGridWrapper background='dark'>
-                <DataGridPro
-                    {...dataGridDefaultProps}
-                    rows={credentials}
-                    columns={CredentialsDataGridColumns}
-                    loading={isLoading}
-                    getRowId={row => row.serviceAccountName!}
-                    checkboxSelection
-                    onSelectionModelChange={model => setSelectedIds(model as string[])}
-                    components={{
-                        Toolbar: () => <CredentialsDataGridToolbar onGenerate={handleGenerateNewCredentials} onDelete={() => setIsDeleteDialogOpen(true)} disabled={!selectedIds.length} />,
-                    }}
-                />
-            </DataGridWrapper>
+            {credentials.length
+                ? (
+                    <DataGridWrapper background='dark'>
+                        <DataGridPro
+                            {...dataGridDefaultProps}
+                            rows={credentials}
+                            columns={CredentialsDataGridColumns}
+                            loading={isLoading}
+                            getRowId={row => row.serviceAccountName!}
+                            checkboxSelection
+                            onSelectionModelChange={model => setSelectedIds(model as string[])}
+                            components={{
+                                Toolbar: () => (
+                                    <CredentialsDataGridToolbar
+                                        onGenerate={handleGenerateNewCredentials}
+                                        onDelete={() => setIsDeleteDialogOpen(true)}
+                                        disabled={!selectedIds.length}
+                                    />
+                                ),
+                            }}
+                        />
+                    </DataGridWrapper>
+                ) : (
+                    <DataGridEmptyState
+                        title='No credentials yet...'
+                        description={`To generate your first credentials, select 'Generate New Credentials'. Provide a name, description and set its access rights.`}
+                        label='Generate new credentials'
+                        onCreate={handleGenerateNewCredentials}
+                        sx={{ p: 0 }}
+                    />
+                )}
         </>
     );
 };
