@@ -23,6 +23,7 @@ export const dataGridDefaultProps: DataGridProProps = {
     getEstimatedRowHeight: () => 40,
     hideFooter: true,
     disableSelectionOnClick: true,
+    disableMultipleSelection: true,
     disableColumnMenu: true,
     disableColumnReorder: true,
     disableColumnResize: true,

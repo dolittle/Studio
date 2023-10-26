@@ -75,6 +75,7 @@ models/RemoteServiceStatus.ts
 models/RestApiServiceStatus.ts
 models/RestApiStatusDto.ts
 models/RestApiTargetStatus.ts
+models/ServiceAccountAccess.ts
 models/ServiceAccountCreatedDto.ts
 models/ServiceAccountListDto.ts
 models/SetMessageMappingRequestArguments.ts

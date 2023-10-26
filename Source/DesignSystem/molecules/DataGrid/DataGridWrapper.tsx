@@ -20,7 +20,20 @@ const dataGridDefaultStyles: SxProps = {
  * The props for a {@link DataGridWrapper} component.
  */
 export type DataGridWrapperProps = {
+    /**
+     * The background color of the DataGridWrapper component.
+     * @default 'default'
+     */
+    background?: 'default' | 'dark';
+
+    /**
+     * The Data Grid component.
+     */
     children: React.ReactNode;
+
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
     sx?: SxProps;
 };
 
@@ -29,7 +42,7 @@ export type DataGridWrapperProps = {
  * @param {DataGridWrapperProps} props Props for the DataGridWrapper component.
  * @returns DataGridWrapper component.
  */
-export const DataGridWrapper = ({ children, sx }: DataGridWrapperProps) =>
-    <Paper elevation={1} sx={{ ...dataGridDefaultStyles, ...sx }}>
+export const DataGridWrapper = ({ background, children, sx }: DataGridWrapperProps) =>
+    <Paper elevation={background === 'dark' ? 0 : 1} sx={{ ...dataGridDefaultStyles, ...sx }}>
         {children}
     </Paper>;

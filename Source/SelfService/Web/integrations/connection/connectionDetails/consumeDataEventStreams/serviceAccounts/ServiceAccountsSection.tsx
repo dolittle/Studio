@@ -2,19 +2,21 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { useSnackbar } from 'notistack';
+
 import { Collapse } from '@mui/material';
+
 import { AlertBox, ContentParagraph, ContentSection } from '@dolittle/design-system';
+
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
+
 import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
+
 import { GenerateServiceAccountForm } from './GenerateServiceAccountForm';
 import { ServiceAccountsTableSection } from './ServiceAccountsTableSection';
 
-export type ServiceAccountsSectionProps = {};
-
-export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
-    const { enqueueSnackbar } = useSnackbar();
+export const ServiceAccountsSection = () => {
     const connectionId = useConnectionIdFromRoute();
+
     const [expandForm, setExpandForm] = useState(false);
     const [resetForm, setResetForm] = useState(false);
 
@@ -64,7 +66,6 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
         }
     }, [resetForm]);
 
-
     if (isError) return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
 
     return (
@@ -85,6 +86,7 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
             <ContentParagraph>
                 Manage service accounts to be used in apps connecting to the Async API
             </ContentParagraph>
+
             <Collapse in={expandForm}>
                 <ContentSection hideDivider title='Generate New Service Account'>
                     <GenerateServiceAccountForm
@@ -96,6 +98,7 @@ export const ServiceAccountsSection = (props: ServiceAccountsSectionProps) => {
                     />
                 </ContentSection>
             </Collapse>
+
             <ServiceAccountsTableSection items={items} isLoading={isLoading} connectionId={connectionId} />
         </ContentSection>
     );

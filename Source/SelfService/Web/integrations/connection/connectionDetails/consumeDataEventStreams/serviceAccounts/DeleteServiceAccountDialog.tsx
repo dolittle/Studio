@@ -2,8 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { Dispatch } from 'react';
-import { AlertDialog } from '@dolittle/design-system/';
+
 import { Box, Typography } from '@mui/material';
+
+import { AlertDialog } from '@dolittle/design-system/';
 
 export type DeleteServiceAccountDialogState = {
     open: boolean;
@@ -37,22 +39,23 @@ export type DeleteServiceAccountDialogProps = {
 };
 
 export const DeleteServiceAccountDialog = ({ dispatch, state, onDelete }: DeleteServiceAccountDialogProps) => {
-
     const hasMany = state.serviceAccounts.length > 1;
 
-    return <AlertDialog
-        id='delete-service-account-dialog'
-        title={`Delete service account${hasMany ? 's' : ''}`}
-        description={`Are you sure you want to delete the selected service account${hasMany ? 's' : ''}?`}
-        confirmBtnText='Delete'
-        confirmBtnColor='error'
-        isOpen={state.open}
-        onConfirm={() => onDelete(state.serviceAccounts)}
-        onCancel={() => dispatch({ type: 'close' })}
-        isLoading={state.isLoading}
-    >
-        <Box marginTop={2}>
-            {state.serviceAccounts.map((serviceAccount) => <Typography key={serviceAccount}>{`"${serviceAccount}"`}</Typography>)}
-        </Box>
-    </AlertDialog>;
+    return (
+        <AlertDialog
+            id='delete-service-account-dialog'
+            title={`Delete service account${hasMany ? 's' : ''}`}
+            description={`Are you sure you want to delete the selected service account${hasMany ? 's' : ''}?`}
+            confirmBtnText='Delete'
+            confirmBtnColor='error'
+            isOpen={state.open}
+            onConfirm={() => onDelete(state.serviceAccounts)}
+            onCancel={() => dispatch({ type: 'close' })}
+            isLoading={state.isLoading}
+        >
+            <Box sx={{ mt: 2 }}>
+                {state.serviceAccounts.map(serviceAccount => <Typography key={serviceAccount}>{`"${serviceAccount}"`}</Typography>)}
+            </Box>
+        </AlertDialog>
+    );
 };

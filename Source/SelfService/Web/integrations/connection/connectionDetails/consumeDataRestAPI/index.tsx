@@ -13,7 +13,7 @@ import { RestApiServiceStatus } from '../../../../apis/integrations/generated';
 import { useConnectionsIdRestApiStatusGet, useConnectionsIdRestApiEnablePost, useConnectionsIdRestApiDisablePost } from '../../../../apis/integrations/connectionRestApiApi.hooks';
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
-import { CredentialsSection } from './Credentials/CredentialsSection';
+import { CredentialsIndex } from './Credentials';
 import { EnableRestApiSection } from './EnableRestApiSection';
 import { DisableRestApiDialog, disableRestApiDialogReducer } from './DisableRestApiDialog';
 import { RestApiDescriptionSection } from './RestApiDescriptionSection';
@@ -116,10 +116,9 @@ export const ConsumeDataRestAPIView = () => {
                         }
                     </>
                 }
-                <CredentialsSection />
+                <CredentialsIndex />
             </ContentContainer>
 
         </>
     );
 };
-
