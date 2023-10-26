@@ -3,9 +3,12 @@
 
 import React, { Dispatch } from 'react';
 
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Paper } from '@mui/material';
-import { AlertDialog, Button, ContentContainer, ContentDivider, ContentSection, IconButton, LoadingSpinner } from '@dolittle/design-system';
+import { Dialog, DialogTitle, DialogActions } from '@mui/material';
+
+import { Button, IconButton, LoadingSpinner } from '@dolittle/design-system';
+
 import { useConnectionsIdKafkaServiceAccountsServiceAccountNameGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
+
 import { ACTIONTYPE, ViewCredentialsDialogState } from './viewCredentialsDialogReducer';
 import { ViewCredentialsDialogContent } from './ViewCredentialsDialogContent';
 
@@ -23,7 +26,6 @@ const styles = {
     },
 };
 
-
 export type ViewCertificateDialogProps = {
     dispatch: Dispatch<ACTIONTYPE>;
     dialogState: ViewCredentialsDialogState;
@@ -31,46 +33,39 @@ export type ViewCertificateDialogProps = {
 
 const id = 'view-certificate';
 
-export const ViewCertificateDialog = ({
-    dialogState,
-    dispatch,
-}: ViewCertificateDialogProps) => {
+export const ViewCertificateDialog = ({ dialogState, dispatch }: ViewCertificateDialogProps) => {
     const { data, isLoading } = useConnectionsIdKafkaServiceAccountsServiceAccountNameGet({ id: dialogState.connectionId, serviceAccountName: dialogState.serviceAccountName || '' });
 
     const handleClose = () => {
         dispatch({ type: 'close' });
     };
 
-
     return (
-        <>
-            <Dialog
-                open={dialogState.isOpen ?? false}
-                aria-labelledby={`${id}-${dialogState.serviceAccountName}-dialog-title`}
-                aria-describedby={`${id}-${dialogState.serviceAccountName}-dialog-description`}
-                maxWidth='xl'
-                fullWidth={true}
-                scroll='paper'
-                onClose={() => dispatch({ type: 'close' })}
-            >
-                <DialogTitle id={`${id}-${dialogState.serviceAccountName}-dialog-title`} sx={styles.title}>
-                    View Certificate for {dialogState.serviceAccountName}
-                    <IconButton tooltipText='Close dialog' edge='end' onClick={handleClose} />
-                </DialogTitle>
+        <Dialog
+            open={dialogState.isOpen ?? false}
+            aria-labelledby={`${id}-${dialogState.serviceAccountName}-dialog-title`}
+            aria-describedby={`${id}-${dialogState.serviceAccountName}-dialog-description`}
+            maxWidth='xl'
+            fullWidth={true}
+            scroll='paper'
+            onClose={() => dispatch({ type: 'close' })}
+        >
+            <DialogTitle id={`${id}-${dialogState.serviceAccountName}-dialog-title`} sx={styles.title}>
+                View Certificate for {dialogState.serviceAccountName}
+                <IconButton tooltipText='Close dialog' edge='end' onClick={handleClose} />
+            </DialogTitle>
 
-                {isLoading
-                    ? <LoadingSpinner />
-                    : <ViewCredentialsDialogContent
-                        content={data?.certificate!}
-                        downloadableFileName={`service-${dialogState.serviceAccountName}.cert`}
-                    />
-                }
+            {isLoading
+                ? <LoadingSpinner />
+                : <ViewCredentialsDialogContent
+                    content={data?.certificate!}
+                    downloadableFileName={`service-${dialogState.serviceAccountName}.cert`}
+                />
+            }
 
-                <DialogActions sx={{ mr: 1 }}>
-                    <Button label={'Close'} onClick={handleClose} color='subtle' />
-                </DialogActions>
-            </Dialog>
-        </>
+            <DialogActions sx={{ mr: 1 }}>
+                <Button label={'Close'} onClick={handleClose} color='subtle' />
+            </DialogActions>
+        </Dialog>
     );
 };
-

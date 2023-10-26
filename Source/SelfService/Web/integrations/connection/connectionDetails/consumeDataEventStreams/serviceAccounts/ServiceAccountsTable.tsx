@@ -3,13 +3,14 @@
 
 import React, { useMemo } from 'react';
 
-import { DataGridPro, GridColDef, GridSelectionModel } from '@mui/x-data-grid-pro';
 import { Paper } from '@mui/material';
+import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+
 import { Button, StatusIndicator } from '@dolittle/design-system';
 
 import { KafkaServiceAccountListDto } from '../../../../../apis/integrations/generated';
-import { formatDate } from '../../../../../utils/helpers/dates';
 
+import { formatDate } from '../../../../../utils/helpers/dates';
 
 export type ServiceAccountsTableProps = {
     items: KafkaServiceAccountListDto[];
@@ -20,7 +21,6 @@ export type ServiceAccountsTableProps = {
 };
 
 export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onViewKey, onSelectionChanged }: ServiceAccountsTableProps) => {
-
     const columns: GridColDef<KafkaServiceAccountListDto>[] = useMemo(() => [
         {
             field: 'serviceAccountName',
@@ -40,35 +40,39 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onVi
             minWidth: 300,
             sortable: false,
             flex: 1,
-            renderCell: (params) => {
-                return <>
+            renderCell: params => (
+                <>
                     <Button variant='outlined' label='View Certificate' onClick={() => onViewCertificate(params.row)} sx={{ mr: 2 }} />
                     <Button variant='outlined' label='View Key' onClick={() => onViewKey(params.row)} />
-                </>;
-            }
+                </>
+            ),
         },
         {
             field: 'createdAt',
             headerName: 'Created at',
             minWidth: 100,
             flex: 1,
-            valueFormatter: (params) => params.value ? formatDate(params.value) : '-',
-            renderCell: (params) => {
-                return <span title={params.value?.toISOString()}>{params.formattedValue}</span>;
-            },
+            valueFormatter: params => params.value ? formatDate(params.value) : '-',
+            renderCell: params => <span title={params.value?.toISOString()}>{params.formattedValue}</span>,
         },
         {
             field: 'certificateExpiry',
             headerName: 'Certificate Validity',
             minWidth: 100,
             flex: 1,
-            renderCell: (params) => {
-
+            renderCell: params => {
                 const isValid = params.value > Date.now();
-                return <>{params.value
-                    ? <span title={params.value.toISOString()}><StatusIndicator status={isValid ? 'success' : 'error'} label={isValid ? 'Up to date' : 'Expired'} /></span>
-                    : '-'
-                }</>;
+
+                return (
+                    <>
+                        {params.value
+                            ? <span title={params.value.toISOString()}>
+                                <StatusIndicator status={isValid ? 'success' : 'error'} label={isValid ? 'Up to date' : 'Expired'} />
+                            </span>
+                            : '-'
+                        }
+                    </>
+                );
             },
         },
     ], [onViewCertificate, onViewKey]);
@@ -90,8 +94,8 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onVi
                 headerHeight={46}
                 hideFooter
                 loading={isLoading}
-                getRowId={(row) => row.serviceAccountName!}
-                onSelectionModelChange={(model) => onSelectionChanged(model as string[])}
+                getRowId={row => row.serviceAccountName!}
+                onSelectionModelChange={model => onSelectionChanged(model as string[])}
             />
         </Paper>
     );

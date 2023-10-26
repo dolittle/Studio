@@ -3,10 +3,12 @@
 
 import React, { Dispatch } from 'react';
 
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Paper } from '@mui/material';
-import { AlertDialog, Button, ContentContainer, ContentDivider, ContentSection, IconButton, LoadingSpinner } from '@dolittle/design-system';
+import { Dialog, DialogTitle, DialogActions } from '@mui/material';
+
+import { Button, IconButton, LoadingSpinner } from '@dolittle/design-system';
+
 import { useConnectionsIdKafkaServiceAccountsServiceAccountNameGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
-import { TextCopyBox } from '../../../../../components/TextCopyBox';
+
 import { ACTIONTYPE, ViewCredentialsDialogState } from './viewCredentialsDialogReducer';
 import { ViewCredentialsDialogContent } from './ViewCredentialsDialogContent';
 
@@ -24,7 +26,6 @@ const styles = {
     },
 };
 
-
 export type ViewKeyDialogProps = {
     dispatch: Dispatch<ACTIONTYPE>;
     dialogState: ViewCredentialsDialogState;
@@ -32,45 +33,39 @@ export type ViewKeyDialogProps = {
 
 const id = 'view-key';
 
-export const ViewKeyDialog = ({
-    dialogState,
-    dispatch,
-}: ViewKeyDialogProps) => {
+export const ViewKeyDialog = ({ dialogState, dispatch }: ViewKeyDialogProps) => {
     const { data, isFetching } = useConnectionsIdKafkaServiceAccountsServiceAccountNameGet({ id: dialogState.connectionId, serviceAccountName: dialogState.serviceAccountName || '' });
 
     const handleClose = () => {
         dispatch({ type: 'close' });
     };
 
-
     return (
-        <>
-            <Dialog
-                open={dialogState.isOpen ?? false}
-                aria-labelledby={`${id}-${dialogState.serviceAccountName}-dialog-title`}
-                aria-describedby={`${id}-${dialogState.serviceAccountName}-dialog-description`}
-                maxWidth='xl'
-                fullWidth={true}
-                scroll='paper'
-                onClose={() => dispatch({ type: 'close' })}
-            >
-                <DialogTitle id={`${id}-${dialogState.serviceAccountName}-dialog-title`} sx={styles.title}>
-                    View Key for {dialogState.serviceAccountName}
-                    <IconButton tooltipText='Close dialog' edge='end' onClick={handleClose} />
-                </DialogTitle>
+        <Dialog
+            open={dialogState.isOpen ?? false}
+            aria-labelledby={`${id}-${dialogState.serviceAccountName}-dialog-title`}
+            aria-describedby={`${id}-${dialogState.serviceAccountName}-dialog-description`}
+            maxWidth='xl'
+            fullWidth={true}
+            scroll='paper'
+            onClose={() => dispatch({ type: 'close' })}
+        >
+            <DialogTitle id={`${id}-${dialogState.serviceAccountName}-dialog-title`} sx={styles.title}>
+                View Key for {dialogState.serviceAccountName}
+                <IconButton tooltipText='Close dialog' edge='end' onClick={handleClose} />
+            </DialogTitle>
 
-                {isFetching
-                    ? <LoadingSpinner />
-                    : <ViewCredentialsDialogContent
-                        content={data?.key!}
-                        downloadableFileName={`service-${dialogState.serviceAccountName}.key`}
-                    />
-                }
+            {isFetching
+                ? <LoadingSpinner />
+                : <ViewCredentialsDialogContent
+                    content={data?.key!}
+                    downloadableFileName={`service-${dialogState.serviceAccountName}.key`}
+                />
+            }
 
-                <DialogActions sx={{ mr: 1 }}>
-                    <Button label={'Close'} onClick={handleClose} color='subtle' />
-                </DialogActions>
-            </Dialog>
-        </>
+            <DialogActions sx={{ mr: 1 }}>
+                <Button label={'Close'} onClick={handleClose} color='subtle' />
+            </DialogActions>
+        </Dialog>
     );
 };
