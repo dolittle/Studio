@@ -9,7 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { DialogForm } from '@dolittle/design-system';
 
 import { useConnectionsIdServiceAccountsServiceAccountNamePost } from '../../../../../../../apis/integrations/serviceAccountApi.hooks';
-import { ResponseError, ServiceAccountCreatedDto } from '../../../../../../../apis/integrations/generated';
+import { ServiceAccountAccess, ServiceAccountCreatedDto, ResponseError } from '../../../../../../../apis/integrations/generated';
 import { CACHE_KEYS } from '../../../../../../../apis/integrations/CacheKeys';
 
 import { GenerateCredentials } from './GenerateCredentials';
@@ -18,6 +18,7 @@ import { GeneratedCredentialsSection } from './GeneratedCredentialsSection';
 export type GenerateCredentialsFormParameters = {
     name: string;
     description?: string;
+    access: ServiceAccountAccess;
 };
 
 export type GenerateCredentialsDialogIndexProps = {
@@ -44,6 +45,7 @@ export const GenerateCredentialsDialogIndex = ({ connectionId, isDialogOpen, onD
             id: connectionId,
             serviceAccountName: fieldValues.name,
             description: fieldValues.description,
+            access: fieldValues.access,
         }, {
             onSuccess: (data: ServiceAccountCreatedDto) => {
                 setToken(data.token);
@@ -84,6 +86,7 @@ export const GenerateCredentialsDialogIndex = ({ connectionId, isDialogOpen, onD
             formInitialValues={{
                 name: '',
                 description: '',
+                access: ServiceAccountAccess.Read,
             }}
         >
             <GenerateCredentials hasResult={hasResult} />

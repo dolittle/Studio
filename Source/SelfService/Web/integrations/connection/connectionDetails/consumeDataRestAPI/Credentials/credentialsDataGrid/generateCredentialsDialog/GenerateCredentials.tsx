@@ -3,18 +3,29 @@
 
 import React from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
-import { Input } from '@dolittle/design-system';
+import { Input, Select } from '@dolittle/design-system';
+
+import { ServiceAccountAccess } from '../../../../../../../apis/integrations/generated';
+
+const accessOptions = [
+    { displayValue: 'Read', value: ServiceAccountAccess.Read },
+    { displayValue: 'Read & Write', value: ServiceAccountAccess.ReadWrite },
+    { displayValue: 'Admin', value: ServiceAccountAccess.Admin },
+];
 
 export type GenerateCredentialsProps = {
     hasResult: boolean;
 };
 
 export const GenerateCredentials = ({ hasResult }: GenerateCredentialsProps) =>
-    <Box sx={{ mt: 3 }}>
+    <Stack sx={{ mt: 3 }}>
         <Typography sx={{ my: 2 }}>Who or what are these credentials for?</Typography>
 
-        <Input id='name' label='Name' required disabled={hasResult} sx={{ mr: 10 }} />
-        <Input id='description' label='Description' disabled={hasResult} />
-    </Box>;
+        <Stack sx={{ gap: 2 }}>
+            <Input id='name' label='Name' required disabled={hasResult} />
+            <Input id='description' label='Description' disabled={hasResult} />
+            <Select id='access' label='Access' options={accessOptions} />
+        </Stack>
+    </Stack>;
