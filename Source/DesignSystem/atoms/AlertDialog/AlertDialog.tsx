@@ -5,7 +5,7 @@ import React from 'react';
 
 import Draggable from 'react-draggable';
 
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, PaperProps } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, PaperProps, SxProps } from '@mui/material';
 
 import { Button, Form, IconButton, LoadingSpinner } from '@dolittle/design-system';
 
@@ -135,6 +135,11 @@ export type AlertDialogProps = {
      * @default false
      */
     hideCancelButton?: boolean;
+
+    /**
+     * The `sx` prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
+    sx?: SxProps;
 };
 
 /**
@@ -171,7 +176,7 @@ export const AlertDialog = ({ id, isOpen, title, description, children, cancelBu
     </Dialog>;
 
 // TODO: Hack for now, remove when we have a better solution. Also add to stories.
-export const DialogForm = ({ id, isOpen, title, description, isLoading, children, cancelButtonLabel, onCancel, onClose, hideCancelButton, confirmBtnText, onConfirm, hideSubmitButton, formInitialValues }: AlertDialogProps) =>
+export const DialogForm = ({ id, isOpen, title, description, isLoading, children, cancelButtonLabel, onCancel, onClose, hideCancelButton, confirmBtnText, onConfirm, hideSubmitButton, formInitialValues, sx }: AlertDialogProps) =>
     <Dialog
         open={isOpen ?? false}
         onClose={onClose ?? onCancel}
@@ -183,7 +188,7 @@ export const DialogForm = ({ id, isOpen, title, description, isLoading, children
             </Draggable>
         }
     >
-        <Form initialValues={formInitialValues} onSubmit={onConfirm}>
+        <Form initialValues={formInitialValues} onSubmit={onConfirm} sx={sx}>
             <DialogTitle id={`${id}-dialog-title`} sx={styles.title}>
                 {title}
                 <IconButton tooltipText='Close dialog' edge='end' onClick={onClose ?? onCancel} />
