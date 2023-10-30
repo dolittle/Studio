@@ -5,9 +5,9 @@ import React from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
-import { ContentSection, IconButton, Link } from '@dolittle/design-system';
+import { ContentWithSubtitle, IconButton, InlineBox, Link } from '@dolittle/design-system';
 
 
 export type RestApiDescriptionSectionProps = {
@@ -32,41 +32,24 @@ export const RestApiDescriptionSection = ({ restApiBaseUrl }: RestApiDescription
     };
 
     return (
-        <>
-            <ContentSection title='Rest API URL'>
-                <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
-                    <Link
-                        target
-                        href={restApiUrl}
-                        message={restApiUrl}
-                    />
-                    <IconButton
-                        tooltipText='Copy rest API URL link to clipboard'
-                        icon='CopyAllRounded'
-                        color='primary'
-                        onClick={handleRestApiLinkCopy}
-                    />
-                </Box>
-            </ContentSection>
+        <ContentWithSubtitle title='Links' infoTooltipLabel='Our rest API is documented using OpenAPI.'>
+            <section>
+                <Typography>Rest API URL:</Typography>
 
-            <ContentSection title='Rest API Documentation'>
-                <Typography sx={{ pt: 1.5 }}>Our rest API is documented using OpenAPI.</Typography>
+                <InlineBox>
+                    <Link target ariaLabel='Rest API URL' href={restApiUrl} message={restApiUrl} />
+                    <IconButton tooltipText='Copy rest API URL link to clipboard' icon='CopyAllRounded' color='primary' onClick={handleRestApiLinkCopy} />
+                </InlineBox>
+            </section>
 
-                <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
-                    <Link
-                        target
-                        ariaLabel='OpenAPI documentation'
-                        href={openApiDocumentationUrl}
-                        message={openApiDocumentationUrl}
-                    />
-                    <IconButton
-                        tooltipText='Copy OpenAPI documentation link to clipboard'
-                        icon='CopyAllRounded'
-                        color='primary'
-                        onClick={handleOpenApiDocumentationLinkCopy}
-                    />
-                </Box>
-            </ContentSection>
-        </>
+            <section>
+                <Typography sx={{ mt: 2 }}>Rest API Documentation:</Typography>
+
+                <InlineBox>
+                    <Link target ariaLabel='OpenAPI documentation' href={openApiDocumentationUrl} message={openApiDocumentationUrl} />
+                    <IconButton tooltipText='Copy OpenAPI documentation link to clipboard' icon='CopyAllRounded' color='primary' onClick={handleOpenApiDocumentationLinkCopy} />
+                </InlineBox>
+            </section>
+        </ContentWithSubtitle>
     );
 };
