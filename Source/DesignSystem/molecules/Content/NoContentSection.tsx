@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Paper, SxProps, Typography } from '@mui/material';
 
-import { Button } from '@dolittle/design-system';
+import { Button, ButtonProps } from '@dolittle/design-system';
 
 /**
  * The props for a {@link NoContentSection} component.
@@ -27,7 +27,15 @@ export type NoContentSectionProps = {
     label: string;
 
     /**
-     * The callback to execute when the button in the empty state is clicked.
+     * Add an icon to the start of the button.
+     *
+     * List of available icons can be found in {@link SvgIcons}.
+     * @default AddCircle
+     */
+    icon?: ButtonProps['startWithIcon'];
+
+    /**
+     * The callback to execute when the button is clicked.
      */
     onCreate: () => void;
 
@@ -46,5 +54,5 @@ export const NoContentSection = ({ title, description, label, onCreate, sx }: No
     <Paper sx={{ p: 2, boxShadow: 'none', ...sx }}>
         <Typography variant='h2'>{title}</Typography>
         <Typography variant='body1' sx={{ my: 2 }}>{description}</Typography>
-        <Button label={label} variant='fullwidth' startWithIcon='AddCircle' onClick={onCreate} />
+        <Button label={label} variant='fullwidth' startWithIcon={icon ? icon : 'AddCircle'} onClick={onCreate} />
     </Paper>;
