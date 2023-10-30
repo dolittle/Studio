@@ -35,7 +35,7 @@ export const ConsumeDataRestAPIView = () => {
         { id: connectionId },
         {
             refetchInterval: data => {
-                return data?.service === 'Deploying' ? 1000 : 4000;
+                return data?.service === 'Deploying' ? 4000 : false;
             },
         },
     );
@@ -51,7 +51,7 @@ export const ConsumeDataRestAPIView = () => {
                 queryClient.invalidateQueries([CACHE_KEYS.ConnectionRestApiStatus_GET, connectionId]);
                 enqueueSnackbar('Rest API service is being deployed. You will be able to access it in a few minutes.');
             },
-            onError: (error) => {
+            onError: error => {
                 enqueueSnackbar('Something went wrong deploying the Rest API service. Error: ' + error, { variant: 'error' });
             }
         });
@@ -64,7 +64,7 @@ export const ConsumeDataRestAPIView = () => {
                 queryClient.invalidateQueries([CACHE_KEYS.ConnectionRestApiStatus_GET, connectionId]);
                 enqueueSnackbar('Rest API service has been disabled.');
             },
-            onError: (error) => {
+            onError: error => {
                 enqueueSnackbar('Something went wrong while disabling the Rest API service. Error: ' + error, { variant: 'error' });
             }
         });
