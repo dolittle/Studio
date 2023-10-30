@@ -3,14 +3,11 @@
 
 import React, { useMemo, useState } from 'react';
 
-import { Box } from '@mui/material';
-
-import { AlertBox } from '@dolittle/design-system';
+import { AlertBox, ContentWithSubtitle } from '@dolittle/design-system';
 
 import { useConnectionsIdServiceAccountsGet } from '../../../../../apis/integrations/serviceAccountApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
-import { CredentialsHeader } from './CredentialsHeader';
 import { CredentialsDataGridIndex } from './credentialsDataGrid';
 
 export const CredentialsIndex = () => {
@@ -28,9 +25,12 @@ export const CredentialsIndex = () => {
     if (isError) return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
 
     return (
-        <Box sx={{ mb: 3 }}>
-            <CredentialsHeader />
+        <ContentWithSubtitle
+            title='Credentials'
+            infoTooltipLabel='Generate new credentials to be used as credentials in apps connecting to the Rest API service.'
+            sx={{ mb: 3 }}
+        >
             <CredentialsDataGridIndex credentials={credentials} connectionId={connectionId} isLoading={isLoading} onActiveCredentialChange={setActiveCredential} />
-        </Box>
+        </ContentWithSubtitle>
     );
 };
