@@ -12,12 +12,12 @@ import { Button, ButtonProps } from '@dolittle/design-system';
  */
 export type NoContentSectionProps = {
     /**
-     * The title to display in the empty state.
+     * The title to display when there is no content.
      */
     title: string;
 
     /**
-     * The description to display in the empty state.
+     * The description to display when there is no content.
      */
     description: string;
 
@@ -46,12 +46,12 @@ export type NoContentSectionProps = {
 };
 
 /**
- * Custom empty state component for the DataGrid.
+ * A component that displays an empty state with a title, description and a button.
  * @param {NoContentSectionProps} props - The {@link NoContentSectionProps}.
  * @returns A {@link NoContentSection} component.
  */
-export const NoContentSection = ({ title, description, label, onCreate, sx }: NoContentSectionProps) =>
-    <Paper sx={{ p: 2, boxShadow: 'none', ...sx }}>
+export const NoContentSection = ({ title, description, label, icon, onCreate, sx }: NoContentSectionProps) =>
+    <Paper sx={{ p: 2, boxShadow: 'none', maxInlineSize: 1200, ...sx }}>
         <Typography variant='h2'>{title}</Typography>
         <Typography variant='body1' sx={{ my: 2 }}>{description}</Typography>
         <Button label={label} variant='fullwidth' startWithIcon={icon ? icon : 'AddCircle'} onClick={onCreate} />
