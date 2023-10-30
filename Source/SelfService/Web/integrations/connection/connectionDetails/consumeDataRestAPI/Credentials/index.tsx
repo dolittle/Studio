@@ -3,13 +3,14 @@
 
 import React, { useMemo, useState } from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
-import { AlertBox, ContentDivider } from '@dolittle/design-system';
+import { AlertBox } from '@dolittle/design-system';
 
 import { useConnectionsIdServiceAccountsGet } from '../../../../../apis/integrations/serviceAccountApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
+import { CredentialsHeader } from './CredentialsHeader';
 import { CredentialsDataGridIndex } from './credentialsDataGrid';
 
 export const CredentialsIndex = () => {
@@ -28,9 +29,7 @@ export const CredentialsIndex = () => {
 
     return (
         <Box sx={{ mb: 3 }}>
-            <ContentDivider sx={{ my: 1 }} />
-            <Typography variant='subtitle2' sx={{ my: 3 }}>Credentials</Typography>
-
+            <CredentialsHeader />
             <CredentialsDataGridIndex credentials={credentials} connectionId={connectionId} isLoading={isLoading} onActiveCredentialChange={setActiveCredential} />
         </Box>
     );

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 
 import { Input, Select } from '@dolittle/design-system';
 
@@ -20,12 +20,8 @@ export type GenerateCredentialsProps = {
 };
 
 export const GenerateCredentials = ({ hasResult }: GenerateCredentialsProps) =>
-    <Stack sx={{ mt: 3 }}>
-        <Typography sx={{ my: 2 }}>Who or what are these credentials for?</Typography>
-
-        <Stack sx={{ gap: 2 }}>
-            <Input id='name' label='Name' required disabled={hasResult} />
-            <Input id='description' label='Description' disabled={hasResult} />
-            <Select id='access' label='Access' options={accessOptions} />
-        </Stack>
+    <Stack sx={{ mt: 3, gap: 2 }}>
+        <Input id='name' label='Name' required disabled={hasResult} />
+        <Input id='description' label='Description' disabled={hasResult} />
+        <Select id='access' label='Access' options={accessOptions} />
     </Stack>;

@@ -76,7 +76,7 @@ export const GenerateCredentialsDialogIndex = ({ connectionId, isDialogOpen, onD
             id='generate-credentials'
             isOpen={isDialogOpen}
             title='Generate New Credentials'
-            description='Generate new credentials to be used as credentials in apps connecting to the Rest API service.'
+            description='Who or what are these credentials for?'
             cancelButtonLabel={hasResult ? 'Close' : 'Cancel'}
             onCancel={handleCancel}
             confirmBtnText='Generate Token'
@@ -88,6 +88,7 @@ export const GenerateCredentialsDialogIndex = ({ connectionId, isDialogOpen, onD
                 description: '',
                 access: ServiceAccountAccess.Read,
             }}
+            sx={{ width: 600 }}
         >
             <GenerateCredentials hasResult={hasResult} />
             {hasResult && <GeneratedCredentialsSection token={token} />}
