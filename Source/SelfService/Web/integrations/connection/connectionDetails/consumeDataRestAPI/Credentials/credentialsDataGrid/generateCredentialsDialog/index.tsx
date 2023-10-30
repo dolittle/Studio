@@ -76,7 +76,7 @@ export const GenerateCredentialsDialogIndex = ({ connectionId, isDialogOpen, onD
             id='generate-credentials'
             isOpen={isDialogOpen}
             title='Generate New Credentials'
-            description='Who or what are these credentials for?'
+            description={hasResult ? 'Credential Token' : 'Who or what are these credentials for?'}
             cancelButtonLabel={hasResult ? 'Close' : 'Cancel'}
             onCancel={handleCancel}
             confirmBtnText='Generate Token'
@@ -90,8 +90,10 @@ export const GenerateCredentialsDialogIndex = ({ connectionId, isDialogOpen, onD
             }}
             sx={{ width: 600 }}
         >
-            <GenerateCredentials hasResult={hasResult} />
-            {hasResult && <GeneratedCredentialsSection token={token} />}
+            {!hasResult
+                ? <GenerateCredentials />
+                : <GeneratedCredentialsSection token={token} />
+            }
         </DialogForm>
     );
 };

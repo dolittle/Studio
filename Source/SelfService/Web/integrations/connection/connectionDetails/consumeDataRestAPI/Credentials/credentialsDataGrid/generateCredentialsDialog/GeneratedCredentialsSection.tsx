@@ -23,7 +23,6 @@ export const GeneratedCredentialsSection = ({ token }: GeneratedCredentialsSecti
 
     return (
         <Box sx={{ mt: 3 }}>
-            <Typography>Credential Token</Typography>
             <Typography sx={{ my: 2 }}>The token will only be visible one time after you generate it, so please make sure to copy it.</Typography>
 
             <Box sx={{ mt: 2 }}>

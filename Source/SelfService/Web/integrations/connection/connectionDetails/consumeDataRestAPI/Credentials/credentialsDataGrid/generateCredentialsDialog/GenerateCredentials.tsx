@@ -15,13 +15,9 @@ const accessOptions = [
     { displayValue: 'Admin', value: ServiceAccountAccess.Admin },
 ];
 
-export type GenerateCredentialsProps = {
-    hasResult: boolean;
-};
-
-export const GenerateCredentials = ({ hasResult }: GenerateCredentialsProps) =>
+export const GenerateCredentials = () =>
     <Stack sx={{ mt: 3, gap: 2 }}>
-        <Input id='name' label='Name' required disabled={hasResult} />
-        <Input id='description' label='Description' disabled={hasResult} />
+        <Input id='name' label='Name' required />
+        <Input id='description' label='Description' />
         <Select id='access' label='Access' options={accessOptions} />
     </Stack>;
