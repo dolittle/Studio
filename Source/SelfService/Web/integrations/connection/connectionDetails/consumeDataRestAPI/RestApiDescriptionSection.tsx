@@ -11,11 +11,12 @@ import { ContentSection, IconButton, Link } from '@dolittle/design-system';
 
 
 export type RestApiDescriptionSectionProps = {
-    restApiBaseUrl: string
+    restApiBaseUrl: string;
 };
 
 export const RestApiDescriptionSection = ({ restApiBaseUrl }: RestApiDescriptionSectionProps) => {
     const { enqueueSnackbar } = useSnackbar();
+
     const baseApiUrlWithTrailingSlash = restApiBaseUrl.endsWith('/') ? restApiBaseUrl : `${restApiBaseUrl}/`;
     const restApiUrl = `${baseApiUrlWithTrailingSlash}swagger/index.html`;
     const openApiDocumentationUrl = `${baseApiUrlWithTrailingSlash}swagger/v1/swagger.json`;
@@ -29,6 +30,7 @@ export const RestApiDescriptionSection = ({ restApiBaseUrl }: RestApiDescription
         navigator.clipboard.writeText(openApiDocumentationUrl);
         enqueueSnackbar('OpenAPI documentation copied to clipboard.');
     };
+
     return (
         <>
             <ContentSection title='Rest API URL'>
@@ -49,6 +51,7 @@ export const RestApiDescriptionSection = ({ restApiBaseUrl }: RestApiDescription
 
             <ContentSection title='Rest API Documentation'>
                 <Typography sx={{ pt: 1.5 }}>Our rest API is documented using OpenAPI.</Typography>
+
                 <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
                     <Link
                         target
