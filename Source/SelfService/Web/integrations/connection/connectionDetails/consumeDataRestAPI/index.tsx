@@ -6,40 +6,39 @@ import React, { useReducer } from 'react';
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Select, MenuItem } from '@mui/material';
+import { Button, ContentContainer, ContentHeader, ContentParagraph } from '@dolittle/design-system';
 
-import { Button, ContentContainer, ContentHeader, ContentParagraph, StatusIndicatorProps, Switch } from '@dolittle/design-system';
 import { RestApiServiceStatus } from '../../../../apis/integrations/generated';
 import { useConnectionsIdRestApiStatusGet, useConnectionsIdRestApiEnablePost, useConnectionsIdRestApiDisablePost } from '../../../../apis/integrations/connectionRestApiApi.hooks';
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
+
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
+
 import { CredentialsIndex } from './Credentials';
 import { EnableRestApiSection } from './EnableRestApiSection';
 import { DisableRestApiDialog, disableRestApiDialogReducer } from './DisableRestApiDialog';
 import { RestApiDescriptionSection } from './RestApiDescriptionSection';
+
 import { getIndicatorStatusFromStatusMessage } from '../../../statusHelpers';
 
 /* The ERP ReadModels -service must be specific to the connection, so we need
     to generate the URL dynamically. */
 
 export const ConsumeDataRestAPIView = () => {
-    // const [forceShowEnable, setForceShowEnable] = React.useState(true);
-    // const [forcedServiceStatus, setForcedServiceStatus] = React.useState<RestApiServiceStatus | ''>('');
     const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionIdFromRoute();
-    const { data: apiStatus, isLoading } = useConnectionsIdRestApiStatusGet(
-        { id: connectionId },
-        {
-            refetchInterval: (data) => {
-                return data?.service === 'Deploying' ? 1000 : 4000;
-            }
-        }
-    );
     const enableMutation = useConnectionsIdRestApiEnablePost();
     const disableMutation = useConnectionsIdRestApiDisablePost();
     const queryClient = useQueryClient();
     const [disableServiceDialogState, disableServiceDialogDispatch] = useReducer(disableRestApiDialogReducer, { isOpen: false });
-
+    const { data: apiStatus, isLoading } = useConnectionsIdRestApiStatusGet(
+        { id: connectionId },
+        {
+            refetchInterval: data => {
+                return data?.service === 'Deploying' ? 1000 : 4000;
+            },
+        },
+    );
 
     const serviceStatus = apiStatus?.service || 'Off';
     const showEnableSection = (apiStatus?.target === 'Disabled') || serviceStatus === 'Deploying';
@@ -71,54 +70,50 @@ export const ConsumeDataRestAPIView = () => {
         });
     };
 
-
     return (
-        <>
-            <ContentContainer>
-                <DisableRestApiDialog dispatch={disableServiceDialogDispatch} state={disableServiceDialogState} onConfirm={handleDisableRestApi} />
-                <ContentHeader
-                    title='REST API'
-                    status={!isLoading && serviceStatusIndicator
-                        ? {
-                            status: serviceStatusIndicator.status,
-                            label: serviceStatusIndicator.label,
-                            message: serviceStatusIndicator.message,
-                        }
-                        : undefined
+        <ContentContainer>
+            <DisableRestApiDialog dispatch={disableServiceDialogDispatch} state={disableServiceDialogState} onConfirm={handleDisableRestApi} />
+
+            <ContentHeader
+                title='REST API'
+                status={!isLoading && serviceStatusIndicator
+                    ? {
+                        status: serviceStatusIndicator.status,
+                        label: serviceStatusIndicator.label,
+                        message: serviceStatusIndicator.message,
                     }
-                    buttonsSlot={
-                        <>
-                            {(!showEnableSection) &&
-                                <Button
-                                    label='Disable Rest API'
-                                    variant='outlined'
-                                    color='error'
-                                    disabled={shouldDisableDisableButton}
-                                    onClick={() => disableServiceDialogDispatch({ type: 'open' })}
-                                />
-                            }
-                        </>
-                    }
-                />
-                <ContentParagraph>
-                    The Rest API service exposes the message types for the connector to be consumed in external applications and services.
-                    The API is fully documented using OpenAPI specifications and will reflect the message types set up for the connector.
-                </ContentParagraph>
-                {!isLoading &&
+                    : undefined
+                }
+                buttonsSlot={
                     <>
-                        {showEnableSection
-                            ? <EnableRestApiSection
-                                onEnableRestApi={() => handleEnableRestApi()}
-                                status={serviceStatus || 'Off'}
-                                isEnabling={enableMutation.isLoading}
+                        {(!showEnableSection) &&
+                            <Button
+                                label='Disable Rest API'
+                                variant='outlined'
+                                color='error'
+                                disabled={shouldDisableDisableButton}
+                                onClick={() => disableServiceDialogDispatch({ type: 'open' })}
                             />
-                            : <RestApiDescriptionSection restApiBaseUrl={apiStatus?.basePath || ''} />
                         }
                     </>
                 }
-                <CredentialsIndex />
-            </ContentContainer>
+            />
 
-        </>
+            <ContentParagraph>
+                The Rest API service exposes the message types for the connector to be consumed in external applications and services.
+                The API is fully documented using OpenAPI specifications and will reflect the message types set up for the connector.
+            </ContentParagraph>
+
+            {!isLoading &&
+                <>
+                    {showEnableSection
+                        ? <EnableRestApiSection onEnableRestApi={() => handleEnableRestApi()} status={serviceStatus || 'Off'} isEnabling={enableMutation.isLoading} />
+                        : <RestApiDescriptionSection restApiBaseUrl={apiStatus?.basePath || ''} />
+                    }
+                </>
+            }
+
+            <CredentialsIndex />
+        </ContentContainer>
     );
 };
