@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { DataGridPro } from '@mui/x-data-grid-pro';
 
-import { dataGridDefaultProps, DataGridEmptyState, DataGridWrapper } from '@dolittle/design-system';
+import { dataGridDefaultProps, DataGridWrapper, NoContentSection } from '@dolittle/design-system';
 
 import { ServiceAccountListDto } from '../../../../../../apis/integrations/generated';
 
@@ -79,7 +79,7 @@ export const CredentialsDataGridIndex = ({ credentials, connectionId, isLoading,
                         />
                     </DataGridWrapper>
                 ) : (
-                    <DataGridEmptyState
+                    <NoContentSection
                         title='No credentials yet...'
                         description={`To generate your first credentials, select 'Generate New Credentials'. Provide a name, description and set its access rights.`}
                         label='Generate new credentials'

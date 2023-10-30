@@ -8,9 +8,9 @@ import { Paper, SxProps, Typography } from '@mui/material';
 import { Button } from '@dolittle/design-system';
 
 /**
- * The props for a {@link DataGridEmptyStateProps} component.
+ * The props for a {@link NoContentSection} component.
  */
-export type DataGridEmptyStateProps = {
+export type NoContentSectionProps = {
     /**
      * The title to display in the empty state.
      */
@@ -39,10 +39,10 @@ export type DataGridEmptyStateProps = {
 
 /**
  * Custom empty state component for the DataGrid.
- * @param {DataGridEmptyStateProps} props - The {@link DataGridEmptyStateProps}.
- * @returns A {@link DataGridEmptyState} component.
+ * @param {NoContentSectionProps} props - The {@link NoContentSectionProps}.
+ * @returns A {@link NoContentSection} component.
  */
-export const DataGridEmptyState = ({ title, description, label, onCreate, sx }: DataGridEmptyStateProps) =>
+export const NoContentSection = ({ title, description, label, onCreate, sx }: NoContentSectionProps) =>
     <Paper sx={{ p: 2, boxShadow: 'none', ...sx }}>
         <Typography variant='h2'>{title}</Typography>
         <Typography variant='body1' sx={{ my: 2 }}>{description}</Typography>
