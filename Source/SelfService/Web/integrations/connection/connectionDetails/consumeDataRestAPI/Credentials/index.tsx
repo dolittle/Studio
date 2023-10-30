@@ -24,12 +24,10 @@ export const CredentialsIndex = () => {
 
     if (isError) return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
 
+    const infoText = 'Generate new credentials to be used as credentials in apps connecting to the Rest API service.';
+
     return (
-        <ContentWithSubtitle
-            title='Credentials'
-            infoTooltipLabel='Generate new credentials to be used as credentials in apps connecting to the Rest API service.'
-            sx={{ mb: 3 }}
-        >
+        <ContentWithSubtitle title='Credentials' infoTooltipLabel={infoText} sx={{ mb: 3 }}>
             <CredentialsDataGridIndex credentials={credentials} connectionId={connectionId} isLoading={isLoading} onActiveCredentialChange={setActiveCredential} />
         </ContentWithSubtitle>
     );
