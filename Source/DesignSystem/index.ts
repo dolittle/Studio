@@ -17,6 +17,7 @@ export { Chip, ChipProps } from './atoms/Chip';
 export * from './atoms/Forms';
 export { Icon, IconProps } from './atoms/Icon';
 export { IconButton, IconButtonProps } from './atoms/IconButton';
+export { InlineBox, InlineBoxProps } from './atoms/InlineBox';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
 export { LoadingSpinnerFullPage } from './atoms/LoadingSpinnerFullPage';
@@ -31,6 +32,7 @@ export { Tooltip } from './atoms/Tooltip';
 export { TextField, TextFieldProps } from './atoms/TextField';
 
 // Molecules
+export { ContentWithSubtitle, ContentWithSubtitleProps } from './molecules/Content';
 export * from './molecules/DataGrid';
 export { FileUploadForm, FileUploadFormProps, FileUploadFormRef } from './molecules/FileUploadForm';
 export { Graph } from './molecules/Metrics/Graph';
