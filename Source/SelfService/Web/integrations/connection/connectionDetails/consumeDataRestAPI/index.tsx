@@ -35,7 +35,10 @@ export const ConsumeDataRestAPIView = () => {
         { id: connectionId },
         {
             refetchInterval: data => {
-                return data?.service === 'Deploying' ? 4000 : false;
+                // This will reset the credentials dialog input fields.
+                // As a workaround, we disabled the button while the service is deploying or terminating.
+                const workInProgress = data?.service === 'Deploying' || data?.service === 'Terminating';
+                return workInProgress ? 10000 : false;
             },
         },
     );
