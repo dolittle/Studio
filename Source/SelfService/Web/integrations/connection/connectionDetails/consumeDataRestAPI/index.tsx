@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { Button, ContentContainer, ContentHeader, ContentParagraph } from '@dolittle/design-system';
+import { Button, ContentContainer, ContentHeader, ContentParagraph, LoadingSpinner } from '@dolittle/design-system';
 
 import { useConnectionsIdRestApiStatusGet, useConnectionsIdRestApiEnablePost, useConnectionsIdRestApiDisablePost } from '../../../../apis/integrations/connectionRestApiApi.hooks';
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
@@ -75,6 +75,8 @@ export const ConsumeDataRestAPIView = () => {
         });
     };
 
+    if (isLoading) return <LoadingSpinner />;
+
     return (
         <ContentContainer>
             <DisableRestApiDialog isOpen={isDeleteDialogOpen} onCancel={() => setIsDeleteDialogOpen(false)} onConfirm={handleDisableRestApi} />
@@ -109,14 +111,12 @@ export const ConsumeDataRestAPIView = () => {
                 The API is fully documented using OpenAPI specifications and will reflect the message types set up for the connector.
             </ContentParagraph>
 
-            {!isLoading &&
-                <AccessIndex
-                    isApiDisabled={showEnableSection}
-                    isButtonDisabled={isButtonsDisabled}
-                    onEnableRestApi={() => handleEnableRestApi()}
-                    restApiBaseUrl={apiStatus?.basePath || ''}
-                />
-            }
+            <AccessIndex
+                isApiDisabled={showEnableSection}
+                isButtonDisabled={isButtonsDisabled}
+                onEnableRestApi={() => handleEnableRestApi()}
+                restApiBaseUrl={apiStatus?.basePath || ''}
+            />
 
             <CredentialsIndex isButtonDisabled={isButtonsDisabled} />
         </ContentContainer>
