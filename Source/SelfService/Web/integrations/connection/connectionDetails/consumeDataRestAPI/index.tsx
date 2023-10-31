@@ -118,7 +118,7 @@ export const ConsumeDataRestAPIView = () => {
                 />
             }
 
-            <CredentialsIndex />
+            <CredentialsIndex isButtonDisabled={isButtonsDisabled} />
         </ContentContainer>
     );
 };

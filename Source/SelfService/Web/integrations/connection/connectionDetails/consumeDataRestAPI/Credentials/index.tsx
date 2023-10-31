@@ -10,7 +10,11 @@ import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { CredentialsDataGridIndex } from './credentialsDataGrid';
 
-export const CredentialsIndex = () => {
+export type CredentialsIndexProps = {
+    isButtonDisabled: boolean;
+};
+
+export const CredentialsIndex = ({ isButtonDisabled }: CredentialsIndexProps) => {
     const connectionId = useConnectionIdFromRoute();
     const { data, isLoading, isError, error } = useConnectionsIdServiceAccountsGet({ id: connectionId });
 
@@ -28,7 +32,13 @@ export const CredentialsIndex = () => {
 
     return (
         <ContentWithSubtitle title='Credentials' infoTooltipLabel={infoText} sx={{ mb: 3 }}>
-            <CredentialsDataGridIndex credentials={credentials} connectionId={connectionId} isLoading={isLoading} onActiveCredentialChange={setActiveCredential} />
+            <CredentialsDataGridIndex
+                credentials={credentials}
+                connectionId={connectionId}
+                isLoading={isLoading}
+                isButtonDisabled={isButtonDisabled}
+                onActiveCredentialChange={setActiveCredential}
+            />
         </ContentWithSubtitle>
     );
 };
