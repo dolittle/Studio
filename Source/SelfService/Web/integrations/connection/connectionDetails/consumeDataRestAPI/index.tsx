@@ -1,7 +1,7 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useReducer } from 'react';
+import React, { useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
@@ -15,7 +15,7 @@ import { useConnectionIdFromRoute } from '../../../routes.hooks';
 
 import { AccessIndex } from './access';
 import { CredentialsIndex } from './Credentials';
-import { DisableRestApiDialog, disableRestApiDialogReducer } from './DisableRestApiDialog';
+import { DisableRestApiDialog } from './DisableRestApiDialog';
 
 import { getIndicatorStatusFromStatusMessage } from '../../../statusHelpers';
 
@@ -24,11 +24,11 @@ import { getIndicatorStatusFromStatusMessage } from '../../../statusHelpers';
 
 export const ConsumeDataRestAPIView = () => {
     const { enqueueSnackbar } = useSnackbar();
+
+    const queryClient = useQueryClient();
     const connectionId = useConnectionIdFromRoute();
     const enableMutation = useConnectionsIdRestApiEnablePost();
     const disableMutation = useConnectionsIdRestApiDisablePost();
-    const queryClient = useQueryClient();
-    const [disableServiceDialogState, disableServiceDialogDispatch] = useReducer(disableRestApiDialogReducer, { isOpen: false });
     const { data: apiStatus, isLoading } = useConnectionsIdRestApiStatusGet(
         { id: connectionId },
         {
@@ -40,6 +40,8 @@ export const ConsumeDataRestAPIView = () => {
             },
         },
     );
+
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
     const serviceStatus = apiStatus?.service || 'Off';
     const showEnableSection = (apiStatus?.target === 'Disabled') || serviceStatus === 'Deploying';
@@ -55,12 +57,13 @@ export const ConsumeDataRestAPIView = () => {
             },
             onError: error => {
                 enqueueSnackbar('Something went wrong deploying the Rest API service. Error: ' + error, { variant: 'error' });
-            }
+            },
         });
     };
 
     const handleDisableRestApi = () => {
-        disableServiceDialogDispatch({ type: 'close' });
+        setIsDeleteDialogOpen(false);
+
         disableMutation.mutate({ id: connectionId }, {
             onSuccess: () => {
                 queryClient.invalidateQueries([CACHE_KEYS.ConnectionRestApiStatus_GET, connectionId]);
@@ -68,13 +71,13 @@ export const ConsumeDataRestAPIView = () => {
             },
             onError: error => {
                 enqueueSnackbar('Something went wrong while disabling the Rest API service. Error: ' + error, { variant: 'error' });
-            }
+            },
         });
     };
 
     return (
         <ContentContainer>
-            <DisableRestApiDialog dispatch={disableServiceDialogDispatch} state={disableServiceDialogState} onConfirm={handleDisableRestApi} />
+            <DisableRestApiDialog isOpen={isDeleteDialogOpen} onCancel={() => setIsDeleteDialogOpen(false)} onConfirm={handleDisableRestApi} />
 
             <ContentHeader
                 title='REST API'
@@ -94,7 +97,7 @@ export const ConsumeDataRestAPIView = () => {
                                 variant='outlined'
                                 color='error'
                                 disabled={shouldDisableDisableButton}
-                                onClick={() => disableServiceDialogDispatch({ type: 'open' })}
+                                onClick={() => setIsDeleteDialogOpen(true)}
                             />
                         }
                     </>
