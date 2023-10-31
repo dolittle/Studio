@@ -73,7 +73,8 @@ export const CredentialsDataGridIndex = ({ credentials, connectionId, isLoading,
                                     <CredentialsDataGridToolbar
                                         onGenerate={handleGenerateNewCredentials}
                                         onDelete={() => setIsDeleteDialogOpen(true)}
-                                        disabled={!selectedIds.length}
+                                        isGenerateButtonDisabled={isButtonDisabled}
+                                        isDeleteButtonDisabled={!selectedIds.length}
                                     />
                                 ),
                             }}
