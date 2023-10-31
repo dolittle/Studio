@@ -5,5 +5,4 @@ export { dataGridDefaultProps } from './DataGrid';
 export { DataGridWrapper } from './DataGridWrapper';
 export { DataGridCustomToolbar } from './DataGridCustomToolbar';
 export { DataGridDetailPanel, DetailPanelExpandIcon, DetailPanelCollapseIcon } from './DataGridDetailPanel';
-export { DataGridEmptyState, DataGridEmptyStateProps } from './DataGridEmptyState';
 export { EditCell, EditTextFieldCell } from './EditCell';

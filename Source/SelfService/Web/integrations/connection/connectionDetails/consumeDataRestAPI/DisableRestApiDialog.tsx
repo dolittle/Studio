@@ -1,54 +1,60 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { Dispatch } from 'react';
-import { AlertDialog } from '@dolittle/design-system';
+import React from 'react';
+
+import { useSnackbar } from 'notistack';
+import { useQueryClient } from '@tanstack/react-query';
+
 import { DialogContentText } from '@mui/material';
 
+import { AlertDialog } from '@dolittle/design-system';
 
-export type DisableRestApiDialogState = {
-    isOpen: boolean;
-};
+import { useConnectionsIdRestApiDisablePost } from '../../../../apis/integrations/connectionRestApiApi.hooks';
+import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
 
-export type ACTIONTYPE =
-    | { type: 'open'; payload?: void }
-    | { type: 'close'; payload?: void };
-
-export const disableRestApiDialogReducer = (state: DisableRestApiDialogState, action: ACTIONTYPE): DisableRestApiDialogState => {
-    switch (action.type) {
-        case 'open':
-            return { ...state, isOpen: true };
-        case 'close':
-            return { ...state, isOpen: false };
-        default:
-            return state;
-    }
-};
+import { useConnectionIdFromRoute } from '../../../routes.hooks';
 
 export type DisableRestApiDialogProps = {
-    dispatch: Dispatch<ACTIONTYPE>;
-    state: DisableRestApiDialogState;
-    onConfirm: () => void;
+    isOpen: boolean;
+    onCancel: () => void;
 };
 
-export const DisableRestApiDialog = ({ dispatch, state, onConfirm }: DisableRestApiDialogProps) => {
+export const DisableRestApiDialog = ({ isOpen, onCancel }: DisableRestApiDialogProps) => {
+    const { enqueueSnackbar } = useSnackbar();
 
-    return <AlertDialog
-        id='disable-rest-api-service-dialog'
-        title={`Disable Rest API Service?`}
-        description={`Apps or services depending on this service will no longer be able to access it.`}
-        confirmBtnText='Disable'
-        confirmBtnColor='error'
-        isOpen={state.isOpen}
-        onConfirm={() => onConfirm()}
-        onCancel={() => dispatch({ type: 'close' })}
-    >
-        {/* <DialogContentText sx={{ mt: 2 }}>
-            Apps or services depending on this service will no longer be able to access it.
-        </DialogContentText> */}
+    const connectionId = useConnectionIdFromRoute();
+    const queryClient = useQueryClient();
+    const disableMutation = useConnectionsIdRestApiDisablePost();
 
-        <DialogContentText sx={{ mt: 2 }}>
-            You can enable it again later if you want to without any data loss. Credentials will not be deleted.
-        </DialogContentText>
-    </AlertDialog>;
+    const handleDisableRestApi = () => {
+        onCancel();
+
+        disableMutation.mutate({ id: connectionId }, {
+            onSuccess: () => {
+                queryClient.invalidateQueries([CACHE_KEYS.ConnectionRestApiStatus_GET, connectionId]);
+                enqueueSnackbar('Rest API service has been disabled.');
+            },
+            onError: error => {
+                enqueueSnackbar('Something went wrong while disabling the Rest API service. Error: ' + error, { variant: 'error' });
+            },
+        });
+    };
+
+    return (
+        <AlertDialog
+            id='disable-rest-api-service'
+            isOpen={isOpen}
+            title='Disable Rest API Service?'
+            description='Apps or services depending on this service will no longer be able to access it.'
+            confirmBtnText='Disable'
+            confirmBtnColor='error'
+            onCancel={onCancel}
+            onConfirm={handleDisableRestApi}
+        >
+            <DialogContentText sx={{ mt: 2 }}>
+                You can enable it again later if you want to without any data loss. Credentials will not be deleted.
+            </DialogContentText>
+        </AlertDialog>
+    );
 };

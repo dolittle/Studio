@@ -3,16 +3,18 @@
 
 import React, { useMemo, useState } from 'react';
 
-import { Box, Typography } from '@mui/material';
-
-import { AlertBox, ContentDivider } from '@dolittle/design-system';
+import { AlertBox, ContentWithSubtitle } from '@dolittle/design-system';
 
 import { useConnectionsIdServiceAccountsGet } from '../../../../../apis/integrations/serviceAccountApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { CredentialsDataGridIndex } from './credentialsDataGrid';
 
-export const CredentialsIndex = () => {
+export type CredentialsIndexProps = {
+    isButtonDisabled: boolean;
+};
+
+export const CredentialsIndex = ({ isButtonDisabled }: CredentialsIndexProps) => {
     const connectionId = useConnectionIdFromRoute();
     const { data, isLoading, isError, error } = useConnectionsIdServiceAccountsGet({ id: connectionId });
 
@@ -26,12 +28,17 @@ export const CredentialsIndex = () => {
 
     if (isError) return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
 
-    return (
-        <Box sx={{ mb: 3 }}>
-            <ContentDivider sx={{ my: 1 }} />
-            <Typography variant='subtitle2' sx={{ my: 3 }}>Credentials</Typography>
+    const infoText = 'Generate new credentials to be used as credentials in apps connecting to the Rest API service.';
 
-            <CredentialsDataGridIndex credentials={credentials} connectionId={connectionId} isLoading={isLoading} onActiveCredentialChange={setActiveCredential} />
-        </Box>
+    return (
+        <ContentWithSubtitle title='Credentials' infoTooltipLabel={infoText} sx={{ mb: 3 }}>
+            <CredentialsDataGridIndex
+                credentials={credentials}
+                connectionId={connectionId}
+                isLoading={isLoading}
+                isButtonDisabled={isButtonDisabled}
+                onActiveCredentialChange={setActiveCredential}
+            />
+        </ContentWithSubtitle>
     );
 };

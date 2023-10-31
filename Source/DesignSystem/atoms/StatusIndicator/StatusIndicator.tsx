@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Box, CircularProgress, SxProps, Tooltip, Typography } from '@mui/material';
 
-import { Icon, IconButton, SvgIconsDefinition } from '@dolittle/design-system';
+import { Icon, SvgIconsDefinition } from '@dolittle/design-system';
 
 type ConnectionStatusCondition = {
     color: 'text.primary' | 'text.secondary' | 'success.main' | 'warning.main' | 'error.main' | 'info.main';
@@ -98,8 +98,8 @@ export const StatusIndicator = ({ label, status, message, variantFilled, sx }: S
     };
 
     return (
-        <Tooltip title={message || ''} placement='right' >
-            <Box sx={variantFilled ? styles.variantFilled : styles.variantText} title={message}>
+        <Tooltip title={<Typography variant='body2'>{message || ''}</Typography>} placement='right' arrow>
+            <Box sx={variantFilled ? styles.variantFilled : styles.variantText}>
                 {icon && <Icon icon={icon} />}
                 {status === 'waiting' && <CircularProgress color='inherit' size={16} />}
                 <Typography variant='button' sx={{ ml: 1 }}>{label ?? status}</Typography>

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { SxProps } from '@mui/system';
+import { SxProps, Tooltip, Typography } from '@mui/material';
 
 import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
 
@@ -29,6 +29,11 @@ export type IconProps = {
     size?: 'small' | 'medium';
 
     /**
+     * The tooltip label to display when hovering over the icon.
+     */
+    tooltipLabel?: string;
+
+    /**
      * The sx prop lets you add custom styles to the component.
      */
     sx?: SxProps;
@@ -39,8 +44,16 @@ export type IconProps = {
  * @param {IconProps} props - The {@link IconProps}.
  * @returns A {@link Icon} component.
  */
-export const Icon = ({ icon, color = 'inherit', size = 'small', sx }: IconProps) => {
+export const Icon = ({ icon, color = 'inherit', size = 'small', tooltipLabel, sx }: IconProps) => {
     const clonedIcon = React.cloneElement(SvgIcons[icon], { 'fontSize': size, color, 'aria-hidden': true, sx });
+
+    if (tooltipLabel) {
+        return (
+            <Tooltip title={<Typography variant='body2'>{tooltipLabel}</Typography>} placement='right' arrow>
+                {clonedIcon}
+            </Tooltip>
+        );
+    }
 
     return <>{clonedIcon}</>;
 };

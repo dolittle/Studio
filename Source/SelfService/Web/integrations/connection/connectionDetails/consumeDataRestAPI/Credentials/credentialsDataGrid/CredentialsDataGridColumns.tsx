@@ -22,17 +22,19 @@ export const CredentialsDataGridColumns: GridColDef<ServiceAccountListDto>[] = [
         flex: 1,
     },
     {
+        field: 'access',
+        headerName: 'Access',
+        minWidth: 100,
+        flex: 1,
+        valueFormatter: ({ value }) =>
+            value === 'Read' ? 'Read' : value === 'ReadWrite' ? 'Read & Write' : value === 'Admin' ? 'Admin' : '-',
+    },
+    {
         field: 'createdAt',
         headerName: 'Created at',
         minWidth: 100,
         flex: 1,
         valueFormatter: ({ value }) => value ? formatDate(value) : '-',
         renderCell: ({ formattedValue, value }) => <span title={value?.toISOString()}>{formattedValue}</span>
-    },
-    {
-        field: 'access',
-        headerName: 'Access',
-        minWidth: 100,
-        flex: 1,
     },
 ];
