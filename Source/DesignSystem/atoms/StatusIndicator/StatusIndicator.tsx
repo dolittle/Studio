@@ -98,7 +98,7 @@ export const StatusIndicator = ({ label, status, message, variantFilled, sx }: S
     };
 
     return (
-        <Tooltip title={message || ''} placement='right' arrow>
+        <Tooltip title={<Typography variant='body2'>{message || ''}</Typography>} placement='right' arrow>
             <Box sx={variantFilled ? styles.variantFilled : styles.variantText}>
                 {icon && <Icon icon={icon} />}
                 {status === 'waiting' && <CircularProgress color='inherit' size={16} />}
