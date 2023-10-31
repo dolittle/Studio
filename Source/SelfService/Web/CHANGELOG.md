@@ -1,3 +1,30 @@
+# [3.18.25] - 2023-10-31 [PR: #493](https://github.com/dolittle/Studio/pull/493)
+## Summary
+
+Improve Rest API page appearance.
+
+### Added
+
+- 'sx' props to AlertDialog
+- 'Tooltip' option to Icon component
+- ContentWithSubtitle to Design System
+- InlineBox to Design System
+- Rename DataGridEmptyState to NoContentSection
+- LoadingSpinner to Rest API page when content is loading
+
+### Changed
+
+- Rest API status re-fetch interval to be 'false' when status is stable
+- Rest API 'Access' column value display
+- StatusIndicator Tooltip font
+- Make Rest API action buttons to be disabled while Rest API is in 'Deploying' or 'Terminating' state
+- Replace useReducer with useState for better readability
+
+### Fixed
+
+- StatusIndicator error display. Removed 'title' from StatusIndicator Box
+
+
 # [3.18.24] - 2023-10-26 [PR: #491](https://github.com/dolittle/Studio/pull/491)
 ## Summary
 
