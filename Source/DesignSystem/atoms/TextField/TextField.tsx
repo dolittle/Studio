@@ -5,7 +5,7 @@ import React from 'react';
 
 import { InputAdornment, SxProps, TextField as MuiTextField, TextFieldProps as MuiTextFieldProps } from '@mui/material';
 
-import { Icon, IconProps, SvgIconsDefinition } from '@dolittle/design-system';
+import { Icon, IconProps, SvgIconsDefinition } from '../../index';
 
 type TextFieldAdornmentProps = IconProps & {
     /**
@@ -20,6 +20,9 @@ const TextFieldAdornment = ({ icon, color, size, position }: TextFieldAdornmentP
     </InputAdornment>;
 
 export type TextFieldProps = {
+    /**
+     * The id of the `TextField` element.
+     */
     id?: string;
 
     /**
@@ -54,6 +57,10 @@ export type TextFieldProps = {
      */
     isDisabled?: boolean;
 
+    /**
+     * If true, the `TextField` element will be required.
+     * @default false
+     */
     isRequired?: boolean;
 
     /**
@@ -64,13 +71,11 @@ export type TextFieldProps = {
 
     /**
      * The icon to display at the start of the `TextField`. Must be a valid `SvgIconsDefinition`.
-     * @default undefined
      */
     startIcon?: SvgIconsDefinition;
 
     /**
      * The icon to display at the end of the `TextField`. Must be a valid `SvgIconsDefinition`.
-     * @default undefined
      */
     endIcon?: SvgIconsDefinition;
 
@@ -83,7 +88,6 @@ export type TextFieldProps = {
     /**
      * Callback fired when the `value` is changed.
      * @param {React.ChangeEvent} event - The event source of the callback.
-     * @default undefined
      */
     onValueChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 

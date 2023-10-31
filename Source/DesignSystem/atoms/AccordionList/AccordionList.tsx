@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Accordion, AccordionProps } from '@dolittle/design-system';
+import { Accordion, AccordionProps } from '../../index';
 
 export type AccordionListItem = Omit<AccordionProps, 'defaultExpanded' | 'expanded' | 'onExpanded'>;
 
@@ -43,6 +43,7 @@ export type AccordionListProps = {
  */
 export const AccordionList = ({ singleExpandMode, items, expandedModel, onExpandedModelChange }: AccordionListProps) => {
     const hasMultipleExpanded = expandedModel && expandedModel.length > 1;
+
     if (singleExpandMode && hasMultipleExpanded) {
         console.warn('AccordionList: singleExpandMode is enabled, but more than one accordion item is expanded. Selecting first item.');
         expandedModel = [expandedModel![0]];
@@ -53,11 +54,13 @@ export const AccordionList = ({ singleExpandMode, items, expandedModel, onExpand
     const handleExpanded = (accordionId: string, isExpanded: boolean) => {
         setExpanded(current => {
             const expandedList = singleExpandMode ? new Set<string>() : new Set<string>(current);
+
             if (isExpanded) {
                 expandedList.add(accordionId);
             } else {
                 expandedList.delete(accordionId);
             }
+
             onExpandedModelChange?.([...expandedList]);
             return expandedList;
         });
@@ -66,25 +69,23 @@ export const AccordionList = ({ singleExpandMode, items, expandedModel, onExpand
     const isExpandedControlledState = (panel: string) => expanded.has(panel);
 
     useEffect(() => {
-        if (expandedModel &&
-            (expandedModel.length !== [...expanded].length || !expandedModel.every(model => expanded.has(model)))
-        ) {
+        if (expandedModel && (expandedModel.length !== [...expanded].length || !expandedModel.every(model => expanded.has(model)))) {
             setExpanded(new Set(expandedModel));
         }
-
     }, [expandedModel]);
 
     return (
         <>
-            {items.map(item => <Accordion
-                key={item.id}
-                {...item}
-                expanded={isExpandedControlledState(item.id)}
-                onExpanded={(event, isExpanded) => handleExpanded(item.id, isExpanded)}
-            >
-                {item.children}
-            </Accordion>
-            )}
+            {items.map(item => (
+                <Accordion
+                    key={item.id}
+                    {...item}
+                    expanded={isExpandedControlledState(item.id)}
+                    onExpanded={(event, isExpanded) => handleExpanded(item.id, isExpanded)}
+                >
+                    {item.children}
+                </Accordion>
+            ))}
         </>
     );
 };

@@ -10,7 +10,7 @@ import { action } from '@storybook/addon-actions';
 
 import { Box } from '@mui/material';
 
-import { Button, ButtonProps, availableIcons, SvgIcons } from '@dolittle/design-system';
+import { Button, ButtonProps, availableIcons, SvgIcons } from '../../index';
 
 const buttonWrapper = [Story => <Box sx={{ '& button': { mr: 3, mb: 3 } }}>{Story()}</Box>] as DecoratorFn[];
 
@@ -133,11 +133,7 @@ Outlined.parameters = {
 };
 
 export const Fullwidth = () => (
-    <Button
-        label='full width button with custom style'
-        variant='fullwidth'
-        startWithIcon='AddCircle'
-    />
+    <Button label='full width button with custom style' variant='fullwidth' startWithIcon='AddCircle' />
 );
 Fullwidth.parameters = {
     docs: {
@@ -167,24 +163,9 @@ UseInForms.parameters = {
 
 export const UseAsLink = () => (
     <>
-        <Button
-            label='internal link'
-            color='subtle'
-            href='#'
-        />
-
-        <Button
-            label='external link'
-            href='#'
-            target
-            ariaLabel='Please use meaningful ariaLabel if link opens in new window.'
-        />
-
-        <Button
-            label='with react-router-dom'
-            color='secondary'
-            overrides={{ component: Link, to: '' }}
-        />
+        <Button label='internal link' color='subtle' href='#' />
+        <Button label='external link' href='#' target ariaLabel='Please use meaningful ariaLabel if link opens in new window.' />
+        <Button label='with react-router-dom' color='secondary' overrides={{ component: Link, to: '' }} />
     </>
 );
 UseAsLink.decorators = [Story =>

@@ -1,7 +1,7 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { componentStories, TextField } from '@dolittle/design-system';
+import { componentStories, TextField } from '../../index';
 
 const { metadata, createStory } = componentStories(TextField);
 

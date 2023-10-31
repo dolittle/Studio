@@ -5,7 +5,7 @@ import React, { ReactElement, useState, useEffect } from 'react';
 
 import { Alert, AlertTitle, Collapse, SxProps, Typography } from '@mui/material';
 
-import { IconButton } from '@dolittle/design-system';
+import { IconButton } from '../../index';
 
 import { AlertBoxErrorMessage, AlertBoxErrorTitle } from './helpers';
 
@@ -16,8 +16,7 @@ export type AlertBoxProps = {
     /**
      * The severity of the alert.
      *
-     * Leave empty to use the default `error` severity.
-     *
+     * Leave empty to use the default 'error' severity.
      * @default error
      */
     severity?: 'error' | 'warning' | 'info' | 'success';
@@ -27,7 +26,7 @@ export type AlertBoxProps = {
      *
      * Leave empty to use the default {@link AlertBoxErrorTitle}.
      *
-     * Convension is to NOT use a period at the end of the title.
+     * convention is to NOT use a period at the end of the title.
      * @default <AlertBoxErrorTitle />
      */
     title?: string;
@@ -36,7 +35,6 @@ export type AlertBoxProps = {
      * The message of the alert.
      *
      * Message can be a string or a React element. Leave empty to use the default {@link AlertBoxErrorMessage}.
-     *
      * @default <AlertBoxErrorMessage />
      */
     message?: string | ReactElement;
@@ -44,7 +42,7 @@ export type AlertBoxProps = {
     /**
      * Set this to be `true` if the alert should be dismissible.
      *
-     * This places the close icon in the upper right corner.
+     * This places the 'close' icon in the upper right corner.
      * @default false
      */
     isDismissible?: boolean;
@@ -57,8 +55,6 @@ export type AlertBoxProps = {
 
     /**
      * Callback function that is called when the alert is dismissed.
-     *
-     * @default undefined
      */
     onDismissed?: () => void;
 

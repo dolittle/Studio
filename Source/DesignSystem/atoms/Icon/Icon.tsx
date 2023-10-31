@@ -5,14 +5,14 @@ import React from 'react';
 
 import { SxProps, Tooltip, Typography } from '@mui/material';
 
-import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
+import { SvgIcons, SvgIconsDefinition } from '../../index';
 
 /**
  * The props for a {@link Icon} component.
  */
 export type IconProps = {
     /**
-     * Usual MUI icon writen as a `string`. Must be a valid `SvgIconsDefinition`.
+     * Usual MUI icon written as a `string`. Must be a valid `SvgIconsDefinition`.
      */
     icon: SvgIconsDefinition;
 
@@ -34,7 +34,7 @@ export type IconProps = {
     tooltipLabel?: string;
 
     /**
-     * The sx prop lets you add custom styles to the component.
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
 };

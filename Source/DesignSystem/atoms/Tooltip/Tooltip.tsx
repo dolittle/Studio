@@ -8,7 +8,7 @@ import { SxProps, Tooltip as MuiTooltip, Typography } from '@mui/material';
 /**
  * The props for a {@link Tooltip} component.
  */
-type TooltipProps = {
+export type TooltipProps = {
     /**
      * The tooltip title.
      */

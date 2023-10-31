@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { componentStories, Icon, availableIcons, SvgIconsDefinition } from '@dolittle/design-system';
+import { componentStories, Icon, availableIcons, SvgIconsDefinition } from '../../index';
 
 const { metadata, createStory } = componentStories(Icon);
 
@@ -13,7 +13,7 @@ metadata.parameters = {
             component: `Icons are purely decorative and used to life the UI. Icons can help users more easily scan a long list.
 
 They can also be used to help separate groups of items or data such as cards or statuses. 
-Avoid unneccessarily adding icons so as not to clutter the UI and overwhelm the user.`
+Avoid unnecessarily adding icons so as not to clutter the UI and overwhelm the user.`
         },
     },
 };

@@ -10,6 +10,7 @@ import { componentStories, IconButton, availableIcons, SvgIconsDefinition } from
 const { metadata, createStory } = componentStories(IconButton);
 
 metadata.title = 'Icon Button';
+
 metadata.parameters = {
     docs: {
         description: {

@@ -7,10 +7,9 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { Divider, List, ListItem } from '@mui/material';
 
-import { Button, AlertDialog } from '@dolittle/design-system';
+import { AlertDialog, Button } from '../../index';
 
-import { alertDialogDescription } from './helpers';
-import { dummyArray } from '../../helpers/DummyContents';
+import { alertDialogDescription, dummyArray } from './helpers';
 
 export default {
     title: 'Alert Dialog',

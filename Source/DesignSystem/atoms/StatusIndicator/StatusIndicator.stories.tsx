@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Stack } from '@mui/material';
 
-import { componentStories, StatusIndicator, StatusIndicatorProps } from '@dolittle/design-system';
+import { componentStories, StatusIndicator, StatusIndicatorProps } from '../../index';
 
 const { metadata, createStory } = componentStories(StatusIndicator);
 

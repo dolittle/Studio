@@ -8,7 +8,7 @@ import { ComponentMeta } from '@storybook/react';
 import { Breadcrumbs } from '../../index';
 
 import { Content, Router } from '../../helpers/ReactRouter';
-import { DummyBreadcrumbs, DummyListMenu } from './DummyBreadcrumbs';
+import { DummyBreadcrumbs, DummyListMenu } from './helpers';
 
 export default {
     title: 'Breadcrumbs',

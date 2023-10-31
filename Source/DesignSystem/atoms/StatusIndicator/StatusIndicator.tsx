@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Box, CircularProgress, SxProps, Tooltip, Typography } from '@mui/material';
 
-import { Icon, SvgIconsDefinition } from '@dolittle/design-system';
+import { Icon, SvgIconsDefinition } from '../../index';
 
 type ConnectionStatusCondition = {
     color: 'text.primary' | 'text.secondary' | 'success.main' | 'warning.main' | 'error.main' | 'info.main';
@@ -35,12 +35,12 @@ const connectionStatusCondition = (status: StatusIndicatorProps['status']): Conn
  */
 export type StatusIndicatorProps = {
     /**
-     * The `status` to show.
+     * The status to show.
      */
     status: 'success' | 'table-success' | 'information' | 'waiting' | 'warning' | 'error' | 'unknown';
 
     /**
-     * The `label` to show.
+     * The label to show.
      *
      * If not provided, the `status` will be used as the `label`.
      * @default status
@@ -48,7 +48,7 @@ export type StatusIndicatorProps = {
     label?: string;
 
     /**
-     * The `message` to show.
+     * The message to show.
      *
      * Optional field to show a longer message that describes the current status. Shown as a tooltip.
      * @default status
@@ -62,7 +62,7 @@ export type StatusIndicatorProps = {
     variantFilled?: boolean;
 
     /**
-     * The `sx` prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
 };
