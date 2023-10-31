@@ -4,7 +4,7 @@
 import React from 'react';
 
 // Import our custom made StoryTemplate component.
-import { componentStories } from '@dolittle/design-system';
+import { componentStories } from '../../index';
 
 // Use the componentStories function to create a metadata object and a createStory function.
 const { metadata, createStory } = componentStories(() => <></>);
@@ -22,7 +22,15 @@ metadata.parameters = {
 };
 
 // Add the controls/props of the component.
-metadata.argTypes = {};
+metadata.argTypes = {
+    // statusLevel: {
+    //     control: {
+    //         type: 'select',
+    //         options: ['success', 'waiting', 'warning', 'error', 'unknown'],
+    //     },
+    // },
+    // sx: { control: false },
+};
 
 // Set the default arguments/props of the component.
 metadata.args = {};
@@ -43,3 +51,33 @@ SecondExample.parameters = {
         },
     },
 };
+
+
+
+// Without StoryTemplate:
+
+// export default {
+//     title: 'Component Name',
+//     component: 'ComponentName',
+//     parameters: {
+//         docs: {
+//             description: ``,
+//         },
+//     },
+//     args: {},
+//     argTypes: {},
+// } as ComponentMeta<typeof ComponentName>;
+
+// const Template: ComponentStory<typeof ComponentName> = args => {
+//     //const [isOpen, setIsOpen] = useState(args.isOpen || false);
+//     return (<></>);
+// };
+
+//export const Default = Template.bind({});
+
+// export const AnotherVariant = Template.bind({});
+// AnotherVariant.args = {
+//     title: '',
+//     description: '',
+//     children: <></>,
+// };

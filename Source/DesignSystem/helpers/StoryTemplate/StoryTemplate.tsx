@@ -27,7 +27,7 @@ export type StoryTemplateProps = {
 };
 
 /**
- * The button component is used to trigger an action or event, such as submitting a form, opening a dialog, canceling an action, or performing a delete operation.
+ * Add a description of the component here.
  * @param {StoryTemplateProps} props - The {@link StoryTemplateProps}.
  * @returns A {@link StoryTemplate} component.
  */
