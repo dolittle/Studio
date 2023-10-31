@@ -3,13 +3,9 @@
 
 import React, { useState } from 'react';
 
-import { useSnackbar } from 'notistack';
-import { useQueryClient } from '@tanstack/react-query';
-
 import { Button, ContentContainer, ContentHeader, ContentParagraph, LoadingSpinner } from '@dolittle/design-system';
 
-import { useConnectionsIdRestApiStatusGet, useConnectionsIdRestApiEnablePost, useConnectionsIdRestApiDisablePost } from '../../../../apis/integrations/connectionRestApiApi.hooks';
-import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
+import { useConnectionsIdRestApiStatusGet } from '../../../../apis/integrations/connectionRestApiApi.hooks';
 
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
 
@@ -23,12 +19,10 @@ import { getIndicatorStatusFromStatusMessage } from '../../../statusHelpers';
     to generate the URL dynamically. */
 
 export const ConsumeDataRestAPIView = () => {
-    const { enqueueSnackbar } = useSnackbar();
-
-    const queryClient = useQueryClient();
     const connectionId = useConnectionIdFromRoute();
-    const enableMutation = useConnectionsIdRestApiEnablePost();
-    const disableMutation = useConnectionsIdRestApiDisablePost();
+
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
     const { data: apiStatus, isLoading } = useConnectionsIdRestApiStatusGet(
         { id: connectionId },
         {
@@ -41,45 +35,17 @@ export const ConsumeDataRestAPIView = () => {
         },
     );
 
-    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-
     const serviceStatus = apiStatus?.service || 'Off';
     const showEnableSection = (apiStatus?.target === 'Disabled') || serviceStatus === 'Deploying';
     const isButtonsDisabled = serviceStatus === 'Deploying' || serviceStatus === 'Terminating';
     const shouldDisableDisableButton = serviceStatus === 'Off' || serviceStatus === 'Deploying' || serviceStatus === 'Terminating';
     const serviceStatusIndicator = getIndicatorStatusFromStatusMessage(apiStatus?.status);
 
-    const handleEnableRestApi = () => {
-        enableMutation.mutate({ id: connectionId }, {
-            onSuccess: () => {
-                queryClient.invalidateQueries([CACHE_KEYS.ConnectionRestApiStatus_GET, connectionId]);
-                enqueueSnackbar('Rest API service is being deployed. You will be able to access it in a few minutes.');
-            },
-            onError: error => {
-                enqueueSnackbar('Something went wrong deploying the Rest API service. Error: ' + error, { variant: 'error' });
-            },
-        });
-    };
-
-    const handleDisableRestApi = () => {
-        setIsDeleteDialogOpen(false);
-
-        disableMutation.mutate({ id: connectionId }, {
-            onSuccess: () => {
-                queryClient.invalidateQueries([CACHE_KEYS.ConnectionRestApiStatus_GET, connectionId]);
-                enqueueSnackbar('Rest API service has been disabled.');
-            },
-            onError: error => {
-                enqueueSnackbar('Something went wrong while disabling the Rest API service. Error: ' + error, { variant: 'error' });
-            },
-        });
-    };
-
     if (isLoading) return <LoadingSpinner />;
 
     return (
         <ContentContainer>
-            <DisableRestApiDialog isOpen={isDeleteDialogOpen} onCancel={() => setIsDeleteDialogOpen(false)} onConfirm={handleDisableRestApi} />
+            <DisableRestApiDialog isOpen={isDeleteDialogOpen} onCancel={() => setIsDeleteDialogOpen(false)} />
 
             <ContentHeader
                 title='REST API'
@@ -111,13 +77,7 @@ export const ConsumeDataRestAPIView = () => {
                 The API is fully documented using OpenAPI specifications and will reflect the message types set up for the connector.
             </ContentParagraph>
 
-            <AccessIndex
-                isApiDisabled={showEnableSection}
-                isButtonDisabled={isButtonsDisabled}
-                onEnableRestApi={() => handleEnableRestApi()}
-                restApiBaseUrl={apiStatus?.basePath || ''}
-            />
-
+            <AccessIndex isApiDisabled={showEnableSection} isButtonDisabled={isButtonsDisabled} restApiBaseUrl={apiStatus?.basePath || ''} />
             <CredentialsIndex isButtonDisabled={isButtonsDisabled} />
         </ContentContainer>
     );

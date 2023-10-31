@@ -12,13 +12,12 @@ export type AccessIndexProps = {
     isApiDisabled: boolean;
     isButtonDisabled: boolean;
     restApiBaseUrl: string;
-    onEnableRestApi: () => void;
 };
 
-export const AccessIndex = ({ isApiDisabled, isButtonDisabled, restApiBaseUrl, onEnableRestApi }: AccessIndexProps) =>
+export const AccessIndex = ({ isApiDisabled, isButtonDisabled, restApiBaseUrl }: AccessIndexProps) =>
     <ContentWithSubtitle title='Access' infoTooltipLabel='Our rest API is documented using OpenAPI.'>
         {isApiDisabled
-            ? <EnableRestApiSection onEnableRestApi={onEnableRestApi} disabled={isButtonDisabled} />
+            ? <EnableRestApiSection disabled={isButtonDisabled} />
             : <RestApiDescriptionSection restApiBaseUrl={restApiBaseUrl} />
         }
     </ContentWithSubtitle>;
