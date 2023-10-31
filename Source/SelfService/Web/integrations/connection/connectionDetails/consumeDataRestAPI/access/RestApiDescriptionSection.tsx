@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 
 import { Typography } from '@mui/material';
 
-import { ContentWithSubtitle, IconButton, InlineBox, Link } from '@dolittle/design-system';
+import { IconButton, InlineBox, Link } from '@dolittle/design-system';
 
 
 export type RestApiDescriptionSectionProps = {
@@ -32,7 +32,7 @@ export const RestApiDescriptionSection = ({ restApiBaseUrl }: RestApiDescription
     };
 
     return (
-        <ContentWithSubtitle title='Links' infoTooltipLabel='Our rest API is documented using OpenAPI.'>
+        <>
             <section>
                 <Typography>Rest API URL:</Typography>
 
@@ -50,6 +50,6 @@ export const RestApiDescriptionSection = ({ restApiBaseUrl }: RestApiDescription
                     <IconButton tooltipText='Copy OpenAPI documentation link to clipboard' icon='CopyAllRounded' color='primary' onClick={handleOpenApiDocumentationLinkCopy} />
                 </InlineBox>
             </section>
-        </ContentWithSubtitle>
+        </>
     );
 };

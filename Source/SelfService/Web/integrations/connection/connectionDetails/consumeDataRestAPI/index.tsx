@@ -8,16 +8,14 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { Button, ContentContainer, ContentHeader, ContentParagraph } from '@dolittle/design-system';
 
-import { RestApiServiceStatus } from '../../../../apis/integrations/generated';
 import { useConnectionsIdRestApiStatusGet, useConnectionsIdRestApiEnablePost, useConnectionsIdRestApiDisablePost } from '../../../../apis/integrations/connectionRestApiApi.hooks';
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
 
 import { useConnectionIdFromRoute } from '../../../routes.hooks';
 
+import { AccessIndex } from './access';
 import { CredentialsIndex } from './Credentials';
-import { EnableRestApiSection } from './EnableRestApiSection';
 import { DisableRestApiDialog, disableRestApiDialogReducer } from './DisableRestApiDialog';
-import { RestApiDescriptionSection } from './RestApiDescriptionSection';
 
 import { getIndicatorStatusFromStatusMessage } from '../../../statusHelpers';
 
@@ -45,6 +43,7 @@ export const ConsumeDataRestAPIView = () => {
 
     const serviceStatus = apiStatus?.service || 'Off';
     const showEnableSection = (apiStatus?.target === 'Disabled') || serviceStatus === 'Deploying';
+    const isButtonsDisabled = serviceStatus === 'Deploying' || serviceStatus === 'Terminating';
     const shouldDisableDisableButton = serviceStatus === 'Off' || serviceStatus === 'Deploying' || serviceStatus === 'Terminating';
     const serviceStatusIndicator = getIndicatorStatusFromStatusMessage(apiStatus?.status);
 
@@ -108,12 +107,12 @@ export const ConsumeDataRestAPIView = () => {
             </ContentParagraph>
 
             {!isLoading &&
-                <>
-                    {showEnableSection
-                        ? <EnableRestApiSection onEnableRestApi={() => handleEnableRestApi()} status={serviceStatus || 'Off'} isEnabling={enableMutation.isLoading} />
-                        : <RestApiDescriptionSection restApiBaseUrl={apiStatus?.basePath || ''} />
-                    }
-                </>
+                <AccessIndex
+                    isApiDisabled={showEnableSection}
+                    isButtonDisabled={isButtonsDisabled}
+                    onEnableRestApi={() => handleEnableRestApi()}
+                    restApiBaseUrl={apiStatus?.basePath || ''}
+                />
             }
 
             <CredentialsIndex />
