@@ -9,6 +9,8 @@ import { componentStories } from '../../index';
 // Use the componentStories function to create a metadata object and a createStory function.
 const { metadata, createStory } = componentStories(() => <></>);
 
+// TODO: Update component to improve text.
+
 // Set the title of the component.
 metadata.title = 'Dummy component';
 

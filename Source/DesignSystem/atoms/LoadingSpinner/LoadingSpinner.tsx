@@ -10,7 +10,7 @@ import { Backdrop, CircularProgress, CircularProgressProps } from '@mui/material
  */
 export type LoadingSpinnerProps = CircularProgressProps & {
     /**
-     * If true, the spinner will cover the entire page.
+     * If true, the spinner will cover the navigation bar.
      */
     fullPage?: boolean;
 };
