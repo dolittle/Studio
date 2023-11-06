@@ -3,16 +3,16 @@
 
 import React from 'react';
 
-import { Box, CircularProgress, CircularProgressProps } from '@mui/material';
+import { Backdrop, CircularProgress, CircularProgressProps } from '@mui/material';
 
 /**
  * The props for a {@link LoadingSpinner} component.
  */
 export type LoadingSpinnerProps = CircularProgressProps & {
     /**
-     * Whether or not the loading spinner should take up the full height of the screen.
+     * If true, the spinner will cover the entire page.
      */
-    fullHeight?: boolean;
+    fullPage?: boolean;
 };
 
 /**
@@ -21,6 +21,6 @@ export type LoadingSpinnerProps = CircularProgressProps & {
  * @returns A {@link LoadingSpinner} component.
  */
 export const LoadingSpinner = (props: LoadingSpinnerProps) =>
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: props.fullHeight ? '100vh' : 'auto', p: 2 }}>
+    <Backdrop open={true} sx={{ zIndex: props.fullPage ? theme => theme.zIndex.drawer + 1 : 'auto' }}>
         <CircularProgress {...props} />
-    </Box>;
+    </Backdrop>;
