@@ -8,7 +8,7 @@ import { useSnackbar } from 'notistack';
 
 import { Guid } from '@dolittle/rudiments';
 
-import { Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
+import { Button, Form, LoadingSpinner } from '@dolittle/design-system';
 
 import { saveSimpleMicroserviceWithStore } from '../../stores/microservice';
 
@@ -91,7 +91,8 @@ export const MicroserviceDeploy = ({ application }: MicroserviceDeployProps) => 
 
     return (
         <>
-            {isLoading && <LoadingSpinnerFullPage />}
+            {isLoading && <LoadingSpinner fullPage />}
+
             <PageTitle title='Deploy Microservice' />
 
             <Form<MicroserviceFormParameters>

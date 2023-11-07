@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box } from '@mui/material';
 
-import { AlertDialog, Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
+import { AlertDialog, Button, Form, LoadingSpinner } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroserviceWithStore, editMicroserviceWithStore } from '../../../../stores/microservice';
 
@@ -104,7 +104,7 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
 
     return (
         <>
-            {isLoading && <LoadingSpinnerFullPage />}
+            {isLoading && <LoadingSpinner fullPage />}
 
             <AlertDialog
                 id='delete-microservice'
