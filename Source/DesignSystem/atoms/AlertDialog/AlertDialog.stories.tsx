@@ -4,6 +4,7 @@
 import React, { Fragment, useState } from 'react';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import { Divider, List, ListItem } from '@mui/material';
 
@@ -19,14 +20,6 @@ export default {
             description: { component: alertDialogDescription },
         },
     },
-    args: {
-        id: 'alert',
-        title: 'Alert Dialog',
-        description: 'This is a description of the dialog. It can be used to provide more information about the dialog and what it does.',
-        confirmBtnColor: 'primary',
-        cancelBtnText: 'Cancel',
-        confirmBtnText: 'Confirm',
-    },
     argTypes: {
         children: { control: false },
         isOpen: { control: false },
@@ -37,15 +30,47 @@ export default {
             },
         },
     },
+    args: {
+        id: 'dialog',
+        isOpen: false,
+        title: 'This is a title',
+        description: 'This is a description of the dialog. It can be used to provide more information about the dialog and what it does.',
+        isLoading: false,
+        cancelBtnLabel: 'Cancel',
+        hideCancelButton: false,
+        onCancel: action('Canceled!'),
+        confirmBtnLabel: 'Confirm',
+        confirmBtnColor: 'primary',
+        onConfirm: action('Confirmed!'),
+        onClose: action('Closed!'),
+    },
 } as ComponentMeta<typeof AlertDialog>;
 
 const Template: ComponentStory<typeof AlertDialog> = args => {
-    const [isOpen, setIsOpen] = useState(args.isOpen || false);
+    const [isDialogOpen, setIsDialogOpen] = useState(args.isOpen || false);
+
+    const handleDialogClose = () => setIsDialogOpen(false);
 
     return (
         <>
-            <Button label='Open dialog' onClick={() => setIsOpen(true)} />
-            <AlertDialog {...args} isOpen={isOpen} onCancel={() => setIsOpen(false)} onConfirm={() => setIsOpen(false)} />
+            <Button label='Open dialog' onClick={() => setIsDialogOpen(true)} />
+
+            <AlertDialog
+                {...args}
+                isOpen={isDialogOpen}
+                onCancel={() => {
+                    handleDialogClose();
+                    args.onCancel();
+                }}
+                onConfirm={() => {
+                    handleDialogClose();
+                    args.onConfirm();
+                }}
+                onClose={() => {
+                    handleDialogClose();
+                    if (args.onClose) args.onClose();
+                }}
+            />
         </>
     );
 };
@@ -66,4 +91,14 @@ WithChildrenContent.args = {
             )}
         </List>
     ),
+};
+
+export const WithoutCancelButton = Template.bind({});
+WithoutCancelButton.args = {
+    hideCancelButton: true,
+};
+
+export const WithLoading = Template.bind({});
+WithLoading.args = {
+    isLoading: true,
 };
