@@ -58,7 +58,7 @@ export default {
 } as ComponentMeta<typeof FormDialog>;
 
 const Template: ComponentStory<typeof FormDialog> = args => {
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [isDialogOpen, setIsDialogOpen] = useState(args.isOpen || false);
 
     const handleDialogClose = () => setIsDialogOpen(false);
 
@@ -66,7 +66,22 @@ const Template: ComponentStory<typeof FormDialog> = args => {
         <>
             <Button label='Open form dialog' onClick={() => setIsDialogOpen(true)} />
 
-            <FormDialog {...args} isOpen={isDialogOpen} onCancel={handleDialogClose} onSubmit={handleDialogClose} onClose={handleDialogClose} />
+            <FormDialog
+                {...args}
+                isOpen={isDialogOpen}
+                onCancel={() => {
+                    handleDialogClose();
+                    args.onCancel();
+                }}
+                onSubmit={() => {
+                    handleDialogClose();
+                    args.onSubmit('Submitted!');
+                }}
+                onClose={() => {
+                    handleDialogClose();
+                    if (args.onClose) args.onClose();
+                }}
+            />
         </>
     );
 };
