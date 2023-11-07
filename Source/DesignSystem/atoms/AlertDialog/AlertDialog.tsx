@@ -7,7 +7,7 @@ import Draggable from 'react-draggable';
 
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, PaperProps, SxProps } from '@mui/material';
 
-import { Button, Form, IconButton, LoadingSpinner } from '@dolittle/design-system';
+import { Button, IconButton } from '@dolittle/design-system';
 
 const styles = {
     title: {
@@ -173,38 +173,4 @@ export const AlertDialog = ({ id, isOpen, title, description, children, cancelBu
             <Button onClick={onCancel} label={cancelButtonLabel ?? 'Cancel'} color='subtle' />
             <Button onClick={onConfirm} label={confirmBtnText} color={confirmBtnColor ?? 'primary'} />
         </DialogActions>
-    </Dialog>;
-
-// TODO: Hack for now, remove when we have a better solution. Also add to stories.
-export const DialogForm = ({ id, isOpen, title, description, isLoading, children, cancelButtonLabel, onCancel, onClose, hideCancelButton, confirmBtnText, onConfirm, hideSubmitButton, formInitialValues, sx }: AlertDialogProps) =>
-    <Dialog
-        open={isOpen ?? false}
-        onClose={onClose ?? onCancel}
-        aria-labelledby={`${id}-dialog-title`}
-        aria-describedby={`${id}-dialog-description`}
-        PaperComponent={(props: PaperProps) =>
-            <Draggable handle={`#${id}-dialog-title`} cancel={'[class*="MuiDialogContent-root"]'}>
-                <Paper {...props} />
-            </Draggable>
-        }
-    >
-        <Form initialValues={formInitialValues} onSubmit={onConfirm} sx={sx}>
-            <DialogTitle id={`${id}-dialog-title`} sx={styles.title}>
-                {title}
-                <IconButton tooltipText='Close dialog' edge='end' onClick={onClose ?? onCancel} />
-            </DialogTitle>
-
-            <DialogContent sx={{ typography: 'body2' }}>
-                <DialogContentText id={`${id}-dialog-description`} sx={styles.description}>{description}</DialogContentText>
-                {children}
-            </DialogContent>
-
-            {isLoading
-                ? <LoadingSpinner />
-                : <DialogActions sx={{ mr: 1 }}>
-                    {!hideCancelButton && <Button label={cancelButtonLabel ? cancelButtonLabel : 'Cancel'} color='subtle' onClick={onCancel} />}
-                    {!hideSubmitButton && <Button label={confirmBtnText} type='submit' />}
-                </DialogActions>
-            }
-        </Form>
     </Dialog>;

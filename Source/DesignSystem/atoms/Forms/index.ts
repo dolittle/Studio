@@ -3,6 +3,7 @@
 
 export { Checkbox } from './Checkbox';
 export { Form, FormProps, FormRef } from './Form';
+export { FormDialog, FormDialogProps } from './FormDialog';
 export { Input, InputProps } from './Input';
 export { PasswordInput, PasswordInputProps } from './PasswordInput';
 export { Select, SelectProps, SelectPropsOptions } from './Select';
