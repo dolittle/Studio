@@ -3,8 +3,6 @@
 
 import React from 'react';
 
-import { Stack } from '@mui/material';
-
 import { Input, Select } from '@dolittle/design-system';
 
 import { ServiceAccountAccess } from '../../../../../../../apis/integrations/generated';
@@ -16,8 +14,8 @@ const accessOptions = [
 ];
 
 export const GenerateCredentials = () =>
-    <Stack sx={{ mt: 3, gap: 2 }}>
+    <>
         <Input id='name' label='Name' required />
         <Input id='description' label='Description' />
         <Select id='access' label='Access' options={accessOptions} />
-    </Stack>;
+    </>;

@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { DialogForm } from '@dolittle/design-system';
+import { FormDialog } from '@dolittle/design-system';
 
 import { useConnectionsIdServiceAccountsServiceAccountNamePost } from '../../../../../../../apis/integrations/serviceAccountApi.hooks';
 import { ServiceAccountAccess, ServiceAccountCreatedDto, ResponseError } from '../../../../../../../apis/integrations/generated';
@@ -72,28 +72,27 @@ export const GenerateCredentialsDialogIndex = ({ connectionId, isDialogOpen, onD
     };
 
     return (
-        <DialogForm
+        <FormDialog
             id='generate-credentials'
             isOpen={isDialogOpen}
             title='Generate New Credentials'
             description={hasResult ? 'Credential Token' : 'Who or what are these credentials for?'}
+            isLoading={isLoading}
             cancelButtonLabel={hasResult ? 'Close' : 'Cancel'}
             onCancel={handleCancel}
-            confirmBtnText='Generate Token'
-            onConfirm={handleGenerate}
+            submitBtnLabel='Generate Token'
             hideSubmitButton={hasResult}
-            isLoading={isLoading}
+            onSubmit={handleGenerate}
             formInitialValues={{
                 name: '',
                 description: '',
                 access: ServiceAccountAccess.Read,
-            }}
-            sx={{ width: 600 }}
+            } as GenerateCredentialsFormParameters}
         >
             {!hasResult
                 ? <GenerateCredentials />
                 : <GeneratedCredentialsSection token={token} />
             }
-        </DialogForm>
+        </FormDialog>
     );
 };
