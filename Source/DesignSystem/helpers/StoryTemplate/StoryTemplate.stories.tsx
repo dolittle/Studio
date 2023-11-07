@@ -3,6 +3,9 @@
 
 import React from 'react';
 
+// Import the action function from Storybook to use when actions are triggered.
+// import { action } from '@storybook/addon-actions';
+
 // Import our custom made StoryTemplate component.
 import { componentStories } from '../../index';
 
@@ -35,7 +38,9 @@ metadata.argTypes = {
 };
 
 // Set the default arguments/props of the component.
-metadata.args = {};
+metadata.args = {
+    // onCancel: action('Canceled!'),
+};
 
 // Export the metadata.
 export default metadata;
