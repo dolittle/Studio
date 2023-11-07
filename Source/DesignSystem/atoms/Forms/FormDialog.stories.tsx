@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import { Button, FormDialog, Input, Select } from '../../index';
+import { Button, FormDialog, Input, Select, TextField } from '../../index';
 
 // TODO: Update component to improve text.
 
@@ -87,3 +87,25 @@ const Template: ComponentStory<typeof FormDialog> = args => {
 };
 
 export const Default = Template.bind({});
+
+export const LoadingState = Template.bind({});
+LoadingState.args = {
+    isLoading: true,
+};
+
+export const WithoutCancelButton = Template.bind({});
+WithoutCancelButton.args = {
+    hideCancelButton: true,
+};
+
+export const WithoutSubmitButton = Template.bind({});
+WithoutSubmitButton.args = {
+    cancelButtonLabel: 'Close',
+    hideSubmitButton: true,
+    children: <>
+        <div>
+            <TextField value='Input value' label='Form Text Field' isDisabled sx={{ width: 200 }} />
+            <Button label='Copy input value' startWithIcon='CopyAllRounded' onClick={action('Copied!')} sx={{ ml: 3 }} />
+        </div>
+    </>,
+};
