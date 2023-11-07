@@ -102,10 +102,10 @@ export const WithoutSubmitButton = Template.bind({});
 WithoutSubmitButton.args = {
     cancelButtonLabel: 'Close',
     hideSubmitButton: true,
-    children: <>
-        <div>
+    children: (
+        <>
             <TextField value='Input value' label='Form Text Field' isDisabled sx={{ width: 200 }} />
             <Button label='Copy input value' startWithIcon='CopyAllRounded' onClick={action('Copied!')} sx={{ ml: 3 }} />
-        </div>
-    </>,
+        </>
+    ),
 };

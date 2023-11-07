@@ -121,6 +121,11 @@ export type FormDialogProps = {
     formInitialValues: any;
 };
 
+/**
+ * The form dialog is used to display a form in a dialog.
+ * @param {FormDialogProps} props - The {@link FormDialogProps}.
+ * @returns A {@link FormDialog} component.
+ */
 export const FormDialog = ({ id, isOpen, title, description, isLoading, children, cancelButtonLabel, hideCancelButton, onCancel, submitBtnLabel, hideSubmitButton, onSubmit, onClose, formInitialValues }: FormDialogProps) =>
     <Dialog
         open={isOpen ?? false}
