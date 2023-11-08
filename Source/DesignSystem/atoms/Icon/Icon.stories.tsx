@@ -28,5 +28,10 @@ export default metadata;
 
 export const Default = createStory();
 
+export const WithTooltip = createStory({
+    icon: 'InfoRounded',
+    tooltipLabel: 'This is the tooltip title',
+});
+
 export const IconsWeUse = () =>
     availableIcons.map(key => <Icon key={key} icon={key as SvgIconsDefinition} sx={{ m: 1 }} />);
