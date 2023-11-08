@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import { SxProps, Tooltip, Typography } from '@mui/material';
+import { SxProps } from '@mui/material';
 
-import { SvgIcons, SvgIconsDefinition } from '../../index';
+import { SvgIcons, SvgIconsDefinition, Tooltip } from '../../index';
 
 /**
  * The props for a {@link Icon} component.
@@ -49,8 +49,8 @@ export const Icon = ({ icon, color = 'inherit', size = 'small', tooltipLabel, sx
 
     if (tooltipLabel) {
         return (
-            <Tooltip title={<Typography variant='body2'>{tooltipLabel}</Typography>} placement='right' arrow>
-                {clonedIcon}
+            <Tooltip title={tooltipLabel}>
+                <span>{clonedIcon}</span>
             </Tooltip>
         );
     }

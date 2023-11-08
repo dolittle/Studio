@@ -18,10 +18,15 @@ Avoid unnecessarily adding icons so as not to clutter the UI and overwhelm the u
     },
 };
 
+metadata.argTypes = {
+    sx: { control: false },
+};
+
 metadata.args = {
     icon: 'Dolittle',
     color: 'inherit',
     size: 'small',
+    tooltipLabel: '',
 };
 
 export default metadata;
@@ -30,7 +35,7 @@ export const Default = createStory();
 
 export const WithTooltip = createStory({
     icon: 'InfoRounded',
-    tooltipLabel: 'This is the tooltip title',
+    tooltipLabel: 'Add the purpose of the icon here',
 });
 
 export const IconsWeUse = () =>
