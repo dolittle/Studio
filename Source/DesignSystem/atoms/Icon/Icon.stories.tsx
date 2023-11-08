@@ -34,4 +34,4 @@ export const WithTooltip = createStory({
 });
 
 export const IconsWeUse = () =>
-    availableIcons.map(key => <Icon key={key} icon={key as SvgIconsDefinition} sx={{ m: 1 }} />);
+    availableIcons.map(icon => <Icon key={icon} icon={icon as SvgIconsDefinition} tooltipLabel={icon} sx={{ m: 1 }} />);
