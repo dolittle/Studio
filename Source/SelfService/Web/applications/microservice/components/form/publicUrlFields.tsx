@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { Stack, Typography } from '@mui/material';
 
-import { Input, Link, Switch, Tooltip } from '@dolittle/design-system';
+import { FormFieldTooltip, Input, Link, Switch } from '@dolittle/design-system';
 
 const PublicUrlFieldDescription = () =>
     <>
@@ -34,7 +34,7 @@ export const PublicUrlFields = ({ hasPublicUrl, isDisabled, }: PublicUrlFieldsPr
             />
 
             {showPublicUrlInfo &&
-                <Tooltip tooltipTitle='PATH' tooltipText={<PublicUrlFieldDescription />}>
+                <FormFieldTooltip title='PATH' description={<PublicUrlFieldDescription />}>
                     <Input
                         id='ingressPath'
                         label='Path'
@@ -43,7 +43,7 @@ export const PublicUrlFields = ({ hasPublicUrl, isDisabled, }: PublicUrlFieldsPr
                         disabled={isDisabled}
                         sx={{ width: 226 }}
                     />
-                </Tooltip>
+                </FormFieldTooltip>
             }
         </Stack>
     );

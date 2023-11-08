@@ -3,10 +3,11 @@
 
 import React, { useEffect, useMemo } from 'react';
 
-import { Typography, Stack } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 
-import { Input, MaxWidthTextBlock, Select, SelectPropsOptions, Tooltip } from '@dolittle/design-system';
+import { Stack } from '@mui/material';
+
+import { FormFieldTooltip, Input, MaxWidthTextBlock, Select, SelectPropsOptions } from '@dolittle/design-system';
 
 import { Link } from '../../../../../apis/integrations/generated';
 import { M3AuthenticationType } from './M3AuthenticationType';
@@ -79,7 +80,11 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType
         <Stack spacing={3.5} sx={{ mt: 3, ml: 3 }}>
             <MaxWidthTextBlock>{newConnectionDescription}</MaxWidthTextBlock>
 
-            <Tooltip tooltipTitle='Connector Name' tooltipText={<ConnectorNameTooltipText />} sx={{ top: 16 }}>
+            <FormFieldTooltip
+                title='Connector Name'
+                description={<ConnectorNameTooltipText />}
+                sx={{ top: 16 }}
+            >
                 <Input
                     id='connectorName'
                     label='Connector Name'
@@ -87,11 +92,11 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType
                     required='Please enter the connector name.'
                     disabled={!canEdit}
                 />
-            </Tooltip>
+            </FormFieldTooltip>
 
-            <Tooltip
-                tooltipTitle='Hosting'
-                tooltipText={hasSavedDeploymentType ? hostingSelectedTooltipText : hostingTooltipText}
+            <FormFieldTooltip
+                title='Hosting'
+                description={hasSavedDeploymentType ? hostingSelectedTooltipText : hostingTooltipText}
                 displayOnHover={hasSavedDeploymentType}
                 sx={{ top: 38 }}
             >
@@ -102,11 +107,11 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType
                     disabled={!canEdit || hasSavedDeploymentType}
                     required='Please select the hosting type.'
                 />
-            </Tooltip>
+            </FormFieldTooltip>
 
-            <Tooltip
-                tooltipTitle='M3 Authentication Type'
-                tooltipText={authenticationTypeTooltipText}
+            <FormFieldTooltip
+                title='M3 Authentication Type'
+                description={authenticationTypeTooltipText}
                 displayOnHover={true}
                 sx={{ top: 38 }}
             >
@@ -117,7 +122,7 @@ export const MainM3ConnectionInfo = ({ connectionIdLinks, hasSavedDeploymentType
                     disabled={!canEdit}
                     required='Please select the authentication type.'
                 />
-            </Tooltip>
+            </FormFieldTooltip>
         </Stack>
     );
 };
