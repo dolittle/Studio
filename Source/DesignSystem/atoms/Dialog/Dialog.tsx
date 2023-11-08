@@ -5,9 +5,9 @@ import React from 'react';
 
 import Draggable from 'react-draggable';
 
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, PaperProps } from '@mui/material';
+import { Dialog as MuiDialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, PaperProps } from '@mui/material';
 
-import { Button, IconButton, LoadingSpinner } from '@dolittle/design-system';
+import { Button, IconButton, LoadingSpinner } from '../../index';
 
 const styles = {
     title: {
@@ -25,9 +25,9 @@ const styles = {
 };
 
 /**
- * The props for the {@link AlertDialog} component.
+ * The props for the {@link Dialog} component.
  */
-export type AlertDialogProps = {
+export type DialogProps = {
     /**
      * The id is used to identify the dialog and its children. It is used for accessibility and testing.
      *
@@ -117,12 +117,12 @@ export type AlertDialogProps = {
 };
 
 /**
- * The alert dialog is used to confirm an action or output.
- * @param {AlertDialogProps} props - The {@link AlertDialogProps} that contains the properties for the alert dialog.
- * @returns A {@link AlertDialog} component.
+ * The dialog is used to confirm an action or to display information to the user.
+ * @param {DialogProps} props - The {@link DialogProps}.
+ * @returns A {@link Dialog} component.
  */
-export const AlertDialog = ({ id, isOpen, title, description, isLoading, children, cancelBtnLabel, hideCancelButton, onCancel, confirmBtnLabel, confirmBtnColor, onConfirm, onClose }: AlertDialogProps) =>
-    <Dialog
+export const Dialog = ({ id, isOpen, title, description, isLoading, children, cancelBtnLabel, hideCancelButton, onCancel, confirmBtnLabel, confirmBtnColor, onConfirm, onClose }: DialogProps) =>
+    <MuiDialog
         open={isOpen ?? false}
         onClose={onClose ?? onCancel}
         aria-labelledby={`${id}-dialog-title`}
@@ -140,7 +140,7 @@ export const AlertDialog = ({ id, isOpen, title, description, isLoading, childre
             <IconButton tooltipText='Close dialog' edge='end' onClick={onClose ?? onCancel} />
         </DialogTitle>
 
-        <DialogContent sx={{ typography: 'body2' }}>
+        <DialogContent sx={{ typography: 'body2', minInlineSize: { sm: 500 } }}>
             {description &&
                 <DialogContentText id={`${id}-dialog-description`} sx={styles.description}>
                     {description}
@@ -154,4 +154,4 @@ export const AlertDialog = ({ id, isOpen, title, description, isLoading, childre
             {!hideCancelButton && <Button onClick={onCancel} label={cancelBtnLabel ?? 'Cancel'} color='subtle' />}
             <Button onClick={onConfirm} label={confirmBtnLabel} color={confirmBtnColor ?? 'primary'} />
         </DialogActions>
-    </Dialog>;
+    </MuiDialog>;

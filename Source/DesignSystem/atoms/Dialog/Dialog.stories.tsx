@@ -8,16 +8,15 @@ import { action } from '@storybook/addon-actions';
 
 import { Divider, List, ListItem } from '@mui/material';
 
-import { AlertDialog, Button } from '../../index';
+import { Dialog, Button } from '../../index';
 
-import { alertDialogDescription, dummyArray } from './helpers';
+import { dialogDescription, dummyArray } from './helpers';
 
 export default {
-    title: 'Alert Dialog',
-    component: AlertDialog,
+    component: Dialog,
     parameters: {
         docs: {
-            description: { component: alertDialogDescription },
+            description: { component: dialogDescription },
         },
     },
     argTypes: {
@@ -44,9 +43,9 @@ export default {
         onConfirm: action('Confirmed!'),
         onClose: action('Closed!'),
     },
-} as ComponentMeta<typeof AlertDialog>;
+} as ComponentMeta<typeof Dialog>;
 
-const Template: ComponentStory<typeof AlertDialog> = args => {
+const Template: ComponentStory<typeof Dialog> = args => {
     const [isDialogOpen, setIsDialogOpen] = useState(args.isOpen || false);
 
     const handleDialogClose = () => setIsDialogOpen(false);
@@ -55,7 +54,7 @@ const Template: ComponentStory<typeof AlertDialog> = args => {
         <>
             <Button label='Open dialog' onClick={() => setIsDialogOpen(true)} />
 
-            <AlertDialog
+            <Dialog
                 {...args}
                 isOpen={isDialogOpen}
                 onCancel={() => {

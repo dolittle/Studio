@@ -1,14 +1,14 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { Typography } from '@mui/material';
 
-import { AlertDialog } from '@dolittle/design-system/';
+import { Dialog } from '@dolittle/design-system/';
 
 import { CACHE_KEYS } from '../../../../../../apis/integrations/CacheKeys';
 import { useConnectionsIdServiceAccountsServiceAccountNameDelete } from '../../../../../../apis/integrations/serviceAccountApi.hooks';
@@ -25,9 +25,12 @@ export const DeleteCredentialsDialog = ({ connectionId, isDialogOpen, credential
     const queryClient = useQueryClient();
     const deleteMutation = useConnectionsIdServiceAccountsServiceAccountNameDelete();
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const hasMany = credentialsToDelete.length > 1;
 
     const handleDelete = (credentials: string[]) => {
+        setIsLoading(true);
         const deleteMutations = credentials.map(id => deleteMutation.mutateAsync({ id: connectionId, serviceAccountName: id }));
 
         Promise.allSettled(deleteMutations)
@@ -42,22 +45,25 @@ export const DeleteCredentialsDialog = ({ connectionId, isDialogOpen, credential
                 });
                 queryClient.invalidateQueries([CACHE_KEYS.ConnectionServiceAccounts_GET, connectionId]);
             })
-            .finally(onDialogCancel);
+            .finally(() => {
+                onDialogCancel();
+                setIsLoading(false);
+            });
     };
 
     return (
-        <AlertDialog
+        <Dialog
             id='delete-credentials'
             isOpen={isDialogOpen}
             title={`Delete credential${hasMany ? 's' : ''}`}
             description={`Are you sure you want to delete the selected credential${hasMany ? 's' : ''}? This action cannot be undone and will impact any applications currently using these credentials.`}
-            confirmBtnText='Delete'
-            confirmBtnColor='error'
+            isLoading={isLoading}
             onCancel={onDialogCancel}
+            confirmBtnLabel='Delete'
+            confirmBtnColor='error'
             onConfirm={() => handleDelete(credentialsToDelete)}
-        //isLoading={isLoading}
         >
             {credentialsToDelete.map(serviceAccount => <Typography key={serviceAccount} gutterBottom>{`"${serviceAccount}"`}</Typography>)}
-        </AlertDialog>
+        </Dialog>
     );
 };

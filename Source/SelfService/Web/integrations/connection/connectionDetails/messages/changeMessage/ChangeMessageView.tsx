@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { AlertBox, AlertDialog, ContentHeader } from '@dolittle/design-system';
+import { AlertBox, ContentHeader, Dialog } from '@dolittle/design-system';
 
 import { MessageMappingModel } from '../../../../../apis/integrations/generated';
 
@@ -71,16 +71,16 @@ export const ChangeMessageView = ({
                     <>
                         {(mode === 'new' || queryIsSuccess) && (
                             <>
-                                <AlertDialog
-                                    id='discard-changes-dialog'
+                                <Dialog
+                                    id='discard-changes'
+                                    isOpen={showDiscardChangesDialog}
                                     title='Are you sure that you want to discard these changes?'
                                     description={`By clicking ‘discard changes' none of the changes you have made to this screen will be stored.`}
-                                    isOpen={showDiscardChangesDialog}
                                     onCancel={() => cancelMessageMapping()}
-                                    onClose={() => setShowDiscardChangesDialog(false)}
+                                    cancelBtnLabel='Discard changes'
+                                    confirmBtnLabel='Continue working'
                                     onConfirm={() => setShowDiscardChangesDialog(false)}
-                                    cancelBtnText='Discard changes'
-                                    confirmBtnText='Continue working'
+                                    onClose={() => setShowDiscardChangesDialog(false)}
                                 />
 
                                 <ContentHeader
@@ -123,5 +123,3 @@ export const ChangeMessageView = ({
         </>
     );
 };
-
-

@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { DialogContentText } from '@mui/material';
 
-import { AlertDialog } from '@dolittle/design-system';
+import { Dialog } from '@dolittle/design-system';
 
 import { useConnectionsIdRestApiDisablePost } from '../../../../apis/integrations/connectionRestApiApi.hooks';
 import { CACHE_KEYS } from '../../../../apis/integrations/CacheKeys';
@@ -42,19 +42,19 @@ export const DisableRestApiDialog = ({ isOpen, onCancel }: DisableRestApiDialogP
     };
 
     return (
-        <AlertDialog
+        <Dialog
             id='disable-rest-api-service'
             isOpen={isOpen}
-            title='Disable Rest API Service?'
+            title='Disable Rest API Service'
             description='Apps or services depending on this service will no longer be able to access it.'
-            confirmBtnText='Disable'
-            confirmBtnColor='error'
             onCancel={onCancel}
+            confirmBtnLabel='Disable'
+            confirmBtnColor='error'
             onConfirm={handleDisableRestApi}
         >
-            <DialogContentText sx={{ mt: 2 }}>
+            <DialogContentText>
                 You can enable it again later if you want to without any data loss. Credentials will not be deleted.
             </DialogContentText>
-        </AlertDialog>
+        </Dialog>
     );
 };

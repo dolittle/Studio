@@ -2,8 +2,10 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { Dispatch } from 'react';
-import { AlertDialog } from '@dolittle/design-system';
+
 import { DialogContentText } from '@mui/material';
+
+import { Dialog } from '@dolittle/design-system';
 
 export type DisableWebhooksDialogState = {
     isOpen: boolean;
@@ -30,20 +32,18 @@ export type DisableWebhooksDialogProps = {
     onConfirm: () => void;
 };
 
-export const DisableWebhooksDialog = ({ dispatch, state, onConfirm }: DisableWebhooksDialogProps) => {
-
-    return <AlertDialog
-        id='disable-realtime-sync-service-dialog'
-        title={`Disable Realtime Sync Service?`}
-        description={`When disabled, data will only be updated based on the scheduled sync interval.`}
-        confirmBtnText='Disable'
-        confirmBtnColor='error'
+export const DisableWebhooksDialog = ({ dispatch, state, onConfirm }: DisableWebhooksDialogProps) =>
+    <Dialog
+        id='disable-realtime-sync-service'
+        title='Disable Realtime Sync Service'
         isOpen={state.isOpen}
-        onConfirm={() => onConfirm()}
+        description='When disabled, data will only be updated based on the scheduled sync interval.'
         onCancel={() => dispatch({ type: 'close' })}
+        confirmBtnLabel='Disable'
+        confirmBtnColor='error'
+        onConfirm={() => onConfirm()}
     >
-        <DialogContentText sx={{ mt: 2 }}>
+        <DialogContentText>
             You can enable it again later if you want to without any data loss.
         </DialogContentText>
-    </AlertDialog>;
-};
+    </Dialog>;

@@ -3,9 +3,9 @@
 
 import React, { Dispatch } from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
-import { AlertDialog } from '@dolittle/design-system/';
+import { Dialog } from '@dolittle/design-system/';
 
 export type DeleteServiceAccountDialogState = {
     open: boolean;
@@ -42,20 +42,18 @@ export const DeleteServiceAccountDialog = ({ dispatch, state, onDelete }: Delete
     const hasMany = state.serviceAccounts.length > 1;
 
     return (
-        <AlertDialog
-            id='delete-service-account-dialog'
+        <Dialog
+            id='delete-service-account'
+            isOpen={state.open}
             title={`Delete service account${hasMany ? 's' : ''}`}
             description={`Are you sure you want to delete the selected service account${hasMany ? 's' : ''}?`}
-            confirmBtnText='Delete'
-            confirmBtnColor='error'
-            isOpen={state.open}
-            onConfirm={() => onDelete(state.serviceAccounts)}
-            onCancel={() => dispatch({ type: 'close' })}
             isLoading={state.isLoading}
+            onCancel={() => dispatch({ type: 'close' })}
+            confirmBtnLabel='Delete'
+            confirmBtnColor='error'
+            onConfirm={() => onDelete(state.serviceAccounts)}
         >
-            <Box sx={{ mt: 2 }}>
-                {state.serviceAccounts.map(serviceAccount => <Typography key={serviceAccount}>{`"${serviceAccount}"`}</Typography>)}
-            </Box>
-        </AlertDialog>
+            {state.serviceAccounts.map(serviceAccount => <Typography key={serviceAccount}>{`"${serviceAccount}"`}</Typography>)}
+        </Dialog>
     );
 };
