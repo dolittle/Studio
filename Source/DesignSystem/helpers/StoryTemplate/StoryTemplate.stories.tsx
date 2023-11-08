@@ -4,15 +4,22 @@
 import React from 'react';
 
 // Import the action function from Storybook to use when actions are triggered.
-// import { action } from '@storybook/addon-actions';
+import { action } from '@storybook/addon-actions';
 
 // Import our custom made StoryTemplate component.
 import { componentStories } from '../../index';
 
-// Use the componentStories function to create a metadata object and a createStory function.
-const { metadata, createStory } = componentStories(() => <></>);
-
 // TODO: Update component to improve text.
+
+// Use the componentStories function to create a metadata object and a createStory function.
+const { metadata, createStory } = componentStories(() => <></>, {
+    actions: { onChange: 'changed' },
+    decorator: Story => (
+        <>
+            {Story()}
+        </>
+    ),
+});
 
 // Set the title of the component.
 metadata.title = 'Dummy component';
@@ -24,17 +31,20 @@ metadata.parameters = {
             component: `Write the description of the component here.`
         },
     },
+    // Include only the controls that you want to show.
+    controls: { include: ['', ''] },
 };
 
 // Add the controls/props of the component.
 metadata.argTypes = {
-    // statusLevel: {
+    // prop: {
     //     control: {
     //         type: 'select',
     //         options: ['success', 'waiting', 'warning', 'error', 'unknown'],
     //     },
     // },
-    // sx: { control: false },
+    // Exclude the controls that you don't want to show.
+    // prop: { control: false },
 };
 
 // Set the default arguments/props of the component.
@@ -49,16 +59,15 @@ export default metadata;
 export const Default = createStory();
 
 // Create a story for the component with a specific props.
-// Add custom description/guidance for the story with 'parameters'.
 export const SecondExample = createStory();
 SecondExample.parameters = {
     docs: {
+        // Add custom description/guidance for the story with 'parameters'.
         description: {
             story: `Write the individual component story description here.`
         },
     },
 };
-
 
 
 // Without StoryTemplate:
