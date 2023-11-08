@@ -27,7 +27,7 @@ export { Tabs } from './atoms/Tabs';
 export { MaxWidthTextBlock } from './atoms/Typography/MaxWidthTextBlock';
 export { NewSwitch } from './atoms/Switch';
 export { Terminal, TerminalConnect, TerminalStreams, InputMessages, OutputMessages } from './atoms/Terminal';
-export { FormFieldTooltip, FormFieldTooltipProps } from './atoms/Tooltip';
+export { FormFieldTooltip, FormFieldTooltipProps, Tooltip, TooltipProps } from './atoms/Tooltip';
 export { TextField, TextFieldProps } from './atoms/TextField';
 
 // Molecules
