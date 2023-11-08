@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import { Box, CircularProgress, SxProps, Tooltip, Typography } from '@mui/material';
+import { Box, CircularProgress, SxProps, Typography } from '@mui/material';
 
-import { Icon, SvgIconsDefinition } from '../../index';
+import { Icon, SvgIconsDefinition, Tooltip } from '../../index';
 
 type ConnectionStatusCondition = {
     color: 'text.primary' | 'text.secondary' | 'success.main' | 'warning.main' | 'error.main' | 'info.main';
@@ -98,12 +98,20 @@ export const StatusIndicator = ({ label, status, message, variantFilled, sx }: S
     };
 
     return (
-        <Tooltip title={<Typography variant='body2'>{message || ''}</Typography>} placement='right' arrow>
+        message ? (
+            <Tooltip title={message}>
+                <Box sx={variantFilled ? styles.variantFilled : styles.variantText}>
+                    {icon && <Icon icon={icon} />}
+                    {status === 'waiting' && <CircularProgress color='inherit' size={16} />}
+                    <Typography variant='button' sx={{ ml: 1 }}>{label ?? status}</Typography>
+                </Box>
+            </Tooltip>
+        ) : (
             <Box sx={variantFilled ? styles.variantFilled : styles.variantText}>
                 {icon && <Icon icon={icon} />}
                 {status === 'waiting' && <CircularProgress color='inherit' size={16} />}
                 <Typography variant='button' sx={{ ml: 1 }}>{label ?? status}</Typography>
             </Box>
-        </Tooltip>
+        )
     );
 };

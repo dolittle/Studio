@@ -3,7 +3,9 @@
 
 import React from 'react';
 
-import { Box, Tooltip } from '@mui/material';
+import { Box } from '@mui/material';
+
+import { Tooltip } from '@dolittle/design-system';
 
 const fmt = (summary?: number, digits?: number) => {
     if (summary === undefined) {
@@ -32,15 +34,15 @@ export const Summary = ({ description, period, avg, digits, max, now, unit }: Su
 
     return (
         <Box sx={{ whiteSpace: 'pre' }}>
-            <Tooltip title={`Average ${columnMetric} ${period}`}>
+            <Tooltip title={`Average ${columnMetric} ${period}`} placement='top'>
                 <span>{fmt(avg, digits)}</span>
             </Tooltip>
             {' | '}
-            <Tooltip title={`Maximum ${columnMetric} ${period}`}>
+            <Tooltip title={`Maximum ${columnMetric} ${period}`} placement='top'>
                 <span>{fmt(max, digits)}</span>
             </Tooltip>
             {' | '}
-            <Tooltip title={`Current ${columnMetric}`}>
+            <Tooltip title={`Current ${columnMetric}`} placement='top'>
                 <span>{fmt(now, digits)}</span>
             </Tooltip>
             {unit && ' ' + unit}

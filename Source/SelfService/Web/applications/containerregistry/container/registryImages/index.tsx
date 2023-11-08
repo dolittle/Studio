@@ -5,10 +5,10 @@ import React, { useCallback, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { Box, Tooltip } from '@mui/material';
+import { Box } from '@mui/material';
 import { DataGridPro, DataGridProProps, GridColDef, GridRowId } from '@mui/x-data-grid-pro';
 
-import { Button, dataGridDefaultProps, DataGridCustomToolbar, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon, IconButton } from '@dolittle/design-system';
+import { Button, dataGridDefaultProps, DataGridCustomToolbar, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon, IconButton, Tooltip } from '@dolittle/design-system';
 
 import { ContainerRegistryImages } from '../../../../apis/solutions/containerregistry';
 
@@ -50,7 +50,7 @@ export const RegistryImagesIndex = ({ applicationId, data }: RegistryImagesIndex
     const Toolbar = () =>
         <DataGridCustomToolbar title={`Host: ${data.url}`}>
             <Box sx={{ display: 'flex' }}>
-                <Tooltip title='Coming soon!' placement='top' arrow>
+                <Tooltip title='Coming soon!' placement='top'>
                     <span><Button label='Delete image(s)' startWithIcon='DeleteRounded' disabled sx={{ mr: 1 }} /></span>
                 </Tooltip>
                 <IconButton
