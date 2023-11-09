@@ -1,3 +1,42 @@
+# [3.18.28] - 2023-11-9 [PR: #494](https://github.com/dolittle/Studio/pull/494)
+## Summary
+
+Refine Design System components to make them understandable and reusable.
+Add documentation and stories for Design System components.
+Replace project components with new or improved Design System components.
+
+Fix bug in microservice name field when capital letters are used.
+
+### Added
+
+- StoryTemplate.tsx as example for writing Design System components.
+- FormDialog component to Design System.
+- New Tooltip component to Design System to be used in normal case (not in form).
+- 'WithTooltip' example to Icon stories in Storybook.
+- 'inline' style to Checkbox component in Design System so checkboxes would't take a full with of an parent.
+- Chip component documentation for Storybook.
+
+### Changed
+
+- LoadingSpinner component 'fullPage' appearance.
+- Rename AlertDialog component to Dialog and improve its Storybook and docs.
+- Replace Dialogs, that uses form, with FormDialog.
+- Rename Tooltip component to FormFieldTooltip as it is only used on form fields.
+- Replace tooltips in project with new Tooltip component.
+- Rename Link component 'message' prop to be 'label'.
+- Rename InlineBox component to InlineWrapper.
+- Improve StoryTemplate.stories, which can be used as an example when creating stories in Storybook.
+
+### Fixed
+
+- Regex that checks the Microservice name during creation and update. Added upper case support.
+
+### Removed
+
+- Remove FullPageLoadingSpinner as a separate component and merge it with default LoadingSpinner component.
+- Icons that are no longer used.
+
+
 # [3.18.25] - 2023-10-31 [PR: #493](https://github.com/dolittle/Studio/pull/493)
 ## Summary
 
