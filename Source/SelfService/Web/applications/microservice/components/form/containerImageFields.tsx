@@ -17,10 +17,10 @@ const EntrypointDescription = () =>
     <>
         If you would like to override your container image ENTRYPOINT,
         you can do so in this field. You can find more information on ENTRYPOINTS and CMD ARGUMENETS <Link
+            label='here'
             href='https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact'
             target
             ariaLabel='Understand how CMD and ENTRYPOINT interact which opens in a new window.'
-            message='here'
             color='secondary'
         />.
     </>;

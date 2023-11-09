@@ -11,7 +11,7 @@ const PublicUrlFieldDescription = () =>
     <>
         Dolittle will generate a public URL for you. If you would like to specify a subpath, please enter one here. If you would
         like custom handling of the path and subpaths, please reach
-        out to <Link href='mailto: support@dolittle.com' message='Dolittle support' color='secondary' /> after you&#39;ve deployed the service.
+        out to <Link label='Dolittle support' href='mailto: support@dolittle.com' color='secondary' /> after you&#39;ve deployed the service.
     </>;
 
 export type PublicUrlFieldsProps = {

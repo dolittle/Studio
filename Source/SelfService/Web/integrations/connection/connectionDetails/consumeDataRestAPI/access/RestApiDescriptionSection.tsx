@@ -37,7 +37,7 @@ export const RestApiDescriptionSection = ({ restApiBaseUrl }: RestApiDescription
                 <Typography>Rest API URL:</Typography>
 
                 <InlineWrapper>
-                    <Link target ariaLabel='Rest API URL' href={restApiUrl} message={restApiUrl} />
+                    <Link label={restApiUrl} href={restApiUrl} target ariaLabel='Rest API URL' />
                     <IconButton tooltipText='Copy rest API URL link to clipboard' icon='CopyAllRounded' color='primary' onClick={handleRestApiLinkCopy} />
                 </InlineWrapper>
             </section>
@@ -46,7 +46,7 @@ export const RestApiDescriptionSection = ({ restApiBaseUrl }: RestApiDescription
                 <Typography sx={{ mt: 2 }}>Rest API Documentation:</Typography>
 
                 <InlineWrapper>
-                    <Link target ariaLabel='OpenAPI documentation' href={openApiDocumentationUrl} message={openApiDocumentationUrl} />
+                    <Link label={openApiDocumentationUrl} href={openApiDocumentationUrl} target ariaLabel='OpenAPI documentation' />
                     <IconButton tooltipText='Copy OpenAPI documentation link to clipboard' icon='CopyAllRounded' color='primary' onClick={handleOpenApiDocumentationLinkCopy} />
                 </InlineWrapper>
             </section>

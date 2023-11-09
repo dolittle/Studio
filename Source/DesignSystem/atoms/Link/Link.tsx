@@ -10,14 +10,14 @@ import { ExtendButtonBase, ButtonTypeMap, Link as MuiLink } from '@mui/material'
  */
 export type LinkProps = {
     /**
+     * The label to display.
+     */
+    label: string;
+
+    /**
      * The URL to link to.
      */
     href?: string;
-
-    /**
-     * The message to display.
-     */
-    message: string;
 
     /**
      * Mark this as `true` if the link should open in a new browser tab.
@@ -49,7 +49,7 @@ export type LinkProps = {
  * @param {LinkProps} props - The {@link LinkProps}.
  * @returns A {@link Link} component.
  */
-export const Link = ({ href, ariaLabel, target, color, message, overrides }: LinkProps) =>
+export const Link = ({ label, href, ariaLabel, target, color, overrides }: LinkProps) =>
     <MuiLink
         color={color === 'subtle' ? 'text.primary' : color}
         href={href}
@@ -60,5 +60,5 @@ export const Link = ({ href, ariaLabel, target, color, message, overrides }: Lin
         sx={{ '&:hover': { opacity: 0.9 } }}
         {...overrides}
     >
-        {message}
+        {label}
     </MuiLink>;

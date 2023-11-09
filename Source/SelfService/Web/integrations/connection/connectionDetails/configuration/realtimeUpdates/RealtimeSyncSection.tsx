@@ -12,7 +12,6 @@ import { AlertBox, Button, ContentParagraph, ContentSection, IconButton, Link, S
 import { DisableWebhooksDialog, disableWebhooksDialogReducer } from './DisableRealtimeSyncDialog';
 import { getIndicatorStatusFromStatusMessage } from '../../../../statusHelpers';
 
-
 export const RealtimeSyncSection = () => {
     const { enqueueSnackbar } = useSnackbar();
 
@@ -141,9 +140,10 @@ export const RealtimeSyncSection = () => {
                     <Stack>
                         <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
                             <Link
+                                label={webhookStatus?.basePath + '/{TABLE_NAME}'}
                                 target
                                 ariaLabel='Webhook base path'
-                                message={webhookStatus?.basePath + '/{TABLE_NAME}'} />
+                            />
                             <IconButton
                                 tooltipText='Copy webhook base path to clipboard'
                                 icon='CopyAllRounded'
@@ -169,9 +169,6 @@ export const RealtimeSyncSection = () => {
                     </Stack>
                 </ContentSection>
             }
-
         </>
-
     );
 };
-
