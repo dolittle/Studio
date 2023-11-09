@@ -24,7 +24,7 @@ Clicking a selected card a second time should deselect the card. ` },
 };
 
 metadata.args = {
-    icon: 'Dolittle',
+    icon: 'AigonixLightCube',
     title: 'Title',
     description: 'This is a description for the select card.',
     listTitle: 'List title',
