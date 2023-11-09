@@ -38,7 +38,7 @@ export const MicroserviceViewIndex = ({ application, currentMicroservice }: Micr
     const microserviceName = currentMicroservice.name;
 
     const getLastOpenTab = parseInt(sessionStorage.getItem('microservice-details-tabs') || '0');
-    const podsStatuses = () => currentMicroservice.live.pods.flatMap(pod => pod.containers.map(container => container.state));
+    const podsStatuses = () => currentMicroservice.live?.pods?.flatMap(pod => pod.containers.map(container => container.state));
     const microserviceHealthStatus = getContainerStatus(podsStatuses());
 
     const tabs = [
