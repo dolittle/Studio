@@ -23,7 +23,7 @@ metadata.argTypes = {
 };
 
 metadata.args = {
-    icon: 'Dolittle',
+    icon: 'AigonixLightCube',
     color: 'inherit',
     size: 'small',
     tooltipLabel: '',

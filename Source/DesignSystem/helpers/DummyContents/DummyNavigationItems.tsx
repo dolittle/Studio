@@ -155,7 +155,7 @@ export const DummySidePanelNavigation = () => {
         },
         {
             label: 'Side panel link 2',
-            icon: 'SettingsRounded',
+            icon: 'InfoRounded',
             sx: { my: 1 },
             overrides: {
                 component: Link,
