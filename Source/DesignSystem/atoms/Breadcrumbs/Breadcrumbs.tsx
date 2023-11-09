@@ -64,4 +64,4 @@ type BreadcrumbsLinkProps = {
 };
 
 const BreadcrumbsLink = ({ label, navigateTo, overrides }: BreadcrumbsLinkProps) =>
-    <Link message={label} color='subtle' href={navigateTo} overrides={{ component: RouterLink, to: navigateTo }} />;
+    <Link label={label} href={navigateTo} color='subtle' overrides={{ component: RouterLink, to: navigateTo }} />;
