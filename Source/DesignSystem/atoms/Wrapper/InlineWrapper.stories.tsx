@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import { componentStories, InlineBox } from '../../index';
+import { componentStories, InlineWrapper } from '../../index';
 
-const { metadata, createStory } = componentStories(InlineBox);
+const { metadata, createStory } = componentStories(InlineWrapper);
 
-metadata.title = 'Inline Box';
+metadata.title = 'Wrapper/Inline Wrapper';
 
 metadata.parameters = {
     docs: {

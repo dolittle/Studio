@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { Stack, Typography } from '@mui/material';
 
-import { componentStories, AccordionList, Button, InlineBox } from '../../index';
+import { componentStories, AccordionList, Button, InlineWrapper } from '../../index';
 
 import { dummyAccordionList, dummyAccordionListWithStatus } from '../../helpers/DummyContents';
 
@@ -80,20 +80,20 @@ export const WithProgrammaticallyChangingExpandedState = () => {
     return (
         <>
             <Stack sx={{ mb: 3, gap: 1 }}>
-                <InlineBox>
+                <InlineWrapper>
                     <Typography component='span'>Accordion 1 forced state: {expandedModel.includes('1').toString()}</Typography>
                     <Button onClick={() => toggleAccordionState('1')} label={getButtonLabel('1')} />
-                </InlineBox>
+                </InlineWrapper>
 
-                <InlineBox>
+                <InlineWrapper>
                     <Typography component='span'>Accordion 2 forced state: {expandedModel.includes('2').toString()}</Typography>
                     <Button onClick={() => toggleAccordionState('2')} label={getButtonLabel('2')} />
-                </InlineBox>
+                </InlineWrapper>
 
-                <InlineBox>
+                <InlineWrapper>
                     <Typography component='span'>Accordion 3 forced state: {expandedModel.includes('3').toString()}</Typography>
                     <Button onClick={() => toggleAccordionState('3')} label={getButtonLabel('3')} />
-                </InlineBox>
+                </InlineWrapper>
             </Stack>
 
             <AccordionList items={items} expandedModel={expandedModel} onExpandedModelChange={setExpandedModel} />

@@ -17,7 +17,7 @@ export { Chip, ChipProps } from './atoms/Chip';
 export * from './atoms/Forms';
 export { Icon, IconProps } from './atoms/Icon';
 export { IconButton, IconButtonProps } from './atoms/IconButton';
-export { InlineBox, InlineBoxProps } from './atoms/InlineBox';
+export { InlineWrapper, InlineWrapperProps } from './atoms/Wrapper';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
 export { PreformattedTextBlock, PreformattedTextBlockProps } from './atoms/PreformattedTextBlock';

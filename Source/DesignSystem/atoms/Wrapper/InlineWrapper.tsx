@@ -6,11 +6,11 @@ import React from 'react';
 import { Box, SxProps } from '@mui/material';
 
 /**
- * The props for a {@link InlineBox} component.
+ * The props for a {@link InlineWrapper} component.
  */
-export type InlineBoxProps = {
+export type InlineWrapperProps = {
     /**
-     * The children of the inline box.
+     * The children of the inline wrapper.
      */
     children: React.ReactNode;
 
@@ -21,11 +21,11 @@ export type InlineBoxProps = {
 };
 
 /**
- * A sub-component box that renders an inline box with a gap of 8px.
- * @param {InlineBoxProps} props - The {@link InlineBoxProps}.
- * @returns A {@link InlineBox} component.
+ * An inline wrapper that displays content in a row with a gap of 8px.
+ * @param {InlineWrapperProps} props - The {@link InlineWrapperProps}.
+ * @returns A {@link InlineWrapper} component.
  */
-export const InlineBox = ({ children, sx }: InlineBoxProps) =>
+export const InlineWrapper = ({ children, sx }: InlineWrapperProps) =>
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, ...sx }}>
         {children}
     </Box>;
