@@ -23,7 +23,7 @@ const DialogContent = () =>
     </>;
 
 export default {
-    title: 'Forms/Form Dialog',
+    title: 'Dialog/Form Dialog',
     component: FormDialog,
     parameters: {
         docs: {
