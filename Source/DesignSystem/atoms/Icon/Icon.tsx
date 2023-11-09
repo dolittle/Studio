@@ -3,16 +3,16 @@
 
 import React from 'react';
 
-import { SxProps, Tooltip, Typography } from '@mui/material';
+import { SxProps } from '@mui/material';
 
-import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
+import { SvgIcons, SvgIconsDefinition, Tooltip } from '../../index';
 
 /**
  * The props for a {@link Icon} component.
  */
 export type IconProps = {
     /**
-     * Usual MUI icon writen as a `string`. Must be a valid `SvgIconsDefinition`.
+     * Usual MUI icon written as a `string`. Must be a valid `SvgIconsDefinition`.
      */
     icon: SvgIconsDefinition;
 
@@ -34,7 +34,7 @@ export type IconProps = {
     tooltipLabel?: string;
 
     /**
-     * The sx prop lets you add custom styles to the component.
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
 };
@@ -49,8 +49,8 @@ export const Icon = ({ icon, color = 'inherit', size = 'small', tooltipLabel, sx
 
     if (tooltipLabel) {
         return (
-            <Tooltip title={<Typography variant='body2'>{tooltipLabel}</Typography>} placement='right' arrow>
-                {clonedIcon}
+            <Tooltip title={tooltipLabel}>
+                <span>{clonedIcon}</span>
             </Tooltip>
         );
     }

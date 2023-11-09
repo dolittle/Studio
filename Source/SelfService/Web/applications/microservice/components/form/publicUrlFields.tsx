@@ -5,13 +5,13 @@ import React, { useState } from 'react';
 
 import { Stack, Typography } from '@mui/material';
 
-import { Input, Link, Switch, Tooltip } from '@dolittle/design-system';
+import { FormFieldTooltip, Input, Link, Switch } from '@dolittle/design-system';
 
 const PublicUrlFieldDescription = () =>
     <>
         Dolittle will generate a public URL for you. If you would like to specify a subpath, please enter one here. If you would
         like custom handling of the path and subpaths, please reach
-        out to <Link href='mailto: support@dolittle.com' message='Dolittle support' color='secondary' /> after you&#39;ve deployed the service.
+        out to <Link label='Dolittle support' href='mailto: support@dolittle.com' color='secondary' /> after you&#39;ve deployed the service.
     </>;
 
 export type PublicUrlFieldsProps = {
@@ -34,7 +34,7 @@ export const PublicUrlFields = ({ hasPublicUrl, isDisabled, }: PublicUrlFieldsPr
             />
 
             {showPublicUrlInfo &&
-                <Tooltip tooltipTitle='PATH' tooltipText={<PublicUrlFieldDescription />}>
+                <FormFieldTooltip title='PATH' description={<PublicUrlFieldDescription />}>
                     <Input
                         id='ingressPath'
                         label='Path'
@@ -43,7 +43,7 @@ export const PublicUrlFields = ({ hasPublicUrl, isDisabled, }: PublicUrlFieldsPr
                         disabled={isDisabled}
                         sx={{ width: 226 }}
                     />
-                </Tooltip>
+                </FormFieldTooltip>
             }
         </Stack>
     );

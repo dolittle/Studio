@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Box, SxProps, Typography } from '@mui/material';
 
-import { ContentDivider, Icon, InlineBox } from '../../index';
+import { ContentDivider, Icon, InlineWrapper } from '../../index';
 
 /**
  * The props for a {@link ContentWithSubtitle} component.
@@ -41,10 +41,10 @@ export const ContentWithSubtitle = ({ title, infoTooltipLabel, children, sx }: C
     <Box component='article' sx={{ mt: 3, ...sx }}>
         <ContentDivider />
 
-        <InlineBox sx={{ my: 3 }}>
+        <InlineWrapper sx={{ my: 3 }}>
             <Typography variant='subtitle2'>{title}</Typography>
             {infoTooltipLabel && <Icon icon='InfoRounded' tooltipLabel={infoTooltipLabel} />}
-        </InlineBox>
+        </InlineWrapper>
 
         {children}
     </Box>;

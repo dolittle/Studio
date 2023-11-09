@@ -3,11 +3,15 @@
 
 import React, { useState } from 'react';
 
-import { componentStories, Accordion, StatusIndicatorProps } from '@dolittle/design-system';
-
-import { DummyChildrenContent } from '../../helpers/DummyContents';
+import { componentStories, Accordion, MaxWidthTextBlock, StatusIndicatorProps } from '../../index';
 
 const { metadata, createStory } = componentStories(Accordion);
+
+const DummyChildrenContent = () =>
+    <MaxWidthTextBlock>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa illo similique consequuntur dolores natus ex
+        sunt esse mollitia id atque. Atque molestiae cum magnam eligendi maxime id sapiente quaerat suscipit?
+    </MaxWidthTextBlock>;
 
 metadata.parameters = {
     docs: {

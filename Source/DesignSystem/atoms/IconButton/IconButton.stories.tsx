@@ -10,6 +10,7 @@ import { componentStories, IconButton, availableIcons, SvgIconsDefinition } from
 const { metadata, createStory } = componentStories(IconButton);
 
 metadata.title = 'Icon Button';
+
 metadata.parameters = {
     docs: {
         description: {
@@ -43,5 +44,5 @@ export const Default = createStory();
 
 export const IconsWeUse = () =>
     <Box sx={{ '& button': { m: 1 } }}>
-        {availableIcons.map(key => <IconButton key={key} tooltipText={key} icon={key as SvgIconsDefinition} />)}
+        {availableIcons.map(icon => <IconButton key={icon} tooltipText={icon} icon={icon as SvgIconsDefinition} />)}
     </Box>;

@@ -61,9 +61,9 @@ export const SetupContainerScreen = ({ application }: SetupContainerScreenProps)
             <Routes>
                 <Route path='/overview' element={
                     <List sx={{ '& li': { my: 2 } }}>
-                        <li><Link href={containerRegistryHref} message='Container Registry Info' /></li>
-                        <li><Link href={kubernetesAccessHref} message='Verify access to kubernetes' /></li>
-                        <li><Link href={azurePipelineHref} message='Setup Azure Pipelines' /></li>
+                        <li><Link label='Container Registry Info' href={containerRegistryHref} /></li>
+                        <li><Link label='Verify access to kubernetes' href={kubernetesAccessHref} /></li>
+                        <li><Link label='Setup Azure Pipelines' href={azurePipelineHref} /></li>
                     </List>
                 } />
 

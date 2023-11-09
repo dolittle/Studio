@@ -5,12 +5,12 @@ import React from 'react';
 
 import { Search } from '@mui/icons-material';
 
-import { componentStories, Form, Input, Tooltip } from '@dolittle/design-system';
+import { componentStories, Form, FormFieldTooltip, Input } from '@dolittle/design-system';
 
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
-type StoriesValuesProps = {
+type FormValueParameters = {
     defaultInput: string;
     requiredInput: string;
     requiredInputWithCustomMessage: string;
@@ -21,8 +21,8 @@ type StoriesValuesProps = {
 
 const { metadata, createStory } = componentStories(Input, {
     actions: { onChange: 'changed' },
-    decorator: (Story) => (
-        <Form<StoriesValuesProps>
+    decorator: Story => (
+        <Form<FormValueParameters>
             initialValues={{
                 defaultInput: '',
                 requiredInput: '',
@@ -98,7 +98,7 @@ metadata.args = {
     disabled: false,
     required: false,
     pattern: undefined,
-    isFullWidth: false
+    isFullWidth: false,
 };
 
 export default metadata;
@@ -116,7 +116,7 @@ Required.parameters = {
             story: `Always include an asterisk (*) on the label when input is required from the user.
             Alternatively, you can leave out the asterisk IF all fields are required and only a few are optional.
             In this case, include the type (optional) in the label. This is only recommended in familiar tasks where users expect certain information to be required,
-            such as a signup or checkout process.`
+            such as a sign up or checkout process.`
         },
     },
 };
@@ -137,7 +137,6 @@ export const RequiredWithCustomRegexPattern = createStory({
     required: true,
 });
 
-//TODO: change styling and name to disabled
 export const WithDashedBorder = createStory({
     id: 'dashedInput',
     label: 'With dashed border',
@@ -149,13 +148,13 @@ export const WithSideTooltip = createStory({
     label: 'With side tooltip',
 });
 WithSideTooltip.decorators = [
-    (Story) => (
-        <Tooltip
-            tooltipTitle='Title'
-            tooltipText='Use this tooltip to provide additional information about the input.'
+    Story => (
+        <FormFieldTooltip
+            title='This is the title of the tooltip'
+            description='Use this tooltip to provide additional information about the input.'
         >
             {Story()}
-        </Tooltip>
+        </FormFieldTooltip>
     ),
 ];
 

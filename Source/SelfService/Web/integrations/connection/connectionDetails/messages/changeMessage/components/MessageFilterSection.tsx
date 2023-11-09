@@ -25,10 +25,10 @@ export const MessageFilterSection = (props: MessageFilterSectionProps) => {
             </ContentParagraph>
             <ContentParagraph>
                 Filters are defined using a jq predicate expression. The jq predicate is an expression based on the jq query language, which allows for filtering the data based on the JSON structure of the message type. You can learn more about jq here  <Link
+                    label={'https://stedolan.github.io/jq/manual/'}
+                    href={'https://stedolan.github.io/jq/manual/'}
                     target
                     ariaLabel='jq user manual'
-                    href={'https://stedolan.github.io/jq/manual/'}
-                    message={'https://stedolan.github.io/jq/manual/'}
                 />
             </ContentParagraph>
             <ContentParagraph>

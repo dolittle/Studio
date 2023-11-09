@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { Stack, Typography } from '@mui/material';
 
-import { Input, Select, Tooltip } from '@dolittle/design-system';
+import { FormFieldTooltip, Input, Select } from '@dolittle/design-system';
 
 import { getRuntimes } from '../../../../apis/solutions/api';
 
@@ -61,12 +61,12 @@ export const SetupFields = ({ environments, runtimeVersion, hasDashedBorder, isE
                 }}
             />
 
-            <Tooltip
-                tooltipTitle='Development Environment'
-                tooltipText='The environment where your microservice will be deployed.'
-                open={showEnvironmentInfo}
-                handleOpen={() => setShowEnvironmentInfo(true)}
-                handleClose={() => setShowEnvironmentInfo(false)}
+            <FormFieldTooltip
+                title='Development Environment'
+                description='The environment where your microservice will be deployed.'
+                isOpen={showEnvironmentInfo}
+                onOpen={() => setShowEnvironmentInfo(true)}
+                onClose={() => setShowEnvironmentInfo(false)}
             >
                 <Select
                     id='developmentEnvironment'
@@ -77,14 +77,14 @@ export const SetupFields = ({ environments, runtimeVersion, hasDashedBorder, isE
                     disabled={isDisabled}
                     required
                 />
-            </Tooltip>
+            </FormFieldTooltip>
 
-            <Tooltip
-                tooltipTitle='Runtime'
-                tooltipText={runtimeDescription}
-                open={showEntrypointInfo}
-                handleOpen={() => setShowEntrypointInfo(true)}
-                handleClose={() => setShowEntrypointInfo(false)}
+            <FormFieldTooltip
+                title='Runtime'
+                description={runtimeDescription}
+                isOpen={showEntrypointInfo}
+                onOpen={() => setShowEntrypointInfo(true)}
+                onClose={() => setShowEntrypointInfo(false)}
             >
                 <Select
                     id='runtimeVersion'
@@ -95,7 +95,7 @@ export const SetupFields = ({ environments, runtimeVersion, hasDashedBorder, isE
                     disabled={isEditMode}
                     sx={hasDashedBorder ? { '& fieldset': { borderStyle: 'dashed' } } : {}}
                 />
-            </Tooltip>
+            </FormFieldTooltip>
         </Stack>
     );
 };

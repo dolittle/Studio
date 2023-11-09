@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { AppBar, Box, Drawer, Stack, Toolbar, Theme } from '@mui/material';
 
-import { Icon, IconProps, IconButton } from '../../index';
+import { IconProps, IconButton } from '../../index';
 
 const styles = {
     nav: { zIndex: (theme: Theme) => theme.zIndex.drawer + 1 },
@@ -77,7 +77,6 @@ export const NavigationBar = ({ logo, primaryNavigationItems, secondaryNavigatio
                 <Box sx={styles.mobileNavigationBar}>
                     <IconButton
                         tooltipText={isMobileNavOpen ? 'Close' : 'Open'}
-                        tooltipPlacement='bottom'
                         icon='MenuRounded'
                         edge='start'
                         onClick={() => setIsMobileNavOpen(prevState => !prevState)}

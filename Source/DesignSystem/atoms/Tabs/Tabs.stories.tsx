@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { componentStories, Tabs } from '@dolittle/design-system';
+import { componentStories, Tabs } from '../../index';
 
 const { metadata, createStory } = componentStories(Tabs);
 

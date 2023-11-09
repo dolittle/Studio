@@ -6,7 +6,7 @@ import React, { Fragment } from 'react';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 import { Divider, List, ListItem } from '@mui/material';
 
-import { AlertDialog } from '@dolittle/design-system';
+import { Dialog } from '@dolittle/design-system';
 
 type DeleteConfigFileDialogProps = {
     selectedDataRows: GridSelectionModel;
@@ -20,14 +20,14 @@ export const DeleteConfigFileDialog = ({ selectedDataRows, open, setOpen, handle
     const isPlural = hasManySelectedRows ? 'files' : 'file';
 
     return (
-        <AlertDialog
+        <Dialog
             id='delete-config-file'
+            isOpen={open}
             title={`Delete configuration ${isPlural}`}
             description={`Are you sure you want to delete ${hasManySelectedRows ? 'these' : 'this'} ${isPlural}?`}
-            confirmBtnColor='error'
-            confirmBtnText='Delete'
-            isOpen={open}
             onCancel={() => setOpen(false)}
+            confirmBtnLabel='Delete'
+            confirmBtnColor='error'
             onConfirm={handleDelete}
         >
             <List>
@@ -38,6 +38,6 @@ export const DeleteConfigFileDialog = ({ selectedDataRows, open, setOpen, handle
                     </Fragment>
                 )}
             </List>
-        </AlertDialog>
+        </Dialog>
     );
 };

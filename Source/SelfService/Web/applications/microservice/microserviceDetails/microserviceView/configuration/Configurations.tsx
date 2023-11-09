@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box } from '@mui/material';
 
-import { AlertDialog, Button, Form, LoadingSpinnerFullPage } from '@dolittle/design-system';
+import { Dialog, Button, Form, LoadingSpinner } from '@dolittle/design-system';
 
 import { canDeleteMicroservice, deleteMicroserviceWithStore, editMicroserviceWithStore } from '../../../../stores/microservice';
 
@@ -104,16 +104,16 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
 
     return (
         <>
-            {isLoading && <LoadingSpinnerFullPage />}
+            {isLoading && <LoadingSpinner fullPage />}
 
-            <AlertDialog
+            <Dialog
                 id='delete-microservice'
+                isOpen={deleteDialogIsOpen}
                 title='Delete microservice?'
                 description='This action cannot be undone. Click delete if you would like to delete the microservice.'
-                confirmBtnColor='error'
-                confirmBtnText='Delete'
-                isOpen={deleteDialogIsOpen}
                 onCancel={() => setDeleteDialogIsOpen(false)}
+                confirmBtnColor='error'
+                confirmBtnLabel='Delete'
                 onConfirm={handleMicroserviceDelete}
             />
 

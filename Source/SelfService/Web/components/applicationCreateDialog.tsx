@@ -7,9 +7,9 @@ import { useSnackbar } from 'notistack';
 
 import { Guid } from '@dolittle/rudiments';
 
-import { Stack, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
-import { Checkbox, DialogForm, LoadingSpinnerFullPage, Input } from '@dolittle/design-system';
+import { Checkbox, FormDialog, Input } from '@dolittle/design-system';
 
 import { createApplication, HttpApplicationRequest } from '../apis/solutions/application';
 
@@ -74,10 +74,14 @@ export const ApplicationCreateDialog = ({ isOpen, onClose }: ApplicationCreateDi
     };
 
     return (
-        <DialogForm
+        <FormDialog
             id='create-application'
             isOpen={isOpen}
             title='Create new Application'
+            isLoading={isLoading}
+            onCancel={onClose}
+            submitBtnLabel='Create'
+            onSubmit={handleSpaceCreate}
             formInitialValues={{
                 name: '',
                 environments: {
@@ -86,31 +90,26 @@ export const ApplicationCreateDialog = ({ isOpen, onClose }: ApplicationCreateDi
                     Prod: true,
                 }
             } as ApplicationCreateParameters}
-            confirmBtnText='Create'
-            onCancel={onClose}
-            onConfirm={handleSpaceCreate}
         >
-            {isLoading && <LoadingSpinnerFullPage />}
+            <section>
+                <Typography variant='body1' sx={{ mb: 2 }}>Provide a name for your new application.</Typography>
+                <Input
+                    id='name'
+                    label='Application name'
+                    required
+                    pattern={{
+                        value: alphaNumericLowerCasedCharsRegex,
+                        message: 'Name can only contain lowercase alphanumeric characters.'
+                    }}
+                />
+            </section>
 
-            <Typography variant='body1' sx={{ my: 2 }}>Provide a name for your new application.</Typography>
-            <Input
-                id='name'
-                label='Application name'
-                required
-                pattern={{
-                    value: alphaNumericLowerCasedCharsRegex,
-                    message: 'Name can only contain lowercase alphanumeric characters.'
-                }}
-            />
-
-            <Typography variant='body1' sx={{ mt: 4 }}>
-                Select the environments you would like available in your new application.
-            </Typography>
-            <Stack sx={{ '& .MuiFormControl-root': { display: 'inline' } }}>
+            <section>
+                <Typography variant='body1' sx={{ my: 2 }}>Select the environments you would like available in your new application.</Typography>
                 <Checkbox id='environments.Dev' label='Development' />
                 <Checkbox id='environments.Test' label='Test' />
                 <Checkbox id='environments.Prod' label='Production *' disabled />
-            </Stack>
-        </DialogForm>
+            </section>
+        </FormDialog>
     );
 };

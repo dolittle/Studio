@@ -8,7 +8,7 @@ export { themeDark } from './theming/theme';
 // Atoms
 export * from './atoms/Accordion';
 export * from './atoms/AccordionList';
-export { AlertDialog, AlertDialogProps, DialogForm } from './atoms/AlertDialog';
+export { Dialog, DialogProps, FormDialog, FormDialogProps } from './atoms/Dialog';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
 export { BadgeWithTitle, BadgeWithTitleProps } from './atoms/BadgeWithTitle';
 export { Breadcrumbs, BreadcrumbsProps } from './atoms/Breadcrumbs';
@@ -17,10 +17,9 @@ export { Chip, ChipProps } from './atoms/Chip';
 export * from './atoms/Forms';
 export { Icon, IconProps } from './atoms/Icon';
 export { IconButton, IconButtonProps } from './atoms/IconButton';
-export { InlineBox, InlineBoxProps } from './atoms/InlineBox';
+export { InlineWrapper, InlineWrapperProps } from './atoms/Wrapper';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
-export { LoadingSpinnerFullPage } from './atoms/LoadingSpinnerFullPage';
 export { PreformattedTextBlock, PreformattedTextBlockProps } from './atoms/PreformattedTextBlock';
 export { StatusIndicator, StatusIndicatorProps } from './atoms/StatusIndicator';
 export { Summary } from './atoms/Metrics';
@@ -28,7 +27,7 @@ export { Tabs } from './atoms/Tabs';
 export { MaxWidthTextBlock } from './atoms/Typography/MaxWidthTextBlock';
 export { NewSwitch } from './atoms/Switch';
 export { Terminal, TerminalConnect, TerminalStreams, InputMessages, OutputMessages } from './atoms/Terminal';
-export { Tooltip } from './atoms/Tooltip';
+export { FormFieldTooltip, FormFieldTooltipProps, Tooltip, TooltipProps } from './atoms/Tooltip';
 export { TextField, TextFieldProps } from './atoms/TextField';
 
 // Molecules

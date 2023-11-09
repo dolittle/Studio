@@ -3,7 +3,7 @@
 
 import React, { Fragment } from 'react';
 
-import { AlertDialog } from '@dolittle/design-system';
+import { Dialog } from '@dolittle/design-system';
 
 import { Divider, List, ListItem, Typography } from '@mui/material';
 
@@ -27,13 +27,13 @@ export const ValidateFileDialog = ({ invalid, open, setOpen, handleValidate }: V
     const charErrorMessage = 'File name contains invalid characters. Only letters, numbers, dashes, underscores and periods are allowed.';
 
     return (
-        <AlertDialog
+        <Dialog
             id='config-file-size'
+            isOpen={open}
             title={`${isPlural} can't be added`}
             description={`Please cancel or select a new ${isPlural}.`}
-            confirmBtnText='Select new'
-            isOpen={open}
             onCancel={setOpen}
+            confirmBtnLabel='Select new'
             onConfirm={handleValidate}
         >
             <List>
@@ -49,6 +49,6 @@ export const ValidateFileDialog = ({ invalid, open, setOpen, handleValidate }: V
                     </Fragment>
                 )}
             </List>
-        </AlertDialog>
+        </Dialog>
     );
 };

@@ -1,81 +1,41 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { ReactElement } from 'react';
+import React from 'react';
 
-import { SxProps, Tooltip as MuiTooltip, Typography } from '@mui/material';
+import { Tooltip as MuiTooltip, Typography } from '@mui/material';
 
 /**
  * The props for a {@link Tooltip} component.
  */
-type TooltipProps = {
+export type TooltipProps = {
     /**
-     * The tooltip title.
+     * The title to show.
      */
-    tooltipTitle: string;
+    title: string;
 
     /**
-     * The tooltip text.
-     */
-    tooltipText: string | React.ReactNode;
-
-    /**
-     * You can use the open, onOpen and onClose props to control the behavior of the tooltip.
-     *
-     * This is useful when you want to implement a custom behavior.
-     * You can use this with components that don't have a hover state, like a button.
-     * @default false
-     */
-    open?: boolean;
-    handleOpen?: () => void;
-    handleClose?: () => void;
-
-    /**
-     * If true, the tooltip is shown when the element is hovered.
-     * @default false
-     */
-    displayOnHover?: boolean;
-
-    /**
-     * Tooltip is placed on the right.
+     * The placement of the tooltip.
      * @default 'right'
      */
-    placement?: never;
+    placement?: 'top' | 'right';
 
     /**
-     * The content to show tooltip on.
+     * The children to show the tooltip for.
      */
-    children: ReactElement<any, any>;
-
-    /**
-     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
-     */
-    sx?: SxProps;
+    children: React.ReactElement<any, any>;
 };
 
 /**
- * Used to display a large tooltip on right side of an input.
+ * The tooltip component is used to show a tooltip when hovering over an element.
  * @param {TooltipProps} props - The {@link TooltipProps}.
  * @returns A {@link Tooltip} component.
  */
-export const Tooltip = ({ tooltipTitle, tooltipText, open, handleOpen, handleClose, displayOnHover, children, sx }: TooltipProps) =>
+export const Tooltip = ({ title, placement, children }: TooltipProps) =>
     <MuiTooltip
-        open={open}
-        onOpen={handleOpen}
-        onClose={handleClose}
-        disableHoverListener={!displayOnHover}
-        placement='right'
-        componentsProps={{
-            tooltip: {
-                sx: { position: 'relative', maxWidth: 520, backgroundColor: 'action.hover', ...sx },
-            },
-        }}
-        title={
-            <>
-                <Typography variant='body2' sx={{ fontWeight: 700, textTransform: 'uppercase' }}>{tooltipTitle}</Typography>
-                <Typography variant='body2'>{tooltipText}</Typography>
-            </>
-        }
+        title={<Typography variant='body2'>{title}</Typography>}
+        placement={placement ?? 'right'}
+        arrow
     >
         {children}
     </MuiTooltip>;

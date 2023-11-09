@@ -4,13 +4,12 @@
 import React from 'react';
 
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid-pro';
-import { Tooltip } from '@mui/material';
 
-import { StatusIndicator } from '@dolittle/design-system';
+import { StatusIndicator, Tooltip } from '@dolittle/design-system';
 
 import { MicroserviceObject } from '../../../../apis/solutions/api';
 
-import { getPodHealthStatus, getRuntimeNumberFromString } from '../../../../utils/helpers';
+import { getPodHealthStatus } from '../../../../utils/helpers';
 
 export type HealthStatusTableRowProps = {
     row: MicroserviceObject;

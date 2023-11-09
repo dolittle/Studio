@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { componentStories, AlertBox } from '@dolittle/design-system';
+import { componentStories, AlertBox } from '../../index';
 
 import { AlertBoxErrorTitle, AlertBoxErrorMessage, AlertBoxInfoMessage } from './helpers';
 

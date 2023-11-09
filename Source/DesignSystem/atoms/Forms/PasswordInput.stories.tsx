@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { componentStories, Form, Tooltip, PasswordInput } from '@dolittle/design-system';
+import { componentStories, Form, PasswordInput } from '@dolittle/design-system';
 
 type StoriesValuesProps = {
     defaultInput: string;

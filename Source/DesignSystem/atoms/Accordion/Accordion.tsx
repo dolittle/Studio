@@ -16,39 +16,35 @@ const styles = {
         '::before': { display: 'none' },
         '&.Mui-disabled': {
             'backgroundColor': 'inherit',
-            '& h6': {
-                pointerEvents: 'none',
-            },
+            '& h6': { pointerEvents: 'none' },
             '& .MuiAccordionSummary-expandIconWrapper .MuiSvgIcon-root': {
                 pointerEvents: 'none',
-            }
-        }
+            },
+        },
     },
     accordionSummary: {
         'p': 0,
-        // Move the expansion arrow to the left side.
+        // Move the expand arrow to the left side.
         'flexDirection': 'row-reverse',
         // Disable 'expand' click for the entire row.
         'pointerEvents': 'none',
         // Enable 'expand' click on title.
-        '& h6': {
-            pointerEvents: 'auto',
-        },
+        '& h6': { pointerEvents: 'auto' },
         '& .MuiAccordionSummary-expandIconWrapper': {
             transform: 'rotate(-90deg)',
         },
         '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
             transform: 'rotate(0deg)',
-        }
+        },
     },
     expandIcon: {
         color: 'text.secondary',
         // Enable 'expand' click on icon.
-        pointerEvents: 'auto'
+        pointerEvents: 'auto',
     },
     statusIndicator: {
-        pointerEvents: 'auto'
-    }
+        pointerEvents: 'auto',
+    },
 };
 
 /**
@@ -67,7 +63,6 @@ export type AccordionProps = {
 
     /**
      * The status of the accordion. Displayed in the header.
-     * @default undefined
      */
     statusLevel?: StatusIndicatorProps['status'];
 
@@ -80,7 +75,6 @@ export type AccordionProps = {
 
     /**
      * The status message of the accordion. Displayed as a tooltip over the status.
-     *
      */
     statusMessage?: StatusIndicatorProps['message'];
 
@@ -116,7 +110,7 @@ export type AccordionProps = {
     children: React.ReactNode;
 
     /**
-     * The `sx` prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
 };
@@ -126,8 +120,8 @@ export type AccordionProps = {
  * @param {AccordionProps} props - The {@link AccordionProps}.
  * @returns A {@link Accordion} component.
  */
-export const Accordion = ({ id, title, statusLevel, statusLabel, statusMessage, defaultExpanded, expanded, onExpanded, disabled, children, sx }: AccordionProps) => {
-    return <MuiAccordion
+export const Accordion = ({ id, title, statusLevel, statusLabel, statusMessage, defaultExpanded, expanded, onExpanded, disabled, children, sx }: AccordionProps) =>
+    <MuiAccordion
         defaultExpanded={defaultExpanded}
         expanded={expanded}
         onChange={onExpanded}
@@ -147,4 +141,3 @@ export const Accordion = ({ id, title, statusLevel, statusLabel, statusMessage, 
 
         <AccordionDetails>{children}</AccordionDetails>
     </MuiAccordion>;
-};

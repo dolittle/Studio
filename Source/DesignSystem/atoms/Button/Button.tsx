@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Button as MuiButton, ExtendButtonBase, ButtonTypeMap, SxProps } from '@mui/material';
 
-import { SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
+import { SvgIcons, SvgIconsDefinition } from '../../index';
 
 /**
  * The props for a {@link Button} component.
@@ -36,7 +36,6 @@ export type ButtonProps = {
      * Add an icon to the start of the button.
      *
      * List of available icons can be found in {@link SvgIcons}.
-     * @default undefined
      */
     startWithIcon?: SvgIconsDefinition;
 
@@ -44,7 +43,6 @@ export type ButtonProps = {
      * Add an icon to the end of the button.
      *
      * List of available icons can be found in {@link SvgIcons}.
-     * @default undefined
      */
     endWithIcon?: SvgIconsDefinition;
 
@@ -68,7 +66,6 @@ export type ButtonProps = {
 
     /**
      * Add a `href` to the button. If this is set, the button will be rendered as an `a` tag.
-     * @default undefined
      */
     href?: string;
 
@@ -82,7 +79,6 @@ export type ButtonProps = {
 
     /**
      * For accessibility, it is recommended to set `ariaLabel` to a meaningful string.
-     * @default undefined
      */
     ariaLabel?: string;
 
@@ -102,19 +98,16 @@ export type ButtonProps = {
 
     /**
      * Add event handler for button click.
-     * @default undefined
      */
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
 
     /**
-     * The `sx` prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
-     * @default undefined
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
 
     /**
      * The overrides prop gives you access to the underlying MuiButtonProps object, overriding the styles defined by the component and Material-UI.
-     * @default undefined
      */
     overrides?: Partial<ExtendButtonBase<ButtonTypeMap>>;
 };

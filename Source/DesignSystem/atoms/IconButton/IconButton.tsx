@@ -3,9 +3,9 @@
 
 import React, { MouseEventHandler } from 'react';
 
-import { ButtonTypeMap, ExtendButtonBase, IconButton as MuiIconButton, SxProps, Tooltip } from '@mui/material';
+import { ButtonTypeMap, ExtendButtonBase, IconButton as MuiIconButton, SxProps } from '@mui/material';
 
-import { Icon, SvgIcons, SvgIconsDefinition } from '@dolittle/design-system';
+import { Icon, SvgIcons, SvgIconsDefinition, Tooltip } from '../../index';
 
 /**
  * The props for a {@link IconButton} component.
@@ -22,10 +22,10 @@ export type IconButtonProps = {
      * The placement of the tooltip.
      * @default top
      */
-    tooltipPlacement?: 'bottom' | 'left' | 'right' | 'top';
+    tooltipPlacement?: 'right' | 'top';
 
     /**
-     * Usual MUI icon writen as a `string`. Must be a valid `SvgIconsDefinition`.
+     * Usual MUI icon written as a `string`. Must be a valid `SvgIconsDefinition`.
      *
      * Leave empty to use the default `'CloseRounded'` icon.
      *
@@ -94,7 +94,7 @@ export type IconButtonProps = {
  * @returns A {@link IconButton} component.
  */
 export const IconButton = ({ tooltipText, tooltipPlacement, icon, color, size, edge, disabled, href, download, onClick, sx, overrides }: IconButtonProps) =>
-    <Tooltip title={tooltipText || ''} arrow placement={tooltipPlacement ?? 'top'}>
+    <Tooltip title={tooltipText || ''} placement={tooltipPlacement ?? 'top'}>
         <MuiIconButton
             color={color ?? 'inherit'}
             size={size ?? 'small'}

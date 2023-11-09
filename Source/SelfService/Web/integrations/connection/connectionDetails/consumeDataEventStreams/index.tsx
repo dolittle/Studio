@@ -48,10 +48,10 @@ export const ConsumeDataEventStreamsView = () => {
                 <Typography>The API for consuming event streams are defined using AsyncAPI.</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
                     <Link
+                        label={asyncApiSpecificationUrl}
+                        href={asyncApiSpecificationUrl}
                         target
                         ariaLabel='AsyncAPI specification'
-                        href={asyncApiSpecificationUrl}
-                        message={asyncApiSpecificationUrl}
                     />
                     <IconButton
                         tooltipText='Copy AsyncAPI specification link to clipboard'
@@ -67,10 +67,10 @@ export const ConsumeDataEventStreamsView = () => {
 
                 <Box sx={{ display: 'flex', alignItems: 'center', pt: 2, gap: 1 }}>
                     <Link
+                        label={caFileUrl}
+                        href={caFileUrl}
                         target
                         ariaLabel='Certificate Authority file'
-                        href={caFileUrl}
-                        message={caFileUrl}
                     />
                     <IconButton
                         tooltipText='Copy Certificate Authority file to clipboard'

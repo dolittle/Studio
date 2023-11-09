@@ -15,8 +15,9 @@ import type { Form } from './Form';
  */
 export const Checkbox = (props: FieldProps) => {
     const { field, hasError, errorMessage } = useController(props);
+
     return (
-        <FormControl error={hasError} required={isRequired(props.required)}>
+        <FormControl error={hasError} required={isRequired(props.required)} sx={{ display: 'inline' }}>
             <FormControlLabel
                 control={<MuiCheckbox {...field} id={`${props.id}-checkbox`} checked={!!field.value} disabled={props.disabled} sx={{ mr: 0.5 }} />}
                 label={props.label}

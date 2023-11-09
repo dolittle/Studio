@@ -1,7 +1,7 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { componentStories, Link } from '@dolittle/design-system';
+import { componentStories, Link } from '../../index';
 
 const { metadata, createStory } = componentStories(Link);
 
@@ -17,20 +17,20 @@ metadata.parameters = {
 };
 
 metadata.args = {
+    label: 'Default internal link',
     href: '#',
     target: false,
     ariaLabel: 'Write a meaningful aria label here',
     color: 'primary',
-    message: 'Default internal link',
 };
 
 export const Default = createStory();
 
 export const ExternalLink = createStory({
+    label: 'Go to Dolittle website',
     href: 'https://dolittle.io',
     target: true,
     ariaLabel: 'To learn more, visit our website which opens in a new window.',
-    message: 'Go to Dolittle website',
 });
 ExternalLink.parameters = {
     docs: {
@@ -43,9 +43,9 @@ ExternalLink.parameters = {
 };
 
 export const SecondaryLink = createStory({
+    label: 'Informative link',
     href: '#',
     color: 'secondary',
-    message: 'Informative link',
 });
 SecondaryLink.parameters = {
     docs: {
@@ -58,9 +58,9 @@ SecondaryLink.parameters = {
 };
 
 export const SubtleLink = createStory({
+    label: 'Not so important link',
     href: '#',
     color: 'subtle',
-    message: 'Not so important link',
 });
 SubtleLink.parameters = {
     docs: {

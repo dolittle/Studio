@@ -3,10 +3,10 @@
 
 import React, { useMemo } from 'react';
 
-import { Box, Paper, Tooltip } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { DataGridPro, GridColDef, GridSelectionModel, GridRowId, useGridApiRef, GRID_CHECKBOX_SELECTION_FIELD, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid-pro';
 
-import { EditCell, EditTextFieldCell } from '@dolittle/design-system';
+import { EditCell, EditTextFieldCell, Tooltip } from '@dolittle/design-system';
 
 import { MappableTableColumn } from '../../../../../../apis/integrations/generated';
 import { toPascalCase } from '../../../../../../utils/helpers/strings';
@@ -45,10 +45,7 @@ export const MessageMappingTable = ({
             renderCell: (params) => {
                 return <>
                     {disabledRows?.includes(params.row.id)
-                        ? <Tooltip
-                            title='This is a primary key for this table and is required as part of the message type.'
-                            placement='right'
-                        >
+                        ? <Tooltip title='This is a primary key for this table and is required as part of the message type'>
                             <Box>{GRID_CHECKBOX_SELECTION_COL_DEF.renderCell?.(params)}</Box>
                         </Tooltip>
                         : GRID_CHECKBOX_SELECTION_COL_DEF.renderCell?.(params)}

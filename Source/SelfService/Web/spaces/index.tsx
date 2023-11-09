@@ -80,7 +80,7 @@ export const ApplicationsIndex = () => {
                 }
 
                 <Typography>
-                    Don’t have access to a applications? <Link message='Contact us' href='mailto:support@dolittle.com' /> to get started.
+                    Don’t have access to a applications? <Link label='Contact us' href='mailto:support@dolittle.com' /> to get started.
                 </Typography>
 
                 <Box>

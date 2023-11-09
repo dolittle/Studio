@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Stack, Typography } from '@mui/material';
 
-import { Input, Link, Tooltip } from '@dolittle/design-system';
+import { FormFieldTooltip, Input, Link } from '@dolittle/design-system';
 
 import { HeadArguments } from './headArguments';
 import { alphaNumericLowerCasedCharsRegex } from '../../../../utils/helpers/regex';
@@ -17,10 +17,10 @@ const EntrypointDescription = () =>
     <>
         If you would like to override your container image ENTRYPOINT,
         you can do so in this field. You can find more information on ENTRYPOINTS and CMD ARGUMENETS <Link
+            label='here'
             href='https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact'
             target
             ariaLabel='Understand how CMD and ENTRYPOINT interact which opens in a new window.'
-            message='here'
             color='secondary'
         />.
     </>;
@@ -35,7 +35,7 @@ export const ContainerImageFields = ({ hasDashedBorder, isEditMode, isDisabled }
     <Stack sx={{ mb: 4 }}>
         <Typography variant='subtitle2' sx={{ mb: 2 }}>Container Image Settings</Typography>
 
-        <Tooltip tooltipTitle='Image Name' tooltipText='Please provide the container image name for your microservice.'>
+        <FormFieldTooltip title='Image Name' description='Please provide the container image name for your microservice.'>
             <Input
                 id='headImage'
                 label='Image Name'
@@ -44,9 +44,9 @@ export const ContainerImageFields = ({ hasDashedBorder, isEditMode, isDisabled }
                 required='Provide an image name.'
                 sx={{ width: 1, maxWidth: 500, minWidth: 220 }}
             />
-        </Tooltip>
+        </FormFieldTooltip>
 
-        <Tooltip tooltipTitle='Port' tooltipText={portDescription} sx={{ position: 'relative', top: 6 }}>
+        <FormFieldTooltip title='Port' description={portDescription} sx={{ position: 'relative', top: 6 }}>
             <Input
                 id='headPort'
                 label='Port'
@@ -57,15 +57,15 @@ export const ContainerImageFields = ({ hasDashedBorder, isEditMode, isDisabled }
                     message: 'Please enter a valid port number.'
                 }}
             />
-        </Tooltip>
+        </FormFieldTooltip>
 
-        <Tooltip tooltipTitle='Entrypoint' tooltipText={<EntrypointDescription />}>
+        <FormFieldTooltip title='Entrypoint' description={<EntrypointDescription />}>
             <Input
                 id='entrypoint'
                 label='Entrypoint'
                 disabled={isDisabled}
             />
-        </Tooltip>
+        </FormFieldTooltip>
 
         <HeadArguments disabled={isDisabled} />
     </Stack>;

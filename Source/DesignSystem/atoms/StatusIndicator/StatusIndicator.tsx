@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import { Box, CircularProgress, SxProps, Tooltip, Typography } from '@mui/material';
+import { Box, CircularProgress, SxProps, Typography } from '@mui/material';
 
-import { Icon, SvgIconsDefinition } from '@dolittle/design-system';
+import { Icon, SvgIconsDefinition, Tooltip } from '../../index';
 
 type ConnectionStatusCondition = {
     color: 'text.primary' | 'text.secondary' | 'success.main' | 'warning.main' | 'error.main' | 'info.main';
@@ -35,12 +35,12 @@ const connectionStatusCondition = (status: StatusIndicatorProps['status']): Conn
  */
 export type StatusIndicatorProps = {
     /**
-     * The `status` to show.
+     * The status to show.
      */
     status: 'success' | 'table-success' | 'information' | 'waiting' | 'warning' | 'error' | 'unknown';
 
     /**
-     * The `label` to show.
+     * The label to show.
      *
      * If not provided, the `status` will be used as the `label`.
      * @default status
@@ -48,7 +48,7 @@ export type StatusIndicatorProps = {
     label?: string;
 
     /**
-     * The `message` to show.
+     * The message to show.
      *
      * Optional field to show a longer message that describes the current status. Shown as a tooltip.
      * @default status
@@ -62,7 +62,7 @@ export type StatusIndicatorProps = {
     variantFilled?: boolean;
 
     /**
-     * The `sx` prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
 };
@@ -98,12 +98,20 @@ export const StatusIndicator = ({ label, status, message, variantFilled, sx }: S
     };
 
     return (
-        <Tooltip title={<Typography variant='body2'>{message || ''}</Typography>} placement='right' arrow>
+        message ? (
+            <Tooltip title={message}>
+                <Box sx={variantFilled ? styles.variantFilled : styles.variantText}>
+                    {icon && <Icon icon={icon} />}
+                    {status === 'waiting' && <CircularProgress color='inherit' size={16} />}
+                    <Typography variant='button' sx={{ ml: 1 }}>{label ?? status}</Typography>
+                </Box>
+            </Tooltip>
+        ) : (
             <Box sx={variantFilled ? styles.variantFilled : styles.variantText}>
                 {icon && <Icon icon={icon} />}
                 {status === 'waiting' && <CircularProgress color='inherit' size={16} />}
                 <Typography variant='button' sx={{ ml: 1 }}>{label ?? status}</Typography>
             </Box>
-        </Tooltip>
+        )
     );
 };
