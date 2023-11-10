@@ -14,11 +14,11 @@ import { ConnectionModel } from '../../apis/integrations/generated';
 import { getIndicatorStatusFromStatusMessage } from '../statusHelpers';
 
 
-type ConnectionsTableRowProps = {
+type ConnectionsDataGridRowProps = {
     row: ConnectionModel;
 };
 
-const StatusCell = ({ row }: ConnectionsTableRowProps) => {
+const StatusCell = ({ row }: ConnectionsDataGridRowProps) => {
     const status = getIndicatorStatusFromStatusMessage(row.status.statusMessage);
 
     return (
@@ -26,12 +26,12 @@ const StatusCell = ({ row }: ConnectionsTableRowProps) => {
     );
 };
 
-export type ConnectionsTableProps = {
+export type ConnectionsDataGridProps = {
     connections: ConnectionModel[];
     isLoading: boolean;
 };
 
-export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTableProps) => {
+export const ConnectionsDataGrid = ({ connections, isLoading }: ConnectionsDataGridProps) => {
     const navigate = useNavigate();
 
     const connectionsColumns: GridColDef<ConnectionModel>[] = [
@@ -52,7 +52,7 @@ export const ConnectionsTable = ({ connections, isLoading }: ConnectionsTablePro
             headerName: 'Source',
             minWidth: 270,
             flex: 1,
-            valueGetter: ({ row }: ConnectionsTableRowProps) => 'M3',
+            valueGetter: ({ row }: ConnectionsDataGridRowProps) => 'M3',
         },
         {
             field: 'status',

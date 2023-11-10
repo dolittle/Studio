@@ -12,7 +12,7 @@ import { useConnectionsGet, useConnectionsIdPost } from '../../apis/integrations
 
 import { PageTitle } from '../../layout/PageTitle';
 import { NoConnections } from './noConnections';
-import { ConnectionsTable } from './connectionsTable';
+import { ConnectionsDataGrid } from './ConnectionsDataGrid';
 
 const getSuggestedIdFromRelHref = (href: string | null | undefined) => {
     if (!href) return href;
@@ -65,7 +65,7 @@ export const Connections = () => {
                 : isLoading || connections.length
                     ? (
                         <>
-                            <ConnectionsTable connections={connections} isLoading={isLoading} />
+                            <ConnectionsDataGrid connections={connections} isLoading={isLoading} />
                             <CreateButton label='Set Up New Connection' icon='PolylineRounded' onCreate={handleCreateNew} isDisabled={isLoading} />
                         </>
                     ) : (
