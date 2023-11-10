@@ -25,7 +25,7 @@ export const getDetailPanelColumns = (applicationId: string, image: string) => {
         const { enqueueSnackbar } = useSnackbar();
 
         const handleImageCopy = () => {
-            navigator.clipboard.writeText(`${image}:${row?.name}@${row?.digest}`);
+            navigator.clipboard.writeText(`${image}:${row?.name}`);
             enqueueSnackbar(`Tag '${row?.name}' has been copied to clipboard.`);
         };
 
