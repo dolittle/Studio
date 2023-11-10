@@ -16,7 +16,7 @@ export { Button, ButtonProps, CreateButton, CreateButtonProps } from './atoms/Bu
 export { Chip, ChipProps } from './atoms/Chip';
 export * from './atoms/Forms';
 export { Icon, IconProps } from './atoms/Icon';
-export { IconButton, IconButtonProps } from './atoms/IconButton';
+export { IconButton, IconButtonProps, CopyIconButton, CopyIconButtonProps } from './atoms/IconButton';
 export { InlineWrapper, InlineWrapperProps } from './atoms/Wrapper';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';
