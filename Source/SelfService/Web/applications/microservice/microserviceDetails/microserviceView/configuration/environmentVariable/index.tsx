@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { GridRowId, GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
 import { Box } from '@mui/material';
+import { GridRowModesModel, GridRowModes, GridRowModel } from '@mui/x-data-grid-pro';
 
 import { Accordion, Button } from '@dolittle/design-system';
 
@@ -15,7 +15,7 @@ import {
     getServerUrlPrefix,
     InputEnvironmentVariable,
     MicroserviceObject,
-    updateEnvironmentVariables
+    updateEnvironmentVariables,
 } from '../../../../../../apis/solutions/api';
 
 import { EmptyDataTable } from '../../../../components/emptyDataTable';
@@ -45,17 +45,13 @@ export const EnvironmentVariableIndex = ({ applicationId, currentMicroservice }:
     const [rowMode, setRowMode] = useState<GridRowModesModel>({});
     const [disableAddButton, setDisableAddButton] = useState(false);
 
-    const microserviceId = currentMicroservice.id;
-    const microserviceEnvironment = currentMicroservice.environment;
-    const microserviceName = currentMicroservice.name;
-
     useEffect(() => {
         fetchAndUpdateEnvVariableList();
     }, []);
 
     const fetchAndUpdateEnvVariableList = async () => {
         try {
-            const result = await getEnvironmentVariables(applicationId, microserviceEnvironment, microserviceId);
+            const result = await getEnvironmentVariables(applicationId, currentMicroservice.environment, currentMicroservice.id);
             createDataTableObj(result.data);
         } catch (error) {
             enqueueSnackbar(`Could not fetch environment variables. ${error}`, { variant: 'error' });
@@ -101,7 +97,7 @@ export const EnvironmentVariableIndex = ({ applicationId, currentMicroservice }:
     const handleEnvVariableDelete = async () => {
         const remainingEnvVariables = dataGridRows.filter(envVariable => !selectedRowIds.includes(envVariable.id));
 
-        const result = await updateEnvironmentVariables(applicationId, microserviceEnvironment, microserviceId, remainingEnvVariables);
+        const result = await updateEnvironmentVariables(applicationId, currentMicroservice.environment, currentMicroservice.id, remainingEnvVariables);
 
         if (result) {
             dataGridRows.filter(envVariable => {
@@ -117,7 +113,7 @@ export const EnvironmentVariableIndex = ({ applicationId, currentMicroservice }:
     };
 
     // TODO: This is reused. consider moving
-    const configMapPrefix = `${microserviceEnvironment.toLowerCase()}-${microserviceName.toLowerCase()}`;
+    const configMapPrefix = `${currentMicroservice.environment.toLowerCase()}-${currentMicroservice.name.toLowerCase()}`;
 
     const handleSecretEnvVariableDownload = () => {
         const secretName = `${configMapPrefix}-secret-env-variables`;

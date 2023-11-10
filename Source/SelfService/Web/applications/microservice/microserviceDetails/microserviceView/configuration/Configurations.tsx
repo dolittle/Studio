@@ -38,18 +38,14 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
     const [editMicroserviceMode, setEditMicroserviceMode] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const applicationId = application.id;
-    const microserviceId = currentMicroservice.id;
-    const microserviceEnvironment = currentMicroservice.environment;
-    const microserviceName = currentMicroservice.name;
     const microserviceInfo = getMicroserviceInfo(application, currentMicroservice);
     const { runtimeImage, isPublic, ingress, headCommand, headImage, headPort } = microserviceInfo.extra;
 
-    const canDelete = canDeleteMicroservice(application.environments, microserviceEnvironment, microserviceId);
+    const canDelete = canDeleteMicroservice(application.environments, currentMicroservice.environment, currentMicroservice.id);
     const availableEnvironments = application.environments.map(env => env.name);
 
     const hasPublicUrl = isPublic || false;
-    const hasM3ConnectorOption = application.environments.find(env => env.name === microserviceEnvironment)?.connections?.m3Connector || false;
+    const hasM3ConnectorOption = application.environments.find(env => env.name === currentMicroservice.environment)?.connections?.m3Connector || false;
     // Remove extra slash from ingress path as it is there already with startAdornment.
     const cleanedIngressPath = ingress?.path?.replace(/\//, '') || '';
     // Convert the head arguments to the format that the form expects.
@@ -69,7 +65,7 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
             runtimeImage: runtimeVersion,
         };
 
-        const response = await editMicroserviceWithStore(applicationId, microserviceEnvironment, microserviceId, editedMicroservice);
+        const response = await editMicroserviceWithStore(application.id, currentMicroservice.environment, currentMicroservice.id, editedMicroservice);
 
         if (response) {
             enqueueSnackbar(`Microservice '${microserviceName}' has been updated.`);
@@ -89,14 +85,14 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
         setIsLoading(true);
         setDeleteDialogIsOpen(false);
 
-        const result = await deleteMicroserviceWithStore(applicationId, microserviceEnvironment, microserviceId);
+        const result = await deleteMicroserviceWithStore(application.id, currentMicroservice.environment, currentMicroservice.id);
 
         if (result) {
-            enqueueSnackbar(`Microservice '${microserviceName}' has been deleted.`);
-            const href = `/microservices/application/${applicationId}/overview`;
+            enqueueSnackbar(`Microservice '${currentMicroservice.name}' has been deleted.`);
+            const href = `/microservices/application/${application.id}/overview`;
             navigate(href);
         } else {
-            enqueueSnackbar(`Failed to delete microservice '${microserviceName}'.`, { variant: 'error' });
+            enqueueSnackbar(`Failed to delete microservice '${currentMicroservice.name}'.`, { variant: 'error' });
         }
 
         setIsLoading(false);
@@ -118,10 +114,10 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
             />
 
             <RestartMicroserviceDialog
-                applicationId={applicationId}
-                environment={microserviceEnvironment}
-                microserviceId={microserviceId}
-                msName={microserviceName}
+                applicationId={application.id}
+                environment={currentMicroservice.environment}
+                microserviceId={currentMicroservice.id}
+                msName={currentMicroservice.name}
                 open={restartDialogIsOpen}
                 setOpen={setRestartDialogIsOpen}
                 handleSuccess={() => window.location.reload()}
@@ -129,8 +125,8 @@ export const ConfigurationsIndex = ({ application, currentMicroservice }: Config
 
             <Form<MicroserviceFormParameters>
                 initialValues={{
-                    microserviceName,
-                    developmentEnvironment: microserviceEnvironment,
+                    microserviceName: currentMicroservice.name,
+                    developmentEnvironment: currentMicroservice.environment,
                     runtimeVersion: runtimeImage,
                     headImage,
                     headPort: headPort || 0,
