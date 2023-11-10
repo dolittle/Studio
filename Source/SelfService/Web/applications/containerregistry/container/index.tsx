@@ -5,8 +5,6 @@ import React, { useEffect, useState } from 'react';
 
 import { useNavigate, Route, Routes } from 'react-router-dom';
 
-import { Box } from '@mui/material';
-
 import { LoadingSpinner } from '@dolittle/design-system';
 
 import { HttpResponseApplication } from '../../../apis/solutions/application';
@@ -47,12 +45,12 @@ export const ContainerIndex = ({ application }: ContainerIndexProps) => {
     }
 
     return (
-        <Box sx={{ mr: 3 }}>
+        <>
             <PageTitle title='Container Registry' />
             <Routes>
                 <Route path='/' element={<RegistryImagesIndex applicationId={application.id} data={containerRegistryImages} />} />
                 <Route path='/welcome' element={<RegistryEmpty applicationId={application.id} />} />
             </Routes>
-        </Box>
+        </>
     );
 };
