@@ -63,7 +63,7 @@ export const MicroservicesIndex = withRouteApplicationState(({ routeApplicationP
             .finally(() => setIsLoading(false));
     }, []);
 
-    if (isLoading) return <LoadingSpinner fullPage />;
+    if (isLoading) return <LoadingSpinner />;
 
     if (application.id === '') {
         return <Typography variant='h1' sx={{ m: 2 }}>Application not found.</Typography>;
