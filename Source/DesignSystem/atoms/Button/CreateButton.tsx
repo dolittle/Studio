@@ -22,6 +22,11 @@ export type CreateButtonProps = {
     icon?: ButtonProps['startWithIcon'];
 
     /**
+     * Whether the button is disabled.
+     */
+    isDisabled?: boolean;
+
+    /**
      * The function to call when the button is clicked.
      */
     onCreate: () => void;
@@ -32,11 +37,12 @@ export type CreateButtonProps = {
  * @param {CreateButtonProps} props - The {@link CreateButtonProps}.
  * @returns A {@link CreateButton} component.
  */
-export const CreateButton = ({ label, icon, onCreate }: CreateButtonProps) =>
+export const CreateButton = ({ label, icon, isDisabled, onCreate }: CreateButtonProps) =>
     <Button
         label={label}
         variant='fullwidth'
         startWithIcon={icon ?? 'RocketLaunch'}
+        disabled={isDisabled}
         onClick={onCreate}
         sx={{ mt: 2 }}
     />;

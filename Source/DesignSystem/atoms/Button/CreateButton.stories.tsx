@@ -20,6 +20,7 @@ metadata.parameters = {
 metadata.args = {
     label: 'Create button label',
     icon: 'RocketLaunch',
+    isDisabled: false,
     onCreate: action('Button clicked!'),
 };
 
