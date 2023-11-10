@@ -37,6 +37,7 @@ export const ConnectionsDataGrid = ({ connections, isLoading }: ConnectionsDataG
                 columns={connectionsDataGridColumns}
                 loading={isLoading}
                 onRowClick={({ row }) => handleRowClick(row)}
+                sx={{ cursor: 'pointer' }}
             />
         </DataGridWrapper>
     );
