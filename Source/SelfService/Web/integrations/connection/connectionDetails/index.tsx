@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Link, Location, Navigate, Outlet, useLocation } from 'react-router-dom';
 
-import { Tabs } from '@dolittle/design-system';
+import { LoadingSpinner, Tabs } from '@dolittle/design-system';
 
 import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionIdFromRoute } from '../../routes.hooks';
@@ -65,7 +65,7 @@ export const ConnectionDetails = () => {
     const connection = data?.value;
     const redirectPath = useRedirectToTabByStatus(connection?.status);
 
-    if (isLoading) return <>Loading</>;
+    if (isLoading) return <LoadingSpinner />;
     if (!connection) return null;
 
     const pageTitle = connection.name || 'Connection Details';

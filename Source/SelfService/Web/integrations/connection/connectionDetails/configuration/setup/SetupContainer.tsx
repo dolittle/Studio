@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Collapse } from '@mui/material';
 
-import { ContentContainer, ContentHeader, ContentSection, FileUploadFormRef } from '@dolittle/design-system';
+import { ContentContainer, ContentHeader, ContentSection, FileUploadFormRef, LoadingSpinner } from '@dolittle/design-system';
 
 import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../../apis/integrations/connectionsApi.hooks';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
@@ -90,7 +90,7 @@ export const SetupContainer = () => {
         connection?.chosenEnvironment.value
     ]);
 
-    if (query.isLoading) return <>Loading</>;
+    if (query.isLoading) return <LoadingSpinner />;
     if (!connection) return null;
 
     const handleDelete = () => {
