@@ -4,11 +4,10 @@
 import React from 'react';
 
 import { useHref } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 
 import { GridColDef } from '@mui/x-data-grid-pro';
 
-import { Button, IconButton } from '@dolittle/design-system';
+import { Button, CopyIconButton } from '@dolittle/design-system';
 
 import { Tag } from '../../../../../apis/solutions/containerregistry';
 
@@ -18,19 +17,6 @@ export const getDetailPanelColumns = (applicationId: string, image: string) => {
 
         return (
             <Button label='Deploy new Microservice' variant='outlined' href={microserviceHref} />
-        );
-    };
-
-    const CopyImageCell = (row: Tag) => {
-        const { enqueueSnackbar } = useSnackbar();
-
-        const handleImageCopy = () => {
-            navigator.clipboard.writeText(`${image}:${row?.name}@${row?.digest}`);
-            enqueueSnackbar(`Tag '${row?.name}' has been copied to clipboard.`);
-        };
-
-        return (
-            <IconButton tooltipText='Copy head image' icon='CopyAllRounded' onClick={handleImageCopy} />
         );
     };
 
@@ -72,7 +58,8 @@ export const getDetailPanelColumns = (applicationId: string, image: string) => {
             align: 'center',
             minWidth: 150,
             flex: 1,
-            renderCell: ({ row }) => CopyImageCell(row),
+            renderCell: ({ row }) =>
+                <CopyIconButton text={`${image}:${row?.name}`} message={`Tag '${row?.name}' has been copied to clipboard.`} tooltipText='Copy head image' />,
         },
     ] as GridColDef<Tag>[];
 };

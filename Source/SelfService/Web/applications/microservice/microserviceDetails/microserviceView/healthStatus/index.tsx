@@ -3,10 +3,9 @@
 
 import React, { useMemo, useState } from 'react';
 
-
 import { AlertBox, AlertBoxErrorMessage, Button, Graph } from '@dolittle/design-system';
 
-import { ContainerStatusInfo, HttpResponsePodStatus, MicroserviceObject } from '../../../../../apis/solutions/api';
+import { ContainerStatusInfo, MicroserviceObject } from '../../../../../apis/solutions/api';
 
 import { Metric, useMetricsFromLast } from '../../../../metrics/useMetrics';
 import { HealthStatusDataGrid, HealthStatusTableStats } from './HealthStatusDataGrid';
@@ -30,12 +29,9 @@ export type HealthStatusIndexProps = {
 export const HealthStatusIndex = ({ applicationId, currentMicroservice }: HealthStatusIndexProps) => {
     const [restartDialogIsOpen, setRestartDialogIsOpen] = useState(false);
 
-    const microserviceId = currentMicroservice.id;
-    const microserviceEnvironment = currentMicroservice.environment;
-
     const timeRange = useMemo<[number, number]>(() => [Date.now() - 86_400_000, Date.now()], [Date.now() / 60_000]);
-    const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${microserviceEnvironment}", microservice_id="${microserviceId}"}`, 86_400, 60);
-    const memory = useMetricsFromLast(`microservice:container_memory_working_set_bytes:max{application_id="${applicationId}", environment="${microserviceEnvironment}", microservice_id="${microserviceId}"}`, 86_400, 60);
+    const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${currentMicroservice.environment}", microservice_id="${currentMicroservice.id}"}`, 86_400, 60);
+    const memory = useMetricsFromLast(`microservice:container_memory_working_set_bytes:max{application_id="${applicationId}", environment="${currentMicroservice.environment}", microservice_id="${currentMicroservice.id}"}`, 86_400, 60);
 
     const containerTables = currentMicroservice.live.pods?.map(pod => {
         const rows = pod.containers.map((container: ContainerStatusInfo) => {
@@ -80,8 +76,8 @@ export const HealthStatusIndex = ({ applicationId, currentMicroservice }: Health
         <>
             <RestartMicroserviceDialog
                 applicationId={applicationId}
-                environment={microserviceEnvironment}
-                microserviceId={microserviceId}
+                environment={currentMicroservice.environment}
+                microserviceId={currentMicroservice.id}
                 msName={currentMicroservice.name}
                 open={restartDialogIsOpen}
                 setOpen={setRestartDialogIsOpen}

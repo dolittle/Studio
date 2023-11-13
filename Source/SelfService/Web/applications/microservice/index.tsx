@@ -8,9 +8,11 @@ import { useSnackbar } from 'notistack';
 
 import { Typography } from '@mui/material';
 
+import { LoadingSpinner } from '@dolittle/design-system';
+
 import { mergeMicroservicesFromGit, mergeMicroservicesFromK8s } from '../stores/microservice';
 
-import { getMicroservices, getMicroservicesWithPods } from '../../apis/solutions/api';
+import { getMicroservicesWithPods } from '../../apis/solutions/api';
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
 import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
@@ -26,7 +28,7 @@ export const MicroservicesIndex = withRouteApplicationState(({ routeApplicationP
     const { enqueueSnackbar } = useSnackbar();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const currentApplicationId = routeApplicationParams.applicationId;
 
@@ -40,28 +42,28 @@ export const MicroservicesIndex = withRouteApplicationState(({ routeApplicationP
         Promise.all([
             getApplication(currentApplicationId),
             getMicroservicesWithPods(currentApplicationId),
-        ]).then(values => {
-            const applicationData = values[0];
+        ])
+            .then(values => {
+                const applicationData = values[0];
 
-            if (!applicationData.id) {
-                navigate('/problem');
-                return;
-            }
+                if (!applicationData.id) {
+                    navigate('/problem');
+                    return;
+                }
 
-            setApplication(applicationData);
+                setApplication(applicationData);
 
-            mergeMicroservicesFromGit(applicationData.microservices);
-            mergeMicroservicesFromK8s(values[1].microservices);
-
-            setIsLoaded(true);
-        }).catch(() => {
-            enqueueSnackbar('Failed getting data from the server.', { variant: 'error' });
-            navigate('/applications');
-            return;
-        });
+                mergeMicroservicesFromGit(applicationData.microservices);
+                mergeMicroservicesFromK8s(values[1].microservices);
+            })
+            .catch(() => {
+                enqueueSnackbar('Failed getting data from the server.', { variant: 'error' });
+                navigate('/applications');
+            })
+            .finally(() => setIsLoading(false));
     }, []);
 
-    if (!isLoaded) return null;
+    if (isLoading) return <LoadingSpinner />;
 
     if (application.id === '') {
         return <Typography variant='h1' sx={{ m: 2 }}>Application not found.</Typography>;

@@ -7,6 +7,8 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
 
+import { LoadingSpinner } from '@dolittle/design-system';
+
 import { getApplication, HttpResponseApplication } from '../../apis/solutions/application';
 
 import { WorkSpaceLayoutWithSidePanel } from '../../layout/workSpaceLayout';
@@ -19,7 +21,7 @@ export const ContainerRegistryIndex = withRouteApplicationState(({ routeApplicat
     const navigate = useNavigate();
 
     const [application, setApplication] = useState({} as HttpResponseApplication);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const currentApplicationId = routeApplicationParams.applicationId;
 
@@ -37,12 +39,12 @@ export const ContainerRegistryIndex = withRouteApplicationState(({ routeApplicat
                 }
 
                 setApplication(applicationData);
-                setIsLoaded(true);
             })
-            .catch(error => console.log(error));
+            .catch(error => console.log(error))
+            .finally(() => setIsLoading(false));
     }, [currentApplicationId]);
 
-    if (!isLoaded) return null;
+    if (isLoading) return <LoadingSpinner />;
 
     if (application.id === '') {
         return <Typography variant='h1' sx={{ m: 2 }}>Application not found.</Typography>;

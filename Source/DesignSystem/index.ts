@@ -12,11 +12,11 @@ export { Dialog, DialogProps, FormDialog, FormDialogProps } from './atoms/Dialog
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';
 export { BadgeWithTitle, BadgeWithTitleProps } from './atoms/BadgeWithTitle';
 export { Breadcrumbs, BreadcrumbsProps } from './atoms/Breadcrumbs';
-export { Button, ButtonProps } from './atoms/Button';
+export { Button, ButtonProps, CreateButton, CreateButtonProps } from './atoms/Button';
 export { Chip, ChipProps } from './atoms/Chip';
 export * from './atoms/Forms';
 export { Icon, IconProps } from './atoms/Icon';
-export { IconButton, IconButtonProps } from './atoms/IconButton';
+export { IconButton, IconButtonProps, CopyIconButton, CopyIconButtonProps } from './atoms/IconButton';
 export { InlineWrapper, InlineWrapperProps } from './atoms/Wrapper';
 export { Link, LinkProps } from './atoms/Link';
 export { LoadingSpinner } from './atoms/LoadingSpinner';

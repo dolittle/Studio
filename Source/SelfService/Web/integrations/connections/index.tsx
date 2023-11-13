@@ -6,12 +6,13 @@ import React from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 
+import { CreateButton } from '@dolittle/design-system';
+
 import { useConnectionsGet, useConnectionsIdPost } from '../../apis/integrations/connectionsApi.hooks';
 
 import { PageTitle } from '../../layout/PageTitle';
 import { NoConnections } from './noConnections';
-import { ConnectionsTable } from './connectionsTable';
-import { CreateConnectionButton } from './createConnectionButton';
+import { ConnectionsDataGrid } from './ConnectionsDataGrid';
 
 const getSuggestedIdFromRelHref = (href: string | null | undefined) => {
     if (!href) return href;
@@ -64,8 +65,8 @@ export const Connections = () => {
                 : isLoading || connections.length
                     ? (
                         <>
-                            <ConnectionsTable connections={connections} isLoading={isLoading} />
-                            <CreateConnectionButton onClick={() => handleCreateNew()} buttonProps={{ disabled: isLoading }} />
+                            <ConnectionsDataGrid connections={connections} isLoading={isLoading} />
+                            <CreateButton label='Set Up New Connection' icon='PolylineRounded' onCreate={handleCreateNew} isDisabled={isLoading} />
                         </>
                     ) : (
                         <NoConnections onCreateNew={() => handleCreateNew()} />

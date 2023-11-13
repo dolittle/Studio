@@ -1,48 +1,14 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
-import { DataGridPro, GridRowId, GridRowParams } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridRowId, DataGridProProps } from '@mui/x-data-grid-pro';
 
-import {
-    DataGridCustomToolbar,
-    dataGridDefaultProps,
-    DataGridDetailPanel,
-    DataGridWrapper,
-    DetailPanelExpandIcon,
-    DetailPanelCollapseIcon,
-    LoadingSpinner
-} from '@dolittle/design-system';
-
-import { getPodLogs, HttpResponsePodLog } from '../../../../../apis/solutions/api';
+import { DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon } from '@dolittle/design-system';
 
 import { healthStatusDataGridColumns } from './healthStatusTableColumns';
-
-const styles = {
-    '& .MuiDataGrid-row': { cursor: 'default' },
-};
-
-type DetailPanelContentProps = {
-    row: HealthStatusDataGridRow;
-};
-
-const DetailPanelContent = ({ row }: DetailPanelContentProps) => {
-    const [data, setData] = useState({ logs: '' } as HttpResponsePodLog);
-    const [isLoading, setLoading] = useState(true);
-
-    useEffect(() => {
-        getPodLogs(row.application, row.podName, row.containerName)
-            .then(setData)
-            .finally(() => setLoading(false));
-    }, []);
-
-    if (isLoading) return <LoadingSpinner />;
-
-    return (
-        <DataGridDetailPanel content={!data.logs ? 'There are no logs printed for this microservice.' : data.logs} />
-    );
-};
+import { DetailPanelContent } from './DetailPanelContent';
 
 export type HealthStatusTableStats = {
     average: number;
@@ -81,6 +47,9 @@ export const HealthStatusDataGrid = ({ rows }: HealthStatusDataGridProps) => {
         }
     };
 
+    const getDetailPanelContent = useCallback<NonNullable<DataGridProProps['getDetailPanelContent']>>(({ row }) =>
+        <DetailPanelContent row={row} />, []);
+
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
     return (
@@ -89,11 +58,10 @@ export const HealthStatusDataGrid = ({ rows }: HealthStatusDataGridProps) => {
                 {...dataGridDefaultProps}
                 rows={rows}
                 columns={healthStatusDataGridColumns}
-                getDetailPanelContent={({ row }: GridRowParams<HealthStatusDataGridRow>) => <DetailPanelContent row={row} />}
+                getDetailPanelContent={getDetailPanelContent}
                 getDetailPanelHeight={getDetailPanelHeight}
                 detailPanelExpandedRowIds={detailPanelExpandedRowIds}
                 onDetailPanelExpandedRowIdsChange={handleDetailPanelExpandedRowIdsChange}
-                sx={styles}
                 components={{
                     DetailPanelExpandIcon,
                     DetailPanelCollapseIcon,

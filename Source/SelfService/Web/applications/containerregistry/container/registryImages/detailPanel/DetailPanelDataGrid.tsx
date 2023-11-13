@@ -40,6 +40,7 @@ export const DetailPanelDataGrid = ({ applicationId, image, row }: DetailPanelDa
                 columns={detailPanelColumns}
                 getRowId={row => row.name}
                 loading={isLoading}
+                sx={{ ml: 6 }}
             />
         </DataGridWrapper>
     );

@@ -5,7 +5,6 @@ import React from 'react';
 
 import { HttpResponseApplication } from '../../../../../apis/solutions/application';
 
-
 import { ConfigurationsIndex } from './Configurations';
 import { ConfigurationFilesIndex } from './configurationFiles';
 import { EnvironmentVariableIndex } from './environmentVariable';

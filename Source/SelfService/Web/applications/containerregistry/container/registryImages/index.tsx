@@ -3,15 +3,13 @@
 
 import React, { useCallback, useState } from 'react';
 
-import { Link } from 'react-router-dom';
-
-import { Box } from '@mui/material';
 import { DataGridPro, DataGridProProps, GridColDef, GridRowId } from '@mui/x-data-grid-pro';
 
-import { Button, dataGridDefaultProps, DataGridCustomToolbar, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon, IconButton, Tooltip } from '@dolittle/design-system';
+import { dataGridDefaultProps, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon } from '@dolittle/design-system';
 
 import { ContainerRegistryImages } from '../../../../apis/solutions/containerregistry';
 
+import { RegistryImagesDataGridToolbar } from './RegistryImagesDataGridToolbar';
 import { DetailPanelDataGrid } from './detailPanel/DetailPanelDataGrid';
 
 const registryImagesDataGridColumns: GridColDef[] = [
@@ -47,24 +45,6 @@ export const RegistryImagesIndex = ({ applicationId, data }: RegistryImagesIndex
 
     const getDetailPanelHeight = useCallback(() => 'auto', []);
 
-    const Toolbar = () =>
-        <DataGridCustomToolbar title={`Host: ${data.url}`}>
-            <Box sx={{ display: 'flex' }}>
-                <Tooltip title='Coming soon!' placement='top'>
-                    <span><Button label='Delete image(s)' startWithIcon='DeleteRounded' disabled sx={{ mr: 1 }} /></span>
-                </Tooltip>
-                <IconButton
-                    tooltipText='Need to add a new image? Instructions can be found under documentation.'
-                    icon='InfoRounded'
-                    sx={{ p: 1 }}
-                    overrides={{
-                        component: Link,
-                        to: `/setup/application/${applicationId}/overview`,
-                    }}
-                />
-            </Box>
-        </DataGridCustomToolbar>;
-
     return (
         <DataGridWrapper>
             <DataGridPro
@@ -79,7 +59,7 @@ export const RegistryImagesIndex = ({ applicationId, data }: RegistryImagesIndex
                 components={{
                     DetailPanelExpandIcon,
                     DetailPanelCollapseIcon,
-                    Toolbar,
+                    Toolbar: () => <RegistryImagesDataGridToolbar data={data} applicationId={applicationId} />,
                 }}
             />
         </DataGridWrapper>

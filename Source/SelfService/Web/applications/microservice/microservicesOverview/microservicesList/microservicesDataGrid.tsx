@@ -1,7 +1,7 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ import { DataGridPro } from '@mui/x-data-grid-pro';
 
 import { DataGridWrapper, dataGridDefaultProps } from '@dolittle/design-system';
 
-import { getPodStatus, MicroserviceObject } from '../../../../apis/solutions/api';
+import { MicroserviceObject } from '../../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../../apis/solutions/application';
 
 import { microservicesDataGridColumns } from './microservicesDataGridColumns';
@@ -32,21 +32,16 @@ export const MicroservicesDataGrid = ({ application, microservices }: Microservi
 
         Promise.all(microservices.map(async microservice => {
             const microserviceInfo = getMicroserviceInfo(application, microservice);
-            // const status = await getMicroserviceStatus(microservice.id, microservice.environment);
 
             return {
                 ...microservice,
                 edit: microserviceInfo,
                 phase: microservice.live.phase,
             } as MicroserviceObject;
-        })).then(setMicroserviceRows)
+        }))
+            .then(setMicroserviceRows)
             .finally(() => setIsLoading(false));
     }, [microservices]);
-
-    const getMicroserviceStatus = useCallback(async (microserviceId: string, environment: string) => {
-        const status = await getPodStatus(application.id, environment, microserviceId);
-        return status.pods;
-    }, [application.id]);
 
     const handleTableRowClick = (microserviceId: string, environment: string) => {
         const href = `/microservices/application/${application.id}/view/${microserviceId}/${environment}`;
@@ -62,6 +57,7 @@ export const MicroservicesDataGrid = ({ application, microservices }: Microservi
                 loading={isLoading}
                 onRowClick={({ row }) => handleTableRowClick(row.id, row.environment)}
                 getRowId={(row) => `${row.id}-${row.environment}`}
+                sx={{ cursor: 'pointer' }}
             />
         </DataGridWrapper>
     );

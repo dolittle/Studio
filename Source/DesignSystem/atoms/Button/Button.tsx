@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Button as MuiButton, ExtendButtonBase, ButtonTypeMap, SxProps } from '@mui/material';
 
-import { SvgIcons, SvgIconsDefinition } from '../../index';
+import { CreateButton, SvgIcons, SvgIconsDefinition } from '../../index';
 
 /**
  * The props for a {@link Button} component.
@@ -48,6 +48,8 @@ export type ButtonProps = {
 
     /**
      * Set to `true` if button should take up the entire width of its container.
+     *
+     * Also see {@link CreateButton} if button should be used for creating new items.
      * @default false
      */
     isFullWidth?: boolean;

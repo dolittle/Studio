@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import { useHref } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import { Button } from '@dolittle/design-system';
+import { CreateButton } from '@dolittle/design-system';
 
 import { MicroserviceObject } from '../../../../apis/solutions/api';
 import { HttpResponseApplication } from '../../../../apis/solutions/application';
@@ -18,19 +18,12 @@ export type MicroservicesViewProps = {
 };
 
 export const MicroservicesList = ({ application, microservices }: MicroservicesViewProps) => {
-    const createMicroserviceHref = useHref(`/microservices/application/${application.id}/create`);
+    const navigate = useNavigate();
 
     return (
         <>
             <MicroservicesDataGrid application={application} microservices={microservices} />
-
-            <Button
-                label='Deploy New Microservice'
-                variant='fullwidth'
-                startWithIcon='RocketLaunch'
-                href={createMicroserviceHref}
-                sx={{ mt: 2 }}
-            />
+            <CreateButton label='Deploy New Microservice' onCreate={() => navigate(`/microservices/application/${application.id}/create`)} />
         </>
     );
 };
