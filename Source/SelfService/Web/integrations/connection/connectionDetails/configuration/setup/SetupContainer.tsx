@@ -157,9 +157,9 @@ export const SetupContainer = () => {
                             alwaysEdit={alwaysEdit}
                         />
                     }
-                ></ContentHeader>
-                <ContentSection hideHeader>
+                />
 
+                <ContentSection hideHeader>
                     <MainM3ConnectionInfo
                         hasSavedDeploymentType={hasSavedDeploymentType}
                         connectionIdLinks={links}
