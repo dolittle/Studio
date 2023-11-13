@@ -88,7 +88,6 @@ export const CredentialsDataGridIndex = ({ credentials, connectionId, isLoading,
                         label='Generate new credentials'
                         onCreate={handleGenerateNewCredentials}
                         isDisabled={isButtonDisabled}
-                        sx={{ p: 0 }}
                     />
                 )}
         </>
