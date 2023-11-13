@@ -18,7 +18,7 @@ export const childRoutePaths = ['/configuration', '/messages', '/consume-data-re
 
 const getSelectedTab = (location: Location) => {
     const pathname = location.pathname;
-    const foundIndex = childRoutePaths.findIndex((path) => pathname.includes(path));
+    const foundIndex = childRoutePaths.findIndex(path => pathname.includes(path));
     return foundIndex >= 0 ? foundIndex : 0;
 };
 

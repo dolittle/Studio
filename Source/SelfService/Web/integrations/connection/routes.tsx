@@ -13,7 +13,6 @@ import { MessagesViewRoot } from './connectionDetails/messages';
 import { Index as ChangeMessageView } from './connectionDetails/messages/changeMessage';
 import { ConsumeDataEventStreamsView } from './connectionDetails/consumeDataEventStreams';
 
-
 export const routes: RouteObject[] = [
     {
         path: '*',
@@ -39,7 +38,7 @@ export const routes: RouteObject[] = [
                         path: 'edit/:table/:messageId',
                         element: <ChangeMessageView />,
                     },
-                ]
+                ],
             },
             {
                 path: 'consume-data-rest-api',
@@ -50,5 +49,5 @@ export const routes: RouteObject[] = [
                 element: <ConsumeDataEventStreamsView />,
             },
         ],
-    }
+    },
 ];
