@@ -33,7 +33,7 @@ export const HealthStatusIndex = ({ applicationId, currentMicroservice }: Health
     const cpu = useMetricsFromLast(`microservice:container_cpu_usage_seconds:rate_max{application_id="${applicationId}", environment="${currentMicroservice.environment}", microservice_id="${currentMicroservice.id}"}`, 86_400, 60);
     const memory = useMetricsFromLast(`microservice:container_memory_working_set_bytes:max{application_id="${applicationId}", environment="${currentMicroservice.environment}", microservice_id="${currentMicroservice.id}"}`, 86_400, 60);
 
-    const containerTables = currentMicroservice.live.pods?.map(pod => {
+    const containerTables = currentMicroservice.live?.pods?.map(pod => {
         const rows = pod.containers.map((container: ContainerStatusInfo) => {
             const containerCPU = cpu.metrics.find(_ => _.labels.container === container.name);
             const containerMemory = memory.metrics.find(_ => _.labels.container === container.name);
