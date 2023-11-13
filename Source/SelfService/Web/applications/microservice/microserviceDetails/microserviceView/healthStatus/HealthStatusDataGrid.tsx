@@ -7,7 +7,7 @@ import { DataGridPro, GridRowId, DataGridProProps } from '@mui/x-data-grid-pro';
 
 import { DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon } from '@dolittle/design-system';
 
-import { healthStatusDataGridColumns } from './healthStatusTableColumns';
+import { healthStatusDataGridColumns } from './HealthStatusDataGridColumns';
 import { DetailPanelContent } from './DetailPanelContent';
 
 export type HealthStatusTableStats = {
