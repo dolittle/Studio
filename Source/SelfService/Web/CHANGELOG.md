@@ -1,3 +1,31 @@
+# [3.18.29] - 2023-11-13 [PR: #495](https://github.com/dolittle/Studio/pull/495)
+## Summary
+
+Add style improvements and bug fixes.
+
+### Added
+
+- CreateButton to Design System that is used under Data Grids for creating new content
+- CopyIconButton to Design System that is used for copying the text content
+- Cursor 'pointer' style to Microservices and Connections DataGrid
+- LoadingSpinner to ContainerRegistry page
+- Left margin to ContainerRegistry DataGridDetailPanel
+
+### Changed
+
+- Rename ConnectionsTable to ConnectionsDataGrid for consistency
+- Add Rest API Credentials DataGrid 'height' to display long content with a scrollbar
+
+### Fixed
+
+- Black screen if Pods does not exist
+- ContainerRegistry 'copy' cell content
+
+### Removed
+
+- Unused code
+
+
 # [3.18.28] - 2023-11-9 [PR: #494](https://github.com/dolittle/Studio/pull/494)
 ## Summary
 
