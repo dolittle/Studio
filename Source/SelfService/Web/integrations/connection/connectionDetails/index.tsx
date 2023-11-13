@@ -14,7 +14,7 @@ import { PageTitle } from '../../../layout/PageTitle';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 import { getIndicatorStatusFromStatusMessage } from '../../statusHelpers';
 
-export const childRoutePaths = ['/configuration', '/messages', '/consume-data-rest-api', '/consume-data-event-streams'];
+export const childRoutePaths = ['/configuration', '/messages', '/commands', '/consume-data-rest-api', '/consume-data-event-streams'];
 
 const getSelectedTab = (location: Location) => {
     const pathname = location.pathname;
@@ -37,6 +37,14 @@ const tabs = [
         overrides: {
             component: Link,
             to: 'messages',
+        },
+    },
+    {
+        label: 'commands',
+        render: () => <></>,
+        overrides: {
+            component: Link,
+            to: 'commands',
         },
     },
     {
