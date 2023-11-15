@@ -3,15 +3,11 @@
 
 import React, { useState } from 'react';
 
-import { Tab as MuiTab, Tabs as MuiTabs, ButtonTypeMap, ExtendButtonBase } from '@mui/material';
+import { Box, ButtonTypeMap, ExtendButtonBase, Tab as MuiTab, Tabs as MuiTabs } from '@mui/material';
 
 const styles = {
     tabs: {
         'mb': 3.5,
-        '& .MuiTabs-flexContainer': {
-            flexDirection: { xs: 'column', md: 'row' },
-            alignItems: 'center',
-        },
         '& .MuiTabs-indicator': {
             display: 'flex',
             justifyContent: 'center',
@@ -21,15 +17,11 @@ const styles = {
             width: 1,
             maxWidth: 40,
             backgroundColor: 'primary.main',
-            display: { xs: 'none', md: 'block' },
         },
     },
     tab: {
-        'fontSize': 14,
-        'mr': { xs: 0, md: 8 },
-        'mb': { xs: 2, md: 0 },
-        '&:last-child': { mr: 0 },
-        'borderBottom': { xs: '2px solid', md: 'none' },
+        fontSize: 14,
+        mr: 8,
     },
 };
 
@@ -88,7 +80,7 @@ export const Tabs = ({ id, selectedTab = 0, tabs }: TabsProps) => {
     };
 
     return (
-        <>
+        <Box sx={{ width: 1, maxWidth: { xs: 320, sm: 600, md: 900, lg: 1200 } }}>
             <MuiTabs
                 id={id}
                 value={currentTab}
@@ -96,6 +88,8 @@ export const Tabs = ({ id, selectedTab = 0, tabs }: TabsProps) => {
                 TabIndicatorProps={
                     { children: <span className='MuiTabs-indicatorSpan' /> }
                 }
+                variant='scrollable'
+                scrollButtons='auto'
                 sx={{ ...styles.tabs }}
             >
                 {tabs.map((tab, index) =>
@@ -111,6 +105,6 @@ export const Tabs = ({ id, selectedTab = 0, tabs }: TabsProps) => {
                 )}
             </MuiTabs>
             {tabs[currentTab]?.render()}
-        </>
+        </Box>
     );
 };

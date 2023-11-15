@@ -15,9 +15,9 @@
 
 import * as runtime from '../runtime';
 import type {
-    ServiceAccountAccess,
-    ServiceAccountCreatedDto,
-    ServiceAccountListDto,
+  ServiceAccountAccess,
+  ServiceAccountCreatedDto,
+  ServiceAccountListDto,
 } from '../models/index';
 import {
     ServiceAccountAccessFromJSON,
@@ -54,7 +54,7 @@ export class ServiceAccountApi extends runtime.BaseAPI {
      */
     async connectionsIdServiceAccountsGetRaw(requestParameters: ConnectionsIdServiceAccountsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ServiceAccountListDto>>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id', 'Required parameter requestParameters.id was null or undefined when calling connectionsIdServiceAccountsGet.');
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdServiceAccountsGet.');
         }
 
         const queryParameters: any = {};
@@ -96,11 +96,11 @@ export class ServiceAccountApi extends runtime.BaseAPI {
      */
     async connectionsIdServiceAccountsServiceAccountNameDeleteRaw(requestParameters: ConnectionsIdServiceAccountsServiceAccountNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id', 'Required parameter requestParameters.id was null or undefined when calling connectionsIdServiceAccountsServiceAccountNameDelete.');
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdServiceAccountsServiceAccountNameDelete.');
         }
 
         if (requestParameters.serviceAccountName === null || requestParameters.serviceAccountName === undefined) {
-            throw new runtime.RequiredError('serviceAccountName', 'Required parameter requestParameters.serviceAccountName was null or undefined when calling connectionsIdServiceAccountsServiceAccountNameDelete.');
+            throw new runtime.RequiredError('serviceAccountName','Required parameter requestParameters.serviceAccountName was null or undefined when calling connectionsIdServiceAccountsServiceAccountNameDelete.');
         }
 
         const queryParameters: any = {};
@@ -141,11 +141,11 @@ export class ServiceAccountApi extends runtime.BaseAPI {
      */
     async connectionsIdServiceAccountsServiceAccountNamePostRaw(requestParameters: ConnectionsIdServiceAccountsServiceAccountNamePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ServiceAccountCreatedDto>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id', 'Required parameter requestParameters.id was null or undefined when calling connectionsIdServiceAccountsServiceAccountNamePost.');
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdServiceAccountsServiceAccountNamePost.');
         }
 
         if (requestParameters.serviceAccountName === null || requestParameters.serviceAccountName === undefined) {
-            throw new runtime.RequiredError('serviceAccountName', 'Required parameter requestParameters.serviceAccountName was null or undefined when calling connectionsIdServiceAccountsServiceAccountNamePost.');
+            throw new runtime.RequiredError('serviceAccountName','Required parameter requestParameters.serviceAccountName was null or undefined when calling connectionsIdServiceAccountsServiceAccountNamePost.');
         }
 
         const queryParameters: any = {};

@@ -57,7 +57,7 @@ export type NoContentSectionProps = {
  * @returns A {@link NoContentSection} component.
  */
 export const NoContentSection = ({ title, description, label, icon, isDisabled, onCreate, sx }: NoContentSectionProps) =>
-    <Paper sx={{ p: 2, boxShadow: 'none', maxInlineSize: 1200, ...sx }}>
+    <Paper sx={{ boxShadow: 'none', maxInlineSize: 1200, ...sx }}>
         <Typography variant='h2'>{title}</Typography>
         <Typography variant='body1' sx={{ my: 2 }}>{description}</Typography>
         <Button label={label} variant='fullwidth' startWithIcon={icon ? icon : 'AddCircle'} disabled={isDisabled} onClick={onCreate} />

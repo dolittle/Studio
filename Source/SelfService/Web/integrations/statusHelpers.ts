@@ -1,11 +1,12 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 import { StatusMessage } from '../apis/integrations/generated';
 import { StatusIndicatorMessage } from '../utils/helpers/connectionStatuses';
 
-
 export const getIndicatorStatusFromStatusMessage = (status?: StatusMessage): StatusIndicatorMessage | undefined => {
     if (!status) return undefined;
+
     const indicator: StatusIndicatorMessage = {
         status: 'unknown',
         label: status?.title,

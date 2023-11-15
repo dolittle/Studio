@@ -3,21 +3,21 @@
 
 import React from 'react';
 
-import { RouteObject, Navigate } from 'react-router-dom';
+import { Navigate, RouteObject } from 'react-router-dom';
 
 import { Connection } from './connection';
 import { Connections } from './connections';
 
-export const integrationsBreadcrumbsNameMap: { [key: string]: string } = {
-    '/integrations': 'Integrations',
-    '/integrations/connections': 'Connections',
-    '/integrations/connections/configuration': 'Configuration',
-    '/integrations/connections/messages': 'Messages',
-    '/integrations/connections/messages/new': 'New Message',
-    '/integrations/connections/messages/edit': 'Edit Message',
-    '/integrations/connections/expose': 'Expose Data',
-    '/integrations/connections/new': 'New Connection',
-};
+// export const integrationsBreadcrumbsNameMap: { [key: string]: string } = {
+//     '/integrations': 'Integrations',
+//     '/integrations/connections': 'Connections',
+//     '/integrations/connections/configuration': 'Configuration',
+//     '/integrations/connections/messages': 'Messages',
+//     '/integrations/connections/messages/new': 'New Message',
+//     '/integrations/connections/messages/edit': 'Edit Message',
+//     '/integrations/connections/expose': 'Expose Data',
+//     '/integrations/connections/new': 'New Connection',
+// };
 
 export const routes: RouteObject[] = [
     {

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { SxProps } from '@mui/material';
+import { Box, SxProps } from '@mui/material';
 
 import { SvgIcons, SvgIconsDefinition, Tooltip } from '../../index';
 
@@ -50,7 +50,7 @@ export const Icon = ({ icon, color = 'inherit', size = 'small', tooltipLabel, sx
     if (tooltipLabel) {
         return (
             <Tooltip title={tooltipLabel}>
-                <span>{clonedIcon}</span>
+                <Box sx={{ display: 'flex' }}>{clonedIcon}</Box>
             </Tooltip>
         );
     }

@@ -9,6 +9,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useSnackbar } from 'notistack';
 import { useGlobalContext } from '../context/globalContext';
 
+import { LoadingSpinner } from '@dolittle/design-system';
+
 import { buildQueryClient } from '../apis/integrations/queryClient';
 
 import { routes } from './routes';
@@ -35,7 +37,7 @@ export const IntegrationsIndex = () => {
         setIsLoading(false);
     }, []);
 
-    if (isLoading) return null;
+    if (isLoading) return <LoadingSpinner />;
 
     return (
         <WorkSpaceLayoutWithSidePanel pageTitle='Connections | Integrations'>

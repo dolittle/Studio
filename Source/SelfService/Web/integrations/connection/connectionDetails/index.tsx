@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Link, Location, Navigate, Outlet, useLocation } from 'react-router-dom';
 
-import { Tabs } from '@dolittle/design-system';
+import { LoadingSpinner, Tabs } from '@dolittle/design-system';
 
 import { useConnectionsIdGet } from '../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionIdFromRoute } from '../../routes.hooks';
@@ -14,11 +14,11 @@ import { PageTitle } from '../../../layout/PageTitle';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 import { getIndicatorStatusFromStatusMessage } from '../../statusHelpers';
 
-export const childRoutePaths = ['/configuration', '/messages', '/consume-data-rest-api', '/consume-data-event-streams'];
+export const childRoutePaths = ['/configuration', '/messages', '/commands', '/consume-data-rest-api', '/consume-data-event-streams'];
 
 const getSelectedTab = (location: Location) => {
     const pathname = location.pathname;
-    const foundIndex = childRoutePaths.findIndex((path) => pathname.includes(path));
+    const foundIndex = childRoutePaths.findIndex(path => pathname.includes(path));
     return foundIndex >= 0 ? foundIndex : 0;
 };
 
@@ -39,6 +39,14 @@ const tabs = [
             to: 'messages',
         },
     },
+    /*     {
+            label: 'commands',
+            render: () => <></>,
+            overrides: {
+                component: Link,
+                to: 'commands',
+            },
+        }, */
     {
         label: 'Consume Data (Rest API)',
         render: () => <></>,
@@ -65,7 +73,7 @@ export const ConnectionDetails = () => {
     const connection = data?.value;
     const redirectPath = useRedirectToTabByStatus(connection?.status);
 
-    if (isLoading) return <>Loading</>;
+    if (isLoading) return <LoadingSpinner />;
     if (!connection) return null;
 
     const pageTitle = connection.name || 'Connection Details';
