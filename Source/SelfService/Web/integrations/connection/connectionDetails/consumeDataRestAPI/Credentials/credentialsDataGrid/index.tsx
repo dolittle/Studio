@@ -59,14 +59,13 @@ export const CredentialsDataGridIndex = ({ credentials, connectionId, isLoading,
 
             {credentials.length
                 ? (
-                    <DataGridWrapper background='dark' sx={{ height: 400 }}>
+                    <DataGridWrapper background='dark'>
                         <DataGridPro
                             {...dataGridDefaultProps}
                             rows={credentials}
                             columns={CredentialsDataGridColumns}
-                            autoHeight={false}
                             loading={isLoading}
-                            getRowId={row => row.serviceAccountName!}
+                            getRowId={row => row.serviceAccountName}
                             checkboxSelection
                             onSelectionModelChange={model => setSelectedIds(model as string[])}
                             components={{
