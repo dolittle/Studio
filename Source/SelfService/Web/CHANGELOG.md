@@ -1,3 +1,18 @@
+# [3.18.31] - 2023-11-15 [PR: #496](https://github.com/dolittle/Studio/pull/496)
+## Summary
+
+Add 'commands' page as a tab.
+
+### Added
+
+- LoadingSpinner to Integration page
+
+### Fixed
+
+- Microservice black screen when there is no 'live' Object
+- Added tabs responsive styles
+
+
 # [3.18.29] - 2023-11-13 [PR: #495](https://github.com/dolittle/Studio/pull/495)
 ## Summary
 
