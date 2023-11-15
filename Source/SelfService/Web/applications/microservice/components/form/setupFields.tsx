@@ -54,8 +54,8 @@ export const SetupFields = ({ environments, runtimeVersion, hasDashedBorder, isE
                 id='microserviceName'
                 label='Microservice Name'
                 disabled={isDisabled}
-                required='Provide a microservice name.'
-                pattern={{
+                required={isDisabled ? false : 'Provide a microservice name.'}
+                pattern={isDisabled ? undefined : {
                     value: alphaNumericHyphenRegex,
                     message: `Only letters, numbers and - in the middle are allowed.`,
                 }}
