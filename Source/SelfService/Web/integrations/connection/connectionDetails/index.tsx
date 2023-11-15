@@ -39,14 +39,14 @@ const tabs = [
             to: 'messages',
         },
     },
-    {
-        label: 'commands',
-        render: () => <></>,
-        overrides: {
-            component: Link,
-            to: 'commands',
-        },
-    },
+    /*     {
+            label: 'commands',
+            render: () => <></>,
+            overrides: {
+                component: Link,
+                to: 'commands',
+            },
+        }, */
     {
         label: 'Consume Data (Rest API)',
         render: () => <></>,
