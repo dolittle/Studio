@@ -14,6 +14,7 @@ export { Breadcrumbs, BreadcrumbsProps } from './atoms/Breadcrumbs';
 export { Button, ButtonProps, CreateButton, CreateButtonProps } from './atoms/Button';
 export { Chip, ChipProps } from './atoms/Chip';
 export { Dialog, DialogProps, FormDialog, FormDialogProps } from './atoms/Dialog';
+export { ContentContainer, ContentContainerProps } from './atoms/Content';
 export { ContentDivider, ContentDividerProps } from './atoms/Divider';
 export * from './atoms/Forms';
 export { Icon, IconProps } from './atoms/Icon';

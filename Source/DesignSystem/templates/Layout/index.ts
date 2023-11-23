@@ -3,7 +3,6 @@
 
 export { Layout, LayoutProps } from './Layout';
 
-export { ContentContainer, ContentContainerProps } from './Content/ContentContainer';
 export { ContentHeader, ContentHeaderProps } from './Content/ContentHeader';
 export { ContentSection, ContentSectionProps } from './Content/ContentSection';
 export { ContentParagraph, ContentParagraphProps } from './Content/ContentParagraph';
