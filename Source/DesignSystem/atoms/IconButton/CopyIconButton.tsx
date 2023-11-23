@@ -22,6 +22,14 @@ export type CopyIconButtonProps = {
     message: string;
 
     /**
+     * The color of the icon.
+     *
+     * Most icons will use the default `inherit` color.
+     * @default inherit
+     */
+    color?: 'inherit' | 'primary';
+
+    /**
      * The tooltip text to show when hovering over the icon button.
      */
     tooltipText: string;
@@ -32,7 +40,7 @@ export type CopyIconButtonProps = {
  * @param {CopyIconButtonProps} props - The {@link CopyIconButtonProps}.
  * @returns A {@link CopyIconButton} component.
  */
-export const CopyIconButton = ({ text, message, tooltipText }: CopyIconButtonProps) => {
+export const CopyIconButton = ({ text, message, color, tooltipText }: CopyIconButtonProps) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const handleImageCopy = () => {
@@ -41,6 +49,6 @@ export const CopyIconButton = ({ text, message, tooltipText }: CopyIconButtonPro
     };
 
     return (
-        <IconButton tooltipText={tooltipText} icon='CopyAllRounded' onClick={handleImageCopy} />
+        <IconButton tooltipText={tooltipText} icon='CopyAllRounded' color={color ?? 'inherit'} onClick={handleImageCopy} />
     );
 };

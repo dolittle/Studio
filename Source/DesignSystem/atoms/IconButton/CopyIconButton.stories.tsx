@@ -18,6 +18,7 @@ metadata.parameters = {
 metadata.args = {
     text: 'Text copied to clipboard.',
     message: 'Text copied to clipboard.',
+    color: 'inherit',
     tooltipText: 'Copy text.',
 };
 
