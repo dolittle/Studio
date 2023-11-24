@@ -12,7 +12,7 @@ import { KafkaServiceAccountListDto } from '../../../../../apis/integrations/gen
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 import { useConnectionsIdKafkaServiceAccountsServiceAccountNameDelete } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 
-import { ServiceAccountsTable } from './ServiceAccountsTable';
+import { ServiceAccountsDataGrid } from './ServiceAccountsDataGrid';
 import { ViewCertificateDialog } from './ViewCertificateDialog';
 import { ViewKeyDialog } from './ViewKeyDialog';
 import { viewCredentialsDialogReducer } from './viewCredentialsDialogReducer';
@@ -80,9 +80,11 @@ export const ServiceAccountsTableSection = ({ items, isLoading, connectionId }: 
                 onDelete={handleDelete}
             />
 
-            <ServiceAccountsTable
-                items={items}
+            <ServiceAccountsDataGrid
+                serviceAccountsDataGridRows={items}
                 isLoading={isLoading}
+                onServiceAccountCreate={() => { }}
+                onServiceAccountDelete={() => handleDelete(selectedIds)}
                 onSelectionChanged={setSelectedIds}
                 onViewCertificate={
                     (account) => {

@@ -3,25 +3,26 @@
 
 import React, { useMemo } from 'react';
 
-import { Paper } from '@mui/material';
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 
-import { Button, StatusIndicator } from '@dolittle/design-system';
+import { Button, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, StatusIndicator } from '@dolittle/design-system';
 
 import { KafkaServiceAccountListDto } from '../../../../../apis/integrations/generated';
 
 import { formatDate } from '../../../../../utils/helpers/dates';
 
-export type ServiceAccountsTableProps = {
-    items: KafkaServiceAccountListDto[];
+export type ServiceAccountsDataGridProps = {
+    serviceAccountsDataGridRows: KafkaServiceAccountListDto[];
     isLoading: boolean;
+    onServiceAccountCreate: () => void;
+    onServiceAccountDelete: () => void;
     onViewCertificate: (serviceAccount: KafkaServiceAccountListDto) => void;
     onViewKey: (serviceAccount: KafkaServiceAccountListDto) => void;
     onSelectionChanged: (selection: string[]) => void;
 };
 
-export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onViewKey, onSelectionChanged }: ServiceAccountsTableProps) => {
-    const columns: GridColDef<KafkaServiceAccountListDto>[] = useMemo(() => [
+export const ServiceAccountsDataGrid = ({ serviceAccountsDataGridRows, isLoading, onServiceAccountCreate, onServiceAccountDelete, onViewCertificate, onViewKey, onSelectionChanged }: ServiceAccountsDataGridProps) => {
+    const serviceAccountsDataGridColumns: GridColDef<KafkaServiceAccountListDto>[] = useMemo(() => [
         {
             field: 'serviceAccountName',
             headerName: 'Name',
@@ -78,25 +79,24 @@ export const ServiceAccountsTable = ({ items, isLoading, onViewCertificate, onVi
     ], [onViewCertificate, onViewKey]);
 
     return (
-        <Paper sx={{ width: 1 }}>
+        <DataGridWrapper background='dark'>
             <DataGridPro
-                rows={items}
-                columns={columns}
-                autoHeight
-                disableSelectionOnClick
-                disableColumnMenu
-                disableColumnReorder
-                disableColumnResize
-                disableColumnSelector
-                disableMultipleSelection
-                checkboxSelection
-                getRowHeight={() => 'auto'}
-                headerHeight={46}
-                hideFooter
+                {...dataGridDefaultProps}
+                rows={serviceAccountsDataGridRows}
+                columns={serviceAccountsDataGridColumns}
                 loading={isLoading}
-                getRowId={row => row.serviceAccountName!}
+                getRowId={row => row.serviceAccountName}
+                checkboxSelection
                 onSelectionModelChange={model => onSelectionChanged(model as string[])}
+                components={{
+                    Toolbar: () => (
+                        <DataGridCustomToolbar title='Your Service Accounts'>
+                            <Button label='Generate New Service Account' startWithIcon='AddCircle' onClick={onServiceAccountCreate} />
+                            <Button label='Delete Service Accounts' color='error' startWithIcon='DeleteRounded' onClick={onServiceAccountDelete} />
+                        </DataGridCustomToolbar>
+                    ),
+                }}
             />
-        </Paper>
+        </DataGridWrapper>
     );
 };

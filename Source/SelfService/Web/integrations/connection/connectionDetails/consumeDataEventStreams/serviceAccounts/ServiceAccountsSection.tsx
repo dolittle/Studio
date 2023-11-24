@@ -5,7 +5,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 
 import { Collapse } from '@mui/material';
 
-import { AlertBox, ContentParagraph, ContentSection } from '@dolittle/design-system';
+import { AlertBox, ContentParagraph, ContentSection, ContentWithSubtitle, NoContentSection } from '@dolittle/design-system';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
@@ -15,6 +15,7 @@ import { GenerateServiceAccountForm } from './GenerateServiceAccountForm';
 import { ServiceAccountsTableSection } from './ServiceAccountsTableSection';
 
 import { GenerateServiceAccountDialog } from './generateServiceAccountDialog';
+import { ServiceAccountsDataGrid } from './ServiceAccountsDataGrid';
 
 export const ServiceAccountsSection = () => {
     const connectionId = useConnectionIdFromRoute();
@@ -81,20 +82,60 @@ export const ServiceAccountsSection = () => {
                 onDialogClose={() => setIsGenerateServiceAccountDialogOpen(false)}
             />
 
+            <ContentWithSubtitle title='Service Accounts' infoTooltipLabel='Manage service accounts to be used in apps connecting to the Async API.'>
+                <NoContentSection
+                    title='No Service Accounts yet...'
+                    description={`To generate New Service Account, select 'Generate New Service Account'. Provide a name, description and set its access rights.`}
+                    label='Generate New Service Account'
+                    icon='RocketLaunch'
+                    //isDisabled={disabled}
+                    onCreate={() => setIsGenerateServiceAccountDialogOpen(true)}
+                    sx={{ p: 0 }}
+                />
 
-            <Collapse in={expandForm}>
-                <ContentSection hideDivider title='Generate New Service Account'>
-                    <GenerateServiceAccountForm
-                        resetForm={resetForm}
-                        connectionId={connectionId}
-                        onFormComplete={handleNewGenerated}
-                        onFormCancelled={handleFormCancelled}
-                        canCancel={items.length > 0}
-                    />
-                </ContentSection>
-            </Collapse>
+                <ServiceAccountsDataGrid
+                    serviceAccountsDataGridRows={items}
+                    isLoading={isLoading}
+                    onServiceAccountCreate={() => setIsGenerateServiceAccountDialogOpen(true)}
+                    onServiceAccountDelete={() => setIsGenerateServiceAccountDialogOpen(true)}
+                    onViewCertificate={() => { }}
+                    onViewKey={() => { }}
+                    onSelectionChanged={setSelectedIds}
+                />
+            </ContentWithSubtitle>
 
-            <ServiceAccountsTableSection items={items} isLoading={isLoading} connectionId={connectionId} />
-        </ContentSection>
+            <ContentSection
+                title='Service Accounts'
+                headerProps={{
+                    titleTextVariant: 'title',
+                    buttons: allowGenerateNew ? [
+                        {
+                            label: 'Generate new service account',
+                            variant: 'outlined',
+                            onClick: handleGenerateNewEntry,
+                            disabled: !allowGenerateNew
+                        }
+                    ] : []
+                }}
+            >
+                <ContentParagraph>
+                    Manage service accounts to be used in apps connecting to the Async API
+                </ContentParagraph>
+
+                <Collapse in={expandForm}>
+                    <ContentSection hideDivider title='Generate New Service Account'>
+                        <GenerateServiceAccountForm
+                            resetForm={resetForm}
+                            connectionId={connectionId}
+                            onFormComplete={handleNewGenerated}
+                            onFormCancelled={handleFormCancelled}
+                            canCancel={items.length > 0}
+                        />
+                    </ContentSection>
+                </Collapse>
+
+                <ServiceAccountsTableSection items={items} isLoading={isLoading} connectionId={connectionId} />
+            </ContentSection>
+        </>
     );
 };
