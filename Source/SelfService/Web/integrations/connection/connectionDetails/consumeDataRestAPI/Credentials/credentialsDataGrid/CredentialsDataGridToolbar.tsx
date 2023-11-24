@@ -3,8 +3,6 @@
 
 import React from 'react';
 
-import { Box } from '@mui/material';
-
 import { Button, DataGridCustomToolbar } from '@dolittle/design-system';
 
 export type CredentialsDataGridToolbarProps = {
@@ -16,8 +14,6 @@ export type CredentialsDataGridToolbarProps = {
 
 export const CredentialsDataGridToolbar = ({ onGenerate, onDelete, isGenerateButtonDisabled, isDeleteButtonDisabled }: CredentialsDataGridToolbarProps) =>
     <DataGridCustomToolbar title='Your credentials'>
-        <Box sx={{ display: 'flex' }}>
-            <Button label='Generate new credentials' startWithIcon='AddCircle' disabled={isGenerateButtonDisabled} onClick={onGenerate} sx={{ mr: 1 }} />
-            <Button label='Delete credentials' color='error' startWithIcon='DeleteRounded' disabled={isDeleteButtonDisabled} onClick={onDelete} />
-        </Box>
+        <Button label='Generate new credentials' startWithIcon='AddCircle' disabled={isGenerateButtonDisabled} onClick={onGenerate} />
+        <Button label='Delete credentials' color='error' startWithIcon='DeleteRounded' disabled={isDeleteButtonDisabled} onClick={onDelete} />
     </DataGridCustomToolbar>;
