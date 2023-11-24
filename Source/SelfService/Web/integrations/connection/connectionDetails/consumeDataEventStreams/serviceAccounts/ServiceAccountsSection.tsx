@@ -14,11 +14,16 @@ import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../apis/int
 import { GenerateServiceAccountForm } from './GenerateServiceAccountForm';
 import { ServiceAccountsTableSection } from './ServiceAccountsTableSection';
 
+import { GenerateServiceAccountDialog } from './generateServiceAccountDialog';
+
 export const ServiceAccountsSection = () => {
     const connectionId = useConnectionIdFromRoute();
 
     const [expandForm, setExpandForm] = useState(false);
     const [resetForm, setResetForm] = useState(false);
+
+    const [isGenerateServiceAccountDialogOpen, setIsGenerateServiceAccountDialogOpen] = useState(false);
+    const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
     const { data, isLoading, isError, error } = useConnectionsIdKafkaServiceAccountsGet({ id: connectionId }, {
         refetchInterval(data, query) {
@@ -69,23 +74,13 @@ export const ServiceAccountsSection = () => {
     if (isError) return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
 
     return (
-        <ContentSection
-            title='Service Accounts'
-            headerProps={{
-                titleTextVariant: 'title',
-                buttons: allowGenerateNew ? [
-                    {
-                        label: 'Generate new service account',
-                        variant: 'outlined',
-                        onClick: handleGenerateNewEntry,
-                        disabled: !allowGenerateNew
-                    }
-                ] : []
-            }}
-        >
-            <ContentParagraph>
-                Manage service accounts to be used in apps connecting to the Async API
-            </ContentParagraph>
+        <>
+            <GenerateServiceAccountDialog
+                connectionId={connectionId}
+                isDialogOpen={isGenerateServiceAccountDialogOpen}
+                onDialogClose={() => setIsGenerateServiceAccountDialogOpen(false)}
+            />
+
 
             <Collapse in={expandForm}>
                 <ContentSection hideDivider title='Generate New Service Account'>
