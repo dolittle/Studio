@@ -12,7 +12,7 @@ import { KafkaServiceAccountListDto } from '../../../../../apis/integrations/gen
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 import { useConnectionsIdKafkaServiceAccountsServiceAccountNameDelete } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 
-import { ServiceAccountsDataGrid } from './ServiceAccountsDataGrid';
+import { ServiceAccountsDataGrid } from './serviceAccountsDataGrid/ServiceAccountsDataGrid';
 import { ViewCertificateDialog } from './ViewCertificateDialog';
 import { ViewKeyDialog } from './ViewKeyDialog';
 import { viewCredentialsDialogReducer } from './viewCredentialsDialogReducer';
