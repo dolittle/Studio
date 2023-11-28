@@ -1,48 +1,62 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useReducer, useState } from 'react';
 
 import { DataGridPro } from '@mui/x-data-grid-pro';
 
-import { Button, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
+import { dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
 
 import { KafkaServiceAccountListDto } from '../../../../../../apis/integrations/generated';
 
+import { ServiceAccountsDataGridToolbar } from './ServiceAccountsDataGridToolbar';
 import { serviceAccountsDataGridColumns } from './ServiceAccountsDataGridColumns';
 
+import { ViewCertificateDialog } from '../ViewCertificateDialog';
+import { ViewKeyDialog } from '../ViewKeyDialog';
+import { viewCredentialsDialogReducer } from '../viewCredentialsDialogReducer';
+
 export type ServiceAccountsDataGridProps = {
-    serviceAccountsDataGridRows: KafkaServiceAccountListDto[];
+    connectionId: string;
     isLoading: boolean;
-    onServiceAccountCreate: () => void;
-    onServiceAccountDelete: () => void;
-    onViewCertificate: (serviceAccount: KafkaServiceAccountListDto) => void;
-    onViewKey: (serviceAccount: KafkaServiceAccountListDto) => void;
-    onSelectionChanged: (selection: string[]) => void;
+    serviceAccountsDataGridRows: KafkaServiceAccountListDto[];
 };
 
-export const ServiceAccountsDataGrid = ({ serviceAccountsDataGridRows, isLoading, onServiceAccountCreate, onServiceAccountDelete, onViewCertificate, onViewKey, onSelectionChanged }: ServiceAccountsDataGridProps) => {
-    const columns = useMemo(() => serviceAccountsDataGridColumns(onViewCertificate, onViewKey), [onViewCertificate, onViewKey]);
+export const ServiceAccountsDataGrid = ({ connectionId, isLoading, serviceAccountsDataGridRows }: ServiceAccountsDataGridProps) => {
+    const [viewCertificateDialogState, viewCertificateDialogDispatch] = useReducer(viewCredentialsDialogReducer, { isOpen: false, connectionId });
+    const [viewKeyDialogState, viewKeyDialogDispatch] = useReducer(viewCredentialsDialogReducer, { isOpen: false, connectionId });
+
+    const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+    const handleCertificateView = (serviceAccount: KafkaServiceAccountListDto) => {
+        viewCertificateDialogDispatch({ type: 'open', payload: { serviceAccountName: serviceAccount.serviceAccountName! } });
+    };
+
+    const handleKeyView = (serviceAccount: KafkaServiceAccountListDto) => {
+        viewKeyDialogDispatch({ type: 'open', payload: { serviceAccountName: serviceAccount.serviceAccountName! } });
+    };
+
+    const columns = useMemo(() => serviceAccountsDataGridColumns(handleCertificateView, handleKeyView), [handleCertificateView, handleKeyView]);
 
     return (
-        <DataGridWrapper background='dark'>
-            <DataGridPro
-                {...dataGridDefaultProps}
-                rows={serviceAccountsDataGridRows}
-                columns={columns}
-                loading={isLoading}
-                getRowId={row => row.serviceAccountName}
-                checkboxSelection
-                onSelectionModelChange={model => onSelectionChanged(model as string[])}
-                components={{
-                    Toolbar: () => (
-                        <DataGridCustomToolbar title='Your Service Accounts'>
-                            <Button label='Generate New Service Account' startWithIcon='AddCircle' onClick={onServiceAccountCreate} />
-                            <Button label='Delete Service Accounts' color='error' startWithIcon='DeleteRounded' onClick={onServiceAccountDelete} />
-                        </DataGridCustomToolbar>
-                    ),
-                }}
-            />
-        </DataGridWrapper>
+        <>
+            <ViewCertificateDialog dialogState={viewCertificateDialogState} dispatch={viewCertificateDialogDispatch} />
+            <ViewKeyDialog dialogState={viewKeyDialogState} dispatch={viewKeyDialogDispatch} />
+
+            <DataGridWrapper background='dark'>
+                <DataGridPro
+                    {...dataGridDefaultProps}
+                    rows={serviceAccountsDataGridRows}
+                    columns={columns}
+                    loading={isLoading}
+                    getRowId={row => row.serviceAccountName}
+                    checkboxSelection
+                    onSelectionModelChange={model => setSelectedIds(model as string[])}
+                    components={{
+                        Toolbar: () => <ServiceAccountsDataGridToolbar connectionId={connectionId} selectedRowIds={selectedIds} />,
+                    }}
+                />
+            </DataGridWrapper>
+        </>
     );
 };

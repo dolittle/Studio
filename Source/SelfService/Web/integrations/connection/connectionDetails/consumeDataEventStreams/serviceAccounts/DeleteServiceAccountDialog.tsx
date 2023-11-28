@@ -1,59 +1,69 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { Dispatch } from 'react';
+import React, { useState } from 'react';
+
+import { useSnackbar } from 'notistack';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { Typography } from '@mui/material';
 
 import { Dialog } from '@dolittle/design-system/';
 
-export type DeleteServiceAccountDialogState = {
-    open: boolean;
-    connectionId: string;
-    serviceAccounts: string[];
-    isLoading: boolean;
-};
-
-export type ACTIONTYPE =
-    | { type: 'open'; payload: { serviceAccounts: string[] } }
-    | { type: 'close'; payload?: void }
-    | { type: 'loading'; payload: { isLoading: boolean } };
-
-export const deleteServiceAccountDialogReducer = (state: DeleteServiceAccountDialogState, action: ACTIONTYPE) => {
-    switch (action.type) {
-        case 'open':
-            return { ...state, open: true, serviceAccounts: action.payload.serviceAccounts };
-        case 'close':
-            return { ...state, open: false, serviceAccounts: [], isLoading: false };
-        case 'loading':
-            return { ...state, isLoading: action.payload.isLoading };
-        default:
-            return state;
-    }
-};
+import { useConnectionsIdKafkaServiceAccountsServiceAccountNameDelete } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
+import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 
 export type DeleteServiceAccountDialogProps = {
-    dispatch: Dispatch<ACTIONTYPE>;
-    state: DeleteServiceAccountDialogState;
-    onDelete: (serviceAccounts: string[]) => void;
+    connectionId: string;
+    selectedRowIds: string[];
+    isDialogOpen: boolean;
+    onDialogClose: () => void;
 };
 
-export const DeleteServiceAccountDialog = ({ dispatch, state, onDelete }: DeleteServiceAccountDialogProps) => {
-    const hasMany = state.serviceAccounts.length > 1;
+export const DeleteServiceAccountDialog = ({ connectionId, selectedRowIds, isDialogOpen, onDialogClose }: DeleteServiceAccountDialogProps) => {
+    const { enqueueSnackbar } = useSnackbar();
+    const queryClient = useQueryClient();
+    const deleteMutation = useConnectionsIdKafkaServiceAccountsServiceAccountNameDelete();
+
+    const [isDeletingServiceAccounts, setIsDeletingServiceAccounts] = useState(false);
+
+    const handleServiceAccountDelete = (serviceAccounts: string[]) => {
+        setIsDeletingServiceAccounts(true);
+        const deleteMutations = serviceAccounts.map(id => deleteMutation.mutateAsync({ id: connectionId, serviceAccountName: id }));
+
+        Promise.allSettled(deleteMutations)
+            .then(results => {
+                results.forEach((result, index) => {
+                    const id = serviceAccounts[index];
+                    if (result.status === 'fulfilled') {
+                        enqueueSnackbar(`Successfully deleted service account '${id}'.`);
+                    } else {
+                        enqueueSnackbar(`Failed to delete service account '${id}': ${result.reason}.`, { variant: 'error' });
+                    }
+                });
+                queryClient.invalidateQueries([CACHE_KEYS.ConnectionKafkaServiceAccounts_GET, connectionId]);
+            })
+            .finally(() => {
+                onDialogClose();
+                setIsDeletingServiceAccounts(false);
+            });
+    };
+
+    const hasMany = selectedRowIds.length > 1;
 
     return (
         <Dialog
             id='delete-service-account'
-            isOpen={state.open}
+            isOpen={isDialogOpen}
             title={`Delete service account${hasMany ? 's' : ''}`}
             description={`Are you sure you want to delete the selected service account${hasMany ? 's' : ''}?`}
-            isLoading={state.isLoading}
-            onCancel={() => dispatch({ type: 'close' })}
+            isLoading={isDeletingServiceAccounts}
+            onCancel={onDialogClose}
             confirmBtnLabel='Delete'
             confirmBtnColor='error'
-            onConfirm={() => onDelete(state.serviceAccounts)}
+            onConfirm={() => handleServiceAccountDelete(selectedRowIds)}
         >
-            {state.serviceAccounts.map(serviceAccount => <Typography key={serviceAccount}>{`"${serviceAccount}"`}</Typography>)}
+            {selectedRowIds.map(row => <Typography key={row}>{`"${row}"`}</Typography>)}
         </Dialog>
     );
 };
