@@ -8,6 +8,7 @@ import { RouteObject } from 'react-router-dom';
 import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
 import { CommandsView } from './connectionDetails/commands';
+import { ConsumeDataView } from './connectionDetails/consumeData';
 import { ConsumeDataRestAPIView } from './connectionDetails/consumeData/consumeDataRestAPI';
 import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { MessagesViewRoot } from './connectionDetails/messages';
@@ -47,7 +48,7 @@ export const routes: RouteObject[] = [
             }, */
             {
                 path: 'consume-data-rest-api',
-                element: <ConsumeDataRestAPIView />,
+                element: <ConsumeDataView />,
             },
             {
                 path: 'consume-data-event-streams',
