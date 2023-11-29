@@ -7,7 +7,7 @@ import { ContentContainer, ContentHeader, ContentParagraph } from '@dolittle/des
 
 import { SpecificationSection } from './SpecificationSection';
 import { ResourcesSection } from './ResourcesSection';
-import { ServiceAccountsSection } from './serviceAccounts/ServiceAccountsSection';
+import { ServiceAccountsSection } from './serviceAccountsSection';
 
 export const ConsumeDataEventStreamsView = () =>
     <ContentContainer>

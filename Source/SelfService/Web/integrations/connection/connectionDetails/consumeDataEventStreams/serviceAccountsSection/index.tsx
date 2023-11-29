@@ -10,7 +10,7 @@ import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 
 import { NoServiceAccounts } from './NoServiceAccounts';
-import { ServiceAccountsDataGrid } from './serviceAccountsDataGrid/ServiceAccountsDataGrid';
+import { ServiceAccountsDataGrid } from './serviceAccountsDataGrid';
 
 export const ServiceAccountsSection = () => {
     const connectionId = useConnectionIdFromRoute();
