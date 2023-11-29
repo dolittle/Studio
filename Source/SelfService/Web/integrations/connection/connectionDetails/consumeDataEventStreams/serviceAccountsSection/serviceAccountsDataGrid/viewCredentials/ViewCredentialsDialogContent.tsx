@@ -5,7 +5,7 @@ import React from 'react';
 
 import { DialogContent } from '@mui/material';
 
-import { TextCopyBox } from '../../../../../../components/TextCopyBox';
+import { TextCopyBox } from '../../../../../../../components/TextCopyBox';
 
 export type ViewCredentialsDialogContentProps = {
     content: string

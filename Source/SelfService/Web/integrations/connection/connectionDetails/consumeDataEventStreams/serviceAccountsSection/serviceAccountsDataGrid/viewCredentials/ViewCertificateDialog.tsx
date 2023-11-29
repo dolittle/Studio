@@ -7,7 +7,7 @@ import { Dialog, DialogTitle, DialogActions } from '@mui/material';
 
 import { Button, IconButton, LoadingSpinner } from '@dolittle/design-system';
 
-import { useConnectionsIdKafkaServiceAccountsServiceAccountNameGet } from '../../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
+import { useConnectionsIdKafkaServiceAccountsServiceAccountNameGet } from '../../../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 
 import { ACTIONTYPE, ViewCredentialsDialogState } from './viewCredentialsDialogReducer';
 import { ViewCredentialsDialogContent } from './ViewCredentialsDialogContent';
