@@ -41,10 +41,10 @@ export const routes: RouteObject[] = [
                     },
                 ],
             },
-            {
+            /* {
                 path: 'commands',
                 element: <CommandsView />,
-            },
+            }, */
             {
                 path: 'consume-data-rest-api',
                 element: <ConsumeDataRestAPIView />,
