@@ -7,7 +7,7 @@ import { Dialog, DialogTitle, DialogActions } from '@mui/material';
 
 import { Button, IconButton, LoadingSpinner } from '@dolittle/design-system';
 
-import { useConnectionsIdKafkaServiceAccountsServiceAccountNameGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
+import { useConnectionsIdKafkaServiceAccountsServiceAccountNameGet } from '../../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 
 import { ACTIONTYPE, ViewCredentialsDialogState } from './viewCredentialsDialogReducer';
 import { ViewCredentialsDialogContent } from './ViewCredentialsDialogContent';
@@ -26,15 +26,15 @@ const styles = {
     },
 };
 
-export type ViewCertificateDialogProps = {
+export type ViewKeyDialogProps = {
     dispatch: Dispatch<ACTIONTYPE>;
     dialogState: ViewCredentialsDialogState;
 };
 
-const id = 'view-certificate';
+const id = 'view-key';
 
-export const ViewCertificateDialog = ({ dialogState, dispatch }: ViewCertificateDialogProps) => {
-    const { data, isLoading } = useConnectionsIdKafkaServiceAccountsServiceAccountNameGet({ id: dialogState.connectionId, serviceAccountName: dialogState.serviceAccountName || '' });
+export const ViewKeyDialog = ({ dialogState, dispatch }: ViewKeyDialogProps) => {
+    const { data, isFetching } = useConnectionsIdKafkaServiceAccountsServiceAccountNameGet({ id: dialogState.connectionId, serviceAccountName: dialogState.serviceAccountName || '' });
 
     const handleClose = () => {
         dispatch({ type: 'close' });
@@ -51,15 +51,15 @@ export const ViewCertificateDialog = ({ dialogState, dispatch }: ViewCertificate
             onClose={() => dispatch({ type: 'close' })}
         >
             <DialogTitle id={`${id}-${dialogState.serviceAccountName}-dialog-title`} sx={styles.title}>
-                View Certificate for {dialogState.serviceAccountName}
+                View Key for {dialogState.serviceAccountName}
                 <IconButton tooltipText='Close dialog' edge='end' onClick={handleClose} />
             </DialogTitle>
 
-            {isLoading
+            {isFetching
                 ? <LoadingSpinner />
                 : <ViewCredentialsDialogContent
-                    content={data?.certificate!}
-                    downloadableFileName={`service-${dialogState.serviceAccountName}.cert`}
+                    content={data?.key!}
+                    downloadableFileName={`service-${dialogState.serviceAccountName}.key`}
                 />
             }
 

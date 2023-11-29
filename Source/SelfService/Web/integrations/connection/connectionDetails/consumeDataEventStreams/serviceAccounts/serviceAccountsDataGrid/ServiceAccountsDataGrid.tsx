@@ -12,9 +12,9 @@ import { KafkaServiceAccountListDto } from '../../../../../../apis/integrations/
 import { ServiceAccountsDataGridToolbar } from './ServiceAccountsDataGridToolbar';
 import { serviceAccountsDataGridColumns } from './ServiceAccountsDataGridColumns';
 
-import { ViewCertificateDialog } from '../ViewCertificateDialog';
-import { ViewKeyDialog } from '../ViewKeyDialog';
-import { viewCredentialsDialogReducer } from '../viewCredentialsDialogReducer';
+import { ViewCertificateDialog } from './ViewCertificateDialog';
+import { ViewKeyDialog } from './ViewKeyDialog';
+import { viewCredentialsDialogReducer } from './viewCredentialsDialogReducer';
 
 export type ServiceAccountsDataGridProps = {
     connectionId: string;
