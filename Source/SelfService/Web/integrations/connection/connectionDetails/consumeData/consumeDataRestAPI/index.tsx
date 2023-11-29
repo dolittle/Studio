@@ -18,7 +18,7 @@ import { getIndicatorStatusFromStatusMessage } from '../../../../statusHelpers';
 /* The ERP ReadModels -service must be specific to the connection, so we need
     to generate the URL dynamically. */
 
-export const ConsumeDataRestAPIView = () => {
+export const ConsumeDataRestAPIIndex = () => {
     const connectionId = useConnectionIdFromRoute();
 
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);

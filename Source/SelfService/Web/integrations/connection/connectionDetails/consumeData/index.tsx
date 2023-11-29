@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import { ConsumeDataRestAPIView } from './consumeDataRestAPI';
-import { ConsumeDataEventStreamsView } from './consumeDataEventStreams';
+import { ConsumeDataRestAPIIndex } from './consumeDataRestAPI';
+import { ConsumeDataEventStreamsIndex } from './consumeDataEventStreams';
 
 export const ConsumeDataView = () =>
     <>
-        <ConsumeDataRestAPIView />
-        <ConsumeDataEventStreamsView />
+        <ConsumeDataRestAPIIndex />
+        <ConsumeDataEventStreamsIndex />
     </>;

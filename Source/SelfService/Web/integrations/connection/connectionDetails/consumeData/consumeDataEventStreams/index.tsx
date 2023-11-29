@@ -9,7 +9,7 @@ import { SpecificationSection } from './SpecificationSection';
 import { ResourcesSection } from './ResourcesSection';
 import { ServiceAccountsSection } from './serviceAccountsSection';
 
-export const ConsumeDataEventStreamsView = () =>
+export const ConsumeDataEventStreamsIndex = () =>
     <ContentContainer>
         <ContentHeader title='Async API' status={{ status: 'success', label: 'Active' }} />
 

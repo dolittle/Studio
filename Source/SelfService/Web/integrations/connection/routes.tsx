@@ -9,11 +9,10 @@ import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
 import { CommandsView } from './connectionDetails/commands';
 import { ConsumeDataView } from './connectionDetails/consumeData';
-import { ConsumeDataRestAPIView } from './connectionDetails/consumeData/consumeDataRestAPI';
 import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { MessagesViewRoot } from './connectionDetails/messages';
 import { Index as ChangeMessageView } from './connectionDetails/messages/changeMessage';
-import { ConsumeDataEventStreamsView } from './connectionDetails/consumeData/consumeDataEventStreams';
+import { ConsumeDataEventStreamsIndex } from './connectionDetails/consumeData/consumeDataEventStreams';
 
 export const routes: RouteObject[] = [
     {
@@ -52,7 +51,7 @@ export const routes: RouteObject[] = [
             },
             {
                 path: 'consume-data-event-streams',
-                element: <ConsumeDataEventStreamsView />,
+                element: <ConsumeDataEventStreamsIndex />,
             },
         ],
     },
