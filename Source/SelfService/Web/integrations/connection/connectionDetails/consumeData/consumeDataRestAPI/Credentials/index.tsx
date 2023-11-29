@@ -5,8 +5,8 @@ import React, { useMemo, useState } from 'react';
 
 import { AlertBox, ContentWithSubtitle } from '@dolittle/design-system';
 
-import { useConnectionsIdServiceAccountsGet } from '../../../../../apis/integrations/serviceAccountApi.hooks';
-import { useConnectionIdFromRoute } from '../../../../routes.hooks';
+import { useConnectionsIdServiceAccountsGet } from '../../../../../../apis/integrations/serviceAccountApi.hooks';
+import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
 
 import { CredentialsDataGridIndex } from './credentialsDataGrid';
 

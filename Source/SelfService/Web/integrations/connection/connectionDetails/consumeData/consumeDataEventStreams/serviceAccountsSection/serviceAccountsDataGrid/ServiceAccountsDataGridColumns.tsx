@@ -7,9 +7,9 @@ import { GridColDef } from '@mui/x-data-grid-pro';
 
 import { Button, StatusIndicator } from '@dolittle/design-system';
 
-import { KafkaServiceAccountListDto } from '../../../../../../apis/integrations/generated';
+import { KafkaServiceAccountListDto } from '../../../../../../../apis/integrations/generated';
 
-import { formatDate } from '../../../../../../utils/helpers/dates';
+import { formatDate } from '../../../../../../../utils/helpers/dates';
 
 export const serviceAccountsDataGridColumns = (onViewCertificate: (serviceAccount: KafkaServiceAccountListDto) => void, onViewKey: (serviceAccount: KafkaServiceAccountListDto) => void) => {
     const CertificatesCell = (params) => {

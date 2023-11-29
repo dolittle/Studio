@@ -8,11 +8,11 @@ import { RouteObject } from 'react-router-dom';
 import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
 import { CommandsView } from './connectionDetails/commands';
-import { ConsumeDataRestAPIView } from './connectionDetails/consumeDataRestAPI';
+import { ConsumeDataRestAPIView } from './connectionDetails/consumeData/consumeDataRestAPI';
 import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { MessagesViewRoot } from './connectionDetails/messages';
 import { Index as ChangeMessageView } from './connectionDetails/messages/changeMessage';
-import { ConsumeDataEventStreamsView } from './connectionDetails/consumeDataEventStreams';
+import { ConsumeDataEventStreamsView } from './connectionDetails/consumeData/consumeDataEventStreams';
 
 export const routes: RouteObject[] = [
     {

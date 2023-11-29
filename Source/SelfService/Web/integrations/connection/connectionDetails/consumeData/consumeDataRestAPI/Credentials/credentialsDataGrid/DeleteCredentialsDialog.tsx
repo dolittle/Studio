@@ -10,8 +10,8 @@ import { Typography } from '@mui/material';
 
 import { Dialog } from '@dolittle/design-system/';
 
-import { CACHE_KEYS } from '../../../../../../apis/integrations/CacheKeys';
-import { useConnectionsIdServiceAccountsServiceAccountNameDelete } from '../../../../../../apis/integrations/serviceAccountApi.hooks';
+import { CACHE_KEYS } from '../../../../../../../apis/integrations/CacheKeys';
+import { useConnectionsIdServiceAccountsServiceAccountNameDelete } from '../../../../../../../apis/integrations/serviceAccountApi.hooks';
 
 export type DeleteCredentialsDialogProps = {
     connectionId: string;

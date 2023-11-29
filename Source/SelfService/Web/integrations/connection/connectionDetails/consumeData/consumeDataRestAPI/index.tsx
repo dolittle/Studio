@@ -5,15 +5,15 @@ import React, { useState } from 'react';
 
 import { Button, ContentContainer, ContentHeader, ContentParagraph, LoadingSpinner } from '@dolittle/design-system';
 
-import { useConnectionsIdRestApiStatusGet } from '../../../../apis/integrations/connectionRestApiApi.hooks';
+import { useConnectionsIdRestApiStatusGet } from '../../../../../apis/integrations/connectionRestApiApi.hooks';
 
-import { useConnectionIdFromRoute } from '../../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { AccessIndex } from './access';
 import { CredentialsIndex } from './Credentials';
 import { DisableRestApiDialog } from './DisableRestApiDialog';
 
-import { getIndicatorStatusFromStatusMessage } from '../../../statusHelpers';
+import { getIndicatorStatusFromStatusMessage } from '../../../../statusHelpers';
 
 /* The ERP ReadModels -service must be specific to the connection, so we need
     to generate the URL dynamically. */

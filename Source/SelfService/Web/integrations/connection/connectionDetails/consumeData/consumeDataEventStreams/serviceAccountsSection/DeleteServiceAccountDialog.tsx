@@ -10,8 +10,8 @@ import { Typography } from '@mui/material';
 
 import { Dialog } from '@dolittle/design-system/';
 
-import { useConnectionsIdKafkaServiceAccountsServiceAccountNameDelete } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
-import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
+import { useConnectionsIdKafkaServiceAccountsServiceAccountNameDelete } from '../../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
+import { CACHE_KEYS } from '../../../../../../apis/integrations/CacheKeys';
 
 export type DeleteServiceAccountDialogProps = {
     connectionId: string;

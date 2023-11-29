@@ -7,7 +7,7 @@ import { DataGridPro } from '@mui/x-data-grid-pro';
 
 import { dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
 
-import { KafkaServiceAccountListDto } from '../../../../../../apis/integrations/generated';
+import { KafkaServiceAccountListDto } from '../../../../../../../apis/integrations/generated';
 
 import { ServiceAccountsDataGridToolbar } from './ServiceAccountsDataGridToolbar';
 import { serviceAccountsDataGridColumns } from './ServiceAccountsDataGridColumns';

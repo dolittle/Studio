@@ -8,9 +8,9 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { FormDialog } from '@dolittle/design-system';
 
-import { useConnectionsIdServiceAccountsServiceAccountNamePost } from '../../../../../../../apis/integrations/serviceAccountApi.hooks';
-import { ServiceAccountAccess, ServiceAccountCreatedDto, ResponseError } from '../../../../../../../apis/integrations/generated';
-import { CACHE_KEYS } from '../../../../../../../apis/integrations/CacheKeys';
+import { useConnectionsIdServiceAccountsServiceAccountNamePost } from '../../../../../../../../apis/integrations/serviceAccountApi.hooks';
+import { ServiceAccountAccess, ServiceAccountCreatedDto, ResponseError } from '../../../../../../../../apis/integrations/generated';
+import { CACHE_KEYS } from '../../../../../../../../apis/integrations/CacheKeys';
 
 import { GenerateCredentials } from './GenerateCredentials';
 import { GeneratedCredentialsSection } from './GeneratedCredentialsSection';

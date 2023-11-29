@@ -7,7 +7,7 @@ import { generatePath, useHref } from 'react-router-dom';
 
 import { ContentWithSubtitle, CopyIconButton, InlineWrapper, Link } from '@dolittle/design-system';
 
-import { useConnectionIdFromRoute } from '../../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 export const SpecificationSection = () => {
     const connectionId = useConnectionIdFromRoute();

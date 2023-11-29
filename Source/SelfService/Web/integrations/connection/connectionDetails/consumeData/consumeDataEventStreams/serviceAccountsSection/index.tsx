@@ -5,9 +5,9 @@ import React, { useMemo } from 'react';
 
 import { AlertBox, ContentWithSubtitle } from '@dolittle/design-system';
 
-import { useConnectionIdFromRoute } from '../../../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
 
-import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
+import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 
 import { NoServiceAccounts } from './NoServiceAccounts';
 import { ServiceAccountsDataGrid } from './serviceAccountsDataGrid';

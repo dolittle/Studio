@@ -5,8 +5,8 @@ import React from 'react';
 
 import { GridColDef } from '@mui/x-data-grid-pro';
 
-import { ServiceAccountListDto } from '../../../../../../apis/integrations/generated';
-import { formatDate } from '../../../../../../utils/helpers/dates';
+import { ServiceAccountListDto } from '../../../../../../../apis/integrations/generated';
+import { formatDate } from '../../../../../../../utils/helpers/dates';
 
 export const CredentialsDataGridColumns: GridColDef<ServiceAccountListDto>[] = [
     {

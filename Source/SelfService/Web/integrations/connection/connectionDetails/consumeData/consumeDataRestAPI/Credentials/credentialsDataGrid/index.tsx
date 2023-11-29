@@ -7,7 +7,7 @@ import { DataGridPro } from '@mui/x-data-grid-pro';
 
 import { dataGridDefaultProps, DataGridWrapper, NoContentSection } from '@dolittle/design-system';
 
-import { ServiceAccountListDto } from '../../../../../../apis/integrations/generated';
+import { ServiceAccountListDto } from '../../../../../../../apis/integrations/generated';
 
 import { GenerateCredentialsDialogIndex } from './generateCredentialsDialog';
 import { DeleteCredentialsDialog } from './DeleteCredentialsDialog';

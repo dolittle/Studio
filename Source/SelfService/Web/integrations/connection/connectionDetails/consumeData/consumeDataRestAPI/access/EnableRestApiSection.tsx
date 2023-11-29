@@ -8,10 +8,10 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { NoContentSection } from '@dolittle/design-system';
 
-import { useConnectionsIdRestApiEnablePost } from '../../../../../apis/integrations/connectionRestApiApi.hooks';
-import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
+import { useConnectionsIdRestApiEnablePost } from '../../../../../../apis/integrations/connectionRestApiApi.hooks';
+import { CACHE_KEYS } from '../../../../../../apis/integrations/CacheKeys';
 
-import { useConnectionIdFromRoute } from '../../../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
 
 export type EnableRestApiSectionProps = {
     disabled: boolean;
