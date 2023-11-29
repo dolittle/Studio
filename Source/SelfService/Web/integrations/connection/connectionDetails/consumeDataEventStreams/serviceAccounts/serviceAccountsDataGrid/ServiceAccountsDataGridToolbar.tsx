@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { Button, DataGridCustomToolbar } from '@dolittle/design-system';
 
-import { GenerateServiceAccountDialog } from '../generateServiceAccountDialog';
+import { GenerateServiceAccountDialog } from '../GenerateServiceAccountsDialog';
 import { DeleteServiceAccountDialog } from '../DeleteServiceAccountDialog';
 
 export type ServiceAccountsDataGridToolbarProps = {

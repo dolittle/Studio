@@ -8,9 +8,9 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { FormDialog, Input, Select } from '@dolittle/design-system';
 
-import { useConnectionsIdKafkaServiceAccountsServiceAccountNamePost } from '../../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
-import { AccountAccess, KafkaServiceAccountCreatedDto, ResponseError } from '../../../../../../apis/integrations/generated';
-import { CACHE_KEYS } from '../../../../../../apis/integrations/CacheKeys';
+import { useConnectionsIdKafkaServiceAccountsServiceAccountNamePost } from '../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
+import { AccountAccess, KafkaServiceAccountCreatedDto, ResponseError } from '../../../../../apis/integrations/generated';
+import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 
 export type GenerateKafkaServiceAccountFormParameters = {
     name: string;
