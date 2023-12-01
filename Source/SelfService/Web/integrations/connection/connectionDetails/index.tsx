@@ -14,7 +14,7 @@ import { PageTitle } from '../../../layout/PageTitle';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 import { getIndicatorStatusFromStatusMessage } from '../../statusHelpers';
 
-export const childRoutePaths = ['/configuration', '/messages', '/consume-data-rest-api', '/consume-data-event-streams']; //'/commands',
+export const childRoutePaths = ['/configuration', '/messages', '/consume-data'];
 
 const getSelectedTab = (location: Location) => {
     const pathname = location.pathname;
@@ -48,19 +48,11 @@ const tabs = [
             },
         }, */
     {
-        label: 'Consume Data (Rest API)',
+        label: 'Consume Data',
         render: () => <></>,
         overrides: {
             component: Link,
-            to: 'consume-data-rest-api',
-        },
-    },
-    {
-        label: 'Consume Data (Event Streams)',
-        render: () => <></>,
-        overrides: {
-            component: Link,
-            to: 'consume-data-event-streams',
+            to: 'consume-data',
         },
     },
 ];
