@@ -5,19 +5,31 @@ import React from 'react';
 
 import { ContentWithSubtitle } from '@dolittle/design-system';
 
+import { useConnectionsIdRestApiStatusGet } from '../../../../../../apis/integrations/connectionRestApiApi.hooks';
+
 import { EnableRestApiSection } from './EnableRestApiSection';
 import { RestApiDescriptionSection } from './RestApiDescriptionSection';
 
 export type AccessIndexProps = {
-    isApiDisabled: boolean;
-    isButtonDisabled: boolean;
-    restApiBaseUrl: string;
+    connectionId: string;
 };
 
-export const AccessIndex = ({ isApiDisabled, isButtonDisabled, restApiBaseUrl }: AccessIndexProps) =>
-    <ContentWithSubtitle title='Access' infoTooltipLabel='Our rest API is documented using OpenAPI.'>
-        {isApiDisabled
-            ? <EnableRestApiSection disabled={isButtonDisabled} />
-            : <RestApiDescriptionSection restApiBaseUrl={restApiBaseUrl} />
-        }
-    </ContentWithSubtitle>;
+/* The ERP ReadModels -service must be specific to the connection, so we need
+    to generate the URL dynamically. */
+
+export const AccessIndex = ({ connectionId }: AccessIndexProps) => {
+    const { data: apiStatus } = useConnectionsIdRestApiStatusGet({ id: connectionId });
+
+    const serviceStatus = apiStatus?.service || 'Off';
+    const showEnableRestApiSection = apiStatus?.target === 'Disabled' || serviceStatus === 'Deploying';
+    const isEnableRestApiBtnDisabled = serviceStatus === 'Deploying' || serviceStatus === 'Terminating';
+
+    return (
+        <ContentWithSubtitle title='Access' infoTooltipLabel='Our rest API is documented using OpenAPI.'>
+            {showEnableRestApiSection
+                ? <EnableRestApiSection connectionId={connectionId} isDisabled={isEnableRestApiBtnDisabled} />
+                : <RestApiDescriptionSection restApiBaseUrl={apiStatus?.basePath || ''} />
+            }
+        </ContentWithSubtitle>
+    );
+};

@@ -18,11 +18,10 @@ export type CredentialsDataGridIndexProps = {
     credentials: ServiceAccountListDto[];
     connectionId: string;
     isLoading: boolean;
-    isButtonDisabled: boolean;
     onActiveCredentialChange: (tokenName: string | undefined) => void;
 };
 
-export const CredentialsDataGridIndex = ({ credentials, connectionId, isLoading, isButtonDisabled, onActiveCredentialChange }: CredentialsDataGridIndexProps) => {
+export const CredentialsDataGridIndex = ({ credentials, connectionId, isLoading, onActiveCredentialChange }: CredentialsDataGridIndexProps) => {
     const [isCredentialsDialogOpen, setIsCredentialsDialogOpen] = useState(false);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -73,7 +72,6 @@ export const CredentialsDataGridIndex = ({ credentials, connectionId, isLoading,
                                     <CredentialsDataGridToolbar
                                         onGenerate={handleGenerateNewCredentials}
                                         onDelete={() => setIsDeleteDialogOpen(true)}
-                                        isGenerateButtonDisabled={isButtonDisabled}
                                         isDeleteButtonDisabled={!selectedIds.length}
                                     />
                                 ),
@@ -86,7 +84,6 @@ export const CredentialsDataGridIndex = ({ credentials, connectionId, isLoading,
                         description={`To generate your first credentials, select 'Generate New Credentials'. Provide a name, description and set its access rights.`}
                         label='Generate new credentials'
                         onCreate={handleGenerateNewCredentials}
-                        isDisabled={isButtonDisabled}
                     />
                 )}
         </>

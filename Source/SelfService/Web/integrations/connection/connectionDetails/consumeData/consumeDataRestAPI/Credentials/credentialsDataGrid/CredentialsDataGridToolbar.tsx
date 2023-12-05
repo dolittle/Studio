@@ -8,12 +8,11 @@ import { Button, DataGridCustomToolbar } from '@dolittle/design-system';
 export type CredentialsDataGridToolbarProps = {
     onGenerate: () => void;
     onDelete: () => void;
-    isGenerateButtonDisabled: boolean;
     isDeleteButtonDisabled: boolean;
 };
 
-export const CredentialsDataGridToolbar = ({ onGenerate, onDelete, isGenerateButtonDisabled, isDeleteButtonDisabled }: CredentialsDataGridToolbarProps) =>
+export const CredentialsDataGridToolbar = ({ onGenerate, onDelete, isDeleteButtonDisabled }: CredentialsDataGridToolbarProps) =>
     <DataGridCustomToolbar title='Your credentials'>
-        <Button label='Generate new credentials' startWithIcon='AddCircle' disabled={isGenerateButtonDisabled} onClick={onGenerate} />
+        <Button label='Generate new credentials' startWithIcon='AddCircle' onClick={onGenerate} />
         <Button label='Delete credentials' color='error' startWithIcon='DeleteRounded' disabled={isDeleteButtonDisabled} onClick={onDelete} />
     </DataGridCustomToolbar>;

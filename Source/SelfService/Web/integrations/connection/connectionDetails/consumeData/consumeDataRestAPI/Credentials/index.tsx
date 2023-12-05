@@ -6,17 +6,15 @@ import React, { useMemo, useState } from 'react';
 import { AlertBox, ContentWithSubtitle } from '@dolittle/design-system';
 
 import { useConnectionsIdServiceAccountsGet } from '../../../../../../apis/integrations/serviceAccountApi.hooks';
-import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
 
 import { CredentialsDataGridIndex } from './credentialsDataGrid';
 
 export type CredentialsIndexProps = {
-    isButtonDisabled: boolean;
+    connectionId: string;
 };
 
-export const CredentialsIndex = ({ isButtonDisabled }: CredentialsIndexProps) => {
-    const connectionId = useConnectionIdFromRoute();
-    const { data, isLoading, isError, error } = useConnectionsIdServiceAccountsGet({ id: connectionId });
+export const CredentialsIndex = ({ connectionId }: CredentialsIndexProps) => {
+    const { data, isLoading, error, isError } = useConnectionsIdServiceAccountsGet({ id: connectionId });
 
     const [activeCredential, setActiveCredential] = useState<string | undefined>(undefined);
 
@@ -31,12 +29,11 @@ export const CredentialsIndex = ({ isButtonDisabled }: CredentialsIndexProps) =>
     const infoText = 'Generate new credentials to be used as credentials in apps connecting to the Rest API service.';
 
     return (
-        <ContentWithSubtitle title='Credentials' infoTooltipLabel={infoText} sx={{ mb: 3 }}>
+        <ContentWithSubtitle title='Credentials' infoTooltipLabel={infoText}>
             <CredentialsDataGridIndex
                 credentials={credentials}
                 connectionId={connectionId}
                 isLoading={isLoading}
-                isButtonDisabled={isButtonDisabled}
                 onActiveCredentialChange={setActiveCredential}
             />
         </ContentWithSubtitle>

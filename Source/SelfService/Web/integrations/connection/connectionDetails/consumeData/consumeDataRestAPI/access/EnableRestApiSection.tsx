@@ -11,18 +11,15 @@ import { NoContentSection } from '@dolittle/design-system';
 import { useConnectionsIdRestApiEnablePost } from '../../../../../../apis/integrations/connectionRestApiApi.hooks';
 import { CACHE_KEYS } from '../../../../../../apis/integrations/CacheKeys';
 
-import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
-
 export type EnableRestApiSectionProps = {
-    disabled: boolean;
+    connectionId: string;
+    isDisabled: boolean;
 };
 
-export const EnableRestApiSection = ({ disabled }: EnableRestApiSectionProps) => {
+export const EnableRestApiSection = ({ connectionId, isDisabled }: EnableRestApiSectionProps) => {
     const { enqueueSnackbar } = useSnackbar();
-
     const queryClient = useQueryClient();
     const enableMutation = useConnectionsIdRestApiEnablePost();
-    const connectionId = useConnectionIdFromRoute();
 
     const handleEnableRestApi = () => {
         enableMutation.mutate({ id: connectionId }, {
@@ -42,9 +39,8 @@ export const EnableRestApiSection = ({ disabled }: EnableRestApiSectionProps) =>
             description={`To enable the Rest API service, press the 'Enable REST API' button. The first time you enable the Rest API may take a few minutes to set up and deploy your dedicated service.`}
             label='Enable Rest API'
             icon='RocketLaunch'
-            isDisabled={disabled}
+            isDisabled={isDisabled}
             onCreate={handleEnableRestApi}
-            sx={{ p: 0 }}
         />
     );
 };
