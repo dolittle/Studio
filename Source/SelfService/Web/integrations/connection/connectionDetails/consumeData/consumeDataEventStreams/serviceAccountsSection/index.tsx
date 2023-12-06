@@ -5,16 +5,16 @@ import React, { useMemo } from 'react';
 
 import { AlertBox, ContentWithSubtitle } from '@dolittle/design-system';
 
-import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
-
 import { useConnectionsIdKafkaServiceAccountsGet } from '../../../../../../apis/integrations/kafkaServiceAccountApi.hooks';
 
 import { NoServiceAccounts } from './NoServiceAccounts';
 import { ServiceAccountsDataGrid } from './serviceAccountsDataGrid';
 
-export const ServiceAccountsSection = () => {
-    const connectionId = useConnectionIdFromRoute();
+export type ServiceAccountsSectionProps = {
+    connectionId: string;
+};
 
+export const ServiceAccountsSection = ({ connectionId }: ServiceAccountsSectionProps) => {
     const { data, isLoading, isError, error } = useConnectionsIdKafkaServiceAccountsGet({ id: connectionId }, {
         refetchInterval(data) {
             const hasEntriesWithoutCertificateData = data?.some(item => item.certificateExpiry === null || item.certificateExpiry === undefined);

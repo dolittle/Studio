@@ -18,7 +18,7 @@ export const ConsumeDataEventStreamsIndex = () => {
         <ContentContainer>
             <EventStreamsHeader />
             <ResourcesSection connectionId={connectionId} />
-            <ServiceAccountsSection />
+            <ServiceAccountsSection connectionId={connectionId} />
         </ContentContainer>
     );
 };
