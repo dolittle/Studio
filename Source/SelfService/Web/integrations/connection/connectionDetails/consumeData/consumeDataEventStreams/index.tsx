@@ -3,10 +3,11 @@
 
 import React from 'react';
 
-import { ContentContainer, ContentHeader, ContentParagraph } from '@dolittle/design-system';
+import { ContentContainer } from '@dolittle/design-system';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
+import { EventStreamsHeader } from './EventStreamsHeader';
 import { ResourcesSection } from './ResourcesSection';
 import { ServiceAccountsSection } from './serviceAccountsSection';
 
@@ -15,13 +16,7 @@ export const ConsumeDataEventStreamsIndex = () => {
 
     return (
         <ContentContainer>
-            <ContentHeader title='Async API' status={{ status: 'success', label: 'Active' }} />
-
-            <ContentParagraph>
-                Event streams expose message types for the connector to be consumed in external applications and services over Kafka.
-                The event streams are fully documented using Async API specifications and will reflect the message types set up for the connector.
-            </ContentParagraph>
-
+            <EventStreamsHeader />
             <ResourcesSection connectionId={connectionId} />
             <ServiceAccountsSection />
         </ContentContainer>
