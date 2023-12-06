@@ -26,6 +26,6 @@ export type InlineWrapperProps = {
  * @returns A {@link InlineWrapper} component.
  */
 export const InlineWrapper = ({ children, sx }: InlineWrapperProps) =>
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, ...sx }}>
+    <Box component='section' sx={{ display: 'flex', alignItems: 'center', gap: 1, ...sx }}>
         {children}
     </Box>;
