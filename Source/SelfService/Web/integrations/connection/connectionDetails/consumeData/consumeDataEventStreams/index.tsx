@@ -5,22 +5,25 @@ import React from 'react';
 
 import { ContentContainer, ContentHeader, ContentParagraph } from '@dolittle/design-system';
 
-import { SpecificationSection } from './SpecificationSection';
+import { useConnectionIdFromRoute } from '../../../../routes.hooks';
+
 import { ResourcesSection } from './ResourcesSection';
 import { ServiceAccountsSection } from './serviceAccountsSection';
 
-export const ConsumeDataEventStreamsIndex = () =>
-    <ContentContainer>
-        <ContentHeader title='Async API' status={{ status: 'success', label: 'Active' }} />
+export const ConsumeDataEventStreamsIndex = () => {
+    const connectionId = useConnectionIdFromRoute();
 
-        <ContentParagraph>
-            Event streams expose message types for the connector to be consumed in external applications and services over Kafka.
-            The event streams are fully documented using Async API specifications and will reflect the message types set up for the connector.
-        </ContentParagraph>
+    return (
+        <ContentContainer>
+            <ContentHeader title='Async API' status={{ status: 'success', label: 'Active' }} />
 
-        <SpecificationSection />
+            <ContentParagraph>
+                Event streams expose message types for the connector to be consumed in external applications and services over Kafka.
+                The event streams are fully documented using Async API specifications and will reflect the message types set up for the connector.
+            </ContentParagraph>
 
-        <ResourcesSection />
-
-        <ServiceAccountsSection />
-    </ContentContainer>;
+            <ResourcesSection connectionId={connectionId} />
+            <ServiceAccountsSection />
+        </ContentContainer>
+    );
+};

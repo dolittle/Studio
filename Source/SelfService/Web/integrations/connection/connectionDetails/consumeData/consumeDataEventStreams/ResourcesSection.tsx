@@ -5,30 +5,53 @@ import React from 'react';
 
 import { generatePath, useHref } from 'react-router-dom';
 
-import { ContentWithSubtitle, CopyIconButton, InlineWrapper, Link } from '@dolittle/design-system';
+import { Typography } from '@mui/material';
 
-export const ResourcesSection = () => {
+import { ContentWithSubtitle, CopyIconButton, Icon, IconButton, InlineWrapper, Link } from '@dolittle/design-system';
+
+export type ResourcesSectionProps = {
+    connectionId: string;
+};
+
+export const ResourcesSection = ({ connectionId }: ResourcesSectionProps) => {
     const caFileUrlTemplate = '/api/bridge/resources/kafka/ca.pem';
     const resolvedCAFileUrlWithBasename = useHref(generatePath(caFileUrlTemplate));
     const caFileUrl = `${window.location.origin}${resolvedCAFileUrlWithBasename}`;
 
-    return (
-        <ContentWithSubtitle title='Resources' infoTooltipLabel='Download the Certificate Authority file for Kafka. You will need this to connect your application to consume messages.'>
-            <InlineWrapper>
-                <Link
-                    label={caFileUrl}
-                    href={caFileUrl}
-                    target
-                    ariaLabel='Certificate Authority file'
-                />
+    const asyncApiSpecificationUrlTemplate = '/api/bridge/connections/:id/asyncapi/spec.json';
+    const resolvedAsyncApiSpecificationUrlWithBasename = useHref(generatePath(asyncApiSpecificationUrlTemplate, { id: connectionId }));
+    const asyncApiSpecificationUrl = `${window.location.origin}${resolvedAsyncApiSpecificationUrlWithBasename}`;
 
-                <CopyIconButton
-                    text={caFileUrl}
-                    message='Certificate authority pem-file for kafka copied to clipboard.'
-                    color='primary'
-                    tooltipText='Copy Certificate Authority file to clipboard.'
-                />
-            </InlineWrapper>
+    return (
+        <ContentWithSubtitle title='Resources'>
+            <section>
+                <InlineWrapper sx={{ mt: 2 }}>
+                    <Typography>Async API Specification:</Typography>
+                    <Icon icon='InfoRounded' tooltipLabel='The API for consuming event streams are defined using AsyncAPI.' />
+                </InlineWrapper>
+
+                <InlineWrapper>
+                    <Link label={asyncApiSpecificationUrl} href={asyncApiSpecificationUrl} target ariaLabel='AsyncAPI specification' />
+                    <CopyIconButton
+                        text={asyncApiSpecificationUrl}
+                        message='AsyncAPI specification copied to clipboard.'
+                        color='primary'
+                        tooltipText='Copy AsyncAPI specification link to clipboard.'
+                    />
+                </InlineWrapper>
+            </section>
+
+            <section>
+                <InlineWrapper sx={{ mt: 2 }}>
+                    <Typography>Download the Certificate Authority file for Kafka:</Typography>
+                    <Icon icon='InfoRounded' tooltipLabel={`You will need this to connect your application to 'Consume Messages'.`} />
+                </InlineWrapper>
+
+                <InlineWrapper>
+                    <Link label={caFileUrl} href={caFileUrl} target ariaLabel='Certificate Authority file' />
+                    <IconButton tooltipText='Download Certificate Authority file' icon='DownloadRounded' color='primary' href={caFileUrl} />
+                </InlineWrapper>
+            </section>
         </ContentWithSubtitle>
     );
 };
