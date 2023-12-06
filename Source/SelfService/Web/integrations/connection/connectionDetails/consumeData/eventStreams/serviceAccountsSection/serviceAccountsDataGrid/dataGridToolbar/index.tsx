@@ -5,8 +5,8 @@ import React, { useState } from 'react';
 
 import { Button, DataGridCustomToolbar } from '@dolittle/design-system';
 
-import { GenerateServiceAccountDialog } from '../GenerateServiceAccountsDialog';
-import { DeleteServiceAccountDialog } from '../DeleteServiceAccountDialog';
+import { GenerateServiceAccountDialog } from './GenerateServiceAccountsDialog';
+import { DeleteServiceAccountDialog } from './DeleteServiceAccountDialog';
 
 export type ServiceAccountsDataGridToolbarProps = {
     connectionId: string;

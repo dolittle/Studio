@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { NoContentSection } from '@dolittle/design-system';
 
-import { GenerateServiceAccountDialog } from './GenerateServiceAccountsDialog';
+import { GenerateServiceAccountDialog } from './serviceAccountsDataGrid/dataGridToolbar/GenerateServiceAccountsDialog';
 
 export type NoServiceAccountsProps = {
     connectionId: string;

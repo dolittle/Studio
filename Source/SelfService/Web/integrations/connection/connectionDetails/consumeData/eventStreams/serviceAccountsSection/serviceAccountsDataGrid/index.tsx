@@ -9,7 +9,7 @@ import { dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
 
 import { KafkaServiceAccountListDto } from '../../../../../../../apis/integrations/generated';
 
-import { ServiceAccountsDataGridToolbar } from './ServiceAccountsDataGridToolbar';
+import { ServiceAccountsDataGridToolbar } from './dataGridToolbar';
 import { serviceAccountsDataGridColumns } from './ServiceAccountsDataGridColumns';
 
 import { ViewCertificateDialog } from './viewCredentials/ViewCertificateDialog';

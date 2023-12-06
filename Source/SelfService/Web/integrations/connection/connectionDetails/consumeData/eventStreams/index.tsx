@@ -11,7 +11,7 @@ import { EventStreamsHeader } from './EventStreamsHeader';
 import { ResourcesSection } from './ResourcesSection';
 import { ServiceAccountsSection } from './serviceAccountsSection';
 
-export const ConsumeDataEventStreamsIndex = () => {
+export const EventStreamsIndex = () => {
     const connectionId = useConnectionIdFromRoute();
 
     return (
