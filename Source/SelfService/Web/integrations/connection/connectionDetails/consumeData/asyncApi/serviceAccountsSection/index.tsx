@@ -15,12 +15,7 @@ export type ServiceAccountsSectionProps = {
 };
 
 export const ServiceAccountsSection = ({ connectionId }: ServiceAccountsSectionProps) => {
-    const { data, isLoading, isError, error } = useConnectionsIdKafkaServiceAccountsGet({ id: connectionId }, {
-        refetchInterval(data) {
-            const hasEntriesWithoutCertificateData = data?.some(item => item.certificateExpiry === null || item.certificateExpiry === undefined);
-            return hasEntriesWithoutCertificateData ? 2000 : false;
-        },
-    });
+    const { data, isLoading, isError, error } = useConnectionsIdKafkaServiceAccountsGet({ id: connectionId });
 
     if (isError) return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
 
