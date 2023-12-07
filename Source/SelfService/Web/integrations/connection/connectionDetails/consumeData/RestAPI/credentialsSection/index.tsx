@@ -10,7 +10,7 @@ import { useConnectionsIdServiceAccountsGet } from '../../../../../../apis/integ
 import { NoCredentials } from './NoCredentials';
 import { CredentialsDataGrid } from './credentialsDataGrid';
 
-import { GenerateCredentialsDialogIndex } from './credentialsDataGrid/generateCredentialsDialog';
+import { GenerateCredentialsDialogIndex } from './generateCredentialsDialog';
 
 export type CredentialsSectionProps = {
     connectionId: string;

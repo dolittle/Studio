@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Input, Select } from '@dolittle/design-system';
 
-import { ServiceAccountAccess } from '../../../../../../../../apis/integrations/generated';
+import { ServiceAccountAccess } from '../../../../../../../apis/integrations/generated';
 
 const accessOptions = [
     { displayValue: 'Read', value: ServiceAccountAccess.Read },
