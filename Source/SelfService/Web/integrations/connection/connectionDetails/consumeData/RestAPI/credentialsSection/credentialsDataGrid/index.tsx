@@ -9,50 +9,32 @@ import { dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
 
 import { ServiceAccountListDto } from '../../../../../../../apis/integrations/generated';
 
-import { DeleteCredentialsDialog } from './DeleteCredentialsDialog';
-import { CredentialsDataGridToolbar } from './CredentialsDataGridToolbar';
+import { CredentialsDataGridToolbar } from './dataGridToolbar';
 import { CredentialsDataGridColumns } from './CredentialsDataGridColumns';
 
 export type CredentialsDataGridProps = {
     credentials: ServiceAccountListDto[];
-    connectionId: string;
     isLoading: boolean;
     onCredentialCreate: () => void;
 };
 
-export const CredentialsDataGrid = ({ credentials, connectionId, isLoading, onCredentialCreate }: CredentialsDataGridProps) => {
-    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+export const CredentialsDataGrid = ({ credentials, isLoading, onCredentialCreate }: CredentialsDataGridProps) => {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
     return (
-        <>
-            <DeleteCredentialsDialog
-                connectionId={connectionId}
-                isDialogOpen={isDeleteDialogOpen}
-                onDialogCancel={() => setIsDeleteDialogOpen(false)}
-                credentialsToDelete={selectedIds}
+        <DataGridWrapper background='dark'>
+            <DataGridPro
+                {...dataGridDefaultProps}
+                rows={credentials}
+                columns={CredentialsDataGridColumns}
+                loading={isLoading}
+                getRowId={row => row.serviceAccountName}
+                checkboxSelection
+                onSelectionModelChange={model => setSelectedIds(model as string[])}
+                components={{
+                    Toolbar: () => <CredentialsDataGridToolbar onGenerate={onCredentialCreate} selectedIds={selectedIds} />
+                }}
             />
-
-            <DataGridWrapper background='dark'>
-                <DataGridPro
-                    {...dataGridDefaultProps}
-                    rows={credentials}
-                    columns={CredentialsDataGridColumns}
-                    loading={isLoading}
-                    getRowId={row => row.serviceAccountName}
-                    checkboxSelection
-                    onSelectionModelChange={model => setSelectedIds(model as string[])}
-                    components={{
-                        Toolbar: () => (
-                            <CredentialsDataGridToolbar
-                                onGenerate={onCredentialCreate}
-                                onDelete={() => setIsDeleteDialogOpen(true)}
-                                isDeleteButtonDisabled={!selectedIds.length}
-                            />
-                        ),
-                    }}
-                />
-            </DataGridWrapper>
-        </>
+        </DataGridWrapper>
     );
 };

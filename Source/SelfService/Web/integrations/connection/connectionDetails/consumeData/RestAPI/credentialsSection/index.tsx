@@ -9,7 +9,6 @@ import { useConnectionsIdServiceAccountsGet } from '../../../../../../apis/integ
 
 import { NoCredentials } from './NoCredentials';
 import { CredentialsDataGrid } from './credentialsDataGrid';
-
 import { GenerateCredentialsDialogIndex } from './generateCredentialsDialog';
 
 export type CredentialsSectionProps = {
@@ -57,14 +56,8 @@ export const CredentialsSection = ({ connectionId }: CredentialsSectionProps) =>
 
             <ContentWithSubtitle title='Credentials' infoTooltipLabel={infoText}>
                 {credentials.length
-                    ? (
-                        <CredentialsDataGrid
-                            credentials={credentials}
-                            connectionId={connectionId}
-                            isLoading={isLoading}
-                            onCredentialCreate={handleGenerateNewCredentials}
-                        />
-                    ) : <NoCredentials onCredentialCreate={handleGenerateNewCredentials} />
+                    ? <CredentialsDataGrid credentials={credentials} isLoading={isLoading} onCredentialCreate={handleGenerateNewCredentials} />
+                    : <NoCredentials onCredentialCreate={handleGenerateNewCredentials} />
                 }
             </ContentWithSubtitle>
         </>
