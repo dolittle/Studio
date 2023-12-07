@@ -7,18 +7,18 @@ import { ContentContainer } from '@dolittle/design-system';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
-import { AccessIndex } from './access';
-import { CredentialsIndex } from './Credentials';
-import { RestApiHeader } from './restApiHeader/RestAPIHeader';
+import { HeaderSection } from './headerSection';
+import { ResourcesSection } from './resourcesSection';
+import { CredentialsSection } from './credentialsSection';
 
 export const RestApiContainer = () => {
     const connectionId = useConnectionIdFromRoute();
 
     return (
         <ContentContainer>
-            <RestApiHeader connectionId={connectionId} />
-            <AccessIndex connectionId={connectionId} />
-            <CredentialsIndex connectionId={connectionId} />
+            <HeaderSection connectionId={connectionId} />
+            <ResourcesSection connectionId={connectionId} />
+            <CredentialsSection connectionId={connectionId} />
         </ContentContainer>
     );
 };

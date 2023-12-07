@@ -13,11 +13,11 @@ import { DisableRestApiDialog } from './DisableRestApiDialog';
 
 import { getIndicatorStatusFromStatusMessage } from '../../../../../statusHelpers';
 
-export type RestApiHeaderProps = {
+export type HeaderSectionProps = {
     connectionId: string;
 };
 
-export const RestApiHeader = ({ connectionId }: RestApiHeaderProps) => {
+export const HeaderSection = ({ connectionId }: HeaderSectionProps) => {
     const [isDisableRestApiDialogOpen, setIsDisableRestApiDialogOpen] = useState(false);
 
     const { data: apiStatus, isLoading } = useConnectionsIdRestApiStatusGet({ id: connectionId },

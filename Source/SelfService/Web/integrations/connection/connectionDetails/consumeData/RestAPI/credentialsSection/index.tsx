@@ -9,11 +9,11 @@ import { useConnectionsIdServiceAccountsGet } from '../../../../../../apis/integ
 
 import { CredentialsDataGrid } from './credentialsDataGrid';
 
-export type CredentialsIndexProps = {
+export type CredentialsSectionProps = {
     connectionId: string;
 };
 
-export const CredentialsIndex = ({ connectionId }: CredentialsIndexProps) => {
+export const CredentialsSection = ({ connectionId }: CredentialsSectionProps) => {
     const { data, isLoading, error, isError } = useConnectionsIdServiceAccountsGet({ id: connectionId });
 
     const [activeCredential, setActiveCredential] = useState<string | undefined>(undefined);

@@ -10,11 +10,11 @@ import { Typography } from '@mui/material';
 import { IconButton, InlineWrapper, Link } from '@dolittle/design-system';
 
 
-export type RestApiDescriptionSectionProps = {
+export type ActiveRestApiViewProps = {
     restApiBaseUrl: string;
 };
 
-export const RestApiDescriptionSection = ({ restApiBaseUrl }: RestApiDescriptionSectionProps) => {
+export const ActiveRestApiView = ({ restApiBaseUrl }: ActiveRestApiViewProps) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const baseApiUrlWithTrailingSlash = restApiBaseUrl.endsWith('/') ? restApiBaseUrl : `${restApiBaseUrl}/`;

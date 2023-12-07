@@ -11,12 +11,12 @@ import { NoContentSection } from '@dolittle/design-system';
 import { useConnectionsIdRestApiEnablePost } from '../../../../../../apis/integrations/connectionRestApiApi.hooks';
 import { CACHE_KEYS } from '../../../../../../apis/integrations/CacheKeys';
 
-export type EnableRestApiSectionProps = {
+export type DisabledRestApiViewProps = {
     connectionId: string;
     isDisabled: boolean;
 };
 
-export const EnableRestApiSection = ({ connectionId, isDisabled }: EnableRestApiSectionProps) => {
+export const DisabledRestApiView = ({ connectionId, isDisabled }: DisabledRestApiViewProps) => {
     const { enqueueSnackbar } = useSnackbar();
     const queryClient = useQueryClient();
     const enableMutation = useConnectionsIdRestApiEnablePost();

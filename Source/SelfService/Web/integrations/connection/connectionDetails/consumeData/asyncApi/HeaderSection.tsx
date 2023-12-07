@@ -7,7 +7,7 @@ import { Typography } from '@mui/material';
 
 import { ContentHeader } from '@dolittle/design-system';
 
-export const AsyncApiHeader = () =>
+export const HeaderSection = () =>
     <>
         <ContentHeader title='Async API' status={{ status: 'success', label: 'Active' }} />
 

@@ -7,7 +7,7 @@ import { ContentContainer } from '@dolittle/design-system';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
-import { AsyncApiHeader } from './AsyncApiHeader';
+import { HeaderSection } from './HeaderSection';
 import { ResourcesSection } from './ResourcesSection';
 import { ServiceAccountsSection } from './serviceAccountsSection';
 
@@ -16,7 +16,7 @@ export const AsyncApiContainer = () => {
 
     return (
         <ContentContainer>
-            <AsyncApiHeader />
+            <HeaderSection />
             <ResourcesSection connectionId={connectionId} />
             <ServiceAccountsSection connectionId={connectionId} />
         </ContentContainer>
