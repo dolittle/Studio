@@ -9,7 +9,7 @@ import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { AccessIndex } from './access';
 import { CredentialsIndex } from './Credentials';
-import { RestApiHeader } from './RestAPIHeader';
+import { RestApiHeader } from './restApiHeader/RestAPIHeader';
 
 export const RestAPIIndex = () => {
     const connectionId = useConnectionIdFromRoute();

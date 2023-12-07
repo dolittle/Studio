@@ -7,11 +7,11 @@ import { Typography } from '@mui/material';
 
 import { Button, ContentHeader } from '@dolittle/design-system';
 
-import { useConnectionsIdRestApiStatusGet } from '../../../../../apis/integrations/connectionRestApiApi.hooks';
+import { useConnectionsIdRestApiStatusGet } from '../../../../../../apis/integrations/connectionRestApiApi.hooks';
 
 import { DisableRestApiDialog } from './DisableRestApiDialog';
 
-import { getIndicatorStatusFromStatusMessage } from '../../../../statusHelpers';
+import { getIndicatorStatusFromStatusMessage } from '../../../../../statusHelpers';
 
 export type RestApiHeaderProps = {
     connectionId: string;
