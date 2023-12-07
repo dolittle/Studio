@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import { RestAPIIndex } from './RestAPI';
-import { EventStreamsIndex } from './eventStreams';
+import { RestApiContainer } from './RestAPI';
+import { AsyncApiContainer } from './asyncApi';
 
 export const ConsumeDataView = () =>
     <>
-        <RestAPIIndex />
-        <EventStreamsIndex />
+        <RestApiContainer />
+        <AsyncApiContainer />
     </>;

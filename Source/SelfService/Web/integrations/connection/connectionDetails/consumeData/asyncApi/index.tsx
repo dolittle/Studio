@@ -7,16 +7,16 @@ import { ContentContainer } from '@dolittle/design-system';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
-import { EventStreamsHeader } from './EventStreamsHeader';
+import { AsyncApiHeader } from './AsyncApiHeader';
 import { ResourcesSection } from './ResourcesSection';
 import { ServiceAccountsSection } from './serviceAccountsSection';
 
-export const EventStreamsIndex = () => {
+export const AsyncApiContainer = () => {
     const connectionId = useConnectionIdFromRoute();
 
     return (
         <ContentContainer>
-            <EventStreamsHeader />
+            <AsyncApiHeader />
             <ResourcesSection connectionId={connectionId} />
             <ServiceAccountsSection connectionId={connectionId} />
         </ContentContainer>

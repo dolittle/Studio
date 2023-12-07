@@ -7,7 +7,7 @@ import { Typography } from '@mui/material';
 
 import { ContentHeader } from '@dolittle/design-system';
 
-export const EventStreamsHeader = () =>
+export const AsyncApiHeader = () =>
     <>
         <ContentHeader title='Async API' status={{ status: 'success', label: 'Active' }} />
 

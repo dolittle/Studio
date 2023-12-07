@@ -11,7 +11,7 @@ import { AccessIndex } from './access';
 import { CredentialsIndex } from './Credentials';
 import { RestApiHeader } from './restApiHeader/RestAPIHeader';
 
-export const RestAPIIndex = () => {
+export const RestApiContainer = () => {
     const connectionId = useConnectionIdFromRoute();
 
     return (
