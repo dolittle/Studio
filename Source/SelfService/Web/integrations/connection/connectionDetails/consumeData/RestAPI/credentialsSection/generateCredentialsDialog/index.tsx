@@ -13,7 +13,7 @@ import { ServiceAccountAccess, ServiceAccountCreatedDto, ResponseError } from '.
 import { CACHE_KEYS } from '../../../../../../../apis/integrations/CacheKeys';
 
 import { GenerateCredentials } from './GenerateCredentials';
-import { GeneratedCredentialsSection } from './GeneratedCredentialsSection';
+import { CredentialsToken } from './CredentialsToken';
 
 export type GenerateCredentialsFormParameters = {
     name: string;
@@ -91,7 +91,7 @@ export const GenerateCredentialsDialogIndex = ({ connectionId, isDialogOpen, onD
         >
             {!hasResult
                 ? <GenerateCredentials />
-                : <GeneratedCredentialsSection token={token} />
+                : <CredentialsToken token={token} />
             }
         </FormDialog>
     );
