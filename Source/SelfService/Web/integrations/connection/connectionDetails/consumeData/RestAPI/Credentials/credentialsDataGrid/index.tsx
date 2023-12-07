@@ -14,14 +14,14 @@ import { DeleteCredentialsDialog } from './DeleteCredentialsDialog';
 import { CredentialsDataGridToolbar } from './CredentialsDataGridToolbar';
 import { CredentialsDataGridColumns } from './CredentialsDataGridColumns';
 
-export type CredentialsDataGridIndexProps = {
+export type CredentialsDataGridProps = {
     credentials: ServiceAccountListDto[];
     connectionId: string;
     isLoading: boolean;
     onActiveCredentialChange: (tokenName: string | undefined) => void;
 };
 
-export const CredentialsDataGridIndex = ({ credentials, connectionId, isLoading, onActiveCredentialChange }: CredentialsDataGridIndexProps) => {
+export const CredentialsDataGrid = ({ credentials, connectionId, isLoading, onActiveCredentialChange }: CredentialsDataGridProps) => {
     const [isCredentialsDialogOpen, setIsCredentialsDialogOpen] = useState(false);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [selectedIds, setSelectedIds] = useState<string[]>([]);

@@ -7,7 +7,7 @@ import { AlertBox, ContentWithSubtitle } from '@dolittle/design-system';
 
 import { useConnectionsIdServiceAccountsGet } from '../../../../../../apis/integrations/serviceAccountApi.hooks';
 
-import { CredentialsDataGridIndex } from './credentialsDataGrid';
+import { CredentialsDataGrid } from './credentialsDataGrid';
 
 export type CredentialsIndexProps = {
     connectionId: string;
@@ -30,7 +30,7 @@ export const CredentialsIndex = ({ connectionId }: CredentialsIndexProps) => {
 
     return (
         <ContentWithSubtitle title='Credentials' infoTooltipLabel={infoText}>
-            <CredentialsDataGridIndex
+            <CredentialsDataGrid
                 credentials={credentials}
                 connectionId={connectionId}
                 isLoading={isLoading}
