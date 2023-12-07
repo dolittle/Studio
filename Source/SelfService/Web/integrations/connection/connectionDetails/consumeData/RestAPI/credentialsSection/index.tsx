@@ -7,7 +7,10 @@ import { AlertBox, ContentWithSubtitle } from '@dolittle/design-system';
 
 import { useConnectionsIdServiceAccountsGet } from '../../../../../../apis/integrations/serviceAccountApi.hooks';
 
+import { NoCredentials } from './NoCredentials';
 import { CredentialsDataGrid } from './credentialsDataGrid';
+
+import { GenerateCredentialsDialogIndex } from './credentialsDataGrid/generateCredentialsDialog';
 
 export type CredentialsSectionProps = {
     connectionId: string;
@@ -16,7 +19,22 @@ export type CredentialsSectionProps = {
 export const CredentialsSection = ({ connectionId }: CredentialsSectionProps) => {
     const { data, isLoading, error, isError } = useConnectionsIdServiceAccountsGet({ id: connectionId });
 
+    const [isGenerateCredentialsDialogOpen, setIsGenerateCredentialsDialogOpen] = useState(false);
     const [activeCredential, setActiveCredential] = useState<string | undefined>(undefined);
+
+    const handleGenerateNewCredentials = () => {
+        setActiveCredential(undefined);
+        setIsGenerateCredentialsDialogOpen(true);
+    };
+
+    const handleGenerateCredentialsCancel = () => {
+        setActiveCredential(undefined);
+        setIsGenerateCredentialsDialogOpen(false);
+    };
+
+    const handleTokenGenerated = (tokenName: string) => {
+        setActiveCredential(tokenName);
+    };
 
     const credentials = useMemo(
         () => data?.filter(credential => credential.serviceAccountName?.toLowerCase() !== activeCredential?.toLowerCase() || '')
@@ -29,13 +47,26 @@ export const CredentialsSection = ({ connectionId }: CredentialsSectionProps) =>
     const infoText = 'Generate new credentials to be used as credentials in apps connecting to the Rest API service.';
 
     return (
-        <ContentWithSubtitle title='Credentials' infoTooltipLabel={infoText}>
-            <CredentialsDataGrid
-                credentials={credentials}
+        <>
+            <GenerateCredentialsDialogIndex
                 connectionId={connectionId}
-                isLoading={isLoading}
-                onActiveCredentialChange={setActiveCredential}
+                isDialogOpen={isGenerateCredentialsDialogOpen}
+                onDialogCancel={handleGenerateCredentialsCancel}
+                onFormComplete={handleTokenGenerated}
             />
-        </ContentWithSubtitle>
+
+            <ContentWithSubtitle title='Credentials' infoTooltipLabel={infoText}>
+                {credentials.length
+                    ? (
+                        <CredentialsDataGrid
+                            credentials={credentials}
+                            connectionId={connectionId}
+                            isLoading={isLoading}
+                            onCredentialCreate={handleGenerateNewCredentials}
+                        />
+                    ) : <NoCredentials onCredentialCreate={handleGenerateNewCredentials} />
+                }
+            </ContentWithSubtitle>
+        </>
     );
 };
