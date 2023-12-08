@@ -25,7 +25,7 @@ export const ResourcesSection = ({ connectionId }: AccessIndexProps) => {
     const isEnableRestApiBtnDisabled = serviceStatus === 'Deploying' || serviceStatus === 'Terminating';
 
     return (
-        <ContentWithSubtitle title='Access' infoTooltipLabel='Our rest API is documented using OpenAPI.'>
+        <ContentWithSubtitle title='Resources' infoTooltipLabel='Our rest API is documented using OpenAPI.'>
             {isRestApiDisabled
                 ? <DisabledRestApiView connectionId={connectionId} isDisabled={isEnableRestApiBtnDisabled} />
                 : <ActiveRestApiView restApiBaseUrl={apiStatus?.basePath || ''} />
