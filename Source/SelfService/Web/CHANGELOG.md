@@ -1,3 +1,24 @@
+# [3.18.33] - 2023-12-8 [PR: #497](https://github.com/dolittle/Studio/pull/497)
+## Summary
+
+Merge the 'Consume Data Event Streams' and 'Consume Data Rest API' tabs into a single 'Consume Data' tab.
+
+### Added
+
+- Implemented new design in 'Consume Data Event Streams' section
+
+### Changed
+
+- Improved Design System components as needed
+- Renamed the components and moved them to the appropriate folder
+- Changed 'Access' section title to 'Resources'
+
+### Fixed
+
+- Commented out 'Commands' tab from routing until we can use it
+- Removed 'refetchInterval' from ServiceAccountsSection
+
+
 # [3.18.31] - 2023-11-15 [PR: #496](https://github.com/dolittle/Studio/pull/496)
 ## Summary
 
