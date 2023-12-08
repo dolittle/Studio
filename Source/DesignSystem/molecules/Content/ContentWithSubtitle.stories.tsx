@@ -5,7 +5,7 @@ import { componentStories, ContentWithSubtitle } from '../../index';
 
 const { metadata, createStory } = componentStories(ContentWithSubtitle);
 
-metadata.title = 'Content With Subtitle';
+metadata.title = 'Content/Content With Subtitle';
 
 metadata.parameters = {
     docs: {
@@ -15,9 +15,13 @@ metadata.parameters = {
     },
 };
 
+metadata.argTypes = {
+    sx: { control: false },
+};
+
 metadata.args = {
-    title: 'Content Title',
-    children: 'Here is the content',
+    title: 'This is the title',
+    children: 'This is the children.',
 };
 
 export default metadata;
@@ -25,12 +29,12 @@ export default metadata;
 export const Default = createStory();
 
 export const WithInfoTooltip = createStory({
-    infoTooltipLabel: 'This is an info tooltip.',
+    infoTooltipLabel: 'This is an info tooltip label.',
 });
 WithInfoTooltip.parameters = {
     docs: {
         description: {
-            story: ``, // TODO: Add description.
+            story: 'The info tooltip label is optional.',
         },
     },
 };

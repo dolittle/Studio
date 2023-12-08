@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Box, SxProps } from '@mui/material';
 
-import { ContentDivider } from './ContentDivider';
+import { ContentDivider } from '../../../index';
 import { ContentHeader, ContentHeaderProps } from './ContentHeader';
 
 export type ContentSectionProps = {

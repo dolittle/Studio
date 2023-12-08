@@ -13,7 +13,6 @@ import { componentStories } from '../../index';
 
 // Use the componentStories function to create a metadata object and a createStory function.
 const { metadata, createStory } = componentStories(() => <></>, {
-    actions: { onChange: 'changed' },
     decorator: Story => (
         <>
             {Story()}
@@ -22,13 +21,13 @@ const { metadata, createStory } = componentStories(() => <></>, {
 });
 
 // Set the title of the component.
-metadata.title = 'Dummy component';
+metadata.title = 'Folder/Dummy component';
 
 // Set the description of the component.
 metadata.parameters = {
     docs: {
         description: {
-            component: `Write the description of the component here.`
+            component: 'Write the description of the component here.',
         },
     },
     // Include only the controls that you want to show.
@@ -45,6 +44,7 @@ metadata.argTypes = {
     // },
     // Exclude the controls that you don't want to show.
     // prop: { control: false },
+    // onCreate: { action: 'onCreate' },
 };
 
 // Set the default arguments/props of the component.

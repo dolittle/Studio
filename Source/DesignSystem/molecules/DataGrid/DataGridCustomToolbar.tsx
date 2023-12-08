@@ -38,5 +38,5 @@ export type DataGridCustomToolbarProps = {
 export const DataGridCustomToolbar = ({ title, children }: DataGridCustomToolbarProps) =>
     <Box component='header' sx={styles}>
         <Typography variant='body2'>{title}</Typography>
-        {children && <Box component='section' sx={{ display: 'flex' }}>{children}</Box>}
+        {children && <Box component='section' sx={{ display: 'flex', gap: 1 }}>{children}</Box>}
     </Box>;
