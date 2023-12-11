@@ -80,31 +80,34 @@ export const Tabs = ({ id, selectedTab = 0, tabs }: TabsProps) => {
     };
 
     return (
-        <Box sx={{ width: 1, maxWidth: { xs: 320, sm: 600, md: 900, lg: 1200 } }}>
-            <MuiTabs
-                id={id}
-                value={currentTab}
-                onChange={handleTabChange}
-                TabIndicatorProps={
-                    { children: <span className='MuiTabs-indicatorSpan' /> }
-                }
-                variant='scrollable'
-                scrollButtons='auto'
-                sx={{ ...styles.tabs }}
-            >
-                {tabs.map((tab, index) =>
-                    <MuiTab
-                        key={index}
-                        id={`tabpanel-${index}`}
-                        aria-labelledby={`tab-${index}`}
-                        label={tab.label}
-                        disableRipple
-                        sx={{ ...styles.tab }}
-                        {...tab.overrides}
-                    />
-                )}
-            </MuiTabs>
+        <>
+            <Box component='nav' sx={{ width: 1, maxWidth: { xs: 320, sm: 600, md: 900, lg: 1200 } }}>
+                <MuiTabs
+                    id={id}
+                    value={currentTab}
+                    onChange={handleTabChange}
+                    TabIndicatorProps={
+                        { children: <span className='MuiTabs-indicatorSpan' /> }
+                    }
+                    variant='scrollable'
+                    scrollButtons='auto'
+                    sx={{ ...styles.tabs }}
+                >
+                    {tabs.map((tab, index) =>
+                        <MuiTab
+                            key={index}
+                            id={`tabpanel-${index}`}
+                            aria-labelledby={`tab-${index}`}
+                            label={tab.label}
+                            disableRipple
+                            sx={{ ...styles.tab }}
+                            {...tab.overrides}
+                        />
+                    )}
+                </MuiTabs>
+            </Box>
+
             {tabs[currentTab]?.render()}
-        </Box>
+        </>
     );
 };
