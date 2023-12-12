@@ -92,7 +92,7 @@ export const HealthStatusIndex = ({ applicationId, currentMicroservice }: Health
             />
 
             {/* TODO: Don't display AlertBox on first render. */}
-            {containerTables.length > 0
+            {containerTables?.length > 0
                 ? containerTables
                 : <AlertBox title='Cannot display microservice containers' message={<AlertBoxErrorMessage />} />
             }
