@@ -3,74 +3,29 @@
 
 import React, { useMemo } from 'react';
 
-import { Box, Paper } from '@mui/material';
-import { DataGridPro, GridColDef, GridSelectionModel, GridRowId, useGridApiRef, GRID_CHECKBOX_SELECTION_FIELD, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridSelectionModel, GridRowId, useGridApiRef, GRID_CHECKBOX_SELECTION_FIELD } from '@mui/x-data-grid-pro';
 
-import { EditCell, EditTextFieldCell, Tooltip } from '@dolittle/design-system';
+import { dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
 
-import { MappableTableColumn } from '../../../../../../../apis/integrations/generated';
-import { toPascalCase } from '../../../../../../../utils/helpers/strings';
+import { DataGridTableListingEntry, messageMappingDataGridColumns } from './MessageMappingDataGridColumns';
 
-import { generateMappedFieldNameFrom } from '../../components/generateMappedFieldNameFrom';
-
-export type DataGridTableListingEntry = MappableTableColumn & {
-    id: string;
-    fieldName: string;
-};
+import { generateUniqueFieldName } from './helpers';
 
 export type MessageMappingDataGridProps = {
     dataGridListing: DataGridTableListingEntry[];
     selectedIds: GridSelectionModel;
     onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
-    disabledRows?: GridRowId[];
+    disabledRows: GridRowId[];
     isLoading: boolean;
-    showOnlySelected?: boolean;
+    showOnlySelected: boolean;
     onFieldMapped: (m3Field: string, mappedFieldName) => void;
     quickFilterValue?: string;
 };
 
-export const MessageMappingDataGrid = ({
-    dataGridListing,
-    selectedIds,
-    onSelectedIdsChanged,
-    disabledRows,
-    isLoading,
-    onFieldMapped,
-    showOnlySelected,
-    quickFilterValue
-}: MessageMappingDataGridProps) => {
-    const columns: GridColDef<DataGridTableListingEntry>[] = useMemo(() => [
-        {
-            ...GRID_CHECKBOX_SELECTION_COL_DEF,
-            renderCell: (params) => {
-                return <>
-                    {disabledRows?.includes(params.row.id)
-                        ? <Tooltip title='This is a primary key for this table and is required as part of the message type'>
-                            <Box>{GRID_CHECKBOX_SELECTION_COL_DEF.renderCell?.(params)}</Box>
-                        </Tooltip>
-                        : GRID_CHECKBOX_SELECTION_COL_DEF.renderCell?.(params)}
-                </>;
-            }
-        },
-        {
-            field: 'm3ColumnName',
-            headerName: 'M3 Field Name',
-            minWidth: 270,
-        },
-        {
-            field: 'm3Description',
-            headerName: 'M3 Description',
-            minWidth: 270,
-        },
-        {
-            field: 'fieldName',
-            headerName: 'Remapped Name',
-            editable: true,
-            minWidth: 270,
-            renderCell: EditCell,
-            renderEditCell: EditTextFieldCell,
-        },
-    ], [disabledRows]);
+export const MessageMappingDataGrid = ({ dataGridListing, selectedIds, onSelectedIdsChanged, disabledRows, isLoading, onFieldMapped, showOnlySelected, quickFilterValue }: MessageMappingDataGridProps) => {
+    const gridApiRef = useGridApiRef();
+
+    const columns = useMemo(() => messageMappingDataGridColumns(disabledRows), [disabledRows]);
 
     const gridFilters = useMemo(() => {
         return {
@@ -84,16 +39,6 @@ export const MessageMappingDataGrid = ({
             quickFilterValues: [quickFilterValue?.trim() || undefined]
         };
     }, [quickFilterValue, showOnlySelected]);
-
-    const gridApiRef = useGridApiRef();
-
-    const generateUniqueFieldName = (gridApiRef, fieldName: string, m3ColumnName: string) => {
-        const existingMappedFields = Array
-            .from(gridApiRef.current?.getSelectedRows() as Map<GridRowId, DataGridTableListingEntry>)
-            .map(([, row]) => row.fieldName) || [];
-        const machineReadableFieldName = generateMappedFieldNameFrom(toPascalCase(fieldName), m3ColumnName, existingMappedFields);
-        return machineReadableFieldName;
-    };
 
     /**
      * Callback for when the user changes the selection in the grid.
@@ -130,10 +75,7 @@ export const MessageMappingDataGrid = ({
      * @param oldRow Old row data.
      * @returns new row data.
      */
-    const processRowUpdate = (
-        newRow: DataGridTableListingEntry,
-        oldRow: DataGridTableListingEntry,
-    ): DataGridTableListingEntry | Promise<DataGridTableListingEntry> => {
+    const processRowUpdate = (newRow: DataGridTableListingEntry, oldRow: DataGridTableListingEntry): DataGridTableListingEntry | Promise<DataGridTableListingEntry> => {
         if (newRow.fieldName === oldRow.fieldName) {
             return newRow;
         }
@@ -157,18 +99,24 @@ export const MessageMappingDataGrid = ({
     };
 
     return (
-        <Paper elevation={0} sx={{ width: 1, height: 400, boxShadow: 'none' }}>
+        <DataGridWrapper background='dark' sx={{ height: 400 }}>
             <DataGridPro
+                {...dataGridDefaultProps}
                 apiRef={gridApiRef}
                 rows={dataGridListing}
                 columns={columns}
-                getRowHeight={() => 'auto'}
-                headerHeight={46}
+                autoHeight={false}
+                hideFooter={false}
                 checkboxSelection
-                onSelectionModelChange={onSelectedModelChanged}
                 selectionModel={selectedIds}
+                onSelectionModelChange={onSelectedModelChanged}
                 isRowSelectable={row => !disabledRows?.includes(row.id) || false}
+                processRowUpdate={processRowUpdate}
+                onProcessRowUpdateError={error => console.log(error)}
+                filterModel={gridFilters}
                 loading={isLoading}
+                keepNonExistentRowsSelected
+                experimentalFeatures={{ newEditingApi: true }}
                 initialState={{
                     pagination: {
                         //@ts-ignore
@@ -178,16 +126,7 @@ export const MessageMappingDataGrid = ({
                         },
                     },
                 }}
-                processRowUpdate={processRowUpdate}
-                onProcessRowUpdateError={error => console.log(error)}
-                experimentalFeatures={{ newEditingApi: true }}
-                filterModel={gridFilters}
-                disableColumnReorder
-                disableColumnResize
-                disableColumnSelector
-                disableSelectionOnClick
-                keepNonExistentRowsSelected
             />
-        </Paper>
+        </DataGridWrapper>
     );
 };

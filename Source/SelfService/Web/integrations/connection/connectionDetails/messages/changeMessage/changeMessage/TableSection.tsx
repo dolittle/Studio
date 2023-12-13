@@ -13,7 +13,8 @@ import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../..
 import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
 
 import { ViewModeProps } from '../ViewMode';
-import { DataGridTableListingEntry, MessageMappingDataGrid } from './messageMappingDataGrid';
+import { MessageMappingDataGrid } from './messageMappingDataGrid';
+import { DataGridTableListingEntry } from './messageMappingDataGrid/MessageMappingDataGridColumns';
 import { useUpdateMappedFieldsInForm } from '../components/useUpdateMappedFieldsInForm';
 import { generateMappedFieldNameFrom } from '../components/generateMappedFieldNameFrom';
 
