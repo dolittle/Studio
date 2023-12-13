@@ -1,11 +1,11 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { DataGridPro, GridSelectionModel, GridRowId, useGridApiRef, GRID_CHECKBOX_SELECTION_FIELD } from '@mui/x-data-grid-pro';
 
-import { dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
+import { dataGridDefaultProps, DataGridWrapper, DataGridCustomToolbar, NewSwitch } from '@dolittle/design-system';
 
 import { DataGridTableListingEntry, messageMappingDataGridColumns } from './MessageMappingDataGridColumns';
 
@@ -14,22 +14,26 @@ import { generateUniqueFieldName } from './helpers';
 export type MessageMappingDataGridProps = {
     dataGridListing: DataGridTableListingEntry[];
     selectedIds: GridSelectionModel;
+    selectedTableName: string;
     onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
     disabledRows: GridRowId[];
     isLoading: boolean;
-    showOnlySelected: boolean;
     onFieldMapped: (m3Field: string, mappedFieldName) => void;
     quickFilterValue?: string;
+
+    mode: 'new' | 'edit';
 };
 
-export const MessageMappingDataGrid = ({ dataGridListing, selectedIds, onSelectedIdsChanged, disabledRows, isLoading, onFieldMapped, showOnlySelected, quickFilterValue }: MessageMappingDataGridProps) => {
+export const MessageMappingDataGrid = ({ dataGridListing, selectedIds, selectedTableName, onSelectedIdsChanged, disabledRows, isLoading, onFieldMapped, mode, quickFilterValue }: MessageMappingDataGridProps) => {
     const gridApiRef = useGridApiRef();
+
+    const [hideUnselectedRows, setHideUnselectedRows] = useState(mode === 'edit');
 
     const columns = useMemo(() => messageMappingDataGridColumns(disabledRows), [disabledRows]);
 
     const gridFilters = useMemo(() => {
         return {
-            items: showOnlySelected ? [
+            items: hideUnselectedRows ? [
                 {
                     columnField: GRID_CHECKBOX_SELECTION_FIELD,
                     operatorValue: 'is',
@@ -38,7 +42,7 @@ export const MessageMappingDataGrid = ({ dataGridListing, selectedIds, onSelecte
             ] : [],
             quickFilterValues: [quickFilterValue?.trim() || undefined]
         };
-    }, [quickFilterValue, showOnlySelected]);
+    }, [quickFilterValue, hideUnselectedRows]);
 
     /**
      * Callback for when the user changes the selection in the grid.
@@ -126,7 +130,36 @@ export const MessageMappingDataGrid = ({ dataGridListing, selectedIds, onSelecte
                         },
                     },
                 }}
+                components={{
+                    Toolbar: () => (
+                        <DataGridCustomToolbar title={`${selectedTableName} Table`}>
+                            <NewSwitch
+                                id='hideUnselectedRows'
+                                label='Hide Unselected Rows'
+                                checked={hideUnselectedRows}
+                                onChange={() => setHideUnselectedRows(!hideUnselectedRows)}
+                            />
+                        </DataGridCustomToolbar>
+                    )
+                }}
             />
         </DataGridWrapper>
     );
 };
+
+// export type MessageMappingDataGridToolbarProps = {
+//     selectedTableName: string;
+// };
+
+// export const MessageMappingDataGridToolbar = ({ selectedTableName }: MessageMappingDataGridToolbarProps) => {
+//     return (
+//         <DataGridCustomToolbar title={`${selectedTableName} Table`}>
+//             <NewSwitch
+//                 id='hideUnselectedRows'
+//                 label='Hide Unselected Rows'
+//                 checked={hideUnselectedRows}
+//                 onChange={() => setHideUnselectedRows(!hideUnselectedRows)}
+//             />
+//         </DataGridCustomToolbar>
+//     );
+// };

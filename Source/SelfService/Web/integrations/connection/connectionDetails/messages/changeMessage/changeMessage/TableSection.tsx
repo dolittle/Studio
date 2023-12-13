@@ -6,7 +6,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Grid, LinearProgress } from '@mui/material';
 import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
-import { AlertBox, Button, ContentSection, NewSwitch, TextField } from '@dolittle/design-system/';
+import { AlertBox, Button, ContentSection, TextField } from '@dolittle/design-system/';
 
 import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
@@ -57,7 +57,6 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
     }
 
     const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>(initialSelectedRowIds);
-    const [hideUnselectedRows, setHideUnselectedRows] = useState(mode === 'edit');
 
     const { data: mappableTableResult, isLoading, isInitialLoading } = useConnectionsIdMessageMappingsTablesTableGet({
         id: connectionId,
@@ -132,23 +131,18 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                                     onValueChange={(event) => setFieldSearchTerm(event.target.value)}
                                     sx={{ flexGrow: 1 }}
                                 />
-                                <NewSwitch
-                                    id='hideUnselectedRows'
-                                    label='Hide Unselected Rows'
-                                    checked={hideUnselectedRows}
-                                    onChange={() => setHideUnselectedRows(!hideUnselectedRows)}
-                                />
                             </Grid>
 
                             <MessageMappingDataGrid
                                 dataGridListing={gridMappableTableColumns}
                                 isLoading={isLoading}
                                 selectedIds={selectedIds}
+                                selectedTableName={selectedTableName}
                                 disabledRows={requiredTableColumnIds}
                                 onSelectedIdsChanged={setSelectedRowIds}
                                 onFieldMapped={updateMappedFieldsAndUpdateFormValue}
                                 quickFilterValue={fieldSearchTerm}
-                                showOnlySelected={hideUnselectedRows}
+                                mode={mode}
                             />
                         </>
                     )}
