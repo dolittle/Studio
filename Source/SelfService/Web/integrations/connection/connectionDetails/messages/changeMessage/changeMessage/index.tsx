@@ -7,15 +7,15 @@ import { useNavigate } from 'react-router-dom';
 
 import { AlertBox, ContentHeader, Dialog } from '@dolittle/design-system';
 
-import { MessageMappingModel } from '../../../../../apis/integrations/generated';
+import { MessageMappingModel } from '../../../../../../apis/integrations/generated';
 
-import { ViewMode } from './ViewMode';
-import { TableSearchSection } from './components/TableSearchSection';
-import { MessageDetailsSection } from './components/MessageDetailsSection';
-import { TableSection } from './components/TableSection';
-import { SubmitButtonSection } from './components/SubmitButtonSection';
-import { CancelOrDiscardButton } from './components/CancelOrDiscardButton';
-import { MessageFilterSection } from './components/MessageFilterSection';
+import { ViewMode } from '../ViewMode';
+import { TableSearchSection } from './TableSearchSection';
+import { MessageDetailsSection } from './MessageDetailsSection';
+import { TableSection } from './TableSection';
+import { SubmitButtonSection } from './SubmitButtonSection';
+import { CancelOrDiscardButton } from './CancelOrDiscardButton';
+import { MessageFilterSection } from './MessageFilterSection';
 
 export type ChangeMessageViewProps = {
     mode: ViewMode;

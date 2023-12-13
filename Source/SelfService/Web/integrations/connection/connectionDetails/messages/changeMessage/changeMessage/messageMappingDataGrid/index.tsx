@@ -8,17 +8,17 @@ import { DataGridPro, GridColDef, GridSelectionModel, GridRowId, useGridApiRef, 
 
 import { EditCell, EditTextFieldCell, Tooltip } from '@dolittle/design-system';
 
-import { MappableTableColumn } from '../../../../../../apis/integrations/generated';
-import { toPascalCase } from '../../../../../../utils/helpers/strings';
+import { MappableTableColumn } from '../../../../../../../apis/integrations/generated';
+import { toPascalCase } from '../../../../../../../utils/helpers/strings';
 
-import { generateMappedFieldNameFrom } from './generateMappedFieldNameFrom';
+import { generateMappedFieldNameFrom } from '../../components/generateMappedFieldNameFrom';
 
 export type DataGridTableListingEntry = MappableTableColumn & {
     id: string;
     fieldName: string;
 };
 
-export type MessageMappingTableProps = {
+export type MessageMappingDataGridProps = {
     dataGridListing: DataGridTableListingEntry[];
     selectedIds: GridSelectionModel;
     onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
@@ -29,7 +29,7 @@ export type MessageMappingTableProps = {
     quickFilterValue?: string;
 };
 
-export const MessageMappingTable = ({
+export const MessageMappingDataGrid = ({
     dataGridListing,
     selectedIds,
     onSelectedIdsChanged,
@@ -38,7 +38,7 @@ export const MessageMappingTable = ({
     onFieldMapped,
     showOnlySelected,
     quickFilterValue
-}: MessageMappingTableProps) => {
+}: MessageMappingDataGridProps) => {
     const columns: GridColDef<DataGridTableListingEntry>[] = useMemo(() => [
         {
             ...GRID_CHECKBOX_SELECTION_COL_DEF,

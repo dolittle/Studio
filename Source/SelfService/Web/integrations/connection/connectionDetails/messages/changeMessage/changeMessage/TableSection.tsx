@@ -13,9 +13,9 @@ import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../..
 import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
 
 import { ViewModeProps } from '../ViewMode';
-import { DataGridTableListingEntry, MessageMappingTable } from './MessageMappingTable';
-import { useUpdateMappedFieldsInForm } from './useUpdateMappedFieldsInForm';
-import { generateMappedFieldNameFrom } from './generateMappedFieldNameFrom';
+import { DataGridTableListingEntry, MessageMappingDataGrid } from './messageMappingDataGrid';
+import { useUpdateMappedFieldsInForm } from '../components/useUpdateMappedFieldsInForm';
+import { generateMappedFieldNameFrom } from '../components/generateMappedFieldNameFrom';
 
 export type TableSectionProps = ViewModeProps & {
     selectedTableName: string;
@@ -139,7 +139,7 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                                 />
                             </Grid>
 
-                            <MessageMappingTable
+                            <MessageMappingDataGrid
                                 dataGridListing={gridMappableTableColumns}
                                 isLoading={isLoading}
                                 selectedIds={selectedIds}

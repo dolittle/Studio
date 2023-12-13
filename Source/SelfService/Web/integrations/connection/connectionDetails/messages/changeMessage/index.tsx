@@ -15,7 +15,7 @@ import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { ViewMode } from './ViewMode';
 import { MessageMappingForm } from './components/MessageMappingForm';
-import { ChangeMessageView } from './ChangeMessageView';
+import { ChangeMessageView } from './changeMessage';
 
 export const Index = () => {
     const location = useLocation();
