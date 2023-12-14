@@ -14,7 +14,7 @@ export type DataGridTableListingEntry = MappableTableColumn & {
     fieldName: string;
 };
 
-export const messageMappingDataGridColumns = (disabledRows: GridRowId[]) => {
+export const getMessageMappingDataGridColumns = (disabledRows: GridRowId[]) => {
     const CheckboxCell = (params) => {
         return (
             disabledRows?.includes(params.row.id)

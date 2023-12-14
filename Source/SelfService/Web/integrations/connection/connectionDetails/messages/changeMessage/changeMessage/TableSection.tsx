@@ -1,22 +1,18 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Box, Grid, LinearProgress } from '@mui/material';
-import { GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { AlertBox, Button, ContentSection, TextField } from '@dolittle/design-system/';
 
-import { FieldMapping, MappedField } from '../../../../../../apis/integrations/generated';
+import { MappedField } from '../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
 
 import { ViewModeProps } from '../ViewMode';
 import { MessageMappingDataGrid } from './messageMappingDataGrid';
-import { DataGridTableListingEntry } from './messageMappingDataGrid/MessageMappingDataGridColumns';
-import { useUpdateMappedFieldsInForm } from '../components/useUpdateMappedFieldsInForm';
-import { generateMappedFieldNameFrom } from '../components/generateMappedFieldNameFrom';
 
 export type TableSectionProps = ViewModeProps & {
     selectedTableName: string;
@@ -26,78 +22,15 @@ export type TableSectionProps = ViewModeProps & {
 
 export const TableSection = ({ selectedTableName, initialSelectedFields, onBackToSearchResultsClicked, mode }: TableSectionProps) => {
     const connectionId = useConnectionIdFromRoute();
-    const setMappedFieldsInForm = useUpdateMappedFieldsInForm();
-
-    if (!selectedTableName) return <AlertBox />;
-
-    const initialMappedFields: Map<string, FieldMapping> = useMemo(() => new Map(
-        initialSelectedFields.map(
-            field => [
-                field.mappedColumn?.m3ColumnName, {
-                    columnName: field.mappedColumn?.m3ColumnName,
-                    fieldName: field.mappedName,
-                    fieldDescription: field.mappedDescription,
-                }]) || []),
-        [initialSelectedFields]
-    );
-
-    const initialSelectedRowIds = useMemo(
-        () => initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName) || [],
-        [initialSelectedFields]
-    );
 
     const [fieldSearchTerm, setFieldSearchTerm] = useState('');
 
-    const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(initialMappedFields);
-    const [hasSetInitialState, setHasSetInitialState] = useState(false);
-
-    if (!hasSetInitialState) {
-        setMappedFieldsInForm(mappedFields, true);
-        setHasSetInitialState(true);
-    }
-
-    const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>(initialSelectedRowIds);
+    if (!selectedTableName) return <AlertBox />;
 
     const { data: mappableTableResult, isLoading, isInitialLoading } = useConnectionsIdMessageMappingsTablesTableGet({
         id: connectionId,
         table: selectedTableName,
     });
-
-    const allMappableTableColumns = mappableTableResult?.value?.columns || [];
-    const requiredTableColumns = mappableTableResult?.value?.required || [];
-    const requiredTableColumnIds = requiredTableColumns.map(required => required.m3ColumnName);
-    const selectedIds = (selectedRowIds.length > 0) ? selectedRowIds : requiredTableColumnIds as GridSelectionModel;
-
-    const gridMappableTableColumns: DataGridTableListingEntry[] = useMemo(
-        () => allMappableTableColumns.map(column => ({
-            id: column.m3ColumnName,
-            fieldName: mappedFields.get(column.m3ColumnName)?.fieldName || '',
-            ...column,
-        })),
-        [allMappableTableColumns, mappedFields]
-    );
-
-    const updateMappedFieldsAndUpdateFormValue = (m3Field: string, mappedFieldName: any) => {
-        setMappedFields(prevMappedFields => {
-            const newMappedFields = new Map(prevMappedFields);
-
-            mappedFieldName
-                ? newMappedFields.set(m3Field, { columnName: m3Field, fieldName: mappedFieldName })
-                : newMappedFields.delete(m3Field);
-            setMappedFieldsInForm(newMappedFields);
-            return newMappedFields;
-        });
-    };
-
-    useEffect(() => {
-        gridMappableTableColumns.forEach(column => {
-            const isRequiredAndUnmapped = requiredTableColumnIds.includes(column.m3ColumnName) && !mappedFields.has(column.m3ColumnName);
-            if (isRequiredAndUnmapped) {
-                const generatedName = generateMappedFieldNameFrom(column.m3Description, column.m3ColumnName, Array.from(mappedFields.keys()));
-                updateMappedFieldsAndUpdateFormValue(column.m3ColumnName, generatedName);
-            }
-        });
-    }, [gridMappableTableColumns, requiredTableColumnIds, mappedFields, generateMappedFieldNameFrom]);
 
     return (
         <>
@@ -128,21 +61,18 @@ export const TableSection = ({ selectedTableName, initialSelectedFields, onBackT
                                     startIcon='Search'
                                     variant='outlined'
                                     placeholder='Search fields'
-                                    onValueChange={(event) => setFieldSearchTerm(event.target.value)}
+                                    onValueChange={event => setFieldSearchTerm(event.target.value)}
                                     sx={{ flexGrow: 1 }}
                                 />
                             </Grid>
 
                             <MessageMappingDataGrid
-                                dataGridListing={gridMappableTableColumns}
-                                isLoading={isLoading}
-                                selectedIds={selectedIds}
-                                selectedTableName={selectedTableName}
-                                disabledRows={requiredTableColumnIds}
-                                onSelectedIdsChanged={setSelectedRowIds}
-                                onFieldMapped={updateMappedFieldsAndUpdateFormValue}
-                                quickFilterValue={fieldSearchTerm}
+                                tableName={selectedTableName}
                                 mode={mode}
+                                quickFilterValue={fieldSearchTerm}
+                                initialSelectedFields={initialSelectedFields}
+                                mappableTableResult={mappableTableResult}
+                                isLoading={isLoading}
                             />
                         </>
                     )}

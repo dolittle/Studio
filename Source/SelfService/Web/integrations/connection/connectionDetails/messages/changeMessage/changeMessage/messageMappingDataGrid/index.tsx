@@ -1,35 +1,98 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
-import { DataGridPro, GridSelectionModel, GridRowId, useGridApiRef, GRID_CHECKBOX_SELECTION_FIELD } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridSelectionModel, useGridApiRef, GRID_CHECKBOX_SELECTION_FIELD } from '@mui/x-data-grid-pro';
 
 import { dataGridDefaultProps, DataGridWrapper, DataGridCustomToolbar, NewSwitch } from '@dolittle/design-system';
 
-import { DataGridTableListingEntry, messageMappingDataGridColumns } from './MessageMappingDataGridColumns';
+import { FieldMapping, MappedField, MappableTableResult } from '../../../../../../../apis/integrations/generated';
+
+import { DataGridTableListingEntry, getMessageMappingDataGridColumns } from './MessageMappingDataGridColumns';
+
+import { ViewMode } from '../../ViewMode';
+import { generateMappedFieldNameFrom } from '../../components/generateMappedFieldNameFrom';
+import { useUpdateMappedFieldsInForm } from '../../components/useUpdateMappedFieldsInForm';
 
 import { generateUniqueFieldName } from './helpers';
 
 export type MessageMappingDataGridProps = {
-    dataGridListing: DataGridTableListingEntry[];
-    selectedIds: GridSelectionModel;
-    selectedTableName: string;
-    onSelectedIdsChanged: (newSelectedIds: GridSelectionModel) => void;
-    disabledRows: GridRowId[];
-    isLoading: boolean;
-    onFieldMapped: (m3Field: string, mappedFieldName) => void;
+    tableName: string;
+    mode: ViewMode;
     quickFilterValue?: string;
-
-    mode: 'new' | 'edit';
+    initialSelectedFields: MappedField[];
+    mappableTableResult: any; // MappableTableResult;
+    isLoading: boolean;
 };
 
-export const MessageMappingDataGrid = ({ dataGridListing, selectedIds, selectedTableName, onSelectedIdsChanged, disabledRows, isLoading, onFieldMapped, mode, quickFilterValue }: MessageMappingDataGridProps) => {
+export const MessageMappingDataGrid = ({ tableName, mode, quickFilterValue, initialSelectedFields, mappableTableResult, isLoading }: MessageMappingDataGridProps) => {
     const gridApiRef = useGridApiRef();
+    const setMappedFieldsInForm = useUpdateMappedFieldsInForm();
 
+    const initialSelectedRowIds = useMemo(
+        () => initialSelectedFields.map(field => field.mappedColumn?.m3ColumnName) || [],
+        [initialSelectedFields]
+    );
+
+    const initialMappedFields: Map<string, FieldMapping> = useMemo(() => new Map(
+        initialSelectedFields.map(
+            field => [
+                field.mappedColumn?.m3ColumnName, {
+                    columnName: field.mappedColumn?.m3ColumnName,
+                    fieldName: field.mappedName,
+                    fieldDescription: field.mappedDescription,
+                }]) || []),
+        [initialSelectedFields]
+    );
+
+    const [hasSetInitialState, setHasSetInitialState] = useState(false);
+    const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>(initialSelectedRowIds);
     const [hideUnselectedRows, setHideUnselectedRows] = useState(mode === 'edit');
+    const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(initialMappedFields);
 
-    const columns = useMemo(() => messageMappingDataGridColumns(disabledRows), [disabledRows]);
+    if (!hasSetInitialState) {
+        setMappedFieldsInForm(mappedFields, true);
+        setHasSetInitialState(true);
+    }
+
+    const allMappableTableColumns = mappableTableResult?.value?.columns || [];
+    const requiredTableColumns = mappableTableResult?.value?.required || [];
+    const requiredTableColumnIds = requiredTableColumns.map(required => required.m3ColumnName);
+    const selectedIds = (selectedRowIds.length > 0) ? selectedRowIds : requiredTableColumnIds as GridSelectionModel;
+
+    const messageMappingDataGridRows: DataGridTableListingEntry[] = useMemo(
+        () => allMappableTableColumns.map(column => ({
+            id: column.m3ColumnName,
+            fieldName: mappedFields.get(column.m3ColumnName)?.fieldName || '',
+            ...column,
+        })),
+        [allMappableTableColumns, mappedFields]
+    );
+
+    const messageMappingDataGridColumns = useMemo(() => getMessageMappingDataGridColumns(requiredTableColumnIds), [requiredTableColumnIds]);
+
+    const updateMappedFieldsAndUpdateFormValue = (m3Field: string, mappedFieldName: any) => {
+        setMappedFields(prevMappedFields => {
+            const newMappedFields = new Map(prevMappedFields);
+
+            mappedFieldName
+                ? newMappedFields.set(m3Field, { columnName: m3Field, fieldName: mappedFieldName })
+                : newMappedFields.delete(m3Field);
+            setMappedFieldsInForm(newMappedFields);
+            return newMappedFields;
+        });
+    };
+
+    useEffect(() => {
+        messageMappingDataGridRows.forEach(column => {
+            const isRequiredAndUnmapped = requiredTableColumnIds.includes(column.m3ColumnName) && !mappedFields.has(column.m3ColumnName);
+            if (isRequiredAndUnmapped) {
+                const generatedName = generateMappedFieldNameFrom(column.m3Description, column.m3ColumnName, Array.from(mappedFields.keys()));
+                updateMappedFieldsAndUpdateFormValue(column.m3ColumnName, generatedName);
+            }
+        });
+    }, [messageMappingDataGridRows, requiredTableColumnIds, mappedFields, generateMappedFieldNameFrom]);
 
     const gridFilters = useMemo(() => {
         return {
@@ -60,16 +123,16 @@ export const MessageMappingDataGrid = ({ dataGridListing, selectedIds, selectedT
                 const row = gridApiRef.current.getRow(id) as DataGridTableListingEntry;
                 const fieldName = generateUniqueFieldName(gridApiRef, row.m3Description, row.m3ColumnName);
                 row.fieldName = fieldName;
-                onFieldMapped(id as string, fieldName);
+                updateMappedFieldsAndUpdateFormValue(id as string, fieldName);
             });
 
         removedIds.forEach(id => {
             const row = gridApiRef.current.getRow(id) as DataGridTableListingEntry;
             row.fieldName = '';
-            onFieldMapped(id as string, '');
+            updateMappedFieldsAndUpdateFormValue(id as string, '');
         });
 
-        onSelectedIdsChanged(newSelectedModel);
+        setSelectedRowIds(newSelectedModel);
     };
 
     /**
@@ -85,7 +148,7 @@ export const MessageMappingDataGrid = ({ dataGridListing, selectedIds, selectedT
         }
 
         const machineReadableFieldName = generateUniqueFieldName(gridApiRef, newRow.fieldName, newRow.m3ColumnName);
-        onFieldMapped(newRow.id, machineReadableFieldName);
+        updateMappedFieldsAndUpdateFormValue(newRow.id, machineReadableFieldName);
 
         const isSelected = gridApiRef.current.isRowSelected(oldRow.id);
         const shouldDeselect = isSelected && !machineReadableFieldName;
@@ -107,14 +170,15 @@ export const MessageMappingDataGrid = ({ dataGridListing, selectedIds, selectedT
             <DataGridPro
                 {...dataGridDefaultProps}
                 apiRef={gridApiRef}
-                rows={dataGridListing}
-                columns={columns}
+                rows={messageMappingDataGridRows}
+                columns={messageMappingDataGridColumns}
                 autoHeight={false}
                 hideFooter={false}
+                disableColumnMenu={false}
                 checkboxSelection
                 selectionModel={selectedIds}
                 onSelectionModelChange={onSelectedModelChanged}
-                isRowSelectable={row => !disabledRows?.includes(row.id) || false}
+                isRowSelectable={row => !requiredTableColumnIds?.includes(row.id) || false}
                 processRowUpdate={processRowUpdate}
                 onProcessRowUpdateError={error => console.log(error)}
                 filterModel={gridFilters}
@@ -132,7 +196,7 @@ export const MessageMappingDataGrid = ({ dataGridListing, selectedIds, selectedT
                 }}
                 components={{
                     Toolbar: () => (
-                        <DataGridCustomToolbar title={`${selectedTableName} Table`}>
+                        <DataGridCustomToolbar title={`${tableName} Table`}>
                             <NewSwitch
                                 id='hideUnselectedRows'
                                 label='Hide Unselected Rows'
@@ -146,20 +210,3 @@ export const MessageMappingDataGrid = ({ dataGridListing, selectedIds, selectedT
         </DataGridWrapper>
     );
 };
-
-// export type MessageMappingDataGridToolbarProps = {
-//     selectedTableName: string;
-// };
-
-// export const MessageMappingDataGridToolbar = ({ selectedTableName }: MessageMappingDataGridToolbarProps) => {
-//     return (
-//         <DataGridCustomToolbar title={`${selectedTableName} Table`}>
-//             <NewSwitch
-//                 id='hideUnselectedRows'
-//                 label='Hide Unselected Rows'
-//                 checked={hideUnselectedRows}
-//                 onChange={() => setHideUnselectedRows(!hideUnselectedRows)}
-//             />
-//         </DataGridCustomToolbar>
-//     );
-// };
