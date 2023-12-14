@@ -5,7 +5,7 @@ import React from 'react';
 
 import { LinearProgress } from '@mui/material';
 
-import { AlertBox, Button, ContentSection } from '@dolittle/design-system/';
+import { AlertBox, Button, ContentWithSubtitle } from '@dolittle/design-system/';
 
 import { MappedField } from '../../../../../../../apis/integrations/generated';
 import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../../apis/integrations/mappableTablesApi.hooks';
@@ -33,16 +33,15 @@ export const TableSection = ({ selectedTableName, mode, initialSelectedFields, o
     if (isInitialLoading) return <LinearProgress />;
 
     return (
-        <ContentSection
+        <ContentWithSubtitle
             title={`${selectedTableName} Table`}
-            beforeHeaderSlot={
-                mode === 'new' &&
+            infoTooltipLabel='Our rest API is documented using OpenAPI.'
+            rightAction={mode === 'new' &&
                 <Button
                     label='Back to Search Results'
                     startWithIcon='ArrowBack'
                     variant='text'
                     color='subtle'
-                    sx={{ ml: 1, mt: 2 }}
                     onClick={onBackToSearchResultsClicked}
                 />
             }
@@ -57,6 +56,6 @@ export const TableSection = ({ selectedTableName, mode, initialSelectedFields, o
                     isLoading={isLoading}
                 />
             }
-        </ContentSection>
+        </ContentWithSubtitle>
     );
 };
