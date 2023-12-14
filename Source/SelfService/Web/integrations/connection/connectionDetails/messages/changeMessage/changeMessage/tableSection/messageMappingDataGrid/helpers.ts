@@ -4,9 +4,9 @@
 import { GridRowId } from '@mui/x-data-grid-pro';
 
 import { DataGridTableListingEntry } from './MessageMappingDataGridColumns';
-import { generateMappedFieldNameFrom } from '../../components/generateMappedFieldNameFrom';
+import { generateMappedFieldNameFrom } from '../../../components/generateMappedFieldNameFrom';
 
-import { toPascalCase } from '../../../../../../../utils/helpers/strings';
+import { toPascalCase } from '../../../../../../../../utils/helpers/strings';
 
 export const generateUniqueFieldName = (gridApiRef, fieldName: string, m3ColumnName: string) => {
     const existingMappedFields = Array

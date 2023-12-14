@@ -7,13 +7,13 @@ import { DataGridPro, GridSelectionModel, useGridApiRef, GRID_CHECKBOX_SELECTION
 
 import { dataGridDefaultProps, DataGridWrapper, DataGridCustomToolbar, NewSwitch } from '@dolittle/design-system';
 
-import { FieldMapping, MappedField, MappableTableResult } from '../../../../../../../apis/integrations/generated';
+import { FieldMapping, MappedField, MappableTableResult } from '../../../../../../../../apis/integrations/generated';
 
 import { DataGridTableListingEntry, getMessageMappingDataGridColumns } from './MessageMappingDataGridColumns';
 
-import { ViewMode } from '../../ViewMode';
-import { generateMappedFieldNameFrom } from '../../components/generateMappedFieldNameFrom';
-import { useUpdateMappedFieldsInForm } from '../../components/useUpdateMappedFieldsInForm';
+import { ViewMode } from '../../../ViewMode';
+import { generateMappedFieldNameFrom } from '../../../components/generateMappedFieldNameFrom';
+import { useUpdateMappedFieldsInForm } from '../../../components/useUpdateMappedFieldsInForm';
 
 import { generateUniqueFieldName } from './helpers';
 
