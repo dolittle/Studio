@@ -35,7 +35,7 @@ export const TableSection = ({ selectedTableName, mode, initialSelectedFields, o
     return (
         <ContentWithSubtitle
             title={`${selectedTableName} Table`}
-            infoTooltipLabel='Our rest API is documented using OpenAPI.'
+            infoTooltipLabel={`This displays all the M3 fields available for '${selectedTableName}' table.`}
             rightAction={mode === 'new' &&
                 <Button
                     label='Back to Search Results'

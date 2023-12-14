@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 
-import { Box, Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 import { TextField } from '@dolittle/design-system/';
 
@@ -25,10 +25,8 @@ export const MappedTableResult = ({ selectedTableName, mode, initialSelectedFiel
 
     return (
         <>
-            <Box sx={{ py: 3 }}>
-                {`This displays all the M3 fields available for this table. Primary fields are necessary for the message type and have already been selected.
-                                You can remap the M3 Description by adding a remapped name that makes sense for your organization’s business logic. `}
-            </Box>
+            <Typography gutterBottom>Primary fields are necessary for the message type and have already been selected.</Typography>
+            <Typography>{`You can remap the M3 Description by adding a remapped name that makes sense for your organization’s business logic. `}</Typography>
 
             <Grid container gap={4} sx={{ py: 3, justifyContent: 'space-between', justifyItems: 'center', }}>
                 <TextField
