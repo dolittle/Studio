@@ -22,6 +22,11 @@ export type ContentWithSubtitleProps = {
     infoTooltipLabel?: string;
 
     /**
+     * The right action to add to the header.
+     */
+    rightAction?: React.ReactNode;
+
+    /**
      * The children of the content.
      */
     children: React.ReactNode;
@@ -37,13 +42,17 @@ export type ContentWithSubtitleProps = {
  * @param {ContentWithSubtitleProps} props - The {@link ContentWithSubtitleProps}.
  * @returns A {@link ContentWithSubtitle} component.
  */
-export const ContentWithSubtitle = ({ title, infoTooltipLabel, children, sx }: ContentWithSubtitleProps) =>
+export const ContentWithSubtitle = ({ title, infoTooltipLabel, rightAction, children, sx }: ContentWithSubtitleProps) =>
     <Box component='article' sx={{ my: 3, ...sx }}>
         <ContentDivider />
 
-        <InlineWrapper sx={{ my: 3 }}>
-            <Typography variant='subtitle2'>{title}</Typography>
-            {infoTooltipLabel && <Icon icon='InfoRounded' tooltipLabel={infoTooltipLabel} />}
+        <InlineWrapper sx={{ my: 3, justifyContent: 'space-between' }}>
+            <InlineWrapper>
+                <Typography variant='subtitle2'>{title}</Typography>
+                {infoTooltipLabel && <Icon icon='InfoRounded' tooltipLabel={infoTooltipLabel} />}
+            </InlineWrapper>
+
+            {rightAction && <div>{rightAction}</div>}
         </InlineWrapper>
 
         {children}
