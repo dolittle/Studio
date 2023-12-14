@@ -20,7 +20,7 @@ import { generateUniqueFieldName } from './helpers';
 export type MessageMappingDataGridProps = {
     tableName: string;
     mode: ViewMode;
-    quickFilterValue?: string;
+    quickFilterValue: string;
     initialSelectedFields: MappedField[];
     mappableTableResult: any; // MappableTableResult;
     isLoading: boolean;
@@ -205,6 +205,12 @@ export const MessageMappingDataGrid = ({ tableName, mode, quickFilterValue, init
                             />
                         </DataGridCustomToolbar>
                     )
+                }}
+                sx={{
+                    // Hide the filter icon in the column header.
+                    '& .MuiDataGrid-columnHeader--filtered .MuiDataGrid-iconButtonContainer': {
+                        display: 'none',
+                    },
                 }}
             />
         </DataGridWrapper>
