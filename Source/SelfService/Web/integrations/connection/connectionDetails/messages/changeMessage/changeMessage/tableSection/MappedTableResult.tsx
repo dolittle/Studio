@@ -3,9 +3,11 @@
 
 import React, { useState } from 'react';
 
-import { Grid, Typography } from '@mui/material';
+import { useDebounce } from 'use-debounce';
 
-import { TextField } from '@dolittle/design-system/';
+import { Typography } from '@mui/material';
+
+import { AigonHelper, InlineWrapper, TextField } from '@dolittle/design-system/';
 
 import { MappedField } from '../../../../../../../apis/integrations/generated';
 import { useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet } from '../../../../../../../apis/integrations/tableMetadataAssistant.hooks';
@@ -24,31 +26,35 @@ export type MappedTableResultProps = {
 
 export const MappedTableResult = ({ connectionId, selectedTableName, mode, initialSelectedFields, mappableTableResult, isLoading }: MappedTableResultProps) => {
     const [fieldSearchTerm, setFieldSearchTerm] = useState('');
+    const [aigonSearchTerm, setAigonSearchTerm] = useState('');
 
-    const query = useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet({
-        id: connectionId,
-        tableName: selectedTableName,
-        userWantsAndNeeds: 'a',
-    });
+    const [debouncedAigonSearchTerm] = useDebounce(aigonSearchTerm, 500);
 
-    const searchResults = query.data;
+    // const query = useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet({
+    //     id: connectionId,
+    //     tableName: selectedTableName,
+    //     userWantsAndNeeds: 'Show me data related to users and timestamps', //debouncedAigonSearchTerm,
+    // });
 
-    console.log('searchResults', searchResults);
+    // const searchResults = query.data || [];
+
+    //console.log('searchResults', searchResults);
 
     return (
         <>
             <Typography gutterBottom>Primary fields are necessary for the message type and have already been selected.</Typography>
-            <Typography>{`You can remap the M3 Description by adding a remapped name that makes sense for your organization’s business logic. `}</Typography>
+            <Typography>{`You can remap the M3 Description by adding a remapped name that makes sense for your organization’s business logic.`}</Typography>
 
-            <Grid container gap={4} sx={{ py: 3, justifyContent: 'space-between', justifyItems: 'center', }}>
+            <InlineWrapper sx={{ py: 3 }}>
                 <TextField
                     startIcon='Search'
                     variant='outlined'
                     placeholder='Search fields'
                     onValueChange={event => setFieldSearchTerm(event.target.value)}
-                    sx={{ flexGrow: 1 }}
+                    isFullWidth
                 />
-            </Grid>
+                <AigonHelper onClick={() => { }} />
+            </InlineWrapper>
 
             <MessageMappingDataGrid
                 tableName={selectedTableName}
