@@ -8,11 +8,13 @@ import { Grid, Typography } from '@mui/material';
 import { TextField } from '@dolittle/design-system/';
 
 import { MappedField } from '../../../../../../../apis/integrations/generated';
+import { useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet } from '../../../../../../../apis/integrations/tableMetadataAssistant.hooks';
 
 import { ViewMode } from '../../ViewMode';
 import { MessageMappingDataGrid } from './messageMappingDataGrid';
 
 export type MappedTableResultProps = {
+    connectionId: string;
     selectedTableName: string;
     mode: ViewMode;
     initialSelectedFields: MappedField[];
@@ -20,8 +22,18 @@ export type MappedTableResultProps = {
     isLoading: boolean;
 };
 
-export const MappedTableResult = ({ selectedTableName, mode, initialSelectedFields, mappableTableResult, isLoading }: MappedTableResultProps) => {
+export const MappedTableResult = ({ connectionId, selectedTableName, mode, initialSelectedFields, mappableTableResult, isLoading }: MappedTableResultProps) => {
     const [fieldSearchTerm, setFieldSearchTerm] = useState('');
+
+    const query = useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet({
+        id: connectionId,
+        tableName: selectedTableName,
+        userWantsAndNeeds: 'a',
+    });
+
+    const searchResults = query.data;
+
+    console.log('searchResults', searchResults);
 
     return (
         <>

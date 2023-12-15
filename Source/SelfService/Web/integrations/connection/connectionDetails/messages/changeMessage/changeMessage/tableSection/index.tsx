@@ -49,6 +49,7 @@ export const TableSection = ({ selectedTableName, mode, initialSelectedFields, o
             {!mappableTableResult?.value
                 ? <AlertBox />
                 : <MappedTableResult
+                    connectionId={connectionId}
                     selectedTableName={selectedTableName}
                     mode={mode}
                     initialSelectedFields={initialSelectedFields}
