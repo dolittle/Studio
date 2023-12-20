@@ -101,9 +101,14 @@ export type TextFieldProps = {
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
     sx?: SxProps;
+
+    /**
+     * The overrides prop gives you access to the underlying MUI object, overriding the styles defined by the component and Material-UI.
+     */
+    overrides?: MuiTextFieldProps;
 };
 
-export const TextField = ({ id, label, value, size = 'small', placeholder, helperText, isDisabled, isRequired, isFullWidth, startIcon, endIcon, iconColor, onValueChange, variant = 'outlined', sx }: TextFieldProps) =>
+export const TextField = ({ id, label, value, size = 'small', placeholder, helperText, isDisabled, isRequired, isFullWidth, startIcon, endIcon, iconColor, onValueChange, variant, sx, overrides }: TextFieldProps) =>
     <MuiTextField
         id={id}
         label={label}
@@ -121,8 +126,9 @@ export const TextField = ({ id, label, value, size = 'small', placeholder, helpe
                 <TextFieldAdornment position='end' icon={endIcon} color={iconColor ?? 'inherit'} size={size} />
         }}
         onChange={onValueChange}
-        variant={variant}
+        variant={variant ?? 'outlined'}
         type='text'
         autoComplete='off'
         sx={{ '.MuiOutlinedInput-root': { fontSize: 'inherit' }, ...sx }}
+        {...overrides}
     />;

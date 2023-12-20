@@ -35,22 +35,11 @@ metadata.args = {
 
 export const Default = createStory();
 
-export const WithLabel = createStory({
-    label: 'Label',
-});
-
-export const WithPlaceholder = createStory({
-    placeholder: 'Placeholder',
-});
-
-export const WithHelperText = createStory({
-    helperText: 'Helper text',
-});
-
-export const WithStartIcon = createStory({
-    startIcon: 'Search',
-});
-
-export const WithEndIcon = createStory({
-    endIcon: 'EditRounded',
+export const Overrides = createStory({
+    overrides: {
+        InputProps: {
+            endAdornment:
+                <IconButton tooltipText='This is an added action button.' icon='AddBoxRounded' onClick={action('IconButton was clicked!')} />,
+        },
+    },
 });
