@@ -30,15 +30,19 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
 
     const [debouncedAigonSearchTerm] = useDebounce(aigonSearchTerm, 500);
 
-    // const query = useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet({
-    //     id: connectionId,
-    //     tableName: selectedTableName,
-    //     userWantsAndNeeds: 'Show me data related to users and timestamps', //debouncedAigonSearchTerm,
-    // });
+    const query = useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet({
+        id: connectionId,
+        tableName: selectedTableName,
+        userWantsAndNeeds: 'Show me data related to users and timestamps', //debouncedAigonSearchTerm,
+    });
 
-    // const searchResults = query.data || [];
+    const searchResults = query.data;
 
-    //console.log('searchResults', searchResults);
+    if (query.isLoading) {
+        console.log('loading');
+    } else {
+        console.log('searchResults', searchResults);
+    }
 
     return (
         <>
@@ -53,7 +57,7 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
                     onValueChange={event => setFieldSearchTerm(event.target.value)}
                     isFullWidth
                 />
-                <AigonHelper onClick={() => { }} />
+                <AigonHelper onAigonActivate={() => { }} />
             </InlineWrapper>
 
             <MessageMappingDataGrid
