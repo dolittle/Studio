@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import { alpha } from '@mui/material';
+import { alpha, InputAdornment } from '@mui/material';
 
-import { IconButton, TextField } from '../../index';
+import { Icon, IconButton, TextField } from '../../index';
 
 /**
  * The props for a {@link AigonSearchBar} component.
@@ -25,12 +25,18 @@ export type AigonSearchBarProps = {
 export const AigonSearchBar = ({ onAigonClose }: AigonSearchBarProps) =>
     <TextField
         id='aigon-search-bar'
-        label='Search with Aigon'
+        placeholder='Search with Aigon'
         isFullWidth
         overrides={{
             InputProps: {
+                startAdornment:
+                    <InputAdornment position='start'>
+                        <Icon icon='Search' color='primary' />
+                    </InputAdornment>,
                 endAdornment:
-                    <IconButton tooltipText='Switch back to normal search.' icon='AigonIcon' size='medium' edge='end' onClick={onAigonClose} />,
+                    <InputAdornment position='end'>
+                        <IconButton tooltipText='Switch back to normal search.' icon='AigonIcon' edge='end' onClick={onAigonClose} />
+                    </InputAdornment>,
             },
         }}
         sx={{ backgroundColor: theme => alpha(theme.palette.primary.main, 0.5) }}
