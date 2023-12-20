@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { InputAdornment, SxProps, TextField as MuiTextField, TextFieldProps as MuiTextFieldProps } from '@mui/material';
+import { InputAdornment, SxProps, TextField as MuiTextField, TextFieldProps as MuiTextFieldProps, Theme } from '@mui/material';
 
 import { Icon, IconProps, SvgIconsDefinition } from '../../index';
 
@@ -106,7 +106,7 @@ export type TextFieldProps = {
     /**
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
-    sx?: SxProps;
+    sx?: SxProps<Theme>;
 
     /**
      * The overrides prop gives you access to the underlying MUI object, overriding the styles defined by the component and Material-UI.
