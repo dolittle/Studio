@@ -13,7 +13,7 @@ import { alphaNumericCharsRegex } from '../../../../../../utils/helpers/regex';
 export type MessageDetailsSectionProps = ViewModeProps & {};
 
 export const MessageDetailsSection = (props: MessageDetailsSectionProps) =>
-    <ContentSection hideHeader>
+    <ContentSection hideHeader sx={{ p: 0, my: 3 }}>
         <Grid container gap={4}>
             <Stack spacing={3}>
                 <Typography variant='subtitle2'>Provide a name for your message type</Typography>
