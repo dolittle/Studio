@@ -1,9 +1,9 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
-import { Alert, AlertTitle, Collapse, SxProps, Typography } from '@mui/material';
+import { Alert, Collapse, SxProps, Typography } from '@mui/material';
 
 import { IconButton } from '../../index';
 
@@ -89,7 +89,7 @@ export const AlertBox = ({ severity, title, message, isDismissible, isOpen = tru
                 action={isDismissible ? <IconButton tooltipText='Dismiss alert' onClick={handleClose} /> : undefined}
                 sx={{ display: 'inline-flex', ...sx }}
             >
-                <AlertTitle>{title ?? AlertBoxErrorTitle}</AlertTitle>
+                <Typography gutterBottom>{title ?? AlertBoxErrorTitle}</Typography>
                 <Typography variant='body2'>{message ?? <AlertBoxErrorMessage />}</Typography>
             </Alert>
         </Collapse>
