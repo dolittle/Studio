@@ -12,9 +12,14 @@ import { Icon, IconButton, TextField } from '../../index';
  */
 export type AigonSearchBarProps = {
     /**
-     * Callback for when the user clicks the Aigon icon.
+     * Callback for when the user clicks the Aigon helper icon.
      */
-    onAigonClose: () => void;
+    onAigonDeactivate: () => void;
+
+    /**
+     * Callback for when the user changes the search term.
+     */
+    onSearchTermChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 /**
@@ -22,11 +27,12 @@ export type AigonSearchBarProps = {
  * @param {AigonSearchBarProps} props - The {@link AigonSearchBarProps}.
  * @returns A {@link AigonSearchBar} component.
  */
-export const AigonSearchBar = ({ onAigonClose }: AigonSearchBarProps) =>
+export const AigonSearchBar = ({ onAigonDeactivate, onSearchTermChange }: AigonSearchBarProps) =>
     <TextField
         id='aigon-search-bar'
         placeholder='Search with Aigon'
         isFullWidth
+        onValueChange={onSearchTermChange}
         overrides={{
             InputProps: {
                 startAdornment:
@@ -35,7 +41,7 @@ export const AigonSearchBar = ({ onAigonClose }: AigonSearchBarProps) =>
                     </InputAdornment>,
                 endAdornment:
                     <InputAdornment position='end'>
-                        <IconButton tooltipText='Switch back to normal search.' icon='AigonIcon' edge='end' onClick={onAigonClose} />
+                        <IconButton tooltipText='Switch back to normal search.' icon='AigonIcon' edge='end' onClick={onAigonDeactivate} />
                     </InputAdornment>,
             },
         }}
