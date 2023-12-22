@@ -13,7 +13,7 @@ const styles = {
         justifyContent: 'space-between',
         alignItems: 'center',
         gap: 4,
-        py: 2,
+        pb: 2,
     },
     buttonGroup: {
         display: 'flex',
@@ -48,7 +48,7 @@ export type ContentHeaderProps = {
 };
 
 export const ContentHeader = ({ title, buttons, buttonsSlot, titleTextVariant = 'title', sx, status }: ContentHeaderProps) =>
-    <Box sx={{ ...styles.wrapper, ...sx }}>
+    <Box component='header' sx={{ ...styles.wrapper, ...sx }}>
         <Box display='flex' flexDirection='row' alignItems='center'>
             <Typography variant={titleTextVariant === 'title' ? 'subtitle1' : 'subtitle2'} noWrap>{title}</Typography>
             {status && <StatusIndicator {...status} sx={{ ml: 2 }} />}

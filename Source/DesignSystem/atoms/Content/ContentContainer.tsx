@@ -21,11 +21,13 @@ export type ContentContainerProps = {
 };
 
 /**
- * A container for content with a paper background.
+ * The ContentContainer is used to wrap sections of content with a paper background.
+ *
+ * Usually used to wrap a {@link ContentWithSubtitle} components.
  * @param {ContentContainerProps} props - The {@link ContentContainerProps}.
  * @returns A {@link ContentContainer} component.
  */
 export const ContentContainer = ({ sx, children }: ContentContainerProps) =>
-    <Paper sx={{ width: 1, my: 2, px: 3, maxWidth: '1200px', ...sx }}>
+    <Paper component='article' sx={{ width: 1, my: 2, py: 2, px: 3, maxWidth: '1200px', ...sx }}>
         {children}
     </Paper>;

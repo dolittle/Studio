@@ -38,10 +38,10 @@ export type ContentWithSubtitleProps = {
  * @returns A {@link ContentWithSubtitle} component.
  */
 export const ContentWithSubtitle = ({ title, infoTooltipLabel, children, sx }: ContentWithSubtitleProps) =>
-    <Box component='article' sx={{ my: 3, ...sx }}>
+    <Box component='article' sx={{ mt: 3, ...sx }}>
         <ContentDivider />
 
-        <InlineWrapper sx={{ my: 3 }}>
+        <InlineWrapper sx={{ mt: 2, mb: 3 }}>
             <Typography variant='subtitle2'>{title}</Typography>
             {infoTooltipLabel && <Icon icon='InfoRounded' tooltipLabel={infoTooltipLabel} />}
         </InlineWrapper>
