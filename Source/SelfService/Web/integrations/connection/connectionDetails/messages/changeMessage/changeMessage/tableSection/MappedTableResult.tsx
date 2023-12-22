@@ -7,7 +7,7 @@ import { useDebounce } from 'use-debounce';
 
 import { Typography } from '@mui/material';
 
-import { AigonHelper, InlineWrapper, TextField } from '@dolittle/design-system/';
+import { AigonHelper, AigonSearchBar, InlineWrapper, TextField } from '@dolittle/design-system/';
 
 import { MappedField } from '../../../../../../../apis/integrations/generated';
 import { useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet } from '../../../../../../../apis/integrations/tableMetadataAssistant.hooks';
@@ -28,21 +28,25 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
     const [fieldSearchTerm, setFieldSearchTerm] = useState('');
     const [aigonSearchTerm, setAigonSearchTerm] = useState('');
 
+    const [isAigonSearchActive, setIsAigonSearchActive] = useState(false);
+
     const [debouncedAigonSearchTerm] = useDebounce(aigonSearchTerm, 500);
 
-    const query = useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet({
-        id: connectionId,
-        tableName: selectedTableName,
-        userWantsAndNeeds: 'Show me data related to users and timestamps', //debouncedAigonSearchTerm,
-    });
+    // const query = useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet({
+    //     id: connectionId,
+    //     tableName: selectedTableName,
+    //     userWantsAndNeeds: 'Show me data related to users and timestamps', //debouncedAigonSearchTerm,
+    // });
 
-    const searchResults = query.data;
+    // const searchResults = query.data;
 
-    if (query.isLoading) {
-        console.log('loading');
-    } else {
-        console.log('searchResults', searchResults);
-    }
+    // if (query.isLoading) {
+    //     console.log('loading');
+    // } else {
+    //     console.log('searchResults', searchResults);
+    // }
+
+    // console.log(fieldSearchTerm, 'fieldSearchTerm');
 
     return (
         <>
@@ -51,14 +55,19 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
 
             <InlineWrapper sx={{ py: 3 }}>
                 <TextField
+                    placeholder='Search fields'
+                    isFullWidth
                     startIcon='Search'
                     variant='outlined'
-                    placeholder='Search fields'
                     onValueChange={event => setFieldSearchTerm(event.target.value)}
-                    isFullWidth
                 />
-                <AigonHelper onAigonActivate={() => { }} />
+                <AigonHelper onAigonActivate={() => setIsAigonSearchActive(true)} />
             </InlineWrapper>
+
+            <AigonSearchBar
+                onAigonDeactivate={() => setIsAigonSearchActive(false)}
+                onSearchTermChange={event => setAigonSearchTerm(event.target.value)}
+            />
 
             <MessageMappingDataGrid
                 tableName={selectedTableName}
