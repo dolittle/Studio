@@ -28,6 +28,6 @@ export type ContentContainerProps = {
  * @returns A {@link ContentContainer} component.
  */
 export const ContentContainer = ({ sx, children }: ContentContainerProps) =>
-    <Paper sx={{ width: 1, my: 2, px: 3, maxWidth: '1200px', ...sx }}>
+    <Paper component='article' sx={{ width: 1, my: 2, py: 2, px: 3, maxWidth: '1200px', ...sx }}>
         {children}
     </Paper>;

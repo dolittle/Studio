@@ -82,7 +82,7 @@ export const AlertBox = ({ severity, title, message, isDismissible, isOpen = tru
     };
 
     return (
-        <Collapse in={open}>
+        <Collapse component='section' in={isAlertBoxOpen}>
             <Alert
                 variant='outlined'
                 severity={severity ?? 'error'}
