@@ -41,7 +41,7 @@ export const ContentWithSubtitle = ({ title, infoTooltipLabel, children, sx }: C
     <Box component='article' sx={{ mt: 3, ...sx }}>
         <ContentDivider />
 
-        <InlineWrapper sx={{ my: 3 }}>
+        <InlineWrapper sx={{ mt: 2, mb: 3 }}>
             <Typography variant='subtitle2'>{title}</Typography>
             {infoTooltipLabel && <Icon icon='InfoRounded' tooltipLabel={infoTooltipLabel} />}
         </InlineWrapper>
