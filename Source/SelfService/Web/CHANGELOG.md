@@ -1,3 +1,16 @@
+# [3.18.36] - 2023-12-22 [PR: #499](https://github.com/dolittle/Studio/pull/499)
+## Summary
+
+Fix 'Consume Data' page crashing when an error occurs.
+
+### Changed
+
+- Improved AlertBox component wording
+- Correct component types specified
+- Changed AlertBox title to be a 'p'
+- Improved ContentContainer and related components margin and padding
+
+
 # [3.18.33] - 2023-12-8 [PR: #497](https://github.com/dolittle/Studio/pull/497)
 ## Summary
 
