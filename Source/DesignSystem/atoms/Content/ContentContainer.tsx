@@ -21,7 +21,9 @@ export type ContentContainerProps = {
 };
 
 /**
- * A container for content with a paper background.
+ * The ContentContainer is used to wrap sections of content with a paper background.
+ *
+ * Usually used to wrap a {@link ContentWithSubtitle} components.
  * @param {ContentContainerProps} props - The {@link ContentContainerProps}.
  * @returns A {@link ContentContainer} component.
  */

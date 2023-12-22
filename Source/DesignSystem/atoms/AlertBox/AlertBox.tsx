@@ -26,7 +26,7 @@ export type AlertBoxProps = {
      *
      * Leave empty to use the default {@link AlertBoxErrorTitle}.
      *
-     * convention is to NOT use a period at the end of the title.
+     * Convention is to NOT use a period at the end of the title.
      * @default <AlertBoxErrorTitle />
      */
     title?: string;
@@ -34,7 +34,7 @@ export type AlertBoxProps = {
     /**
      * The message of the alert.
      *
-     * Message can be a string or a React element. Leave empty to use the default {@link AlertBoxErrorMessage}.
+     * Message can be a `string` or a `React element`. Leave empty to use the default {@link AlertBoxErrorMessage}.
      * @default <AlertBoxErrorMessage />
      */
     message?: string | ReactElement;
@@ -65,19 +65,19 @@ export type AlertBoxProps = {
 };
 
 /**
- * Alert box component is used to display an alert message.
- * @param {AlertBoxProps} props - The {@link AlertBoxProps} that contains the properties for the alert box.
+ * An alert box component that displays an alert with a title and a message.
+ * @param {AlertBoxProps} props - The {@link AlertBoxProps}.
  * @returns A {@link AlertBox} component.
  */
 export const AlertBox = ({ severity, title, message, isDismissible, isOpen = true, onDismissed, sx }: AlertBoxProps) => {
-    const [open, setOpen] = useState(isOpen);
+    const [isAlertBoxOpen, setIsAlertBoxOpen] = useState(isOpen);
 
     useEffect(() => {
-        setOpen(isOpen);
+        setIsAlertBoxOpen(isOpen);
     }, [isOpen]);
 
     const handleClose = () => {
-        setOpen(false);
+        setIsAlertBoxOpen(false);
         onDismissed?.();
     };
 
