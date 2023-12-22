@@ -15,7 +15,7 @@ export type ServiceAccountsSectionProps = {
 };
 
 export const ServiceAccountsSection = ({ connectionId }: ServiceAccountsSectionProps) => {
-    const { data, isLoading, isError, error } = useConnectionsIdKafkaServiceAccountsGet({ id: connectionId });
+    const { data, isLoading, isError } = useConnectionsIdKafkaServiceAccountsGet({ id: connectionId });
 
     // Sort DataGrid rows by createdAt date.
     const serviceAccountsDataGridRows = useMemo(() => data?.sort((a, b) => b.createdAt! > a.createdAt! ? 1 : -1) || [], [data]);
