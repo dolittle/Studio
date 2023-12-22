@@ -17,15 +17,16 @@ export type ServiceAccountsSectionProps = {
 export const ServiceAccountsSection = ({ connectionId }: ServiceAccountsSectionProps) => {
     const { data, isLoading, isError, error } = useConnectionsIdKafkaServiceAccountsGet({ id: connectionId });
 
-    if (isError) return <AlertBox message={`Error while fetching credentials list. ${error}`} />;
-
+    // Sort DataGrid rows by createdAt date.
     const serviceAccountsDataGridRows = useMemo(() => data?.sort((a, b) => b.createdAt! > a.createdAt! ? 1 : -1) || [], [data]);
 
     return (
         <ContentWithSubtitle title='Service Accounts' infoTooltipLabel='Manage service accounts to be used in apps connecting to the Async API.'>
-            {serviceAccountsDataGridRows.length > 0
-                ? <ServiceAccountsDataGrid connectionId={connectionId} isLoading={isLoading} serviceAccountsDataGridRows={serviceAccountsDataGridRows} />
-                : <NoServiceAccounts connectionId={connectionId} />
+            {isError
+                ? <AlertBox message={'Error while fetching credentials list.'} />
+                : !serviceAccountsDataGridRows.length
+                    ? <NoServiceAccounts connectionId={connectionId} />
+                    : <ServiceAccountsDataGrid connectionId={connectionId} isLoading={isLoading} serviceAccountsDataGridRows={serviceAccountsDataGridRows} />
             }
         </ContentWithSubtitle>
     );
