@@ -25,7 +25,7 @@ export const Index = () => {
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
 
     if (mode === 'edit' && (!table || !messageId)) {
-        return <>Cannot crete new message without table or messageId</>;
+        return <>Cannot create new message without table or messageId.</>;
     }
 
     const [selectedTableName, setSelectedTableName] = useState('');
