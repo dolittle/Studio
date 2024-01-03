@@ -11,7 +11,7 @@ import { toPascalCase } from '../../../../../../../../utils/helpers/strings';
 export const generateUniqueFieldName = (gridApiRef, fieldName: string, m3ColumnName: string) => {
     const existingMappedFields = Array
         .from(gridApiRef.current?.getSelectedRows() as Map<GridRowId, DataGridTableListingEntry>)
-        .map(([, row]) => row.fieldName) || [];
+        .map(([, row]) => row?.fieldName) || [];
     const machineReadableFieldName = generateMappedFieldNameFrom(toPascalCase(fieldName), m3ColumnName, existingMappedFields);
     return machineReadableFieldName;
 };
