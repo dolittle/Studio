@@ -94,36 +94,18 @@ export const MessageMappingDataGrid = ({ tableName, mode, quickFilterValue, init
         });
     }, [messageMappingDataGridRows, requiredTableColumnIds, mappedFields, generateMappedFieldNameFrom]);
 
-    const sample = ['AYCONO', 'AYADR1', 'AYRQDN']; // AYADR1
-
     const gridFilters: GridFilterModel = useMemo(() => {
         return {
             // Hide unselected rows. In 'edit' mode, this is initially set to true.
             items: hideUnselectedRows ? [
                 {
-                    id: 'hideUnselectedRows',
                     columnField: GRID_CHECKBOX_SELECTION_FIELD,
                     operatorValue: 'is',
                     value: 'true',
                 },
-                {
-                    id: 'quickFilter',
-                    columnField: 'm3ColumnName',
-                    operatorValue: 'contains',
-                    value: 'AYCONO' || 'AYADR1' || 'AYRQDN'
-                }
-            ]
-                // sample.length ?
-                //     [{
-                //         id: 'quickFilter',
-                //         columnField: 'm3ColumnName',
-                //         operatorValue: 'contains',
-                //         value: 'AYCONO',
-                //     }]
-                : [],
+            ] : [],
             // Apply search term if provided.
             quickFilterValues: [quickFilterValue?.trim() || undefined],
-            //quickFilterValueOperator: 'contains',
         };
     }, [quickFilterValue, hideUnselectedRows]);
 
@@ -226,12 +208,12 @@ export const MessageMappingDataGrid = ({ tableName, mode, quickFilterValue, init
                         </DataGridCustomToolbar>
                     )
                 }}
-            // sx={{
-            //     // Hide the filter icon in the column header.
-            //     '& .MuiDataGrid-columnHeader--filtered .MuiDataGrid-iconButtonContainer': {
-            //         display: 'none',
-            //     },
-            // }}
+                sx={{
+                    // Hide the filter icon in the column header.
+                    '& .MuiDataGrid-columnHeader--filtered .MuiDataGrid-iconButtonContainer': {
+                        display: 'none',
+                    },
+                }}
             />
         </DataGridWrapper>
     );
