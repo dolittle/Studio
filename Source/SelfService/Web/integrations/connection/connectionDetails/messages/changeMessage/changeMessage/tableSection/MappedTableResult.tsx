@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { useDebounce } from 'use-debounce';
 
-import { Typography } from '@mui/material';
+import { Box, LinearProgress, Typography } from '@mui/material';
 
 import { AigonHelper, AigonSearchBar, InlineWrapper, TextField } from '@dolittle/design-system/';
 
@@ -25,58 +25,71 @@ export type MappedTableResultProps = {
 };
 
 export const MappedTableResult = ({ connectionId, selectedTableName, mode, initialSelectedFields, mappableTableResult, isLoading }: MappedTableResultProps) => {
-    const [fieldSearchTerm, setFieldSearchTerm] = useState('');
-    const [aigonSearchTerm, setAigonSearchTerm] = useState('');
-
     const [isAigonSearchActive, setIsAigonSearchActive] = useState(false);
+    const [fieldSearchTerm, setFieldSearchTerm] = useState('');
+    const [aigonSearchTerm, setAigonSearchTerm] = useState(''); // 'Show me data related to users and timestamps',
 
     const [debouncedAigonSearchTerm] = useDebounce(aigonSearchTerm, 500);
 
-    // const query = useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet({
-    //     id: connectionId,
-    //     tableName: selectedTableName,
-    //     userWantsAndNeeds: 'Show me data related to users and timestamps', //debouncedAigonSearchTerm,
-    // });
+    // This query does not run when the aigonSearchTerm.trim() length is less than 5. This is set in the query hook.
+    const { data: aiSearchResult, isInitialLoading } = useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet({
+        id: connectionId,
+        tableName: selectedTableName,
+        userWantsAndNeeds: debouncedAigonSearchTerm,
+    });
 
-    // const searchResults = query.data;
-
-    // if (query.isLoading) {
-    //     console.log('loading');
-    // } else {
-    //     console.log('searchResults', searchResults);
-    // }
-
-    // console.log(fieldSearchTerm, 'fieldSearchTerm');
+    const allMappableTableRows = mappableTableResult?.value?.columns || [];
+    const aiFilteredRows = allMappableTableRows.filter(row => aiSearchResult?.recommendations?.find(({ name }) => row.m3ColumnName === name));
+    const mappableTableDataGridRows = isAigonSearchActive && aigonSearchTerm.length > 5 ? aiFilteredRows : allMappableTableRows;
 
     return (
         <>
             <Typography gutterBottom>Primary fields are necessary for the message type and have already been selected.</Typography>
             <Typography>{`You can remap the M3 Description by adding a remapped name that makes sense for your organization’s business logic.`}</Typography>
 
-            <InlineWrapper sx={{ py: 3 }}>
-                <TextField
-                    placeholder='Search fields'
-                    isFullWidth
-                    startIcon='Search'
-                    variant='outlined'
-                    onValueChange={event => setFieldSearchTerm(event.target.value)}
+            {isAigonSearchActive
+                ? (
+                    <Box sx={{ py: 3 }}>
+                        <AigonSearchBar
+                            onAigonDeactivate={() => {
+                                setIsAigonSearchActive(false);
+                                setAigonSearchTerm('');
+                            }}
+                            onSearchTermChange={event => setAigonSearchTerm(event.target.value)}
+                        />
+                    </Box>
+                )
+                : (
+                    <InlineWrapper sx={{ py: 3 }}>
+                        <TextField
+                            placeholder='Search fields'
+                            isFullWidth
+                            startIcon='Search'
+                            variant='outlined'
+                            onValueChange={event => setFieldSearchTerm(event.target.value)}
+                        />
+                        <AigonHelper
+                            onAigonActivate={() => {
+                                setFieldSearchTerm('');
+                                setIsAigonSearchActive(true);
+                            }}
+                        />
+                    </InlineWrapper>
+                )
+            }
+
+            {isInitialLoading
+                ? <LinearProgress />
+                : <MessageMappingDataGrid
+                    tableName={selectedTableName}
+                    mode={mode}
+                    mappableTableDataGridRows={mappableTableDataGridRows}
+                    quickFilterValue={fieldSearchTerm}
+                    initialSelectedFields={initialSelectedFields}
+                    mappableTableResult={mappableTableResult}
+                    isLoading={isLoading}
                 />
-                <AigonHelper onAigonActivate={() => setIsAigonSearchActive(true)} />
-            </InlineWrapper>
-
-            <AigonSearchBar
-                onAigonDeactivate={() => setIsAigonSearchActive(false)}
-                onSearchTermChange={event => setAigonSearchTerm(event.target.value)}
-            />
-
-            <MessageMappingDataGrid
-                tableName={selectedTableName}
-                mode={mode}
-                quickFilterValue={fieldSearchTerm}
-                initialSelectedFields={initialSelectedFields}
-                mappableTableResult={mappableTableResult}
-                isLoading={isLoading}
-            />
+            }
         </>
     );
 };

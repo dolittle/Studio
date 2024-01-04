@@ -7,7 +7,7 @@ import { DataGridPro, GridFilterModel, GridSelectionModel, useGridApiRef, GRID_C
 
 import { dataGridDefaultProps, DataGridWrapper, DataGridCustomToolbar, NewSwitch } from '@dolittle/design-system';
 
-import { FieldMapping, MappedField, MappableTableResult } from '../../../../../../../../apis/integrations/generated';
+import { FieldMapping, MappedField } from '../../../../../../../../apis/integrations/generated';
 
 import { DataGridTableListingEntry, getMessageMappingDataGridColumns } from './MessageMappingDataGridColumns';
 
@@ -20,13 +20,14 @@ import { generateUniqueFieldName } from './helpers';
 export type MessageMappingDataGridProps = {
     tableName: string;
     mode: ViewMode;
+    mappableTableDataGridRows: any;
     quickFilterValue: string;
     initialSelectedFields: MappedField[];
-    mappableTableResult: any; // MappableTableResult;
+    mappableTableResult: any;
     isLoading: boolean;
 };
 
-export const MessageMappingDataGrid = ({ tableName, mode, quickFilterValue, initialSelectedFields, mappableTableResult, isLoading }: MessageMappingDataGridProps) => {
+export const MessageMappingDataGrid = ({ tableName, mode, mappableTableDataGridRows, quickFilterValue, initialSelectedFields, mappableTableResult, isLoading }: MessageMappingDataGridProps) => {
     const gridApiRef = useGridApiRef();
     const setMappedFieldsInForm = useUpdateMappedFieldsInForm();
 
@@ -56,19 +57,15 @@ export const MessageMappingDataGrid = ({ tableName, mode, quickFilterValue, init
         setHasSetInitialState(true);
     }
 
-    const allMappableTableColumns = mappableTableResult?.value?.columns || [];
     const requiredTableColumns = mappableTableResult?.value?.required || [];
     const requiredTableColumnIds = requiredTableColumns.map(required => required.m3ColumnName);
     const selectedIds = (selectedRowIds.length > 0) ? selectedRowIds : requiredTableColumnIds as GridSelectionModel;
 
-    const messageMappingDataGridRows: DataGridTableListingEntry[] = useMemo(
-        () => allMappableTableColumns.map(column => ({
-            id: column.m3ColumnName,
-            fieldName: mappedFields.get(column.m3ColumnName)?.fieldName || '',
-            ...column,
-        })),
-        [allMappableTableColumns, mappedFields]
-    );
+    const messageMappingDataGridRows: DataGridTableListingEntry[] = useMemo(() => mappableTableDataGridRows.map(column => ({
+        id: column.m3ColumnName,
+        fieldName: mappedFields.get(column.m3ColumnName)?.fieldName || '',
+        ...column,
+    })), [mappableTableDataGridRows, mappedFields]);
 
     const messageMappingDataGridColumns = useMemo(() => getMessageMappingDataGridColumns(requiredTableColumnIds), [requiredTableColumnIds]);
 
