@@ -20,7 +20,6 @@ export const useConnectionsIdMetadataTableAssistantTableNameColumnRecommendation
     const api = getOrCreateApi();
     return useQuery({
         queryKey: [
-            //CACHE_KEYS.ConnectionMappableTables_GET,
             CACHE_KEYS.ConnectionTableMetadataAssistant_GET,
             params.id,
             params.tableName,
@@ -28,6 +27,6 @@ export const useConnectionsIdMetadataTableAssistantTableNameColumnRecommendation
         ],
         queryFn: api.connectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet.bind(api, params),
         staleTime: 60000,
-        enabled: !!params.id && !!params.tableName && !!params.userWantsAndNeeds,
+        enabled: !!params.id && !!params.tableName && !!params.userWantsAndNeeds && params.userWantsAndNeeds.trim().length > 5,
     });
 };
