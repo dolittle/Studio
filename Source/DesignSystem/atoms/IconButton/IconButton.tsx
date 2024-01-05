@@ -108,6 +108,6 @@ export const IconButton = ({ tooltipText, tooltipPlacement, icon, color, size, e
             sx={sx}
             {...overrides}
         >
-            <Icon icon={icon ?? 'CloseRounded'} />
+            <Icon icon={icon ?? 'CloseRounded'} size={size ?? 'small'} />
         </MuiIconButton>
     </Tooltip>;

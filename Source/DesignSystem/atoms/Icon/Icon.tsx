@@ -50,7 +50,7 @@ export const Icon = ({ icon, color = 'inherit', size = 'small', tooltipLabel, sx
     if (tooltipLabel) {
         return (
             <Tooltip title={tooltipLabel}>
-                <Box sx={{ display: 'flex' }}>{clonedIcon}</Box>
+                {clonedIcon}
             </Tooltip>
         );
     }

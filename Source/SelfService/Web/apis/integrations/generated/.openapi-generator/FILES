@@ -15,12 +15,12 @@ apis/LoginApi.ts
 apis/MappableTablesApi.ts
 apis/MessageMappingApi.ts
 apis/MetadataAdminApi.ts
-apis/MetadataAssistantApi.ts
 apis/ProgramMetadataApi.ts
 apis/ProjectTemplateApi.ts
 apis/ResourceDownloadsApi.ts
 apis/ServiceAccountApi.ts
 apis/TableMetadataApi.ts
+apis/TableMetadataAssistantApi.ts
 apis/index.ts
 index.ts
 models/AccountAccess.ts

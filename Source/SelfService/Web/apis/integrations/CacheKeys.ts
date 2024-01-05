@@ -30,4 +30,7 @@ export enum CACHE_KEYS {
     //KafkaServiceAccountsApi
     ConnectionKafkaServiceAccounts_GET = 'connection_kafka_service_accounts_get',
     ConnectionKafkaServiceAccountsName_GET = 'connection_kafka_service_accounts_name_get',
+
+    //TableMetadataAssistantApi
+    ConnectionTableMetadataAssistant_GET = 'connection_metadata_assistant_get',
 };

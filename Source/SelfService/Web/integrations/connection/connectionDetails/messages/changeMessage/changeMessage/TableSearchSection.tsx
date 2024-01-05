@@ -13,7 +13,7 @@ import { useConnectionsIdMessageMappingsTablesSearchGet } from '../../../../../.
 import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
 
 import { ViewModeProps } from '../ViewMode';
-import { TableSearchResults } from './TableSearchResults';
+import { TableSearchResults } from '../components/TableSearchResults';
 
 export type TableSearchSectionProps = ViewModeProps & {
     onTableSelected: (tableName: string) => void;

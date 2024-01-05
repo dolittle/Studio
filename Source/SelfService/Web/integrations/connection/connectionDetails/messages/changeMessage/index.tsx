@@ -15,7 +15,7 @@ import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { ViewMode } from './ViewMode';
 import { MessageMappingForm } from './components/MessageMappingForm';
-import { ChangeMessageView } from './ChangeMessageView';
+import { ChangeMessageView } from './changeMessage';
 
 export const Index = () => {
     const location = useLocation();
@@ -25,7 +25,7 @@ export const Index = () => {
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
 
     if (mode === 'edit' && (!table || !messageId)) {
-        return <>Cannot crete new message without table or messageId</>;
+        return <>Cannot create new message without table or messageId.</>;
     }
 
     const [selectedTableName, setSelectedTableName] = useState('');
