@@ -157,14 +157,18 @@ export function getServerUrlPrefix(): string {
 
 export function getLatestRuntimeInfo(): LatestRuntimeInfo {
     return {
-        image: 'dolittle/runtime:9.3.1',
-        changelog: 'https://github.com/dolittle/Runtime/releases/tag/v9.3.1',
+        image: 'dolittle/runtime:9.3.2',
+        changelog: 'https://github.com/dolittle/Runtime/releases/tag/v9.3.2',
     };
 }
 
 export function getRuntimes(): LatestRuntimeInfo[] {
     return [
         getLatestRuntimeInfo(),
+        {
+            image: 'dolittle/runtime:9.3.1',
+            changelog: 'https://github.com/dolittle/Runtime/releases/tag/v9.3.1',
+        },
         {
             image: 'dolittle/runtime:9.2.2',
             changelog: 'https://github.com/dolittle/Runtime/releases/tag/v9.2.2',
