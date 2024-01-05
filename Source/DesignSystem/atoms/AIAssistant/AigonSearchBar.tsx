@@ -36,13 +36,14 @@ export const AigonSearchBar = ({ onAigonDeactivate, onSearchTermChange }: AigonS
         onValueChange={onSearchTermChange}
         overrides={{
             InputProps: {
+                autoFocus: true,
                 startAdornment:
                     <InputAdornment position='start'>
                         <Icon icon='Search' color='primary' />
                     </InputAdornment>,
                 endAdornment:
                     <InputAdornment position='end'>
-                        <IconButton tooltipText='Switch back to normal search.' icon='AigonIcon' edge='end' onClick={onAigonDeactivate} />
+                        <IconButton tooltipText='Switch back to normal search' icon='AigonIcon' edge='end' onClick={onAigonDeactivate} />
                     </InputAdornment>,
             },
         }}

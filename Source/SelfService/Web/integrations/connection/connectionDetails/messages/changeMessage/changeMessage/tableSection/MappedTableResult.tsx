@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { useDebounce } from 'use-debounce';
 
-import { Box, LinearProgress, Typography } from '@mui/material';
+import { Box, Fade, LinearProgress, Typography } from '@mui/material';
 
 import { AigonHelper, AigonSearchBar, InlineWrapper, TextField } from '@dolittle/design-system/';
 
@@ -29,7 +29,7 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
     const [fieldSearchTerm, setFieldSearchTerm] = useState('');
     const [aigonSearchTerm, setAigonSearchTerm] = useState(''); // 'Show me data related to users and timestamps',
 
-    const [debouncedAigonSearchTerm] = useDebounce(aigonSearchTerm, 500);
+    const [debouncedAigonSearchTerm] = useDebounce(aigonSearchTerm, 5000);
 
     // This query does not run when the aigonSearchTerm.trim() length is less than 5. This is set in the query hook.
     const { data: aiSearchResult, isInitialLoading } = useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet({
@@ -49,17 +49,18 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
 
             {isAigonSearchActive
                 ? (
-                    <Box sx={{ py: 3 }}>
-                        <AigonSearchBar
-                            onAigonDeactivate={() => {
-                                setIsAigonSearchActive(false);
-                                setAigonSearchTerm('');
-                            }}
-                            onSearchTermChange={event => setAigonSearchTerm(event.target.value)}
-                        />
-                    </Box>
-                )
-                : (
+                    <Fade in={isAigonSearchActive} timeout={1000} mountOnEnter unmountOnExit>
+                        <Box sx={{ py: 3.6 }}>
+                            <AigonSearchBar
+                                onAigonDeactivate={() => {
+                                    setIsAigonSearchActive(false);
+                                    setAigonSearchTerm('');
+                                }}
+                                onSearchTermChange={event => setAigonSearchTerm(event.target.value)}
+                            />
+                        </Box>
+                    </Fade>
+                ) : (
                     <InlineWrapper sx={{ py: 3 }}>
                         <TextField
                             placeholder='Search fields'
@@ -68,6 +69,7 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
                             variant='outlined'
                             onValueChange={event => setFieldSearchTerm(event.target.value)}
                         />
+
                         <AigonHelper
                             onAigonActivate={() => {
                                 setFieldSearchTerm('');
@@ -78,7 +80,7 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
                 )
             }
 
-            {isInitialLoading
+            {isInitialLoading && isAigonSearchActive || mappableTableDataGridRows.length === 0
                 ? <LinearProgress />
                 : <MessageMappingDataGrid
                     tableName={selectedTableName}
