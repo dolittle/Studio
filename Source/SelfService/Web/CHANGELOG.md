@@ -1,3 +1,29 @@
+# [3.19.0] - 2024-1-5 [PR: #500](https://github.com/dolittle/Studio/pull/500)
+## Summary
+
+Add an AI-powered search field to the "Message Type" table.
+
+### Added
+
+- Genenerated Integrations API-s
+- Aigon search bar vectror/icon
+- AigonHelper component to Design System
+- AigonSearchBar to Design System
+- SearchBarWithAigon initial version to Design System
+
+### Changed
+
+- Implemented "Message Type" DataGrid Toolbar and moved DataGrid related actions there
+- Improved related Design System components
+- Generally minor styling improvements
+
+### Fixed
+
+- Wording corrections made
+- Broken filter icon in DataGrid header when "Hide unselected rows" mode is selected
+- IconButton 'icon' size when medium size was selected
+
+
 # [3.18.36] - 2023-12-22 [PR: #499](https://github.com/dolittle/Studio/pull/499)
 ## Summary
 
