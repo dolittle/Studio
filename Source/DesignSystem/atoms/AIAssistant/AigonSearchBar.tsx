@@ -30,7 +30,8 @@ export type AigonSearchBarProps = {
 export const AigonSearchBar = ({ onAigonDeactivate, onSearchTermChange }: AigonSearchBarProps) =>
     <TextField
         id='aigon-search-bar'
-        placeholder='Search with Aigon'
+        label='AI-assisted search'
+        placeholder='Please show me data related to users and timestamps'
         isFullWidth
         onValueChange={onSearchTermChange}
         overrides={{
