@@ -71,13 +71,12 @@ export const MessageMappingForm = ({
                 jqFilter: values.jqFilter,
             },
         }, {
-            onSuccess(data, variables, context) {
+            onSuccess() {
                 navigate(`..`);
-                enqueueSnackbar('Message successfully created');
+                enqueueSnackbar('Message successfully created.');
             },
-            onError(error, variables, context) {
-                console.log('error', error);
-                enqueueSnackbar('Something went wrong when trying to save the message', { variant: 'error' });
+            onError(error) {
+                enqueueSnackbar('Something went wrong when trying to save the message.', { variant: 'error' });
             },
         });
     };

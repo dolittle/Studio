@@ -7,13 +7,11 @@ import { enqueueSnackbar } from 'notistack';
 
 import { Button, StatusIndicator } from '@dolittle/design-system';
 
-import { useConnectionsIdMessageMappingsDeleteMultiplePost } from '../../../../../../apis/integrations/messageMappingApi.hooks';
+import { useConnectionsIdMessageMappingsDeleteMultiplePost } from '../../../../../../../apis/integrations/messageMappingApi.hooks';
 
-import { TableToolbarButton } from './TableToolbarButton';
+import { ToolbarButtonProps } from './index';
 
-export type DeleteMessagesProps = TableToolbarButton & {};
-
-export const DeleteMessagesButton = ({ connectionId, selectedMessageTypes, onActionExecuting, onActionCompleted, disable }: DeleteMessagesProps) => {
+export const DeleteMessagesButton = ({ connectionId, selectedMessageTypes, isDisabled, onActionExecuting, onActionCompleted }: ToolbarButtonProps) => {
     const deleteMultipleMutation = useConnectionsIdMessageMappingsDeleteMultiplePost();
 
     const isLoading = deleteMultipleMutation.isLoading;
@@ -26,12 +24,12 @@ export const DeleteMessagesButton = ({ connectionId, selectedMessageTypes, onAct
             id: connectionId,
             mappingReference: selectedMessageTypes.map(messageType => ({ message: messageType.name, table: messageType.fromTable.name })),
         }, {
-            onError(error, variables, context) {
-                enqueueSnackbar(`Failed to delete message types: ${error}`, { variant: 'error' });
+            onError(error) {
+                enqueueSnackbar(`Failed to delete message type: ${error}.`, { variant: 'error' });
                 //TODO: Handle error return object to mark which message types failed to delete
             },
-            onSuccess(data, variables, context) {
-                enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully deleted`);
+            onSuccess() {
+                enqueueSnackbar(`Message type${hasMany ? 's' : ''} successfully deleted.`);
             },
             onSettled() {
                 onActionCompleted();
@@ -47,7 +45,7 @@ export const DeleteMessagesButton = ({ connectionId, selectedMessageTypes, onAct
                     startWithIcon='DeleteRounded'
                     onClick={handleDeleteMessages}
                     color='error'
-                    disabled={!hasSelectedMessages || disable}
+                    disabled={!hasSelectedMessages || isDisabled}
                 />
                 : <StatusIndicator label={`Deleting message type${hasMany ? 's' : ''}...`} status='waiting' />
             }

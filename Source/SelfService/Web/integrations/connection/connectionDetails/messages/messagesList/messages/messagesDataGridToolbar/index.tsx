@@ -5,24 +5,32 @@ import React, { useState } from 'react';
 
 import { ContentHeader } from '@dolittle/design-system';
 
-import { MessageMappingModel } from '../../../../../apis/integrations/generated';
+import { MessageMappingModel } from '../../../../../../../apis/integrations/generated';
 
-import { DeployMessagesButton } from './Toolbar/DeployMessagesButton';
-import { UndeployMessagesButton } from './Toolbar/UndeployMessagesButton';
-import { DeleteMessagesButton } from './Toolbar/DeleteMessagesButton';
-import { CopyMessagesButton } from './Toolbar/CopyMessagesButton';
+import { DeployMessagesButton } from './DeployMessagesButton';
+import { UndeployMessagesButton } from './UndeployMessagesButton';
+import { DeleteMessagesButton } from './DeleteMessagesButton';
+import { CopyMessagesButton } from './CopyMessagesButton';
 
-export type MessagesHeaderProps = {
+export type ToolbarButtonProps = {
+    connectionId: string;
+    selectedMessageTypes: MessageMappingModel[];
+    isDisabled: boolean;
+    onActionCompleted: () => void;
+    onActionExecuting: () => void;
+};
+
+export type MessagesDataGridToolbarProps = {
     connectionId: string;
     selectedMessageTypes: MessageMappingModel[];
     onActionSuccess: () => void;
 };
 
-export const MessagesHeader = (props: MessagesHeaderProps) => {
+export const MessagesDataGridToolbar = ({ connectionId, selectedMessageTypes, onActionSuccess }: MessagesDataGridToolbarProps) => {
     const [isAnyActionExecuting, setIsAnyActionExecuting] = useState(false);
 
     const handleSuccess = () => {
-        props.onActionSuccess();
+        onActionSuccess();
         setIsAnyActionExecuting(false);
     };
 
@@ -33,39 +41,39 @@ export const MessagesHeader = (props: MessagesHeaderProps) => {
     return (
         <ContentHeader
             title='Your Messages'
+            titleTextVariant='subtitle'
             buttonsSlot={
                 <>
                     <DeleteMessagesButton
-                        connectionId={props.connectionId}
-                        selectedMessageTypes={props.selectedMessageTypes}
+                        connectionId={connectionId}
+                        selectedMessageTypes={selectedMessageTypes}
+                        isDisabled={isAnyActionExecuting}
                         onActionCompleted={handleSuccess}
                         onActionExecuting={handleExecuting}
-                        disable={isAnyActionExecuting}
                     />
                     {/* <CopyMessagesButton
-                        connectionId={props.connectionId}
-                        selectedMessageTypes={props.selectedMessageTypes}
+                        connectionId={connectionId}
+                        selectedMessageTypes={selectedMessageTypes}
+                        isDisabled={true}
                         onActionCompleted={handleSuccess}
                         onActionExecuting={handleExecuting}
-                        disable={true}
                     /> */}
                     <UndeployMessagesButton
-                        connectionId={props.connectionId}
-                        selectedMessageTypes={props.selectedMessageTypes}
+                        connectionId={connectionId}
+                        selectedMessageTypes={selectedMessageTypes}
+                        isDisabled={isAnyActionExecuting}
                         onActionCompleted={handleSuccess}
                         onActionExecuting={handleExecuting}
-                        disable={isAnyActionExecuting}
                     />
                     <DeployMessagesButton
-                        connectionId={props.connectionId}
-                        selectedMessageTypes={props.selectedMessageTypes}
+                        connectionId={connectionId}
+                        selectedMessageTypes={selectedMessageTypes}
+                        isDisabled={isAnyActionExecuting}
                         onActionCompleted={handleSuccess}
                         onActionExecuting={handleExecuting}
-                        disable={isAnyActionExecuting}
                     />
                 </>
             }
-            titleTextVariant='subtitle'
         />
     );
 };
