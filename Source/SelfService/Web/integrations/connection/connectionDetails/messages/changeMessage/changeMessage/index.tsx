@@ -91,7 +91,6 @@ export const ChangeMessageView = ({
                                             onDiscarded={() => setShowDiscardChangesDialog(true)}
                                         />
                                     }
-                                    sx={{ minHeight: 64 }}
                                 />
 
                                 <MessageDetailsSection mode={mode} />

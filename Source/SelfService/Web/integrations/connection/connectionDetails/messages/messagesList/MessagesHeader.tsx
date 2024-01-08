@@ -66,7 +66,6 @@ export const MessagesHeader = (props: MessagesHeaderProps) => {
                 </>
             }
             titleTextVariant='subtitle'
-            sx={{ minHeight: 64 }}
         />
     );
 };
