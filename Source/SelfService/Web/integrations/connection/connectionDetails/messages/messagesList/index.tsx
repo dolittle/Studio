@@ -7,13 +7,12 @@ import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
-import { AlertBox, ContentContainer, LoadingSpinner } from '@dolittle/design-system';
+import { AlertBox, ContentContainer, CreateButton, LoadingSpinner } from '@dolittle/design-system';
 
 import { useConnectionsIdMessageMappingsGet } from '../../../../../apis/integrations/messageMappingApi.hooks';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 
 import { MessagesTable } from './MessagesTable';
-import { CreateMessagesButton } from './CreateMessagesButton';
 import { NoMessages } from './NoMessages';
 import { isDefaultEmptyDate } from './helpers';
 import { MessagesHeader } from './MessagesHeader';
@@ -81,7 +80,8 @@ export const MessagesListView = () => {
                         onSelectedIdsChanged={setSelectedMessageTypeIds}
                     />
                 </ContentContainer>
-                <CreateMessagesButton onClick={() => { handleCreateNewMessage(); }} />
+
+                <CreateButton label='Create New Message' icon='MessageRounded' onCreate={handleCreateNewMessage} sx={{ maxWidth: 1200, mt: 0 }} />
             </> :
             <NoMessages onCreateNew={() => { handleCreateNewMessage(); }} />
     );
