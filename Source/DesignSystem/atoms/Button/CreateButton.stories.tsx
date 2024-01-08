@@ -12,9 +12,13 @@ metadata.title = 'Button/Create Button';
 metadata.parameters = {
     docs: {
         description: {
-            component: `The create button is a button that is used for creating new items.`
+            component: 'The create button is a button that is used for creating new items.',
         },
     },
+};
+
+metadata.argTypes = {
+    sx: { control: false },
 };
 
 metadata.args = {
