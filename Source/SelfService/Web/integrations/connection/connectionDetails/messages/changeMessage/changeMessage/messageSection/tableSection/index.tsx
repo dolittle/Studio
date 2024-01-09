@@ -7,11 +7,11 @@ import { LinearProgress } from '@mui/material';
 
 import { AlertBox, Button, ContentWithSubtitle } from '@dolittle/design-system/';
 
-import { MappedField } from '../../../../../../../apis/integrations/generated';
-import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../../apis/integrations/mappableTablesApi.hooks';
-import { useConnectionIdFromRoute } from '../../../../../../routes.hooks';
+import { MappedField } from '../../../../../../../../apis/integrations/generated';
+import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../../../apis/integrations/mappableTablesApi.hooks';
+import { useConnectionIdFromRoute } from '../../../../../../../routes.hooks';
 
-import { ViewModeProps } from '../../ViewMode';
+import { ViewModeProps } from '../../../ViewMode';
 import { MappedTableResult } from './MappedTableResult';
 
 export type TableSectionProps = ViewModeProps & {

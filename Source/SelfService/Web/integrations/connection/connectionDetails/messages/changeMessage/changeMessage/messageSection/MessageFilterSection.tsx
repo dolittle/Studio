@@ -8,8 +8,8 @@ import { useFormState } from 'react-hook-form';
 import { Box, Typography } from '@mui/material';
 import { Button, Link, ContentParagraph, ContentSection, Input } from '@dolittle/design-system';
 
-import { ViewModeProps } from '../ViewMode';
-import { TextCopyBox } from '../../../../../../components/TextCopyBox';
+import { ViewModeProps } from '../../ViewMode';
+import { TextCopyBox } from '../../../../../../../components/TextCopyBox';
 
 export type MessageFilterSectionProps = ViewModeProps & {
 

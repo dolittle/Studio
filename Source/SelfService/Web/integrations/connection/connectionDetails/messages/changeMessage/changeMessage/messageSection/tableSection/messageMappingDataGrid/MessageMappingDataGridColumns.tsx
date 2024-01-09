@@ -7,7 +7,7 @@ import { GridColDef, GridRowId, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-d
 
 import { EditCell, EditTextFieldCell, Tooltip } from '@dolittle/design-system';
 
-import { MappableTableColumn } from '../../../../../../../../apis/integrations/generated';
+import { MappableTableColumn } from '../../../../../../../../../apis/integrations/generated';
 
 export type DataGridTableListingEntry = MappableTableColumn & {
     id: string;

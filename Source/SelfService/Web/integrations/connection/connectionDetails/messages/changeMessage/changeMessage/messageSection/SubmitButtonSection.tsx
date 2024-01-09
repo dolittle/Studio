@@ -7,7 +7,7 @@ import { useFormState } from 'react-hook-form';
 
 import { Button, ContentSection } from '@dolittle/design-system';
 
-import { ViewModeProps } from '../ViewMode';
+import { ViewModeProps } from '../../ViewMode';
 
 export type SubmitButtonSectionProps = ViewModeProps & {
     disabled?: boolean;
