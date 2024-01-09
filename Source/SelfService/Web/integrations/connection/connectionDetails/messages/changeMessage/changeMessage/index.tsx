@@ -20,24 +20,15 @@ import { MessageFilterSection } from './MessageFilterSection';
 export type ChangeMessageViewProps = {
     mode: ViewMode;
     table: string,
-    onTableSelected: (table: string) => void;
     messageId: string,
     isSubmitting: boolean;
     messageType: MessageMappingModel | undefined;
     queryIsError: boolean;
     queryIsSuccess: boolean;
+    onTableSelected: (table: string) => void;
 };
 
-export const ChangeMessageView = ({
-    mode,
-    table,
-    onTableSelected,
-    messageId,
-    isSubmitting,
-    messageType,
-    queryIsError,
-    queryIsSuccess,
-}: ChangeMessageViewProps) => {
+export const ChangeMessageView = ({ mode, table, messageId, isSubmitting, messageType, queryIsError, queryIsSuccess, onTableSelected }: ChangeMessageViewProps) => {
     const navigate = useNavigate();
 
     const [searchInput, setSearchInput] = useState('');
@@ -86,14 +77,12 @@ export const ChangeMessageView = ({
                                 <ContentHeader
                                     title={title}
                                     buttonsSlot={
-                                        <CancelOrDiscardButton
-                                            onCancelled={() => cancelMessageMapping()}
-                                            onDiscarded={() => setShowDiscardChangesDialog(true)}
-                                        />
+                                        <CancelOrDiscardButton onCancelled={() => cancelMessageMapping()} onDiscarded={() => setShowDiscardChangesDialog(true)} />
                                     }
                                 />
 
                                 <MessageDetailsSection mode={mode} />
+
                                 {showTable
                                     ? <>
                                         <TableSection
@@ -103,10 +92,7 @@ export const ChangeMessageView = ({
                                             onBackToSearchResultsClicked={() => removeSelectedTable()}
                                         />
                                         <MessageFilterSection mode={mode} />
-                                        <SubmitButtonSection
-                                            mode={mode}
-                                            isSubmitting={isSubmitting}
-                                        />
+                                        <SubmitButtonSection mode={mode} isSubmitting={isSubmitting} />
                                     </> : <TableSearchSection
                                         mode={mode}
                                         onTableSelected={onTableSelected}

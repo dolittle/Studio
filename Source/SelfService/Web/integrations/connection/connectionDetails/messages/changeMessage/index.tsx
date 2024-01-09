@@ -22,22 +22,21 @@ export const Index = () => {
     const connectionId = useConnectionIdFromRoute();
     const { table = '', messageId = '' } = useParams();
 
+    const [selectedTableName, setSelectedTableName] = useState('');
+
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
 
     if (mode === 'edit' && (!table || !messageId)) {
         return <>Cannot create new message without table or messageId.</>;
     }
 
-    const [selectedTableName, setSelectedTableName] = useState('');
-
-    const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId, table, message: messageId });
-    const saveMessageMappingMutation = useConnectionsIdMessageMappingsTablesTableMessagesMessagePost();
-
-    const messageType = messageQuery.data?.value;
-
     if (mode === 'edit' && table && !selectedTableName) {
         setSelectedTableName(table);
     }
+
+    const messageQuery = useConnectionsIdMessageMappingsTablesTableMessagesMessageGet({ id: connectionId, table, message: messageId });
+    const saveMessageMappingMutation = useConnectionsIdMessageMappingsTablesTableMessagesMessagePost();
+    const messageType = messageQuery.data?.value;
 
     // TODO: Implement this.
     // Prevent the user from accidentally closing the browser tab if they have unsaved changes.
@@ -46,8 +45,6 @@ export const Index = () => {
     //     event.preventDefault();
     //     return event.returnValue = 'Are you sure you want to close?';
     // });
-
-    // TODO: Implement this.
 
     return (
         <ContentContainer>
