@@ -1,7 +1,7 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useDebounce } from 'use-debounce';
 
@@ -17,12 +17,13 @@ import { TableSearchResults } from '../components/TableSearchResults';
 
 export type TableSearchSectionProps = ViewModeProps & {
     onTableSelected: (tableName: string) => void;
-    searchInput: string;
-    setSearchInput: (searchInput: string) => void;
 };
 
-export const TableSearchSection = ({ onTableSelected, searchInput, setSearchInput }: TableSearchSectionProps) => {
+export const TableSearchSection = ({ onTableSelected }: TableSearchSectionProps) => {
     const connectionId = useConnectionIdFromRoute();
+
+    const [searchInput, setSearchInput] = useState('');
+
     const [debouncedSearchTerm] = useDebounce(searchInput, 500);
     const query = useConnectionsIdMessageMappingsTablesSearchGet({ id: connectionId, search: debouncedSearchTerm });
 
@@ -36,18 +37,14 @@ export const TableSearchSection = ({ onTableSelected, searchInput, setSearchInpu
                 placeholder='Search'
                 isFullWidth
                 startIcon='Search'
-                onValueChange={e => setSearchInput(e.target.value)}
+                onValueChange={event => setSearchInput(event.target.value)}
                 sx={{ my: 3 }}
             />
 
             {!!searchResults.length &&
                 <>
                     <Typography variant='body2' sx={{ mb: 3 }}>{`Select the table you'd like to map`}</Typography>
-                    <TableSearchResults
-                        tableListings={searchResults}
-                        isLoading={query.isLoading}
-                        onTableSelected={table => { onTableSelected(table.name!); }}
-                    />
+                    <TableSearchResults tableListings={searchResults} isLoading={query.isLoading} onTableSelected={table => onTableSelected(table.name!)} />
                 </>
             }
         </ContentSection>

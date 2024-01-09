@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { AlertBox, ContentHeader, Dialog } from '@dolittle/design-system';
+import { ContentHeader, Dialog } from '@dolittle/design-system';
 
 import { MessageMappingModel } from '../../../../../../apis/integrations/generated';
 
@@ -23,15 +23,12 @@ export type ChangeMessageViewProps = {
     messageId: string,
     isSubmitting: boolean;
     messageType: MessageMappingModel | undefined;
-    queryIsError: boolean;
-    queryIsSuccess: boolean;
     onTableSelected: (table: string) => void;
 };
 
-export const ChangeMessageView = ({ mode, table, messageId, isSubmitting, messageType, queryIsError, queryIsSuccess, onTableSelected }: ChangeMessageViewProps) => {
+export const ChangeMessageView = ({ mode, table, messageId, isSubmitting, messageType, onTableSelected }: ChangeMessageViewProps) => {
     const navigate = useNavigate();
 
-    const [searchInput, setSearchInput] = useState('');
     const [showDiscardChangesDialog, setShowDiscardChangesDialog] = useState(false);
 
     const showTable = !!table || mode === 'edit';
@@ -56,54 +53,41 @@ export const ChangeMessageView = ({ mode, table, messageId, isSubmitting, messag
 
     return (
         <>
-            {mode === 'edit' && queryIsError
-                ? <AlertBox />
-                : (
-                    <>
-                        {(mode === 'new' || queryIsSuccess) && (
-                            <>
-                                <Dialog
-                                    id='discard-changes'
-                                    isOpen={showDiscardChangesDialog}
-                                    title='Are you sure that you want to discard these changes?'
-                                    description={`By clicking ‘discard changes' none of the changes you have made to this screen will be stored.`}
-                                    onCancel={() => cancelMessageMapping()}
-                                    cancelBtnLabel='Discard changes'
-                                    confirmBtnLabel='Continue working'
-                                    onConfirm={() => setShowDiscardChangesDialog(false)}
-                                    onClose={() => setShowDiscardChangesDialog(false)}
-                                />
+            <Dialog
+                id='discard-changes'
+                isOpen={showDiscardChangesDialog}
+                title='Are you sure that you want to discard these changes?'
+                description={`By clicking ‘discard changes' none of the changes you have made to this screen will be stored.`}
+                onCancel={() => cancelMessageMapping()}
+                cancelBtnLabel='Discard changes'
+                confirmBtnLabel='Continue working'
+                onConfirm={() => setShowDiscardChangesDialog(false)}
+                onClose={() => setShowDiscardChangesDialog(false)}
+            />
 
-                                <ContentHeader
-                                    title={title}
-                                    buttonsSlot={
-                                        <CancelOrDiscardButton onCancelled={() => cancelMessageMapping()} onDiscarded={() => setShowDiscardChangesDialog(true)} />
-                                    }
-                                />
+            <ContentHeader
+                title={title}
+                buttonsSlot={
+                    <CancelOrDiscardButton onCancelled={() => cancelMessageMapping()} onDiscarded={() => setShowDiscardChangesDialog(true)} />
+                }
+            />
 
-                                <MessageDetailsSection mode={mode} />
+            <MessageDetailsSection />
 
-                                {showTable
-                                    ? <>
-                                        <TableSection
-                                            mode={mode}
-                                            selectedTableName={table}
-                                            initialSelectedFields={messageType?.fieldMappings ?? []}
-                                            onBackToSearchResultsClicked={() => removeSelectedTable()}
-                                        />
-                                        <MessageFilterSection mode={mode} />
-                                        <SubmitButtonSection mode={mode} isSubmitting={isSubmitting} />
-                                    </> : <TableSearchSection
-                                        mode={mode}
-                                        onTableSelected={onTableSelected}
-                                        searchInput={searchInput}
-                                        setSearchInput={setSearchInput}
-                                    />
-                                }
-                            </>
-                        )}
-                    </>
-                )
+            {showTable
+                ? <>
+                    <TableSection
+                        mode={mode}
+                        selectedTableName={table}
+                        initialSelectedFields={messageType?.fieldMappings ?? []}
+                        onBackToSearchResultsClicked={() => removeSelectedTable()}
+                    />
+
+                    <MessageFilterSection mode={mode} />
+
+                    <SubmitButtonSection mode={mode} isSubmitting={isSubmitting} />
+                </>
+                : <TableSearchSection mode={mode} onTableSelected={onTableSelected} />
             }
         </>
     );

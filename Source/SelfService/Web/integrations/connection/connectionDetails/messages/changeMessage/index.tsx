@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import { useLocation, useParams } from 'react-router-dom';
 
-import { ContentContainer } from '@dolittle/design-system';
+import { AlertBox, ContentContainer } from '@dolittle/design-system';
 
 import {
     useConnectionsIdMessageMappingsTablesTableMessagesMessageGet,
@@ -46,6 +46,8 @@ export const Index = () => {
     //     return event.returnValue = 'Are you sure you want to close?';
     // });
 
+    if (mode === 'edit' && messageQuery.isError) return <AlertBox />;
+
     return (
         <ContentContainer>
             <MessageMappingForm
@@ -58,12 +60,10 @@ export const Index = () => {
                 <ChangeMessageView
                     mode={mode}
                     table={selectedTableName}
-                    onTableSelected={setSelectedTableName}
                     messageId={messageId}
-                    isSubmitting={saveMessageMappingMutation.isLoading}
                     messageType={messageType}
-                    queryIsError={messageQuery.isError}
-                    queryIsSuccess={messageQuery.isSuccess}
+                    isSubmitting={saveMessageMappingMutation.isLoading}
+                    onTableSelected={setSelectedTableName}
                 />
             </MessageMappingForm>
         </ContentContainer>

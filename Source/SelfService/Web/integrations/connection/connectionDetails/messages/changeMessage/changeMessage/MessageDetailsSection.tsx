@@ -7,12 +7,9 @@ import { Grid, Stack, Typography } from '@mui/material';
 
 import { ContentSection, Input } from '@dolittle/design-system';
 
-import { ViewModeProps } from '../ViewMode';
 import { alphaNumericCharsRegex } from '../../../../../../utils/helpers/regex';
 
-export type MessageDetailsSectionProps = ViewModeProps & {};
-
-export const MessageDetailsSection = (props: MessageDetailsSectionProps) =>
+export const MessageDetailsSection = () =>
     <ContentSection hideHeader sx={{ p: 0, my: 3 }}>
         <Grid container gap={4}>
             <Stack spacing={3}>
