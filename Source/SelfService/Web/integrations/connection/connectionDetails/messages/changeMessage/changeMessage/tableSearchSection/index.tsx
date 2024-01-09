@@ -5,15 +5,13 @@ import React, { useState } from 'react';
 
 import { useDebounce } from 'use-debounce';
 
-import { Typography } from '@mui/material';
+import { ContentWithSubtitle, TextField } from '@dolittle/design-system';
 
-import { ContentSection, TextField } from '@dolittle/design-system';
+import { useConnectionsIdMessageMappingsTablesSearchGet } from '../../../../../../../apis/integrations/mappableTablesApi.hooks';
+import { useConnectionIdFromRoute } from '../../../../../../routes.hooks';
 
-import { useConnectionsIdMessageMappingsTablesSearchGet } from '../../../../../../apis/integrations/mappableTablesApi.hooks';
-import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
-
-import { ViewModeProps } from '../ViewMode';
-import { TableSearchResults } from '../components/TableSearchResults';
+import { ViewModeProps } from '../../ViewMode';
+import { TableSearchResults } from './TableSearchResults';
 
 export type TableSearchSectionProps = ViewModeProps & {
     onTableSelected: (tableName: string) => void;
@@ -30,7 +28,7 @@ export const TableSearchSection = ({ onTableSelected }: TableSearchSectionProps)
     const searchResults = query.data?.value || [];
 
     return (
-        <ContentSection title='Browse M3 Tables'>
+        <ContentWithSubtitle title='Browse M3 Tables'>
             <TextField
                 value={searchInput}
                 size='medium'
@@ -38,15 +36,11 @@ export const TableSearchSection = ({ onTableSelected }: TableSearchSectionProps)
                 isFullWidth
                 startIcon='Search'
                 onValueChange={event => setSearchInput(event.target.value)}
-                sx={{ my: 3 }}
             />
 
             {!!searchResults.length &&
-                <>
-                    <Typography variant='body2' sx={{ mb: 3 }}>{`Select the table you'd like to map`}</Typography>
-                    <TableSearchResults tableListings={searchResults} isLoading={query.isLoading} onTableSelected={table => onTableSelected(table.name!)} />
-                </>
+                <TableSearchResults tableListings={searchResults} isLoading={query.isLoading} onTableSelected={table => onTableSelected(table.name!)} />
             }
-        </ContentSection>
+        </ContentWithSubtitle>
     );
 };

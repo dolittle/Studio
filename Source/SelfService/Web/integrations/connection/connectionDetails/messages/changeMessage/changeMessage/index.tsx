@@ -12,7 +12,7 @@ import { MessageMappingModel } from '../../../../../../apis/integrations/generat
 import { ViewMode } from '../ViewMode';
 import { DiscardChangesDialog } from './DiscardChangesDialog';
 import { MessageSection } from './messageSection';
-import { TableSearchSection } from './TableSearchSection';
+import { TableSearchSection } from './tableSearchSection';
 import { MessageDetailsSection } from './MessageDetailsSection';
 import { CancelOrDiscardButton } from './CancelOrDiscardButton';
 
