@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 
-import { ContentHeader } from '@dolittle/design-system';
+import { ContentDivider, ContentHeader } from '@dolittle/design-system';
 
 import { MessageMappingModel } from '../../../../../../../apis/integrations/generated';
 
@@ -39,41 +39,45 @@ export const MessagesDataGridToolbar = ({ connectionId, selectedMessageTypes, on
     };
 
     return (
-        <ContentHeader
-            title='Your Messages'
-            titleTextVariant='subtitle'
-            buttonsSlot={
-                <>
-                    <DeleteMessagesButton
-                        connectionId={connectionId}
-                        selectedMessageTypes={selectedMessageTypes}
-                        isDisabled={isAnyActionExecuting}
-                        onActionCompleted={handleSuccess}
-                        onActionExecuting={handleExecuting}
-                    />
-                    {/* <CopyMessagesButton
+        <>
+            <ContentHeader
+                title='Your Messages'
+                titleTextVariant='subtitle'
+                buttonsSlot={
+                    <>
+                        <DeleteMessagesButton
+                            connectionId={connectionId}
+                            selectedMessageTypes={selectedMessageTypes}
+                            isDisabled={isAnyActionExecuting}
+                            onActionCompleted={handleSuccess}
+                            onActionExecuting={handleExecuting}
+                        />
+                        {/* <CopyMessagesButton
                         connectionId={connectionId}
                         selectedMessageTypes={selectedMessageTypes}
                         isDisabled={true}
                         onActionCompleted={handleSuccess}
                         onActionExecuting={handleExecuting}
                     /> */}
-                    <UndeployMessagesButton
-                        connectionId={connectionId}
-                        selectedMessageTypes={selectedMessageTypes}
-                        isDisabled={isAnyActionExecuting}
-                        onActionCompleted={handleSuccess}
-                        onActionExecuting={handleExecuting}
-                    />
-                    <DeployMessagesButton
-                        connectionId={connectionId}
-                        selectedMessageTypes={selectedMessageTypes}
-                        isDisabled={isAnyActionExecuting}
-                        onActionCompleted={handleSuccess}
-                        onActionExecuting={handleExecuting}
-                    />
-                </>
-            }
-        />
+                        <UndeployMessagesButton
+                            connectionId={connectionId}
+                            selectedMessageTypes={selectedMessageTypes}
+                            isDisabled={isAnyActionExecuting}
+                            onActionCompleted={handleSuccess}
+                            onActionExecuting={handleExecuting}
+                        />
+                        <DeployMessagesButton
+                            connectionId={connectionId}
+                            selectedMessageTypes={selectedMessageTypes}
+                            isDisabled={isAnyActionExecuting}
+                            onActionCompleted={handleSuccess}
+                            onActionExecuting={handleExecuting}
+                        />
+                    </>
+                }
+            />
+
+            <ContentDivider sx={{ mb: 2 }} />
+        </>
     );
 };

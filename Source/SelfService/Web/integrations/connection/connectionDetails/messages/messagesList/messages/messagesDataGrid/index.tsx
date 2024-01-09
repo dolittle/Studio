@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { DataGridPro, GridInputSelectionModel } from '@mui/x-data-grid-pro';
 
-import { ContentSection } from '@dolittle/design-system';
+import { dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
 
 import { MessageMappingModel } from '../../../../../../../apis/integrations/generated';
 
@@ -19,7 +19,7 @@ export type MessagesDataGridProps = {
     onSelectedIdsChanged: (newSelectedIds: string[]) => void;
 };
 
-export const MessagesDataGrid = ({ rows, onSelectedIdsChanged, initialSelectedIds }: MessagesDataGridProps) => {
+export const MessagesDataGrid = ({ rows, initialSelectedIds, onSelectedIdsChanged }: MessagesDataGridProps) => {
     const navigate = useNavigate();
 
     const columns = messagesDataGridColumns;
@@ -29,22 +29,17 @@ export const MessagesDataGrid = ({ rows, onSelectedIdsChanged, initialSelectedId
     };
 
     return (
-        <ContentSection noSpace sx={{ mx: -2 }}>
+        <DataGridWrapper>
             <DataGridPro
+                {...dataGridDefaultProps}
                 rows={rows}
                 columns={columns}
-                headerHeight={46}
-                getRowHeight={() => 'auto'}
                 onRowClick={({ row }) => onTableRowClick(row as MessageMappingModel)}
-                autoHeight
-                hideFooter
-                disableColumnMenu
                 checkboxSelection
-                disableSelectionOnClick
                 experimentalFeatures={{ newEditingApi: true }}
                 selectionModel={initialSelectedIds}
-                onSelectionModelChange={(selectionModel) => onSelectedIdsChanged(selectionModel as string[])}
+                onSelectionModelChange={selectionModel => onSelectedIdsChanged(selectionModel as string[])}
             />
-        </ContentSection>
+        </DataGridWrapper>
     );
 };
