@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 
 import { useDebounce } from 'use-debounce';
 
+import { Collapse } from '@mui/material';
+
 import { ContentWithSubtitle, TextField } from '@dolittle/design-system';
 
 import { useConnectionsIdMessageMappingsTablesSearchGet } from '../../../../../../../apis/integrations/mappableTablesApi.hooks';
@@ -38,9 +40,9 @@ export const TableSearchSection = ({ onTableSelected }: TableSearchSectionProps)
                 onValueChange={event => setSearchInput(event.target.value)}
             />
 
-            {!!searchResults.length &&
+            <Collapse in={!!searchResults.length} timeout={100} mountOnEnter unmountOnExit>
                 <TableSearchResults tableListings={searchResults} isLoading={query.isLoading} onTableSelected={table => onTableSelected(table.name!)} />
-            }
+            </Collapse>
         </ContentWithSubtitle>
     );
 };
