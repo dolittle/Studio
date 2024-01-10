@@ -59,6 +59,7 @@ export const ChangeMessageView = ({ mode, table, messageId, isSubmitting, messag
                 buttonsSlot={
                     <CancelOrDiscardButton onCancelled={handleMessageMappingCancel} onDiscarded={() => setShowDiscardChangesDialog(true)} />
                 }
+                sx={{ pb: 0 }}
             />
 
             <MessageDetailsSection />
