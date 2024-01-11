@@ -3,8 +3,6 @@
 
 import React from 'react';
 
-import { LinearProgress } from '@mui/material';
-
 import { AlertBox, Button, ContentWithSubtitle } from '@dolittle/design-system/';
 
 import { MappedField } from '../../../../../../../../apis/integrations/generated';
@@ -30,8 +28,6 @@ export const TableSection = ({ selectedTableName, mode, initialSelectedFields, o
         table: selectedTableName,
     });
 
-    if (isInitialLoading) return <LinearProgress />;
-
     return (
         <ContentWithSubtitle
             title={`${selectedTableName} Table`}
@@ -46,7 +42,7 @@ export const TableSection = ({ selectedTableName, mode, initialSelectedFields, o
                 />
             }
         >
-            {!mappableTableResult?.value
+            {!mappableTableResult?.value && !isInitialLoading
                 ? <AlertBox />
                 : <MappedTableResult
                     connectionId={connectionId}
