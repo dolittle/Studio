@@ -1,7 +1,7 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useDebounce } from 'use-debounce';
 
@@ -16,13 +16,13 @@ import { ViewModeProps } from '../../ViewMode';
 import { TableSearchResults } from './TableSearchResults';
 
 export type TableSearchSectionProps = ViewModeProps & {
+    searchInput: string;
+    setSearchInput: (searchInput: string) => void;
     onTableSelected: (tableName: string) => void;
 };
 
-export const TableSearchSection = ({ onTableSelected }: TableSearchSectionProps) => {
+export const TableSearchSection = ({ searchInput, setSearchInput, onTableSelected }: TableSearchSectionProps) => {
     const connectionId = useConnectionIdFromRoute();
-
-    const [searchInput, setSearchInput] = useState('');
 
     const [debouncedSearchTerm] = useDebounce(searchInput, 500);
     const query = useConnectionsIdMessageMappingsTablesSearchGet({ id: connectionId, search: debouncedSearchTerm });

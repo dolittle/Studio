@@ -28,6 +28,7 @@ export type ChangeMessageViewProps = {
 export const ChangeMessageView = ({ mode, table, messageId, isSubmitting, messageType, onTableSelected }: ChangeMessageViewProps) => {
     const navigate = useNavigate();
 
+    const [searchInput, setSearchInput] = useState('');
     const [showDiscardChangesDialog, setShowDiscardChangesDialog] = useState(false);
 
     const showTable = !!table || mode === 'edit';
@@ -72,7 +73,12 @@ export const ChangeMessageView = ({ mode, table, messageId, isSubmitting, messag
                     isSubmitting={isSubmitting}
                     onTableSelected={onTableSelected}
                 />
-                : <TableSearchSection mode={mode} onTableSelected={onTableSelected} />
+                : <TableSearchSection
+                    mode={mode}
+                    onTableSelected={onTableSelected}
+                    searchInput={searchInput}
+                    setSearchInput={setSearchInput}
+                />
             }
         </>
     );
