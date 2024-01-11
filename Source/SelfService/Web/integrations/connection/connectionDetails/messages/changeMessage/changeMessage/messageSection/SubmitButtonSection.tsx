@@ -5,29 +5,30 @@ import React from 'react';
 
 import { useFormState } from 'react-hook-form';
 
-import { Button, ContentSection } from '@dolittle/design-system';
+import { Button, ContentDivider } from '@dolittle/design-system';
 
 import { ViewModeProps } from '../../ViewMode';
 
 export type SubmitButtonSectionProps = ViewModeProps & {
-    disabled?: boolean;
     isSubmitting: boolean;
 };
 
-export const SubmitButtonSection = (props: SubmitButtonSectionProps) => {
+export const SubmitButtonSection = ({ mode, isSubmitting }: SubmitButtonSectionProps) => {
     const { isValid, isDirty } = useFormState();
 
-    const buttonText = props.mode === 'new' ? 'Add Message and close' : 'Save Message and close';
+    const buttonText = mode === 'new' ? 'Add Message And Close' : 'Save Message And Close';
 
     return (
-        <ContentSection hideHeader>
+        <>
+            <ContentDivider sx={{ mt: 3 }} />
+
             <Button
-                label={props.isSubmitting ? 'Saving...' : buttonText}
+                label={isSubmitting ? 'Saving...' : buttonText}
                 variant='fullwidth'
                 type='submit'
+                disabled={!isValid || !isDirty || isSubmitting}
                 sx={{ mt: 2.125 }}
-                disabled={!isValid || !isDirty || props.isSubmitting || props.disabled}
             />
-        </ContentSection>
+        </>
     );
 };
