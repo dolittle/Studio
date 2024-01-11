@@ -30,7 +30,8 @@ export const MessageSection = ({ mode, selectedTableName, initialSelectedFields,
                 onBackToSearchResultsClicked={() => removeSelectedTable()}
             />
 
-            <MessageFilterSection mode={mode} />
+            <MessageFilterSection />
+
             <SubmitButtonSection mode={mode} isSubmitting={isSubmitting} />
         </>
     );
