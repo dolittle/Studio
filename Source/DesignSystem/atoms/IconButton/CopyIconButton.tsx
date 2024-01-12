@@ -14,12 +14,12 @@ export type CopyIconButtonProps = {
     /**
      * The text to copy to the clipboard.
      */
-    text: string;
+    textToCopy: string;
 
     /**
      * The message to show in the snackbar.
      */
-    message: string;
+    snackbarMessage: string;
 
     /**
      * The color of the icon.
@@ -40,12 +40,12 @@ export type CopyIconButtonProps = {
  * @param {CopyIconButtonProps} props - The {@link CopyIconButtonProps}.
  * @returns A {@link CopyIconButton} component.
  */
-export const CopyIconButton = ({ text, message, color, tooltipText }: CopyIconButtonProps) => {
+export const CopyIconButton = ({ textToCopy, snackbarMessage, color, tooltipText }: CopyIconButtonProps) => {
     const { enqueueSnackbar } = useSnackbar();
 
     const handleImageCopy = () => {
-        navigator.clipboard.writeText(text);
-        enqueueSnackbar(message);
+        navigator.clipboard.writeText(textToCopy);
+        enqueueSnackbar(snackbarMessage);
     };
 
     return (

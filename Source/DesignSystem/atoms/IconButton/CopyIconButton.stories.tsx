@@ -10,16 +10,16 @@ metadata.title = 'Icon Button/Copy Icon Button';
 metadata.parameters = {
     docs: {
         description: {
-            component: 'The copy icon button component is a button that copies the text to the clipboard.'
+            component: 'The copy icon button component is a button that copies the text to the clipboard.',
         },
     },
 };
 
 metadata.args = {
-    text: 'Text copied to clipboard.',
-    message: 'Text copied to clipboard.',
+    textToCopy: 'This is the text to copy to the clipboard.',
+    snackbarMessage: 'The message to show in the snackbar.',
     color: 'inherit',
-    tooltipText: 'Copy text.',
+    tooltipText: 'The tooltip text to show when hovering over the icon button.',
 };
 
 export default metadata;

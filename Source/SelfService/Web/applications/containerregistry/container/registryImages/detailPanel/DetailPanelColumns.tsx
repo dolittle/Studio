@@ -59,7 +59,7 @@ export const getDetailPanelColumns = (applicationId: string, image: string) => {
             minWidth: 150,
             flex: 1,
             renderCell: ({ row }) =>
-                <CopyIconButton text={`${image}:${row?.name}`} message={`Tag '${row?.name}' has been copied to clipboard.`} tooltipText='Copy head image' />,
+                <CopyIconButton textToCopy={`${image}:${row?.name}`} snackbarMessage={`Tag '${row?.name}' has been copied to clipboard.`} tooltipText='Copy the Head Image.' />,
         },
     ] as GridColDef<Tag>[];
 };

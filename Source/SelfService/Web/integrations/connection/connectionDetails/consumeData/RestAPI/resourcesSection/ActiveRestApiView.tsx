@@ -23,7 +23,7 @@ export const ActiveRestApiView = ({ restApiBaseUrl }: ActiveRestApiViewProps) =>
 
                 <InlineWrapper>
                     <Link label={restApiUrl} href={restApiUrl} target ariaLabel='Rest API URL' />
-                    <CopyIconButton text={restApiUrl} message='Rest API URL copied to clipboard.' color='primary' tooltipText='Copy the Rest API URL link to the clipboard.' />
+                    <CopyIconButton textToCopy={restApiUrl} snackbarMessage='Rest API URL copied to clipboard.' color='primary' tooltipText='Copy the Rest API URL link to the clipboard.' />
                 </InlineWrapper>
             </section>
 
@@ -32,7 +32,7 @@ export const ActiveRestApiView = ({ restApiBaseUrl }: ActiveRestApiViewProps) =>
 
                 <InlineWrapper>
                     <Link label={openApiDocumentationUrl} href={openApiDocumentationUrl} target ariaLabel='OpenAPI documentation' />
-                    <CopyIconButton text={openApiDocumentationUrl} message='OpenAPI documentation copied to clipboard.' color='primary' tooltipText='Copy the OpenAPI documentation link to the clipboard.' />
+                    <CopyIconButton textToCopy={openApiDocumentationUrl} snackbarMessage='OpenAPI documentation copied to clipboard.' color='primary' tooltipText='Copy the OpenAPI documentation link to the clipboard.' />
                 </InlineWrapper>
             </section>
         </>

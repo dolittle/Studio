@@ -33,8 +33,8 @@ export const ResourcesSection = ({ connectionId }: ResourcesSectionProps) => {
                 <InlineWrapper>
                     <Link label={asyncApiSpecificationUrl} href={asyncApiSpecificationUrl} target ariaLabel='AsyncAPI specification' />
                     <CopyIconButton
-                        text={asyncApiSpecificationUrl}
-                        message='AsyncAPI specification link copied to clipboard.'
+                        textToCopy={asyncApiSpecificationUrl}
+                        snackbarMessage='AsyncAPI specification link copied to clipboard.'
                         color='primary'
                         tooltipText='Copy the AsyncAPI specification link to the clipboard.'
                     />

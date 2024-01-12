@@ -27,7 +27,7 @@ export const MessageFilterSection = () => {
 
                 <InlineWrapper>
                     <Link label={jqUserManualLink} href={jqUserManualLink} target ariaLabel='Jq user manual' />
-                    <CopyIconButton text={jqUserManualLink} message='Jq user manual link copied to clipboard.' color='primary' tooltipText='Copy the jq user manual link to the clipboard.' />
+                    <CopyIconButton textToCopy={jqUserManualLink} snackbarMessage='Jq user manual link copied to clipboard.' color='primary' tooltipText='Copy the jq user manual link to the clipboard.' />
                 </InlineWrapper>
             </section>
 
@@ -36,7 +36,7 @@ export const MessageFilterSection = () => {
 
                 <InlineWrapper>
                     <Typography>{facilityFilteringExample}</Typography>
-                    <CopyIconButton text={facilityFilteringExample} message='Sample jq predicate expression copied to clipboard.' tooltipText='Copy the sample jq predicate expression to the clipboard.' />
+                    <CopyIconButton textToCopy={facilityFilteringExample} snackbarMessage='Sample jq predicate expression copied to clipboard.' tooltipText='Copy the sample jq predicate expression to the clipboard.' />
                 </InlineWrapper>
             </section>
 
