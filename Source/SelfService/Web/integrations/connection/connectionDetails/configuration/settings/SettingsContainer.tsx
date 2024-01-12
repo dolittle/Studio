@@ -2,17 +2,21 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 import React, { useRef, useState } from 'react';
+
 import { useSnackbar } from 'notistack';
+
 import { ContentContainer, ContentHeader } from '@dolittle/design-system/';
+
 import { useConnectionsIdGet } from '../../../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
-import { SettingsFormContent } from './SettingsFormContent';
+
 import { SettingsForm, SettingsFormRef, SettingsFormSaveState } from './SettingsForm';
+import { SettingsFormContent } from './SettingsFormContent';
 import { ActionToolbar } from './ActionToolbar';
 
 export const SettingsContainer = () => {
     const [canEdit, setEditMode] = useState(false);
-    const [lastSaveState, setLastSaveState] = useState<SettingsFormSaveState>();
+    //const [lastSaveState, setLastSaveState] = useState<SettingsFormSaveState>();
 
     const { enqueueSnackbar } = useSnackbar();
     const connectionId = useConnectionIdFromRoute();
@@ -21,13 +25,13 @@ export const SettingsContainer = () => {
     const formRef = useRef<SettingsFormRef>(null);
 
     const connection = query.data?.value;
-    const links = query.data?.links || [];
+    //const links = query.data?.links || [];
 
     const handleSaveState = (saveState: SettingsFormSaveState) => {
-        setLastSaveState(saveState);
-        saveState.forEach((state) => {
+        //setLastSaveState(saveState);
+        saveState.forEach(state => {
             if (state.status === 'success') {
-                enqueueSnackbar(`Saved ${state.name}`);
+                enqueueSnackbar(`Saved ${state.name}.`);
             }
             if (state.status === 'error') {
                 enqueueSnackbar(`Error saving ${state.name}. Error: ${state.errorMessage}`, { variant: 'error' });
@@ -36,7 +40,7 @@ export const SettingsContainer = () => {
     };
 
     const handleOnSaved = (saveState: SettingsFormSaveState): void => {
-        if (saveState.every((state) => state.status === 'success')) {
+        if (saveState.every(state => state.status === 'success')) {
             setEditMode(false);
         }
         handleSaveState(saveState);
@@ -52,20 +56,11 @@ export const SettingsContainer = () => {
 
     return (
         <ContentContainer>
-            <SettingsForm
-                connectionId={connectionId}
-                connection={connection}
-                onSaved={handleOnSaved}
-                ref={formRef}
-            >
+            <SettingsForm connectionId={connectionId} connection={connection} onSaved={handleOnSaved} ref={formRef}>
                 <ContentHeader
                     title='General Settings'
                     buttonsSlot={
-                        <ActionToolbar
-                            canEdit={canEdit}
-                            onCancelAction={handleOnCancelAction}
-                            onEditAction={() => setEditMode(true)}
-                        />
+                        <ActionToolbar canEdit={canEdit} onCancelAction={handleOnCancelAction} onEditAction={() => setEditMode(true)} />
                     }
                 />
                 <SettingsFormContent canEdit={canEdit} />
