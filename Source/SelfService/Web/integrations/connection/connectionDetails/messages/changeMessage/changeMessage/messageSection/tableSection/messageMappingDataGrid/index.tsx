@@ -7,13 +7,13 @@ import { DataGridPro, GridFilterModel, GridSelectionModel, useGridApiRef, GRID_C
 
 import { dataGridDefaultProps, DataGridWrapper, DataGridCustomToolbar, NewSwitch } from '@dolittle/design-system';
 
-import { FieldMapping, MappedField } from '../../../../../../../../apis/integrations/generated';
+import { FieldMapping, MappedField } from '../../../../../../../../../apis/integrations/generated';
 
 import { DataGridTableListingEntry, getMessageMappingDataGridColumns } from './MessageMappingDataGridColumns';
 
-import { ViewMode } from '../../../ViewMode';
-import { generateMappedFieldNameFrom } from '../../../components/generateMappedFieldNameFrom';
-import { useUpdateMappedFieldsInForm } from '../../../components/useUpdateMappedFieldsInForm';
+import { ViewMode } from '../../../../ViewMode';
+import { generateMappedFieldNameFrom } from '../../../../components/generateMappedFieldNameFrom';
+import { useUpdateMappedFieldsInForm } from '../../../../components/useUpdateMappedFieldsInForm';
 
 import { generateUniqueFieldName } from './helpers';
 
@@ -173,7 +173,6 @@ export const MessageMappingDataGrid = ({ tableName, mode, mappableTableDataGridR
                 columns={messageMappingDataGridColumns}
                 autoHeight={false}
                 hideFooter={false}
-                disableColumnMenu={false}
                 checkboxSelection
                 selectionModel={selectedIds}
                 onSelectionModelChange={onSelectedModelChanged}

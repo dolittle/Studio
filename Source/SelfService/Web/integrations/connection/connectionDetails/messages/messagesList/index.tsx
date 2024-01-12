@@ -1,34 +1,25 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
-import { AlertBox, ContentContainer, LoadingSpinner } from '@dolittle/design-system';
+import { AlertBox, LoadingSpinner } from '@dolittle/design-system';
 
 import { useConnectionsIdMessageMappingsGet } from '../../../../../apis/integrations/messageMappingApi.hooks';
-import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 
-import { MessagesTable } from './MessagesTable';
-import { CreateMessagesButton } from './CreateMessagesButton';
+import { Messages } from './messages';
 import { NoMessages } from './NoMessages';
+
 import { isDefaultEmptyDate } from './helpers';
-import { MessagesHeader } from './MessagesHeader';
 
 export const MessagesListView = () => {
-    const connectionId = useConnectionIdFromRoute();
     const navigate = useNavigate();
-    const [selectedMessageTypeIds, setSelectedMessageTypeIds] = useState<string[]>([]);
-    const queryClient = useQueryClient();
+    const connectionId = useConnectionIdFromRoute();
 
     const { data, isError, isLoading } = useConnectionsIdMessageMappingsGet({ id: connectionId });
-
-    const handleCreateNewMessage = () => {
-        navigate('new');
-    };
 
     const messageTypesRows = useMemo(() => {
         const mappedRows = data?.value || [];
@@ -52,37 +43,16 @@ export const MessagesListView = () => {
         return mappedRows;
     }, [data?.value]);
 
-    const selectedMessageTypeRows = useMemo(() =>
-        messageTypesRows.filter(row => selectedMessageTypeIds.includes(row.id))
-        , [messageTypesRows, selectedMessageTypeIds]);
-
-    const handleActionCompleted = () => {
-        setSelectedMessageTypeIds([]);
-        window.setTimeout(() => {
-            queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.ConnectionMessageMappings_GET, connectionId] });
-        }, 300);
+    const handleCreateNewMessage = () => {
+        navigate('new');
     };
 
     if (isLoading) return <LoadingSpinner />;
     if (isError) return <AlertBox />;
 
     return (
-        messageTypesRows.length ?
-            <>
-                <ContentContainer>
-                    <MessagesHeader
-                        connectionId={connectionId}
-                        selectedMessageTypes={selectedMessageTypeRows}
-                        onActionSuccess={handleActionCompleted}
-                    />
-                    <MessagesTable
-                        rows={messageTypesRows}
-                        initialSelectedIds={selectedMessageTypeIds}
-                        onSelectedIdsChanged={setSelectedMessageTypeIds}
-                    />
-                </ContentContainer>
-                <CreateMessagesButton onClick={() => { handleCreateNewMessage(); }} />
-            </> :
-            <NoMessages onCreateNew={() => { handleCreateNewMessage(); }} />
+        messageTypesRows.length
+            ? <Messages connectionId={connectionId} messageTypesRows={messageTypesRows} onNewMessageCreated={handleCreateNewMessage} />
+            : <NoMessages onCreateNew={handleCreateNewMessage} />
     );
 };

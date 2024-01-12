@@ -5,39 +5,27 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { AlertBox, ContentHeader, Dialog } from '@dolittle/design-system';
+import { ContentHeader } from '@dolittle/design-system';
 
 import { MessageMappingModel } from '../../../../../../apis/integrations/generated';
 
 import { ViewMode } from '../ViewMode';
-import { TableSearchSection } from './TableSearchSection';
+import { DiscardChangesDialog } from './DiscardChangesDialog';
+import { MessageSection } from './messageSection';
+import { TableSearchSection } from './tableSearchSection';
 import { MessageDetailsSection } from './MessageDetailsSection';
-import { TableSection } from './tableSection';
-import { SubmitButtonSection } from './SubmitButtonSection';
 import { CancelOrDiscardButton } from './CancelOrDiscardButton';
-import { MessageFilterSection } from './MessageFilterSection';
 
 export type ChangeMessageViewProps = {
     mode: ViewMode;
     table: string,
-    onTableSelected: (table: string) => void;
     messageId: string,
     isSubmitting: boolean;
     messageType: MessageMappingModel | undefined;
-    queryIsError: boolean;
-    queryIsSuccess: boolean;
+    onTableSelected: (table: string) => void;
 };
 
-export const ChangeMessageView = ({
-    mode,
-    table,
-    onTableSelected,
-    messageId,
-    isSubmitting,
-    messageType,
-    queryIsError,
-    queryIsSuccess,
-}: ChangeMessageViewProps) => {
+export const ChangeMessageView = ({ mode, table, messageId, isSubmitting, messageType, onTableSelected }: ChangeMessageViewProps) => {
     const navigate = useNavigate();
 
     const [searchInput, setSearchInput] = useState('');
@@ -54,71 +42,43 @@ export const ChangeMessageView = ({
     //     return event.returnValue = 'Are you sure you want to close?';
     // });
 
-    // TODO: Implement this.
-    const cancelMessageMapping = () => {
+    const handleMessageMappingCancel = () => {
         setShowDiscardChangesDialog(false);
-
         navigate('..');
     };
 
-    const removeSelectedTable = () => onTableSelected('');
-
     return (
         <>
-            {mode === 'edit' && queryIsError
-                ? <AlertBox />
-                : (
-                    <>
-                        {(mode === 'new' || queryIsSuccess) && (
-                            <>
-                                <Dialog
-                                    id='discard-changes'
-                                    isOpen={showDiscardChangesDialog}
-                                    title='Are you sure that you want to discard these changes?'
-                                    description={`By clicking ‘discard changes' none of the changes you have made to this screen will be stored.`}
-                                    onCancel={() => cancelMessageMapping()}
-                                    cancelBtnLabel='Discard changes'
-                                    confirmBtnLabel='Continue working'
-                                    onConfirm={() => setShowDiscardChangesDialog(false)}
-                                    onClose={() => setShowDiscardChangesDialog(false)}
-                                />
+            <DiscardChangesDialog
+                isDialogOpen={showDiscardChangesDialog}
+                onDialogCancel={handleMessageMappingCancel}
+                onDialogClose={() => setShowDiscardChangesDialog(false)}
+            />
 
-                                <ContentHeader
-                                    title={title}
-                                    buttonsSlot={
-                                        <CancelOrDiscardButton
-                                            onCancelled={() => cancelMessageMapping()}
-                                            onDiscarded={() => setShowDiscardChangesDialog(true)}
-                                        />
-                                    }
-                                    sx={{ minHeight: 64 }}
-                                />
+            <ContentHeader
+                title={title}
+                buttonsSlot={
+                    <CancelOrDiscardButton onCancelled={handleMessageMappingCancel} onDiscarded={() => setShowDiscardChangesDialog(true)} />
+                }
+                sx={{ pb: 0 }}
+            />
 
-                                <MessageDetailsSection mode={mode} />
-                                {showTable
-                                    ? <>
-                                        <TableSection
-                                            mode={mode}
-                                            selectedTableName={table}
-                                            initialSelectedFields={messageType?.fieldMappings ?? []}
-                                            onBackToSearchResultsClicked={() => removeSelectedTable()}
-                                        />
-                                        <MessageFilterSection mode={mode} />
-                                        <SubmitButtonSection
-                                            mode={mode}
-                                            isSubmitting={isSubmitting}
-                                        />
-                                    </> : <TableSearchSection
-                                        mode={mode}
-                                        onTableSelected={onTableSelected}
-                                        searchInput={searchInput}
-                                        setSearchInput={setSearchInput}
-                                    />
-                                }
-                            </>
-                        )}
-                    </>
-                )
+            <MessageDetailsSection />
+
+            {showTable
+                ? <MessageSection
+                    mode={mode}
+                    selectedTableName={table}
+                    initialSelectedFields={messageType?.fieldMappings ?? []}
+                    isSubmitting={isSubmitting}
+                    onTableSelected={onTableSelected}
+                />
+                : <TableSearchSection
+                    mode={mode}
+                    onTableSelected={onTableSelected}
+                    searchInput={searchInput}
+                    setSearchInput={setSearchInput}
+                />
             }
         </>
     );

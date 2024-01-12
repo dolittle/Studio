@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import { Paper, SxProps, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 
-import { Button, ButtonProps } from '@dolittle/design-system';
+import { CreateButton, CreateButtonProps } from '@dolittle/design-system';
 
 /**
  * The props for a {@link NoContentSection} component.
@@ -32,7 +32,7 @@ export type NoContentSectionProps = {
      * List of available icons can be found in {@link SvgIcons}.
      * @default AddCircle
      */
-    icon?: ButtonProps['startWithIcon'];
+    icon?: CreateButtonProps['icon'];
 
     /**
      * If true, the button will be disabled.
@@ -48,7 +48,7 @@ export type NoContentSectionProps = {
     /**
      * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
      */
-    sx?: SxProps;
+    sx?: CreateButtonProps['sx'];
 };
 
 /**
@@ -59,6 +59,6 @@ export type NoContentSectionProps = {
 export const NoContentSection = ({ title, description, label, icon, isDisabled, onCreate, sx }: NoContentSectionProps) =>
     <Paper sx={{ boxShadow: 'none', maxInlineSize: 1200, ...sx }}>
         <Typography variant='h2'>{title}</Typography>
-        <Typography variant='body1' sx={{ my: 2 }}>{description}</Typography>
-        <Button label={label} variant='fullwidth' startWithIcon={icon ? icon : 'AddCircle'} disabled={isDisabled} onClick={onCreate} />
+        <Typography variant='body1' sx={{ mt: 2 }}>{description}</Typography>
+        <CreateButton label={label} icon={icon ? icon : 'AddCircle'} isDisabled={isDisabled} onCreate={onCreate} />
     </Paper>;

@@ -3,10 +3,11 @@
 
 import React from 'react';
 
-import { Paper } from '@mui/material';
 import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 
-import { TableListingEntry } from '../../../../../../apis/integrations/generated';
+import { DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
+
+import { TableListingEntry } from '../../../../../../../apis/integrations/generated';
 
 const columns: GridColDef<TableListingEntry>[] = [
     {
@@ -45,22 +46,17 @@ export const TableSearchResults = ({ tableListings, isLoading, onTableSelected }
     };
 
     return (
-        <Paper sx={{ width: 1, boxShadow: 'none' }}>
+        <DataGridWrapper sx={{ mt: 3 }}>
             <DataGridPro
+                {...dataGridDefaultProps}
                 rows={dataGridListing}
                 columns={columns}
-                getRowHeight={() => 'auto'}
-                autoHeight
-                headerHeight={46}
-                hideFooter
-                disableColumnMenu
-                disableColumnReorder
-                disableColumnResize
-                disableColumnSelector
-                disableSelectionOnClick
                 loading={isLoading}
                 onRowClick={({ row }) => handleRowClick(row)}
+                components={{
+                    Toolbar: () => <DataGridCustomToolbar title={`Select the table you'd like to map`} />
+                }}
             />
-        </Paper>
+        </DataGridWrapper>
     );
 };

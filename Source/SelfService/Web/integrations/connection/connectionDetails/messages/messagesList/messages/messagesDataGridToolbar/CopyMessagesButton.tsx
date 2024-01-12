@@ -7,24 +7,22 @@ import { enqueueSnackbar } from 'notistack';
 
 import { Button, StatusIndicator } from '@dolittle/design-system';
 
-import { TableToolbarButton } from './TableToolbarButton';
+import { ToolbarButtonProps } from './index';
 
-export type CopyMessagesProps = TableToolbarButton & {};
-
-export const CopyMessagesButton = (props: CopyMessagesProps) => {
+export const CopyMessagesButton = ({ connectionId, selectedMessageTypes, isDisabled, onActionExecuting, onActionCompleted }: ToolbarButtonProps) => {
     const [isLoading, setIsLoading] = useState(false);
 
-    const hasSelectedMessages = props.selectedMessageTypes.length > 0;
-    const hasMany = props.selectedMessageTypes.length > 1;
+    const hasSelectedMessages = selectedMessageTypes.length > 0;
+    const hasMany = selectedMessageTypes.length > 1;
 
     const handleCopyMessages = () => {
         setIsLoading(true);
-        props.onActionExecuting();
+        onActionExecuting();
         // eslint-disable-next-line no-restricted-globals
         setTimeout(() => {
             setIsLoading(false);
-            enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully copied`);
-            props.onActionCompleted();
+            enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully copied.`);
+            onActionCompleted();
         }, 2000);
     };
 
@@ -35,7 +33,7 @@ export const CopyMessagesButton = (props: CopyMessagesProps) => {
                     label={`Copy message${hasMany ? 's' : ''} to`}
                     startWithIcon='CopyAllRounded'
                     onClick={handleCopyMessages}
-                    disabled={!hasSelectedMessages || props.disable}
+                    disabled={!hasSelectedMessages || isDisabled}
                 />
                 : <StatusIndicator label={`Copying message type${hasMany ? 's' : ''} to...`} status='waiting' />
             }

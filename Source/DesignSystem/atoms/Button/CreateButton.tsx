@@ -30,6 +30,11 @@ export type CreateButtonProps = {
      * The function to call when the button is clicked.
      */
     onCreate: () => void;
+
+    /**
+     * The sx prop lets you add custom styles to the component, overriding the styles defined by Material-UI.
+     */
+    sx?: ButtonProps['sx'];
 };
 
 /**
@@ -37,12 +42,12 @@ export type CreateButtonProps = {
  * @param {CreateButtonProps} props - The {@link CreateButtonProps}.
  * @returns A {@link CreateButton} component.
  */
-export const CreateButton = ({ label, icon, isDisabled, onCreate }: CreateButtonProps) =>
+export const CreateButton = ({ label, icon, isDisabled, onCreate, sx }: CreateButtonProps) =>
     <Button
         label={label}
         variant='fullwidth'
         startWithIcon={icon ?? 'RocketLaunch'}
         disabled={isDisabled}
         onClick={onCreate}
-        sx={{ mt: 2 }}
+        sx={{ mt: 2, ...sx }}
     />;

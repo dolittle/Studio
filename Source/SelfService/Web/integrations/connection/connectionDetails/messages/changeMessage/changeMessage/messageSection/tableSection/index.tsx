@@ -3,15 +3,13 @@
 
 import React from 'react';
 
-import { LinearProgress } from '@mui/material';
-
 import { AlertBox, Button, ContentWithSubtitle } from '@dolittle/design-system/';
 
-import { MappedField } from '../../../../../../../apis/integrations/generated';
-import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../../apis/integrations/mappableTablesApi.hooks';
-import { useConnectionIdFromRoute } from '../../../../../../routes.hooks';
+import { MappedField } from '../../../../../../../../apis/integrations/generated';
+import { useConnectionsIdMessageMappingsTablesTableGet } from '../../../../../../../../apis/integrations/mappableTablesApi.hooks';
+import { useConnectionIdFromRoute } from '../../../../../../../routes.hooks';
 
-import { ViewModeProps } from '../../ViewMode';
+import { ViewModeProps } from '../../../ViewMode';
 import { MappedTableResult } from './MappedTableResult';
 
 export type TableSectionProps = ViewModeProps & {
@@ -30,8 +28,6 @@ export const TableSection = ({ selectedTableName, mode, initialSelectedFields, o
         table: selectedTableName,
     });
 
-    if (isInitialLoading) return <LinearProgress />;
-
     return (
         <ContentWithSubtitle
             title={`${selectedTableName} Table`}
@@ -46,7 +42,7 @@ export const TableSection = ({ selectedTableName, mode, initialSelectedFields, o
                 />
             }
         >
-            {!mappableTableResult?.value
+            {!mappableTableResult?.value && !isInitialLoading
                 ? <AlertBox />
                 : <MappedTableResult
                     connectionId={connectionId}

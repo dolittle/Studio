@@ -7,13 +7,11 @@ import { enqueueSnackbar } from 'notistack';
 
 import { Button, StatusIndicator } from '@dolittle/design-system';
 
-import { useConnectionsIdMessageMappingsUndeployMultiplePost } from '../../../../../../apis/integrations/messageMappingApi.hooks';
+import { useConnectionsIdMessageMappingsUndeployMultiplePost } from '../../../../../../../apis/integrations/messageMappingApi.hooks';
 
-import { TableToolbarButton } from './TableToolbarButton';
+import { ToolbarButtonProps } from './index';
 
-export type DeleteMessagesProps = TableToolbarButton & {};
-
-export const UndeployMessagesButton = ({ connectionId, selectedMessageTypes, onActionExecuting, onActionCompleted, disable }: DeleteMessagesProps) => {
+export const UndeployMessagesButton = ({ connectionId, selectedMessageTypes, isDisabled, onActionExecuting, onActionCompleted }: ToolbarButtonProps) => {
     const undeployMultipleMutation = useConnectionsIdMessageMappingsUndeployMultiplePost();
 
     const isLoading = undeployMultipleMutation.isLoading;
@@ -26,12 +24,12 @@ export const UndeployMessagesButton = ({ connectionId, selectedMessageTypes, onA
             id: connectionId,
             mappingReference: selectedMessageTypes.map(messageType => ({ message: messageType.name, table: messageType.fromTable.name })),
         }, {
-            onError(error, variables, context) {
-                enqueueSnackbar(`Failed to undeploy message types: ${error}`, { variant: 'error' });
+            onError(error) {
+                enqueueSnackbar(`Failed to undeploy message type: ${error}.`, { variant: 'error' });
                 //TODO: Handle error return object to mark which message types failed to delete
             },
-            onSuccess(data, variables, context) {
-                enqueueSnackbar(`Message types${hasMany ? 's' : ''} successfully undeployed`);
+            onSuccess() {
+                enqueueSnackbar(`Message type${hasMany ? 's' : ''} successfully undeployed.`);
             },
             onSettled() {
                 onActionCompleted();
@@ -45,8 +43,8 @@ export const UndeployMessagesButton = ({ connectionId, selectedMessageTypes, onA
                 ? <Button
                     label={`Undeploy message type${hasMany ? 's' : ''}`}
                     startWithIcon='ArchiveRounded'
+                    disabled={!hasSelectedMessages || isDisabled}
                     onClick={handleUndeployMessages}
-                    disabled={!hasSelectedMessages || disable}
                 />
                 : <StatusIndicator label={`Undeploying message type${hasMany ? 's' : ''}...`} status='waiting' />
             }

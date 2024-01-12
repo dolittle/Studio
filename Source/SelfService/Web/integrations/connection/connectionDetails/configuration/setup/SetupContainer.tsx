@@ -14,6 +14,7 @@ import { ContentContainer, ContentHeader, ContentSection, FileUploadFormRef, Loa
 import { useConnectionsIdGet, useConnectionsIdDelete } from '../../../../../apis/integrations/connectionsApi.hooks';
 import { CACHE_KEYS } from '../../../../../apis/integrations/CacheKeys';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
+
 import { M3SetupForm, M3SetupFormRef, M3SetupFormSaveState } from './M3SetupForm';
 import { MainM3ConnectionInfo } from './MainM3ConnectionInfo';
 import { ActionToolbar } from './ActionToolbar';
@@ -21,24 +22,25 @@ import { SetupFormContent } from './SetupFormContent';
 import { M3AuthenticationType } from './M3AuthenticationType';
 
 export const SetupContainer = () => {
-    const [canEdit, setEditMode] = useState(false);
-    const [alwaysEdit, setAlwaysEdit] = useState(false);
-    const [lastSaveState, setLastSaveState] = useState<M3SetupFormSaveState>();
-    const [authenticationType, setAuthenticationType] = useState<M3AuthenticationType>();
+    const navigate = useNavigate();
     const connectionId = useConnectionIdFromRoute();
-    const query = useConnectionsIdGet(
-        { id: connectionId },
-        {
-            refetchInterval: (data) => data?.value?.status.name !== 'Connected' ? 5000 : 8000,
-            refetchOnWindowFocus: false,
-        }
-    );
-
     const formRef = useRef<M3SetupFormRef>(null);
     const fileUploadRef = useRef<FileUploadFormRef>(null);
     const deleteMutation = useConnectionsIdDelete();
     const queryClient = useQueryClient();
-    const navigate = useNavigate();
+
+    const [canEdit, setEditMode] = useState(false);
+    const [alwaysEdit, setAlwaysEdit] = useState(false);
+    const [lastSaveState, setLastSaveState] = useState<M3SetupFormSaveState>();
+    const [authenticationType, setAuthenticationType] = useState<M3AuthenticationType>();
+
+    const query = useConnectionsIdGet(
+        { id: connectionId },
+        {
+            refetchInterval: data => data?.value?.status.name !== 'Connected' ? 5000 : 8000,
+            refetchOnWindowFocus: false,
+        },
+    );
 
     const connection = query.data?.value;
     const links = query.data?.links || [];
@@ -49,9 +51,7 @@ export const SetupContainer = () => {
     const canConfigureConnection = authenticationType && connection?.status?.name !== 'Registered';
 
     useEffect(() => {
-        if (!connection) {
-            return;
-        }
+        if (!connection) return;
 
         const connectionStatus = connection.status.name.toLowerCase();
 
@@ -87,7 +87,7 @@ export const SetupContainer = () => {
         connection?._configuration.ion,
         connection?._configuration.mdp,
         connection?._configuration.m3BasicAuth,
-        connection?.chosenEnvironment.value
+        connection?.chosenEnvironment.value,
     ]);
 
     if (query.isLoading) return <LoadingSpinner />;
@@ -99,11 +99,11 @@ export const SetupContainer = () => {
             {
                 onSuccess() {
                     queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.Connections_GET] });
-                    enqueueSnackbar(`Deleted connection: ${connectionId}`);
+                    enqueueSnackbar(`Deleted connection: ${connectionId}.`);
                     navigate('/integrations/connections');
                 },
                 onError() {
-                    enqueueSnackbar(`Error occurred when deleting connection: ${connectionId}`, { variant: 'error' });
+                    enqueueSnackbar(`Error occurred when deleting connection: ${connectionId}.`, { variant: 'error' });
                 },
             },
         );
@@ -111,9 +111,9 @@ export const SetupContainer = () => {
 
     const handleSaveState = (saveState: M3SetupFormSaveState) => {
         setLastSaveState(saveState);
-        saveState.forEach((state) => {
+        saveState.forEach(state => {
             if (state.status === 'success') {
-                enqueueSnackbar(`Saved ${state.name}`);
+                enqueueSnackbar(`Saved ${state.name}.`);
             }
             if (state.status === 'error') {
                 enqueueSnackbar(`Error saving ${state.name}. Error: ${state.errorMessage}`, { variant: 'error' });
@@ -122,7 +122,7 @@ export const SetupContainer = () => {
     };
 
     const handleOnSaved = (saveState: M3SetupFormSaveState): void => {
-        if (saveState.every((state) => state.status === 'success')) {
+        if (saveState.every(state => state.status === 'success')) {
             fileUploadRef.current?.clearSelected();
             setEditMode(false);
         }
@@ -174,7 +174,6 @@ export const SetupContainer = () => {
                             formSaveState={lastSaveState}
                             fileUploadRef={fileUploadRef} />
                     </Collapse>
-
                 </ContentSection>
             </M3SetupForm>
         </ContentContainer>

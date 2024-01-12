@@ -9,10 +9,10 @@ import { Box, Fade, LinearProgress, Typography } from '@mui/material';
 
 import { AigonHelper, AigonSearchBar, InlineWrapper, TextField } from '@dolittle/design-system/';
 
-import { MappedField } from '../../../../../../../apis/integrations/generated';
-import { useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet } from '../../../../../../../apis/integrations/tableMetadataAssistant.hooks';
+import { MappedField } from '../../../../../../../../apis/integrations/generated';
+import { useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet } from '../../../../../../../../apis/integrations/tableMetadataAssistant.hooks';
 
-import { ViewMode } from '../../ViewMode';
+import { ViewMode } from '../../../ViewMode';
 import { MessageMappingDataGrid } from './messageMappingDataGrid';
 
 export type MappedTableResultProps = {

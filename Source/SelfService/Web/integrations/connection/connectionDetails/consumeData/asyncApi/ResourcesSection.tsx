@@ -33,10 +33,10 @@ export const ResourcesSection = ({ connectionId }: ResourcesSectionProps) => {
                 <InlineWrapper>
                     <Link label={asyncApiSpecificationUrl} href={asyncApiSpecificationUrl} target ariaLabel='AsyncAPI specification' />
                     <CopyIconButton
-                        text={asyncApiSpecificationUrl}
-                        message='AsyncAPI specification copied to clipboard.'
+                        textToCopy={asyncApiSpecificationUrl}
+                        snackbarMessage='AsyncAPI specification link copied to clipboard.'
                         color='primary'
-                        tooltipText='Copy AsyncAPI specification link to clipboard.'
+                        tooltipText='Copy the AsyncAPI specification link to the clipboard.'
                     />
                 </InlineWrapper>
             </section>
@@ -49,7 +49,7 @@ export const ResourcesSection = ({ connectionId }: ResourcesSectionProps) => {
 
                 <InlineWrapper>
                     <Link label={caFileUrl} href={caFileUrl} target ariaLabel='Certificate Authority file' />
-                    <IconButton tooltipText='Download Certificate Authority file' icon='DownloadRounded' color='primary' href={caFileUrl} />
+                    <IconButton tooltipText='Download the Certificate Authority file.' icon='DownloadRounded' color='primary' href={caFileUrl} />
                 </InlineWrapper>
             </section>
         </ContentWithSubtitle>

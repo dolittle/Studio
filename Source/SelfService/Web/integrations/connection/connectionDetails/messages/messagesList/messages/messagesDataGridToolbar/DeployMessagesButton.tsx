@@ -7,13 +7,11 @@ import { enqueueSnackbar } from 'notistack';
 
 import { Button, StatusIndicator } from '@dolittle/design-system';
 
-import { useConnectionsIdMessageMappingsDeployPost } from '../../../../../../apis/integrations/messageMappingApi.hooks';
+import { useConnectionsIdMessageMappingsDeployPost } from '../../../../../../../apis/integrations/messageMappingApi.hooks';
 
-import { TableToolbarButton } from './TableToolbarButton';
+import { ToolbarButtonProps } from './index';
 
-export type DeployMessagesButtonProps = TableToolbarButton & {};
-
-export const DeployMessagesButton = ({ connectionId, selectedMessageTypes, onActionExecuting, onActionCompleted, disable }: DeployMessagesButtonProps) => {
+export const DeployMessagesButton = ({ connectionId, selectedMessageTypes, isDisabled, onActionExecuting, onActionCompleted }: ToolbarButtonProps) => {
     const deployMappingsMutation = useConnectionsIdMessageMappingsDeployPost();
 
     const hasSelectedMessages = selectedMessageTypes.length > 0;
@@ -26,12 +24,12 @@ export const DeployMessagesButton = ({ connectionId, selectedMessageTypes, onAct
             id: connectionId,
             mappingReference: selectedMessageTypes.map(messageType => ({ message: messageType.name, table: messageType.fromTable.name }))
         }, {
-            onError(error, variables, context) {
-                enqueueSnackbar(`Failed to deploy message types: ${error}`, { variant: 'error' });
+            onError(error) {
+                enqueueSnackbar(`Failed to deploy message type: ${error}.`, { variant: 'error' });
                 //TODO: Handle error return object to mark which message types failed to deploy
             },
-            onSuccess(data, variables, context) {
-                enqueueSnackbar(`Message type${hasMany ? 's' : ''} successfully deployed`);
+            onSuccess() {
+                enqueueSnackbar(`Message type${hasMany ? 's' : ''} successfully deployed.`);
             },
             onSettled() {
                 onActionCompleted();
@@ -46,7 +44,7 @@ export const DeployMessagesButton = ({ connectionId, selectedMessageTypes, onAct
                     label={`Deploy message type${hasMany ? 's' : ''}`}
                     startWithIcon='RocketLaunch'
                     onClick={handleDeployMessages}
-                    disabled={!hasSelectedMessages || disable}
+                    disabled={!hasSelectedMessages || isDisabled}
                 />
                 : <StatusIndicator label={`Deploying message type${hasMany ? 's' : ''}...`} status='waiting' />
             }

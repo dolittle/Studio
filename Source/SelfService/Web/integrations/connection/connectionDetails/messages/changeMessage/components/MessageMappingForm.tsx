@@ -1,12 +1,11 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { UseMutationResult } from '@tanstack/react-query';
-
 import { enqueueSnackbar } from 'notistack';
+import { UseMutationResult } from '@tanstack/react-query';
 
 import { Form, FormRef } from '@dolittle/design-system';
 
@@ -21,25 +20,18 @@ export type MessageMappingFormProps = {
     selectedTableName: string;
     messageId: string;
     messageType: MessageMappingModel;
-    children?: React.ReactNode;
+    children: React.ReactNode;
     saveMessageMappingMutation: UseMutationResult<void, unknown, ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, unknown>
 };
 
-export const MessageMappingForm = ({
-    connectionId,
-    selectedTableName,
-    messageType,
-    children,
-    saveMessageMappingMutation
-}: MessageMappingFormProps) => {
+export const MessageMappingForm = ({ connectionId, selectedTableName, messageType, children, saveMessageMappingMutation }: MessageMappingFormProps) => {
     const navigate = useNavigate();
     const formRef = useRef<FormRef<NewMessageMappingParameters>>(null);
+
     const [hasBeenReset, setHasBeenReset] = useState(false);
 
     useEffect(() => {
-        if (!messageType) {
-            return;
-        }
+        if (!messageType) return;
 
         formRef.current?.reset({
             name: messageType?.name ?? '',
@@ -71,13 +63,12 @@ export const MessageMappingForm = ({
                 jqFilter: values.jqFilter,
             },
         }, {
-            onSuccess(data, variables, context) {
+            onSuccess() {
                 navigate(`..`);
-                enqueueSnackbar('Message successfully created');
+                enqueueSnackbar('Message successfully created.');
             },
-            onError(error, variables, context) {
-                console.log('error', error);
-                enqueueSnackbar('Something went wrong when trying to save the message', { variant: 'error' });
+            onError() {
+                enqueueSnackbar('Something went wrong when trying to save the message.', { variant: 'error' });
             },
         });
     };
