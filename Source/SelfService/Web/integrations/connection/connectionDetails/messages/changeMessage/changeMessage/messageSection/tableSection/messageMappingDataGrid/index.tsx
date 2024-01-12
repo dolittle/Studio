@@ -173,7 +173,6 @@ export const MessageMappingDataGrid = ({ tableName, mode, mappableTableDataGridR
                 columns={messageMappingDataGridColumns}
                 autoHeight={false}
                 hideFooter={false}
-                disableColumnMenu={false}
                 checkboxSelection
                 selectionModel={selectedIds}
                 onSelectionModelChange={onSelectedModelChanged}
