@@ -5,7 +5,7 @@ import React, { useRef, useState } from 'react';
 
 import { useSnackbar } from 'notistack';
 
-import { ContentContainer, ContentHeader } from '@dolittle/design-system/';
+import { AlertBox, ContentContainer, ContentHeader, LoadingSpinner } from '@dolittle/design-system/';
 
 import { useConnectionsIdGet } from '../../../../../apis/integrations/connectionsApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
@@ -51,8 +51,8 @@ export const SettingsContainer = () => {
         setEditMode(false);
     };
 
-    if (query.isLoading) return <>Loading</>;
-    if (!connection) return null;
+    if (query.isLoading) return <LoadingSpinner />;
+    if (!connection) return <AlertBox />;
 
     return (
         <ContentContainer>
