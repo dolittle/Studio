@@ -1,3 +1,14 @@
+# [3.19.1] - 2024-1-12 [PR: #501](https://github.com/dolittle/Studio/pull/501)
+## Summary
+
+Improve Connection MessageType appearance and UX.
+
+### Changed
+
+- Improved 'CopyIconButton' props wording
+- Made DataGrid 'EditCell' to be multiline
+
+
 # [3.19.0] - 2024-1-5 [PR: #500](https://github.com/dolittle/Studio/pull/500)
 ## Summary
 
