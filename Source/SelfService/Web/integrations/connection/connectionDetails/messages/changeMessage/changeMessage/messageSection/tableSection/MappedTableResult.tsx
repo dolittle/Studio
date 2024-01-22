@@ -27,9 +27,9 @@ export type MappedTableResultProps = {
 export const MappedTableResult = ({ connectionId, selectedTableName, mode, initialSelectedFields, mappableTableResult, isLoading }: MappedTableResultProps) => {
     const [isAigonSearchActive, setIsAigonSearchActive] = useState(false);
     const [fieldSearchTerm, setFieldSearchTerm] = useState('');
-    const [aigonSearchTerm, setAigonSearchTerm] = useState(''); // 'Show me data related to users and timestamps',
+    const [aigonSearchTerm, setAigonSearchTerm] = useState('');
 
-    const [debouncedAigonSearchTerm] = useDebounce(aigonSearchTerm, 5000);
+    const [debouncedAigonSearchTerm] = useDebounce(aigonSearchTerm, 2000);
 
     // This query does not run when the aigonSearchTerm.trim() length is less than 5. This is set in the query hook.
     const { data: aiSearchResult, isInitialLoading } = useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet({
@@ -40,7 +40,7 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
 
     const allMappableTableRows = mappableTableResult?.value?.columns || [];
     const aiFilteredRows = allMappableTableRows.filter(row => aiSearchResult?.recommendations?.find(({ name }) => row.m3ColumnName === name));
-    const mappableTableDataGridRows = isAigonSearchActive && aigonSearchTerm.length > 5 ? aiFilteredRows : allMappableTableRows;
+    const mappableTableDataGridRows = isAigonSearchActive && aigonSearchTerm.trim().length > 5 ? aiFilteredRows : allMappableTableRows;
 
     return (
         <>
@@ -49,7 +49,7 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
 
             {isAigonSearchActive
                 ? (
-                    <Fade in={isAigonSearchActive} timeout={1000} mountOnEnter unmountOnExit>
+                    <Fade in={isAigonSearchActive} timeout={700} mountOnEnter unmountOnExit>
                         <Box sx={{ py: 3.6 }}>
                             <AigonSearchBar
                                 onAigonDeactivate={() => {
@@ -80,7 +80,7 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
                 )
             }
 
-            {isInitialLoading && isAigonSearchActive || mappableTableDataGridRows.length === 0
+            {isInitialLoading && isAigonSearchActive
                 ? <LinearProgress />
                 : <MessageMappingDataGrid
                     tableName={selectedTableName}
