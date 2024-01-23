@@ -183,15 +183,6 @@ export const MessageMappingDataGrid = ({ tableName, mode, mappableTableDataGridR
                 loading={isLoading}
                 keepNonExistentRowsSelected
                 experimentalFeatures={{ newEditingApi: true }}
-                initialState={{
-                    pagination: {
-                        //@ts-ignore
-                        paginationModel: {
-                            pageSize: 25,
-                            page: 0,
-                        },
-                    },
-                }}
                 components={{
                     Toolbar: () => (
                         <DataGridCustomToolbar title={`${tableName} Table`}>
