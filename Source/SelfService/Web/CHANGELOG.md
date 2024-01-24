@@ -1,3 +1,24 @@
+# [3.19.2] - 2024-1-24 [PR: #502](https://github.com/dolittle/Studio/pull/502)
+## Summary
+
+Add AI-assisted search bar appearance improvements.
+
+### Changed
+
+- Updated Form.stories appearance and wording in Design System
+- Width of MessageMappingDataGrid columns to fill free space
+- Component name from AigonHelper to AigonHelperIcon for better readability
+
+### Fixed
+
+- Removed DataGrid EditCell multiline support as it breaks DataGrid scrolling
+- Removed AigonSearchBar.stories action when input value was changed as this was breaking the site
+
+### Removed
+
+- MessageMappingDataGrid pagination code since we don't use it
+
+
 # [3.19.1] - 2024-1-12 [PR: #501](https://github.com/dolittle/Studio/pull/501)
 ## Summary
 
