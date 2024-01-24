@@ -6,7 +6,7 @@ export { availableIcons, SvgIcons, SvgIconsDefinition } from './theming/Icons/Ic
 export { themeDark } from './theming/theme';
 
 // Atoms
-export { AigonHelper, AigonHelperProps, AigonSearchBar, AigonSearchBarProps } from './atoms/AIAssistant';
+export { AigonHelperIcon, AigonHelperIconProps, AigonSearchBar, AigonSearchBarProps } from './atoms/AIAssistant';
 export * from './atoms/Accordion';
 export * from './atoms/AccordionList';
 export { AlertBox, AlertBoxProps, AlertBoxErrorMessage, AlertBoxInfoMessage } from './atoms/AlertBox';

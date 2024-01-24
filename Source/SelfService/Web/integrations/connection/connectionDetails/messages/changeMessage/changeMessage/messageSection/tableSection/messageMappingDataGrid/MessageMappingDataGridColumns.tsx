@@ -18,7 +18,7 @@ export const getMessageMappingDataGridColumns = (disabledRows: GridRowId[]) => {
     const CheckboxCell = (params) => {
         return (
             disabledRows?.includes(params.row.id)
-                ? <Tooltip title='This is a primary key for this table and is required as part of the message type'>
+                ? <Tooltip title='This is a primary key for this table and is required as part of the message type.'>
                     <div>{GRID_CHECKBOX_SELECTION_COL_DEF.renderCell?.(params)}</div>
                 </Tooltip>
                 : GRID_CHECKBOX_SELECTION_COL_DEF.renderCell?.(params)
@@ -33,18 +33,18 @@ export const getMessageMappingDataGridColumns = (disabledRows: GridRowId[]) => {
         {
             field: 'm3ColumnName',
             headerName: 'M3 Field Name',
-            minWidth: 270,
+            flex: 1,
         },
         {
             field: 'm3Description',
             headerName: 'M3 Description',
-            minWidth: 270,
+            flex: 1,
         },
         {
             field: 'fieldName',
             headerName: 'Remapped Name',
             editable: true,
-            minWidth: 270,
+            flex: 1,
             renderCell: EditCell,
             renderEditCell: EditTextFieldCell,
         },

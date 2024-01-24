@@ -30,7 +30,7 @@ export type AigonSearchBarProps = {
 export const AigonSearchBar = ({ onAigonDeactivate, onSearchTermChange }: AigonSearchBarProps) =>
     <TextField
         id='aigon-search-bar'
-        label='AI-assisted search'
+        label='AI-assisted field filtering'
         placeholder='Please show me data related to users and timestamps'
         isFullWidth
         onValueChange={onSearchTermChange}
@@ -43,7 +43,7 @@ export const AigonSearchBar = ({ onAigonDeactivate, onSearchTermChange }: AigonS
                     </InputAdornment>,
                 endAdornment:
                     <InputAdornment position='end'>
-                        <IconButton tooltipText='Switch back to normal search' icon='AigonIcon' edge='end' onClick={onAigonDeactivate} />
+                        <IconButton tooltipText='Switch back to normal field filtering' icon='AigonIcon' edge='end' onClick={onAigonDeactivate} />
                     </InputAdornment>,
             },
         }}

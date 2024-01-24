@@ -38,7 +38,6 @@ export const EditTextFieldCell = (params: GridRenderCellParams<HTMLInputElement>
             iconColor='primary'
             onValueChange={handleValueChange}
             sx={textFieldBorderStyles}
-            overrides={{ multiline: true }}
         />
     );
 };
@@ -49,5 +48,4 @@ export const EditCell = (params: GridRenderCellParams) =>
         placeholder='Edit...'
         endIcon='EditRounded'
         sx={textFieldBorderStyles}
-        overrides={{ multiline: true }}
     />;

@@ -21,7 +21,6 @@ metadata.argTypes = {};
 
 metadata.args = {
     onAigonDeactivate: action(`Aigon's close button was clicked!`),
-    onSearchTermChange: action(`Aigon's search term was changed!`),
 };
 
 export default metadata;
