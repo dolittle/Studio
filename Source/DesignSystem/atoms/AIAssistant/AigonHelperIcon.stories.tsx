@@ -3,22 +3,22 @@
 
 import { action } from '@storybook/addon-actions';
 
-import { componentStories, AigonHelper } from '../../index';
+import { componentStories, AigonHelperIcon } from '../../index';
 
-const { metadata, createStory } = componentStories(AigonHelper);
+const { metadata, createStory } = componentStories(AigonHelperIcon);
 
-metadata.title = 'AIAssistant/Aigon Helper';
+metadata.title = 'AIAssistant/Aigon Helper Icon';
 
 metadata.parameters = {
     docs: {
         description: {
-            component: 'Aigon Helper is a component that can be used to turn on AI-assisted search.',
+            component: 'Aigon Helper Icon is a component that can be used to turn on AI-assisted search.',
         },
     },
 };
 
 metadata.args = {
-    onAigonActivate: action('Aigon activated!'),
+    onAigonActivate: action('AI assisted search activated!'),
 };
 
 export default metadata;

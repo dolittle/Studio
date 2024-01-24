@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { AigonHelper, InlineWrapper, TextField } from '../../index';
+import { AigonHelperIcon, InlineWrapper, TextField } from '../../index';
 
 export type SearchBarWithAigonProps = {
     onFieldSearchTermChange: (searchTerm: string) => void;
@@ -19,7 +19,7 @@ export const SearchBarWithAigon = ({ onFieldSearchTermChange }: SearchBarWithAig
                 variant='outlined'
                 onValueChange={event => onFieldSearchTermChange(event.target.value)}
             />
-            <AigonHelper onAigonActivate={() => { }} />
+            <AigonHelperIcon onAigonActivate={() => { }} />
         </InlineWrapper>
     );
 };

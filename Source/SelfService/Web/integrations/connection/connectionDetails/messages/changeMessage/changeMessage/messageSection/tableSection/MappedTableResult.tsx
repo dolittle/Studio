@@ -7,7 +7,7 @@ import { useDebounce } from 'use-debounce';
 
 import { Box, Fade, LinearProgress, Typography } from '@mui/material';
 
-import { AigonHelper, AigonSearchBar, InlineWrapper, TextField } from '@dolittle/design-system/';
+import { AigonHelperIcon, AigonSearchBar, InlineWrapper, TextField } from '@dolittle/design-system/';
 
 import { MappedField } from '../../../../../../../../apis/integrations/generated';
 import { useConnectionsIdMetadataTableAssistantTableNameColumnRecommendationsGet } from '../../../../../../../../apis/integrations/tableMetadataAssistant.hooks';
@@ -70,7 +70,7 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
                             onValueChange={event => setFieldSearchTerm(event.target.value)}
                         />
 
-                        <AigonHelper
+                        <AigonHelperIcon
                             onAigonActivate={() => {
                                 setFieldSearchTerm('');
                                 setIsAigonSearchActive(true);
