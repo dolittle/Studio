@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 
-import { CommandsListView } from './CommandsListView';
+import { CommandsListView } from './commandsList/CommandsListView';
 import { NoCommandsView } from './NoCommandsView';
 
 export const CommandsView = () => {
@@ -34,7 +34,7 @@ export const CommandsView = () => {
         <>
             {hasRows
                 ? <CommandsListView onNewCommandCreated={() => { }} />
-                : <NoCommandsView onCreateNew={() => { }} />
+                : <NoCommandsView onNewCommandCreated={() => { }} />
             }
         </>
     );

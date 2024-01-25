@@ -6,14 +6,14 @@ import React from 'react';
 import { NoContentView } from '@dolittle/design-system';
 
 export type NoCommandsViewProps = {
-    onCreateNew: () => void;
+    onNewCommandCreated: () => void;
 };
 
-export const NoCommandsView = ({ onCreateNew }: NoCommandsViewProps) =>
+export const NoCommandsView = ({ onNewCommandCreated }: NoCommandsViewProps) =>
     <NoContentView
         title='No commands have been created yet...'
         label='Create New Command'
         description='Once you create your first command, it will appear here.'
         subDescription={`To create a new command, click on the ‘Create New Command' button above.`}
-        onCreate={onCreateNew}
+        onCreate={onNewCommandCreated}
     />;
