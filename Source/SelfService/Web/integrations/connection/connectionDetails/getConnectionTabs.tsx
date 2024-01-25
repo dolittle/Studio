@@ -5,7 +5,7 @@ import React from 'react';
 
 import { Link, Location } from 'react-router-dom';
 
-export const childRoutePaths = ['/configuration', '/messages', '/consume-data'];
+export const childRoutePaths = ['/configuration', '/messages', '/commands', '/consume-data'];
 
 export const getSelectedTab = (location: Location) => {
     const pathname = location.pathname;
@@ -30,14 +30,14 @@ export const connectionTabs = [
             to: 'messages',
         },
     },
-    /*     {
-            label: 'commands',
-            render: () => <></>,
-            overrides: {
-                component: Link,
-                to: 'commands',
-            },
-        }, */
+    {
+        label: 'commands',
+        render: () => <></>,
+        overrides: {
+            component: Link,
+            to: 'commands',
+        },
+    },
     {
         label: 'Consume Data',
         render: () => <></>,
