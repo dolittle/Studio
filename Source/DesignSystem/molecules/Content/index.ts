@@ -3,3 +3,4 @@
 
 export { ContentWithSubtitle, ContentWithSubtitleProps } from './ContentWithSubtitle';
 export { NoContentSection, NoContentSectionProps } from './NoContentSection';
+export { NoContentView, NoContentViewProps } from './NoContentView';
