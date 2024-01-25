@@ -20,8 +20,9 @@ metadata.parameters = {
 metadata.args = {
     title: 'This is the title...',
     label: 'This is the label',
+    icon: 'AddCircle',
     description: 'This is the description.',
-    subDescription: 'This is a sub-description that belongs to the description and is necessary.',
+    subDescription: 'This is a sub-description that belongs to the description and is required.',
     onCreate: action('Button clicked!'),
 };
 

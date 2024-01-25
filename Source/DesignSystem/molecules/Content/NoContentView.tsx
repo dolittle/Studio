@@ -10,6 +10,7 @@ import { Button, ButtonProps } from '../../index';
 const styles = {
     container: {
         height: 1,
+        justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
     },
@@ -100,11 +101,11 @@ export type NoContentViewProps = {
  * @returns A {@link NoContentView} component.
  */
 export const NoContentView = ({ title, label, icon, description, subDescription, onCreate }: NoContentViewProps) =>
-    <Stack sx={styles.container}>
+    <Stack component='article' sx={styles.container}>
         <Typography variant='h2'>{title}</Typography>
 
-        <Paper sx={styles.buttonContainer}>
-            <Box sx={styles.buttonDashedBorder}></Box>
+        <Paper component='section' sx={styles.buttonContainer}>
+            <Box component='span' sx={styles.buttonDashedBorder}></Box>
             <Button label={label} startWithIcon={icon ? icon : 'AddCircle'} isFullWidth onClick={onCreate} sx={styles.button} />
         </Paper>
 
