@@ -6,12 +6,13 @@ import React from 'react';
 import { RouteObject } from 'react-router-dom';
 
 import { ConnectionDetails } from './connectionDetails';
+
 import { ConfigurationView } from './connectionDetails/configuration';
-import { CommandsView } from './connectionDetails/commands';
-import { ConsumeDataView } from './connectionDetails/consumeData';
 import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { MessagesViewRoot } from './connectionDetails/messages';
 import { Index as ChangeMessageView } from './connectionDetails/messages/changeMessage';
+import { CommandsView } from './connectionDetails/commands';
+import { ConsumeDataView } from './connectionDetails/consumeData';
 
 export const routes: RouteObject[] = [
     {
@@ -40,10 +41,10 @@ export const routes: RouteObject[] = [
                     },
                 ],
             },
-            /* {
+            {
                 path: 'commands',
                 element: <CommandsView />,
-            }, */
+            },
             {
                 path: 'consume-data',
                 element: <ConsumeDataView />,

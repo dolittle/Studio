@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 
 import { ConnectionStatus } from '../../../apis/integrations/generated';
 
-import { childRoutePaths } from '.';
+import { childRoutePaths } from './getConnectionTabs';
 
 const attentionToConfigurationRequiredStatuses = ['registered', 'pending', 'failing'];
 

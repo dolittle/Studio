@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { Link, Location, Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import { LoadingSpinner, Tabs } from '@dolittle/design-system';
 
@@ -13,53 +13,12 @@ import { useConnectionIdFromRoute } from '../../routes.hooks';
 import { PageTitle } from '../../../layout/PageTitle';
 import { useRedirectToTabByStatus } from './useRedirectToTabByStatus';
 import { getIndicatorStatusFromStatusMessage } from '../../statusHelpers';
-
-export const childRoutePaths = ['/configuration', '/messages', '/consume-data'];
-
-const getSelectedTab = (location: Location) => {
-    const pathname = location.pathname;
-    const foundIndex = childRoutePaths.findIndex(path => pathname.includes(path));
-    return foundIndex >= 0 ? foundIndex : 0;
-};
-
-const tabs = [
-    {
-        label: 'configuration',
-        render: () => <></>,
-        overrides: {
-            component: Link,
-            to: 'configuration',
-        },
-    },
-    {
-        label: 'message types',
-        render: () => <></>,
-        overrides: {
-            component: Link,
-            to: 'messages',
-        },
-    },
-    /*     {
-            label: 'commands',
-            render: () => <></>,
-            overrides: {
-                component: Link,
-                to: 'commands',
-            },
-        }, */
-    {
-        label: 'Consume Data',
-        render: () => <></>,
-        overrides: {
-            component: Link,
-            to: 'consume-data',
-        },
-    },
-];
+import { connectionTabs, getSelectedTab } from './getConnectionTabs';
 
 export const ConnectionDetails = () => {
     const location = useLocation();
     const connectionId = useConnectionIdFromRoute();
+
     const { isLoading, data } = useConnectionsIdGet({ id: connectionId });
 
     const connection = data?.value;
@@ -77,7 +36,7 @@ export const ConnectionDetails = () => {
                 ? <Navigate to={redirectPath} replace={true} />
                 : <>
                     <PageTitle title={pageTitle} healthStatus={status?.status} healthStatusLabel={status?.label} healthStatusMessage={status?.message} />
-                    <Tabs selectedTab={getSelectedTab(location)} tabs={tabs} />
+                    <Tabs selectedTab={getSelectedTab(location)} tabs={connectionTabs} />
                     <Outlet />
                 </>
             }
