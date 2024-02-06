@@ -1,3 +1,13 @@
+# [3.19.3] - 2024-2-6 [PR: #503](https://github.com/dolittle/Studio/pull/503)
+## Summary
+
+Add a new 'Commands' tab to the Connection section.
+
+### Added
+
+- NoContentView to the Design System
+
+
 # [3.19.2] - 2024-1-24 [PR: #502](https://github.com/dolittle/Studio/pull/502)
 ## Summary
 
