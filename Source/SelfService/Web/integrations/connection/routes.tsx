@@ -8,9 +8,10 @@ import { RouteObject } from 'react-router-dom';
 import { ConnectionDetails } from './connectionDetails';
 
 import { ConfigurationView } from './connectionDetails/configuration';
-import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { MessagesViewRoot } from './connectionDetails/messages';
+import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { Index as ChangeMessageView } from './connectionDetails/messages/message';
+import { CommandsViewRoot } from './connectionDetails/commands';
 import { CommandsView } from './connectionDetails/commands/commandsList';
 import { ConsumeDataView } from './connectionDetails/consumeData';
 
@@ -43,7 +44,7 @@ export const routes: RouteObject[] = [
             },
             {
                 path: 'commands/*',
-                element: <CommandsView />,
+                element: <CommandsViewRoot />,
                 children: [
                     {
                         path: '',
@@ -58,10 +59,6 @@ export const routes: RouteObject[] = [
                         element: <h1>Edit</h1>,
                     },
                 ],
-            },
-            {
-                path: 'commands',
-                element: <CommandsView />,
             },
             {
                 path: 'consume-data',
