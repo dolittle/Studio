@@ -3,10 +3,14 @@
 
 import React, { useState } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import { CommandsListView } from './commandsListView';
 import { NoCommandsView } from './NoCommandsView';
 
 export const CommandsView = () => {
+    const navigate = useNavigate();
+
     const [hasRows, setHasRows] = useState(true);
 
     // const handleCommandCreate = ({ name, nameSpace, description }: CommandsFormParameters) => {
@@ -30,11 +34,15 @@ export const CommandsView = () => {
     // if (isLoading) return <LoadingSpinner />;
     // if (isError) return <AlertBox />;
 
+    const handleCreateNewCommand = () => {
+        navigate('new');
+    };
+
     return (
         <>
             {hasRows
-                ? <CommandsListView onNewCommandCreated={() => { }} />
-                : <NoCommandsView onNewCommandCreated={() => { }} />
+                ? <CommandsListView onNewCommandCreated={handleCreateNewCommand} />
+                : <NoCommandsView onNewCommandCreated={handleCreateNewCommand} />
             }
         </>
     );
