@@ -11,7 +11,7 @@ import { ConfigurationView } from './connectionDetails/configuration';
 import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { MessagesViewRoot } from './connectionDetails/messages';
 import { Index as ChangeMessageView } from './connectionDetails/messages/message';
-import { CommandsView } from './connectionDetails/commands';
+import { CommandsView } from './connectionDetails/commands/commandsList';
 import { ConsumeDataView } from './connectionDetails/consumeData';
 
 export const routes: RouteObject[] = [
@@ -38,6 +38,24 @@ export const routes: RouteObject[] = [
                     {
                         path: 'edit/:table/:messageId',
                         element: <ChangeMessageView />,
+                    },
+                ],
+            },
+            {
+                path: 'commands/*',
+                element: <CommandsView />,
+                children: [
+                    {
+                        path: '',
+                        element: <CommandsView />,
+                    },
+                    {
+                        path: 'new',
+                        element: <h1>New</h1>,
+                    },
+                    {
+                        path: 'edit',
+                        element: <h1>Edit</h1>,
                     },
                 ],
             },

@@ -10,7 +10,7 @@ import { AlertBox, LoadingSpinner } from '@dolittle/design-system';
 
 import { useConnectionsIdMessageMappingsGet } from '../../../../../apis/integrations/messageMappingApi.hooks';
 
-import { Messages } from './messages';
+import { Messages } from './messagesListView';
 import { NoMessages } from './NoMessages';
 
 import { isDefaultEmptyDate } from './helpers';

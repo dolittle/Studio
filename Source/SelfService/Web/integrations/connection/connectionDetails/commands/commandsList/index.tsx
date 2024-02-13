@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 
-import { CommandsListView } from './commandsList/CommandsListView';
+import { CommandsListView } from './commandsListView';
 import { NoCommandsView } from './NoCommandsView';
 
 export const CommandsView = () => {

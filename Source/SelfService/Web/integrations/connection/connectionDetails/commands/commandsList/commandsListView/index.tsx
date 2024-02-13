@@ -9,7 +9,7 @@ import { ContentContainer, ContentDivider, ContentHeader, CreateButton } from '@
 
 //import { CACHE_KEYS } from '../../../../../../apis/integrations/CacheKeys';
 
-import { CommandsListDataGrid } from './CommandsListDataGrid';
+import { CommandsListDataGrid } from './commandsListDataGrid';
 
 export type CommandsListViewProps = {
     //connectionId: string;
