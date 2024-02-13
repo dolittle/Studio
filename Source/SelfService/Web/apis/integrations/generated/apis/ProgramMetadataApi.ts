@@ -15,25 +15,43 @@
 
 import * as runtime from '../runtime';
 import type {
+  ConnectionPrograms,
+  ProblemDetails,
   ProgramDetails,
-  ProgramHeader,
+  ProgramMetadataHeader,
+  ProgramTransaction,
 } from '../models/index';
 import {
+    ConnectionProgramsFromJSON,
+    ConnectionProgramsToJSON,
+    ProblemDetailsFromJSON,
+    ProblemDetailsToJSON,
     ProgramDetailsFromJSON,
     ProgramDetailsToJSON,
-    ProgramHeaderFromJSON,
-    ProgramHeaderToJSON,
+    ProgramMetadataHeaderFromJSON,
+    ProgramMetadataHeaderToJSON,
+    ProgramTransactionFromJSON,
+    ProgramTransactionToJSON,
 } from '../models/index';
 
-export interface ConnectionsIdMetadataEnvironmentsEnvironmentProgramsGetRequest {
+export interface ConnectionsIdMetadataProgramsGetRequest {
     id: string;
-    environment: string;
 }
 
-export interface ConnectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGetRequest {
+export interface ConnectionsIdMetadataProgramsProgramProgramGetRequest {
     id: string;
-    environment: string;
     program: string;
+}
+
+export interface ConnectionsIdMetadataProgramsProgramProgramTransactionsTransactionGetRequest {
+    id: string;
+    program: string;
+    transaction: string;
+}
+
+export interface ConnectionsIdMetadataProgramsSearchGetRequest {
+    id: string;
+    query?: string;
 }
 
 /**
@@ -43,13 +61,9 @@ export class ProgramMetadataApi extends runtime.BaseAPI {
 
     /**
      */
-    async connectionsIdMetadataEnvironmentsEnvironmentProgramsGetRaw(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentProgramsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProgramHeader>>> {
+    async connectionsIdMetadataProgramsGetRaw(requestParameters: ConnectionsIdMetadataProgramsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProgramMetadataHeader>>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentProgramsGet.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentProgramsGet.');
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataProgramsGet.');
         }
 
         const queryParameters: any = {};
@@ -69,35 +83,31 @@ export class ProgramMetadataApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/connections/{id}/metadata/environments/{environment}/programs`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))),
+            path: `/connections/{id}/metadata/programs`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ProgramHeaderFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ProgramMetadataHeaderFromJSON));
     }
 
     /**
      */
-    async connectionsIdMetadataEnvironmentsEnvironmentProgramsGet(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentProgramsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ProgramHeader>> {
-        const response = await this.connectionsIdMetadataEnvironmentsEnvironmentProgramsGetRaw(requestParameters, initOverrides);
+    async connectionsIdMetadataProgramsGet(requestParameters: ConnectionsIdMetadataProgramsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ProgramMetadataHeader>> {
+        const response = await this.connectionsIdMetadataProgramsGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async connectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGetRaw(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProgramDetails>>> {
+    async connectionsIdMetadataProgramsProgramProgramGetRaw(requestParameters: ConnectionsIdMetadataProgramsProgramProgramGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ProgramDetails>>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGet.');
-        }
-
-        if (requestParameters.environment === null || requestParameters.environment === undefined) {
-            throw new runtime.RequiredError('environment','Required parameter requestParameters.environment was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGet.');
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataProgramsProgramProgramGet.');
         }
 
         if (requestParameters.program === null || requestParameters.program === undefined) {
-            throw new runtime.RequiredError('program','Required parameter requestParameters.program was null or undefined when calling connectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGet.');
+            throw new runtime.RequiredError('program','Required parameter requestParameters.program was null or undefined when calling connectionsIdMetadataProgramsProgramProgramGet.');
         }
 
         const queryParameters: any = {};
@@ -117,7 +127,7 @@ export class ProgramMetadataApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/connections/{id}/metadata/environments/{environment}/programs/{program}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"environment"}}`, encodeURIComponent(String(requestParameters.environment))).replace(`{${"program"}}`, encodeURIComponent(String(requestParameters.program))),
+            path: `/connections/{id}/metadata/programs/program/{program}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"program"}}`, encodeURIComponent(String(requestParameters.program))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -128,8 +138,100 @@ export class ProgramMetadataApi extends runtime.BaseAPI {
 
     /**
      */
-    async connectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGet(requestParameters: ConnectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ProgramDetails>> {
-        const response = await this.connectionsIdMetadataEnvironmentsEnvironmentProgramsProgramGetRaw(requestParameters, initOverrides);
+    async connectionsIdMetadataProgramsProgramProgramGet(requestParameters: ConnectionsIdMetadataProgramsProgramProgramGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ProgramDetails>> {
+        const response = await this.connectionsIdMetadataProgramsProgramProgramGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async connectionsIdMetadataProgramsProgramProgramTransactionsTransactionGetRaw(requestParameters: ConnectionsIdMetadataProgramsProgramProgramTransactionsTransactionGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ProgramTransaction>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataProgramsProgramProgramTransactionsTransactionGet.');
+        }
+
+        if (requestParameters.program === null || requestParameters.program === undefined) {
+            throw new runtime.RequiredError('program','Required parameter requestParameters.program was null or undefined when calling connectionsIdMetadataProgramsProgramProgramTransactionsTransactionGet.');
+        }
+
+        if (requestParameters.transaction === null || requestParameters.transaction === undefined) {
+            throw new runtime.RequiredError('transaction','Required parameter requestParameters.transaction was null or undefined when calling connectionsIdMetadataProgramsProgramProgramTransactionsTransactionGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("Bearer", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/connections/{id}/metadata/programs/program/{program}/transactions/{transaction}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))).replace(`{${"program"}}`, encodeURIComponent(String(requestParameters.program))).replace(`{${"transaction"}}`, encodeURIComponent(String(requestParameters.transaction))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ProgramTransactionFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async connectionsIdMetadataProgramsProgramProgramTransactionsTransactionGet(requestParameters: ConnectionsIdMetadataProgramsProgramProgramTransactionsTransactionGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProgramTransaction> {
+        const response = await this.connectionsIdMetadataProgramsProgramProgramTransactionsTransactionGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async connectionsIdMetadataProgramsSearchGetRaw(requestParameters: ConnectionsIdMetadataProgramsSearchGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ConnectionPrograms>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdMetadataProgramsSearchGet.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.query !== undefined) {
+            queryParameters['query'] = requestParameters.query;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("Bearer", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/connections/{id}/metadata/programs/search`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ConnectionProgramsFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async connectionsIdMetadataProgramsSearchGet(requestParameters: ConnectionsIdMetadataProgramsSearchGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ConnectionPrograms> {
+        const response = await this.connectionsIdMetadataProgramsSearchGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { ProgramTransactionHeader } from './ProgramTransactionHeader';
+import {
+    ProgramTransactionHeaderFromJSON,
+    ProgramTransactionHeaderFromJSONTyped,
+    ProgramTransactionHeaderToJSON,
+} from './ProgramTransactionHeader';
 import type { Table } from './Table';
 import {
     TableFromJSON,
@@ -46,10 +52,28 @@ export interface ProgramDetails {
     component?: string;
     /**
      * 
+     * @type {string}
+     * @memberof ProgramDetails
+     */
+    category?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProgramDetails
+     */
+    environment?: string;
+    /**
+     * 
      * @type {Array<Table>}
      * @memberof ProgramDetails
      */
     tables?: Array<Table>;
+    /**
+     * 
+     * @type {Array<ProgramTransactionHeader>}
+     * @memberof ProgramDetails
+     */
+    transactions?: Array<ProgramTransactionHeader>;
 }
 
 /**
@@ -74,7 +98,10 @@ export function ProgramDetailsFromJSONTyped(json: any, ignoreDiscriminator: bool
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'component': !exists(json, 'component') ? undefined : json['component'],
+        'category': !exists(json, 'category') ? undefined : json['category'],
+        'environment': !exists(json, 'environment') ? undefined : json['environment'],
         'tables': !exists(json, 'tables') ? undefined : ((json['tables'] as Array<any>).map(TableFromJSON)),
+        'transactions': !exists(json, 'transactions') ? undefined : ((json['transactions'] as Array<any>).map(ProgramTransactionHeaderFromJSON)),
     };
 }
 
@@ -90,7 +117,10 @@ export function ProgramDetailsToJSON(value?: ProgramDetails | null): any {
         'name': value.name,
         'description': value.description,
         'component': value.component,
+        'category': value.category,
+        'environment': value.environment,
         'tables': value.tables === undefined ? undefined : ((value.tables as Array<any>).map(TableToJSON)),
+        'transactions': value.transactions === undefined ? undefined : ((value.transactions as Array<any>).map(ProgramTransactionHeaderToJSON)),
     };
 }
 

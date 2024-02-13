@@ -16,7 +16,6 @@ apis/MappableTablesApi.ts
 apis/MessageMappingApi.ts
 apis/MetadataAdminApi.ts
 apis/ProgramMetadataApi.ts
-apis/ProjectTemplateApi.ts
 apis/ResourceDownloadsApi.ts
 apis/ServiceAccountApi.ts
 apis/TableMetadataApi.ts
@@ -32,6 +31,7 @@ models/ConnectionConfigurationResult.ts
 models/ConnectionModel.ts
 models/ConnectionModelArrayResult.ts
 models/ConnectionModelResult.ts
+models/ConnectionPrograms.ts
 models/ConnectionStatus.ts
 models/CredentialStatus.ts
 models/DescribedJqDto.ts
@@ -52,6 +52,7 @@ models/ListTable.ts
 models/M3BasicAuthConfigRequest.ts
 models/M3BasicAuthConfiguration.ts
 models/M3BasicAuthConfigurationResult.ts
+models/M3EnvironmentDto.ts
 models/M3EnvironmentListDto.ts
 models/MappableTable.ts
 models/MappableTableColumn.ts
@@ -67,9 +68,12 @@ models/MetadataPublisherConfigRequest.ts
 models/ModelIndex.ts
 models/NoSuchReadModelResult.ts
 models/NotFoundResult.ts
+models/Parameter.ts
 models/ProblemDetails.ts
 models/ProgramDetails.ts
-models/ProgramHeader.ts
+models/ProgramMetadataHeader.ts
+models/ProgramTransaction.ts
+models/ProgramTransactionHeader.ts
 models/RelatedTable.ts
 models/RemoteServiceStatus.ts
 models/RestApiServiceStatus.ts

@@ -16,74 +16,95 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface M3EnvironmentListDto
+ * @interface M3EnvironmentDto
  */
-export interface M3EnvironmentListDto {
+export interface M3EnvironmentDto {
     /**
      * 
      * @type {string}
-     * @memberof M3EnvironmentListDto
+     * @memberof M3EnvironmentDto
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof M3EnvironmentListDto
+     * @memberof M3EnvironmentDto
      */
     description: string;
     /**
      * 
      * @type {boolean}
-     * @memberof M3EnvironmentListDto
+     * @memberof M3EnvironmentDto
      */
     baseEnvironment: boolean;
     /**
      * 
      * @type {number}
-     * @memberof M3EnvironmentListDto
+     * @memberof M3EnvironmentDto
      */
     tableCount: number;
     /**
      * 
      * @type {number}
-     * @memberof M3EnvironmentListDto
+     * @memberof M3EnvironmentDto
+     */
+    importedTableCount: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof M3EnvironmentDto
      */
     availableApis: number;
     /**
      * 
+     * @type {number}
+     * @memberof M3EnvironmentDto
+     */
+    importedApis: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof M3EnvironmentDto
+     */
+    importedPrograms: number;
+    /**
+     * 
      * @type {string}
-     * @memberof M3EnvironmentListDto
+     * @memberof M3EnvironmentDto
      */
     baseVersion: string;
     /**
      * 
      * @type {string}
-     * @memberof M3EnvironmentListDto
+     * @memberof M3EnvironmentDto
      */
     components: string;
 }
 
 /**
- * Check if a given object implements the M3EnvironmentListDto interface.
+ * Check if a given object implements the M3EnvironmentDto interface.
  */
-export function instanceOfM3EnvironmentListDto(value: object): boolean {
+export function instanceOfM3EnvironmentDto(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "name" in value;
     isInstance = isInstance && "description" in value;
     isInstance = isInstance && "baseEnvironment" in value;
     isInstance = isInstance && "tableCount" in value;
+    isInstance = isInstance && "importedTableCount" in value;
     isInstance = isInstance && "availableApis" in value;
+    isInstance = isInstance && "importedApis" in value;
+    isInstance = isInstance && "importedPrograms" in value;
     isInstance = isInstance && "baseVersion" in value;
     isInstance = isInstance && "components" in value;
 
     return isInstance;
 }
 
-export function M3EnvironmentListDtoFromJSON(json: any): M3EnvironmentListDto {
-    return M3EnvironmentListDtoFromJSONTyped(json, false);
+export function M3EnvironmentDtoFromJSON(json: any): M3EnvironmentDto {
+    return M3EnvironmentDtoFromJSONTyped(json, false);
 }
 
-export function M3EnvironmentListDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): M3EnvironmentListDto {
+export function M3EnvironmentDtoFromJSONTyped(json: any, ignoreDiscriminator: boolean): M3EnvironmentDto {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -93,13 +114,16 @@ export function M3EnvironmentListDtoFromJSONTyped(json: any, ignoreDiscriminator
         'description': json['description'],
         'baseEnvironment': json['baseEnvironment'],
         'tableCount': json['tableCount'],
+        'importedTableCount': json['importedTableCount'],
         'availableApis': json['availableApis'],
+        'importedApis': json['importedApis'],
+        'importedPrograms': json['importedPrograms'],
         'baseVersion': json['baseVersion'],
         'components': json['components'],
     };
 }
 
-export function M3EnvironmentListDtoToJSON(value?: M3EnvironmentListDto | null): any {
+export function M3EnvironmentDtoToJSON(value?: M3EnvironmentDto | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -112,7 +136,10 @@ export function M3EnvironmentListDtoToJSON(value?: M3EnvironmentListDto | null):
         'description': value.description,
         'baseEnvironment': value.baseEnvironment,
         'tableCount': value.tableCount,
+        'importedTableCount': value.importedTableCount,
         'availableApis': value.availableApis,
+        'importedApis': value.importedApis,
+        'importedPrograms': value.importedPrograms,
         'baseVersion': value.baseVersion,
         'components': value.components,
     };
