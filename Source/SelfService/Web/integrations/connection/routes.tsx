@@ -10,7 +10,7 @@ import { ConnectionDetails } from './connectionDetails';
 import { ConfigurationView } from './connectionDetails/configuration';
 import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { MessagesViewRoot } from './connectionDetails/messages';
-import { Index as ChangeMessageView } from './connectionDetails/messages/changeMessage';
+import { Index as ChangeMessageView } from './connectionDetails/messages/message';
 import { CommandsView } from './connectionDetails/commands';
 import { ConsumeDataView } from './connectionDetails/consumeData';
 

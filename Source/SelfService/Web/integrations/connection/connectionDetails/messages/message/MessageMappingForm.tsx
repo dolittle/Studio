@@ -9,7 +9,7 @@ import { UseMutationResult } from '@tanstack/react-query';
 
 import { Form, FormRef } from '@dolittle/design-system';
 
-import { ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, MessageMappingModel, SetMessageMappingRequestArguments } from '../../../../../../apis/integrations/generated';
+import { ConnectionsIdMessageMappingsTablesTableMessagesMessagePostRequest, MessageMappingModel, SetMessageMappingRequestArguments } from '../../../../../apis/integrations/generated';
 
 export type NewMessageMappingParameters = SetMessageMappingRequestArguments & {
     name: string;
