@@ -13,6 +13,7 @@ import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { Index as ChangeMessageView } from './connectionDetails/messages/message';
 import { CommandsViewRoot } from './connectionDetails/commands';
 import { CommandsView } from './connectionDetails/commands/commandsList';
+import { CommandView } from './connectionDetails/commands/command';
 import { ConsumeDataView } from './connectionDetails/consumeData';
 
 export const routes: RouteObject[] = [
@@ -52,7 +53,7 @@ export const routes: RouteObject[] = [
                     },
                     {
                         path: 'new',
-                        element: <h1>New</h1>,
+                        element: <CommandView />,
                     },
                     {
                         path: 'edit',
