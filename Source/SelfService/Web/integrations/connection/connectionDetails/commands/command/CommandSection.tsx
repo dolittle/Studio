@@ -6,7 +6,7 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import { DataGridPro, GridColDef, GridRowId } from '@mui/x-data-grid-pro';
 
-import { AlertBox, ContentWithSubtitle, DataGridCustomToolbar, DataGridWrapper, dataGridDefaultProps, TextField } from '@dolittle/design-system';
+import { AlertBox, Button, ContentDivider, ContentWithSubtitle, DataGridCustomToolbar, DataGridWrapper, dataGridDefaultProps, TextField } from '@dolittle/design-system';
 
 import { useConnectionsIdMetadataProgramsProgramProgramGet } from '../../../../../apis/integrations/programMetadataApi.hooks';
 
@@ -105,6 +105,16 @@ export const CommandSection = ({ connectionId, selectedProgramName }: CommandSec
                     }}
                 />
             </DataGridWrapper>
+
+            <ContentDivider sx={{ mt: 3 }} />
+
+            <Button
+                label='Add Command' //{isSubmitting ? 'Saving...' : buttonText}
+                variant='fullwidth'
+                type='submit'
+                disabled={!selectionModel.length}
+                sx={{ mt: 2 }}
+            />
         </ContentWithSubtitle>
     );
 };
