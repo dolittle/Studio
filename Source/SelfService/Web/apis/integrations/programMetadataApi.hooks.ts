@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { API_CONFIGURATION } from './api';
 import { CACHE_KEYS } from './CacheKeys';
-import { ConnectionsIdMetadataProgramsSearchGetRequest, ProgramMetadataApi } from './generated';
+import { ConnectionsIdMetadataProgramsSearchGetRequest, ConnectionsIdMetadataProgramsProgramProgramGetRequest, ProgramMetadataApi } from './generated';
 
 let apiInstance: ProgramMetadataApi | undefined;
 
@@ -28,5 +28,20 @@ export const useConnectionsIdMetadataProgramsSearchGet = (params: ConnectionsIdM
         queryFn: api.connectionsIdMetadataProgramsSearchGet.bind(api, params),
         staleTime: 60000,
         enabled: !!params.id && !!params.query,
+    });
+};
+
+export const useConnectionsIdMetadataProgramsProgramProgramGet = (params: ConnectionsIdMetadataProgramsProgramProgramGetRequest) => {
+    const api = getOrCreateApi();
+    return useQuery({
+        queryKey: [
+            CACHE_KEYS.ConnectionProgramMetadata_GET,
+            CACHE_KEYS.ConnectionProgramMetadataProgram_GET,
+            params.id,
+            params.program,
+        ],
+        queryFn: api.connectionsIdMetadataProgramsProgramProgramGet.bind(api, params),
+        staleTime: 60000,
+        enabled: !!params.id && !!params.program,
     });
 };

@@ -27,6 +27,7 @@ export enum CACHE_KEYS {
     //ProgramMetadataApi
     ConnectionProgramMetadata_GET = 'connection_program_metadata_get',
     ConnectionProgramMetadataSearch_GET = 'connection_program_metadata_search_get',
+    ConnectionProgramMetadataProgram_GET = 'connection_program_metadata_program_get',
 
     //ServiceAccountsApi
     ConnectionServiceAccounts_GET = 'connection_service_accounts_get',
