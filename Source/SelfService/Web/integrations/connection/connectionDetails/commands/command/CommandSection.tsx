@@ -4,7 +4,7 @@
 import React from 'react';
 
 import { Typography } from '@mui/material';
-import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridRowId } from '@mui/x-data-grid-pro';
 
 import { AlertBox, ContentWithSubtitle, DataGridCustomToolbar, DataGridWrapper, dataGridDefaultProps, TextField } from '@dolittle/design-system';
 
@@ -50,6 +50,7 @@ export type CommandSectionProps = {
 };
 
 export const CommandSection = ({ connectionId, selectedProgramName }: CommandSectionProps) => {
+    const [selectionModel, setSelectionModel] = React.useState<GridRowId[]>([]);
 
     // TODO: Needs error handling.
     const query = useConnectionsIdMetadataProgramsProgramProgramGet({ id: connectionId, program: selectedProgramName });
@@ -60,6 +61,8 @@ export const CommandSection = ({ connectionId, selectedProgramName }: CommandSec
     // });
 
     const searchResults = query.data || [];
+
+    const selectedRowName = selectionModel.length ? `Selected: ${selectionModel[0]}` : '';
 
     console.log('searchResults', searchResults);
 
@@ -87,15 +90,18 @@ export const CommandSection = ({ connectionId, selectedProgramName }: CommandSec
                 onValueChange={() => { }}
             />
 
-            <DataGridWrapper background='dark' sx={{ height: 400, mt: 3 }}>
+            <DataGridWrapper background='dark' sx={{ mt: 3 }}>
                 <DataGridPro
                     {...dataGridDefaultProps}
                     rows={programTransactionDummyData}
                     columns={programTransactionColumns}
                     getRowId={row => row.name}
-                    checkboxSelection // TODO: Only one row can be selected at a time.
+                    disableSelectionOnClick={false}
+                    //checkboxSelection // TODO: Only one row can be selected at a time.
+                    selectionModel={selectionModel}
+                    onSelectionModelChange={setSelectionModel}
                     components={{
-                        Toolbar: () => <DataGridCustomToolbar title='Transactions:' />
+                        Toolbar: () => <DataGridCustomToolbar title='Select transaction:'>{selectedRowName}</DataGridCustomToolbar>
                     }}
                 />
             </DataGridWrapper>
