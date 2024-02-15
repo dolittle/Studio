@@ -12,7 +12,7 @@ import { AlertBox, ContentWithSubtitle, DataGridCustomToolbar, DataGridWrapper, 
 
 import { useConnectionsIdMetadataProgramsSearchGet } from '../../../../../apis/integrations/programMetadataApi.hooks';
 
-type ProgramsListingEntry = {
+export type ProgramsListingEntry = {
     name: string;
     description: string;
     transactionCount: string;

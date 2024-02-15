@@ -3,28 +3,14 @@
 
 import React, { useState } from 'react';
 
-//import { useLocation, useParams } from 'react-router-dom';
-
-import { AlertBox, ContentContainer, ContentHeader, Form } from '@dolittle/design-system';
+import { AlertBox, ContentContainer, ContentHeader } from '@dolittle/design-system';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { CommandForm } from './CommandForm';
 import { CommandDetailSection } from './CommandDetailSection';
-import { CommandSearchSection } from './CommandSearchSection';
+import { CommandSearchSection, ProgramsListingEntry } from './CommandSearchSection';
 import { CommandSection } from './CommandSection';
-
-type ProgramsListingEntry = {
-    name: string;
-    description: string;
-    transactionCount: string;
-};
-
-type NewCommandFormParameters = {
-    commandName: string;
-    namespace: string;
-    description: string;
-};
 
 export const CommandView = () => {
     const connectionId = useConnectionIdFromRoute();
