@@ -12,7 +12,7 @@ import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 
 import { AlertBox, ContentContainer, ContentHeader, ContentWithSubtitle, DataGridCustomToolbar, DataGridWrapper, dataGridDefaultProps, Form, InlineWrapper, Input, TextField } from '@dolittle/design-system';
 
-import { useConnectionsIdMetadataProgramsSearchGet } from '../../../../../apis/integrations/programMetadataApi.hooks';
+import { useConnectionsIdMetadataProgramsSearchGet, useConnectionsIdMetadataProgramsProgramProgramGet } from '../../../../../apis/integrations/programMetadataApi.hooks';
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { alphaNumericCharsRegex } from '../../../../../utils/helpers/regex';
@@ -34,13 +34,48 @@ const programListingColumns: GridColDef<ProgramsListingEntry>[] = [
         field: 'description',
         headerName: 'Description',
         flex: 1,
-        minWidth: 352,
+        minWidth: 400,
     },
     {
         field: 'transactionCount',
         headerName: 'Transaction count',
         flex: 1,
         minWidth: 200,
+    },
+];
+
+type ProgramTransaction = {
+    name: string;
+    description: string;
+};
+
+const programTransactionColumns: GridColDef<ProgramTransaction>[] = [
+    {
+        field: 'name',
+        headerName: 'Transaction name',
+        //flex: 1,
+        minWidth: 400,
+    },
+    {
+        field: 'description',
+        headerName: 'Description',
+        //flex: 1,
+        minWidth: 400,
+    },
+];
+
+const programTransactionDummyData: ProgramTransaction[] = [
+    {
+        name: 'GetCustomer',
+        description: 'Get customer details',
+    },
+    {
+        name: 'GetCustomer',
+        description: 'Get customer details',
+    },
+    {
+        name: 'GetCustomer',
+        description: 'Get customer details',
     },
 ];
 
@@ -53,46 +88,19 @@ type NewCommandFormParameters = {
 export const CommandView = () => {
     const connectionId = useConnectionIdFromRoute();
 
-    const [searchInputValue, setSearchInputValue] = useState('');
-    const [selectedProgramName, setSelectedProgramName] = useState('');
+    const [searchInputValue, setSearchInputValue] = useState('a');
+    const [selectedProgramName, setSelectedProgramName] = useState('ABS100MI');
 
     // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJEb2xpdHRsZSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAiLCJleHAiOjE3MDk5MTUyODh9.iFgKYVlACXbF-jtRhH0VgQgb9S-l0Quw3oiUh2F33ig
     const [debouncedSearchTerm] = useDebounce(searchInputValue, 500);
-    const query = useConnectionsIdMetadataProgramsSearchGet({ id: connectionId, query: debouncedSearchTerm });
+    //const query = useConnectionsIdMetadataProgramsSearchGet({ id: connectionId, query: debouncedSearchTerm });
+    //const query = useConnectionsIdMetadataProgramsProgramProgramGet({ id: connectionId, program: selectedProgramName });
 
-    const searchResults = query.data?.programs || [];
+    const searchResults = [];// query.data?.programs || [];
+
+    //console.log('searchResults', query.data);
 
     const title = 'Create New Command';
-
-    const CommandSearchSection = () => {
-        return (
-            <ContentWithSubtitle title='Find the M3 program'>
-                <TextField
-                    value={searchInputValue}
-                    size='medium'
-                    placeholder='Search'
-                    isFullWidth
-                    startIcon='Search'
-                    onValueChange={event => setSearchInputValue(event.target.value)}
-                />
-
-                <Collapse in={!!searchResults.length} timeout={100} mountOnEnter unmountOnExit>
-                    <DataGridWrapper sx={{ mt: 3 }}>
-                        <DataGridPro
-                            {...dataGridDefaultProps}
-                            rows={searchResults}
-                            columns={programListingColumns}
-                            getRowId={row => row.name}
-                            onRowClick={({ row }) => handleRowClick(row)}
-                            components={{
-                                Toolbar: () => <DataGridCustomToolbar title='Found programs' />
-                            }}
-                        />
-                    </DataGridWrapper>
-                </Collapse>
-            </ContentWithSubtitle>
-        );
-    };
 
     const handleRowClick = (row: ProgramsListingEntry) => {
         setSelectedProgramName(row.name);
@@ -124,50 +132,75 @@ export const CommandView = () => {
                     </InlineWrapper>
                 </ContentWithSubtitle>
 
-                {selectedProgramName
-                    ? (
-                        <ContentWithSubtitle
-                            title={`Selected program: ${selectedProgramName}`}
-                            infoTooltipLabel={`This displays all the fields that are available for '${selectedProgramName}' program.`}
-                        // rightAction={mode === 'new' &&
-                        //     <Button
-                        //         label='Back to Search Results'
-                        //         startWithIcon='ArrowBack'
-                        //         variant='text'
-                        //         color='subtle'
-                        //         onClick={onBackToSearchResultsClicked}
-                        //     />
-                        // }
-                        >
-                            <Typography gutterBottom>Primary fields are necessary for the message type and have already been selected.</Typography>
-                            <Typography>{`You can remap the M3 Description by adding a remapped name that makes sense for your organization’s business logic.`}</Typography>
+                <ContentWithSubtitle
+                    title={`Selected program: ${selectedProgramName}`}
+                    infoTooltipLabel={`This displays all the fields that are available for '${selectedProgramName}' program.`}
+                // rightAction={mode === 'new' &&
+                //     <Button
+                //         label='Back to Search Results'
+                //         startWithIcon='ArrowBack'
+                //         variant='text'
+                //         color='subtle'
+                //         onClick={onBackToSearchResultsClicked}
+                //     />
+                // }
+                >
+                    {/* <Typography gutterBottom>Primary fields are necessary for the message type and have already been selected.</Typography>
+                    <Typography>{`You can remap the M3 Description by adding a remapped name that makes sense for your organization’s business logic.`}</Typography> */}
 
-                            <Typography sx={{ mt: 4, mb: 2 }}>Find API (transaction)</Typography>
+                    <Typography sx={{ mt: 4, mb: 2 }}>Find API (transaction)</Typography>
 
-                            <TextField
-                                placeholder='Search transaction'
-                                isFullWidth
-                                startIcon='Search'
-                                variant='outlined'
-                                onValueChange={() => { }}
-                            />
+                    <TextField
+                        placeholder='Search transaction'
+                        isFullWidth
+                        startIcon='Search'
+                        variant='outlined'
+                        onValueChange={() => { }}
+                    />
 
-                            <DataGridWrapper sx={{ mt: 3 }}>
-                                <DataGridPro
-                                    {...dataGridDefaultProps}
-                                    rows={[]}
-                                    columns={[]}
-                                    getRowId={row => row.name}
-                                    components={{
-                                        Toolbar: () => <DataGridCustomToolbar title='Found transactions' />
-                                    }}
-                                />
-                            </DataGridWrapper>
-                        </ContentWithSubtitle>
-                    )
-                    : <CommandSearchSection />
-                }
+                    <DataGridWrapper sx={{ mt: 3 }}>
+                        <DataGridPro
+                            {...dataGridDefaultProps}
+                            rows={programTransactionDummyData}
+                            columns={programTransactionColumns}
+                            getRowId={row => row.name}
+                            components={{
+                                Toolbar: () => <DataGridCustomToolbar title='Transactions:' />
+                            }}
+                        />
+                    </DataGridWrapper>
+                </ContentWithSubtitle>
             </Form>
         </ContentContainer>
     );
 };
+
+// const CommandSearchSection = () => {
+//     return (
+//         <ContentWithSubtitle title='Find the M3 program'>
+//             <TextField
+//                 value={searchInputValue}
+//                 size='medium'
+//                 placeholder='Search'
+//                 isFullWidth
+//                 startIcon='Search'
+//                 onValueChange={event => setSearchInputValue(event.target.value)}
+//             />
+
+//             <Collapse in={!!searchResults.length} timeout={100} mountOnEnter unmountOnExit>
+//                 <DataGridWrapper sx={{ mt: 3 }}>
+//                     <DataGridPro
+//                         {...dataGridDefaultProps}
+//                         rows={searchResults}
+//                         columns={programListingColumns}
+//                         getRowId={row => row.name}
+//                         onRowClick={({ row }) => handleRowClick(row)}
+//                         components={{
+//                             Toolbar: () => <DataGridCustomToolbar title='Found programs' />
+//                         }}
+//                     />
+//                 </DataGridWrapper>
+//             </Collapse>
+//         </ContentWithSubtitle>
+//     );
+// };
