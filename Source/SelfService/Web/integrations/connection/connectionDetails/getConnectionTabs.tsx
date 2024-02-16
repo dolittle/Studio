@@ -36,7 +36,7 @@ export const connectionTabs = [
         overrides: {
             component: Link,
             to: 'commands',
-            //disabled: true,
+            disabled: true,
         },
     },
     {
