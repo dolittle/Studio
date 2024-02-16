@@ -1,3 +1,9 @@
+# [3.19.5] - 2024-2-16 [PR: #504](https://github.com/dolittle/Studio/pull/504)
+## Summary
+
+Add a 'Create New Command' page to commands Tab.
+
+
 # [3.19.3] - 2024-2-6 [PR: #503](https://github.com/dolittle/Studio/pull/503)
 ## Summary
 
