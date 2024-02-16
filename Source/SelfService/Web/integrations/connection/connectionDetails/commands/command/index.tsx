@@ -3,7 +3,9 @@
 
 import React, { useState } from 'react';
 
-import { AlertBox, ContentContainer, ContentHeader } from '@dolittle/design-system';
+import { useNavigate } from 'react-router-dom';
+
+import { AlertBox, Button, ContentContainer, ContentHeader } from '@dolittle/design-system';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
@@ -13,12 +15,15 @@ import { CommandSearchSection, ProgramsListingEntry } from './CommandSearchSecti
 import { CommandSection } from './CommandSection';
 
 export const CommandView = () => {
+    const navigate = useNavigate();
     const connectionId = useConnectionIdFromRoute();
 
     const [searchInputValue, setSearchInputValue] = useState('');
     const [selectedProgramName, setSelectedProgramName] = useState('');
 
-    const title = 'Create New Command';
+    const handleCommandCancel = () => {
+        navigate('..');
+    };
 
     const handleRowClick = (row: ProgramsListingEntry) => {
         setSelectedProgramName(row.name);
@@ -27,10 +32,10 @@ export const CommandView = () => {
     return (
         <ContentContainer>
             <ContentHeader
-                title={title}
-                // buttonsSlot={
-                //     <CancelOrDiscardButton onCancelled={handleMessageMappingCancel} onDiscarded={() => setShowDiscardChangesDialog(true)} />
-                // }
+                title='Create New Command'
+                buttonsSlot={
+                    <Button label='Cancel' startWithIcon='CancelRounded' color='subtle' onClick={handleCommandCancel} />
+                }
                 sx={{ pb: 0 }}
             />
 
