@@ -44,7 +44,7 @@ export const CommandView = () => {
 
                 {!selectedProgramName
                     ? <CommandSearchSection connectionId={connectionId} searchInputValue={searchInputValue} onSearchInputValueChange={setSearchInputValue} onRowClick={handleRowClick} />
-                    : <CommandSection connectionId={connectionId} selectedProgramName={selectedProgramName} />
+                    : <CommandSection connectionId={connectionId} selectedProgramName={selectedProgramName} onBackToSearchResultsClicked={() => setSelectedProgramName('')} />
                 }
             </CommandForm>
         </ContentContainer>

@@ -46,10 +46,10 @@ const programTransactionDummyData: ProgramTransaction[] = [
 export type CommandSectionProps = {
     connectionId: string;
     selectedProgramName: string;
-    onBackToSearchResultsClicked?: () => void;
+    onBackToSearchResultsClicked: () => void;
 };
 
-export const CommandSection = ({ connectionId, selectedProgramName }: CommandSectionProps) => {
+export const CommandSection = ({ connectionId, selectedProgramName, onBackToSearchResultsClicked }: CommandSectionProps) => {
     const [selectionModel, setSelectionModel] = React.useState<GridRowId[]>([]);
 
     // TODO: Needs error handling.
@@ -69,18 +69,11 @@ export const CommandSection = ({ connectionId, selectedProgramName }: CommandSec
     return (
         <ContentWithSubtitle
             title={`Selected program: ${selectedProgramName}`}
-            infoTooltipLabel={`This displays all the transactions that are available for '${selectedProgramName}' program.`}
-        // rightAction={mode === 'new' &&
-        //     <Button
-        //         label='Back to Search Results'
-        //         startWithIcon='ArrowBack'
-        //         variant='text'
-        //         color='subtle'
-        //         onClick={onBackToSearchResultsClicked}
-        //     />
-        // }
+            rightAction={
+                <Button label='Back To Search Results' startWithIcon='ArrowBack' color='subtle' onClick={onBackToSearchResultsClicked} />
+            }
         >
-            <Typography sx={{ mb: 4 }}>(Add some text here)</Typography>
+            <Typography sx={{ mb: 4 }}>{`This displays all the transactions that are available for '${selectedProgramName}' program.`}</Typography>
 
             <TextField
                 placeholder='Search API (transaction)'
@@ -108,13 +101,7 @@ export const CommandSection = ({ connectionId, selectedProgramName }: CommandSec
 
             <ContentDivider sx={{ mt: 3 }} />
 
-            <Button
-                label='Add Command' //{isSubmitting ? 'Saving...' : buttonText}
-                variant='fullwidth'
-                type='submit'
-                disabled={!selectionModel.length}
-                sx={{ mt: 2 }}
-            />
+            <Button label='Save New Command' variant='fullwidth' type='submit' disabled={!selectionModel.length} sx={{ mt: 2 }} />
         </ContentWithSubtitle>
     );
 };
