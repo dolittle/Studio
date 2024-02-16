@@ -8,10 +8,12 @@ import { RouteObject } from 'react-router-dom';
 import { ConnectionDetails } from './connectionDetails';
 
 import { ConfigurationView } from './connectionDetails/configuration';
-import { MessagesListView } from './connectionDetails/messages/messagesList';
 import { MessagesViewRoot } from './connectionDetails/messages';
-import { Index as ChangeMessageView } from './connectionDetails/messages/changeMessage';
-import { CommandsView } from './connectionDetails/commands';
+import { MessagesListView } from './connectionDetails/messages/messagesList';
+import { Index as ChangeMessageView } from './connectionDetails/messages/message';
+import { CommandsViewRoot } from './connectionDetails/commands';
+import { CommandsView } from './connectionDetails/commands/commandsList';
+import { CommandView } from './connectionDetails/commands/command';
 import { ConsumeDataView } from './connectionDetails/consumeData';
 
 export const routes: RouteObject[] = [
@@ -42,8 +44,22 @@ export const routes: RouteObject[] = [
                 ],
             },
             {
-                path: 'commands',
-                element: <CommandsView />,
+                path: 'commands/*',
+                element: <CommandsViewRoot />,
+                children: [
+                    {
+                        path: '',
+                        element: <CommandsView />,
+                    },
+                    {
+                        path: 'new',
+                        element: <CommandView />,
+                    },
+                    {
+                        path: 'edit',
+                        element: <h1>Edit</h1>,
+                    },
+                ],
             },
             {
                 path: 'consume-data',

@@ -16,49 +16,37 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface ProgramHeader
+ * @interface ProgramTransactionHeader
  */
-export interface ProgramHeader {
+export interface ProgramTransactionHeader {
     /**
      * 
      * @type {string}
-     * @memberof ProgramHeader
+     * @memberof ProgramTransactionHeader
      */
     name?: string;
     /**
      * 
      * @type {string}
-     * @memberof ProgramHeader
+     * @memberof ProgramTransactionHeader
      */
     description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProgramHeader
-     */
-    component?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProgramHeader
-     */
-    loaded?: boolean;
 }
 
 /**
- * Check if a given object implements the ProgramHeader interface.
+ * Check if a given object implements the ProgramTransactionHeader interface.
  */
-export function instanceOfProgramHeader(value: object): boolean {
+export function instanceOfProgramTransactionHeader(value: object): boolean {
     let isInstance = true;
 
     return isInstance;
 }
 
-export function ProgramHeaderFromJSON(json: any): ProgramHeader {
-    return ProgramHeaderFromJSONTyped(json, false);
+export function ProgramTransactionHeaderFromJSON(json: any): ProgramTransactionHeader {
+    return ProgramTransactionHeaderFromJSONTyped(json, false);
 }
 
-export function ProgramHeaderFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProgramHeader {
+export function ProgramTransactionHeaderFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProgramTransactionHeader {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -66,12 +54,10 @@ export function ProgramHeaderFromJSONTyped(json: any, ignoreDiscriminator: boole
         
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'component': !exists(json, 'component') ? undefined : json['component'],
-        'loaded': !exists(json, 'loaded') ? undefined : json['loaded'],
     };
 }
 
-export function ProgramHeaderToJSON(value?: ProgramHeader | null): any {
+export function ProgramTransactionHeaderToJSON(value?: ProgramTransactionHeader | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -82,8 +68,6 @@ export function ProgramHeaderToJSON(value?: ProgramHeader | null): any {
         
         'name': value.name,
         'description': value.description,
-        'component': value.component,
-        'loaded': value.loaded,
     };
 }
 

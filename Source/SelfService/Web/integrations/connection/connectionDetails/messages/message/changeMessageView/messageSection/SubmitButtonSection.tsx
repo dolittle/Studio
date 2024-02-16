@@ -27,7 +27,7 @@ export const SubmitButtonSection = ({ mode, isSubmitting }: SubmitButtonSectionP
                 variant='fullwidth'
                 type='submit'
                 disabled={!isValid || !isDirty || isSubmitting}
-                sx={{ mt: 2.125 }}
+                sx={{ mt: 2 }}
             />
         </>
     );

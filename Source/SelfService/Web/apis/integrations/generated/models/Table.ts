@@ -24,13 +24,19 @@ export interface Table {
      * @type {string}
      * @memberof Table
      */
-    name?: string | null;
+    name?: string;
     /**
      * 
      * @type {string}
      * @memberof Table
      */
-    usage?: string | null;
+    usage?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Table
+     */
+    viaProgram?: string | null;
 }
 
 /**
@@ -54,6 +60,7 @@ export function TableFromJSONTyped(json: any, ignoreDiscriminator: boolean): Tab
         
         'name': !exists(json, 'name') ? undefined : json['name'],
         'usage': !exists(json, 'usage') ? undefined : json['usage'],
+        'viaProgram': !exists(json, 'viaProgram') ? undefined : json['viaProgram'],
     };
 }
 
@@ -68,6 +75,7 @@ export function TableToJSON(value?: Table | null): any {
         
         'name': value.name,
         'usage': value.usage,
+        'viaProgram': value.viaProgram,
     };
 }
 

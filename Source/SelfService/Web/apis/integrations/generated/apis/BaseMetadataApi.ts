@@ -15,17 +15,110 @@
 
 import * as runtime from '../runtime';
 import type {
+  M3EnvironmentDto,
   M3EnvironmentListDto,
+  ProblemDetails,
 } from '../models/index';
 import {
+    M3EnvironmentDtoFromJSON,
+    M3EnvironmentDtoToJSON,
     M3EnvironmentListDtoFromJSON,
     M3EnvironmentListDtoToJSON,
+    ProblemDetailsFromJSON,
+    ProblemDetailsToJSON,
 } from '../models/index';
+
+export interface MetadataEnvironmentsEnvironmentNameGetRequest {
+    environmentName: string;
+}
+
+export interface MetadataEnvironmentsEnvironmentNameReimportPostRequest {
+    environmentName: string;
+}
 
 /**
  * 
  */
 export class BaseMetadataApi extends runtime.BaseAPI {
+
+    /**
+     */
+    async metadataEnvironmentsEnvironmentNameGetRaw(requestParameters: MetadataEnvironmentsEnvironmentNameGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<M3EnvironmentDto>>> {
+        if (requestParameters.environmentName === null || requestParameters.environmentName === undefined) {
+            throw new runtime.RequiredError('environmentName','Required parameter requestParameters.environmentName was null or undefined when calling metadataEnvironmentsEnvironmentNameGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("Bearer", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/metadata/environments/{environmentName}`.replace(`{${"environmentName"}}`, encodeURIComponent(String(requestParameters.environmentName))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(M3EnvironmentDtoFromJSON));
+    }
+
+    /**
+     */
+    async metadataEnvironmentsEnvironmentNameGet(requestParameters: MetadataEnvironmentsEnvironmentNameGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<M3EnvironmentDto>> {
+        const response = await this.metadataEnvironmentsEnvironmentNameGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async metadataEnvironmentsEnvironmentNameReimportPostRaw(requestParameters: MetadataEnvironmentsEnvironmentNameReimportPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.environmentName === null || requestParameters.environmentName === undefined) {
+            throw new runtime.RequiredError('environmentName','Required parameter requestParameters.environmentName was null or undefined when calling metadataEnvironmentsEnvironmentNameReimportPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["X-Organization-Id"] = this.configuration.apiKey("X-Organization-Id"); // X-Organization-Id authentication
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("Bearer", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/metadata/environments/{environmentName}/reimport`.replace(`{${"environmentName"}}`, encodeURIComponent(String(requestParameters.environmentName))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async metadataEnvironmentsEnvironmentNameReimportPost(requestParameters: MetadataEnvironmentsEnvironmentNameReimportPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.metadataEnvironmentsEnvironmentNameReimportPostRaw(requestParameters, initOverrides);
+    }
 
     /**
      */
