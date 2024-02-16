@@ -72,7 +72,7 @@ export const CommandSearchSection = ({ connectionId, searchInputValue, onSearchI
                         getRowId={row => row.name}
                         onRowClick={({ row }) => onRowClick(row)}
                         components={{
-                            Toolbar: () => <DataGridCustomToolbar title='Programs:' />
+                            Toolbar: () => <DataGridCustomToolbar title='Programs' />
                         }}
                     />
                 </DataGridWrapper>

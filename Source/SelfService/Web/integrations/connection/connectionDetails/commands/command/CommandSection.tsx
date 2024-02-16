@@ -167,7 +167,7 @@ export const CommandSection = ({ connectionId, selectedProgramName, onBackToSear
         };
     }, [quickFilterValue]);
 
-    const selectedRowName = selectionModel.length ? `Selected: ${selectionModel[0]}` : '';
+    const selectedRowName = selectionModel.length ? `Selected transaction: ${selectionModel[0]}` : '';
 
     console.log('searchResults', searchResults);
 
@@ -197,11 +197,10 @@ export const CommandSection = ({ connectionId, selectedProgramName, onBackToSear
                     autoHeight={false}
                     disableSelectionOnClick={false}
                     filterModel={gridFilters}
-                    //checkboxSelection // TODO: Only one row can be selected at a time.
                     selectionModel={selectionModel}
                     onSelectionModelChange={setSelectionModel}
                     components={{
-                        Toolbar: () => <DataGridCustomToolbar title='Select transaction:'>{selectedRowName}</DataGridCustomToolbar>
+                        Toolbar: () => <DataGridCustomToolbar title='Transactions'>{selectedRowName}</DataGridCustomToolbar>
                     }}
                 />
             </DataGridWrapper>
