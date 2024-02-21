@@ -5,7 +5,7 @@ import React from 'react';
 
 import { GridColDef } from '@mui/x-data-grid-pro';
 
-import { EditCell, EditTextFieldCell, IconButton, StatusIndicator } from '@dolittle/design-system';
+import { DataGridEditCellView, DataGridEditCellEdit, IconButton, StatusIndicator } from '@dolittle/design-system';
 
 type DummyRowsProps = {
     id: string;
@@ -123,8 +123,8 @@ export const dummyEditCellsColumns: GridColDef[] = [
         minWidth: 150,
         flex: 1,
         editable: true,
-        renderCell: EditCell,
-        renderEditCell: EditTextFieldCell,
+        renderCell: DataGridEditCellView,
+        renderEditCell: DataGridEditCellEdit,
     },
     {
         field: 'col2',
@@ -133,8 +133,8 @@ export const dummyEditCellsColumns: GridColDef[] = [
         minWidth: 150,
         flex: 1,
         editable: true,
-        renderCell: EditCell,
-        renderEditCell: EditTextFieldCell,
+        renderCell: DataGridEditCellView,
+        renderEditCell: DataGridEditCellEdit,
     },
     {
         field: 'col3',
@@ -143,8 +143,8 @@ export const dummyEditCellsColumns: GridColDef[] = [
         minWidth: 150,
         flex: 1,
         editable: true,
-        renderCell: EditCell,
-        renderEditCell: EditTextFieldCell,
+        renderCell: DataGridEditCellView,
+        renderEditCell: DataGridEditCellEdit,
     },
     {
         field: 'col4',
@@ -153,7 +153,7 @@ export const dummyEditCellsColumns: GridColDef[] = [
         minWidth: 150,
         flex: 1,
         editable: true,
-        renderCell: EditCell,
-        renderEditCell: EditTextFieldCell,
+        renderCell: DataGridEditCellView,
+        renderEditCell: DataGridEditCellEdit,
     },
 ];
