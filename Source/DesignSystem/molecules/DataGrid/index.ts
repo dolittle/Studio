@@ -6,3 +6,4 @@ export { DataGridWrapper } from './DataGridWrapper';
 export { DataGridCustomToolbar } from './DataGridCustomToolbar';
 export { DataGridDetailPanel, DetailPanelExpandIcon, DetailPanelCollapseIcon } from './DataGridDetailPanel';
 export { EditCell, EditTextFieldCell } from './EditCell';
+export { DataGridSelectCellView } from './DataGridSelectCell';

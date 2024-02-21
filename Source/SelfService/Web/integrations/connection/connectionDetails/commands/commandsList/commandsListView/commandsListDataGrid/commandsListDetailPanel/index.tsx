@@ -10,6 +10,14 @@ import { Button, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, F
 
 import { commandsListDetailPanelColumns } from './DetailPanelColumns';
 
+const styles = {
+    // Hack for secret cell active state. Otherwise size is going to be different.
+    '& .MuiOutlinedInput-root': {
+        '& .MuiSelect-select': { p: '10px 15px' },
+        '& fieldset': { border: 'none' },
+    },
+};
+
 const commandsListDetailPanelRows = [
     {
         m3Argument: 'CFAB',
@@ -70,6 +78,7 @@ export const CommandsListDetailPanel = ({ row }: any) => {
                                 <Button label='Save Changes' startWithIcon='AddCircle' />
                             </DataGridCustomToolbar>
                         }}
+                        sx={styles}
                     />
                 </DataGridWrapper>
             </Form>

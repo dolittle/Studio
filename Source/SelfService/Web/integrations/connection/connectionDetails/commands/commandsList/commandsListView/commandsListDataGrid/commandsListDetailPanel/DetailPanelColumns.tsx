@@ -1,15 +1,9 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import { GridColDef } from '@mui/x-data-grid-pro';
 
-import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid-pro';
-
-import { Button } from '@dolittle/design-system';
-
-const ParameterSelectCell = (params: GridRenderCellParams) => (
-    <Button label={params.value} color='subtle' endWithIcon='ArrowDropDownRounded' sx={{ width: 1, height: 1, textTransform: 'none', typography: 'body2' }} />
-);
+import { DataGridSelectCellView } from '@dolittle/design-system';
 
 const parameterModeOptions = [
     {
@@ -49,7 +43,7 @@ export const commandsListDetailPanelColumns: GridColDef[] = [
         type: 'singleSelect',
         editable: true,
         valueOptions: parameterModeOptions,
-        renderCell: ParameterSelectCell,
+        renderCell: DataGridSelectCellView,
         minWidth: 120,
         flex: 1,
     },
