@@ -24,32 +24,36 @@ export const commandsListDetailPanelColumns: GridColDef[] = [
     {
         field: 'm3Argument',
         headerName: 'M3 Argument',
+        minWidth: 160,
         flex: 1,
     },
     {
         field: 'description',
         headerName: 'Description',
+        minWidth: 230,
         flex: 1,
     },
     {
         field: 'parameterName',
         headerName: 'Parameter Name',
+        minWidth: 230,
+        flex: 1,
+    },
+    {
+        field: 'defaultValue',
+        headerName: 'Default Value',
+        minWidth: 230,
         flex: 1,
     },
     {
         field: 'mode',
         headerName: 'Mode',
         headerAlign: 'center',
-        type: 'singleSelect',
         editable: true,
+        type: 'singleSelect',
         valueOptions: parameterModeOptions,
         renderCell: DataGridSelectCellView,
-        minWidth: 120,
-        flex: 1,
-    },
-    {
-        field: 'defaultValue',
-        headerName: 'Default Value',
+        minWidth: 200,
         flex: 1,
     },
 ];
