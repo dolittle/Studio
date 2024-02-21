@@ -4,9 +4,11 @@
 import React from 'react';
 
 import { Paper, Typography } from '@mui/material';
-import { DataGridPro, GridColDef, GridRenderCellParams } from '@mui/x-data-grid-pro';
+import { DataGridPro } from '@mui/x-data-grid-pro';
 
 import { Button, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, Form, InlineWrapper, Input } from '@dolittle/design-system';
+
+import { commandsListDetailPanelColumns } from './DetailPanelColumns';
 
 const commandsListDetailPanelRows = [
     {
@@ -29,48 +31,6 @@ const commandsListDetailPanelRows = [
         parameterName: 'Parameter Name',
         mode: 'Hardcoded value',
         defaultValue: 'Default Value',
-    },
-];
-
-
-
-const ParameterSelectCell = (params: GridRenderCellParams) => (
-    <Button label={params.value} color='subtle' endWithIcon='ArrowDropDownRounded' sx={{ width: 1, height: 1, textTransform: 'none', typography: 'body2' }} />
-);
-
-const parameterModeOptions = [{ value: 'Optional', label: 'Optional' }, { value: 'Required', label: 'Required' }, { value: 'Hardcoded value', label: 'Hardcoded value' }];
-
-const commandsListDetailPanelColumns: GridColDef[] = [
-    {
-        field: 'm3Argument',
-        headerName: 'M3 Argument',
-        flex: 1,
-    },
-    {
-        field: 'description',
-        headerName: 'Description',
-        flex: 1,
-    },
-    {
-        field: 'parameterName',
-        headerName: 'Parameter Name',
-        flex: 1,
-    },
-    {
-        field: 'mode',
-        headerName: 'Mode',
-        headerAlign: 'center',
-        type: 'singleSelect',
-        valueOptions: parameterModeOptions,
-        editable: true,
-        renderCell: ParameterSelectCell,
-        minWidth: 120,
-        flex: 1,
-    },
-    {
-        field: 'defaultValue',
-        headerName: 'Default Value',
-        flex: 1,
     },
 ];
 
@@ -112,8 +72,6 @@ export const CommandsListDetailPanel = ({ row }: any) => {
                         }}
                     />
                 </DataGridWrapper>
-
-                {/* <CreateButton label='Save changes and close' onCreate={() => { }} /> */}
             </Form>
         </Paper>
     );
