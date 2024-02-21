@@ -4,9 +4,9 @@
 import React from 'react';
 
 import { Paper, Typography } from '@mui/material';
-import { DataGridPro, DataGridProProps, GridRowId } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridColDef, GridRenderCellParams } from '@mui/x-data-grid-pro';
 
-import { Button, CreateButton, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, Form, InlineWrapper, Input, Select } from '@dolittle/design-system';
+import { Button, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, Form, InlineWrapper, Input } from '@dolittle/design-system';
 
 const commandsListDetailPanelRows = [
     {
@@ -32,7 +32,15 @@ const commandsListDetailPanelRows = [
     },
 ];
 
-const commandsListDetailPanelColumns = [
+
+
+const ParameterSelectCell = (params: GridRenderCellParams) => (
+    <Button label={params.value} color='subtle' endWithIcon='ArrowDropDownRounded' sx={{ width: 1, height: 1, textTransform: 'none', typography: 'body2' }} />
+);
+
+const parameterModeOptions = [{ value: 'Optional', label: 'Optional' }, { value: 'Required', label: 'Required' }, { value: 'Hardcoded value', label: 'Hardcoded value' }];
+
+const commandsListDetailPanelColumns: GridColDef[] = [
     {
         field: 'm3Argument',
         headerName: 'M3 Argument',
@@ -51,16 +59,12 @@ const commandsListDetailPanelColumns = [
     {
         field: 'mode',
         headerName: 'Mode',
-        //<Select
-        //id='mode'
-        //             label='Mode'
-        //             options={
-        //     [
-        //     { value: 'Create', displayValue: 'Create' },
-        //     { value: 'Update', displayValue: 'Update' },
-        //     { value: 'Delete', displayValue: 'Delete' },
-        //             ]}
-        // />
+        headerAlign: 'center',
+        type: 'singleSelect',
+        valueOptions: parameterModeOptions,
+        editable: true,
+        renderCell: ParameterSelectCell,
+        minWidth: 120,
         flex: 1,
     },
     {
