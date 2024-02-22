@@ -20,7 +20,7 @@ const styles = {
 // const styles = {
 //     // Hack for secret cell active state. Otherwise size is going to be different.
 //     '& .MuiOutlinedInput-root': {
-//         '& .MuiSelect-select': { p: '10px 15px' },
+//         '& .MuiSelect-select': { p: '5px 15px' },
 //         '& fieldset': { border: 'none' },
 //     },
 // };

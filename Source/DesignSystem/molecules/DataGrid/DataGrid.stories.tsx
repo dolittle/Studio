@@ -6,8 +6,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { DataGridProProps } from '@mui/x-data-grid-pro';
 
-import { dataTableDescription, dummyColumns, dummyIconRows, dummyRows, dummyEditCellsColumns, dummyIconColumns } from './helpers';
-import { } from '../../helpers/DummyContents';
+import { dataTableDescription, dummyColumns, dummyIconRows, dummyRows, dummyEditCellColumns, dummyEditCellRows, dummyIconColumns } from './helpers';
 
 import { DataGrid, dataGridDefaultProps } from './DataGrid';
 
@@ -87,9 +86,16 @@ IconCells.parameters = {
 export const EditableCells: Story = {
     args: {
         ...Default.args,
-        rows: dummyRows,
-        columns: dummyEditCellsColumns,
+        rows: dummyEditCellRows,
+        columns: dummyEditCellColumns,
         experimentalFeatures: { newEditingApi: true },
+        sx: {
+            // Hack for secret cell active state. Otherwise size is going to be different.
+            '& .MuiOutlinedInput-root': {
+                '& .MuiSelect-select': { p: '5px 15px' },
+                '& fieldset': { border: 'none' },
+            },
+        },
     },
 };
 EditableCells.parameters = {

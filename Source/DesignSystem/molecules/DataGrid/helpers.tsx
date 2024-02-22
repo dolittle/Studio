@@ -5,7 +5,7 @@ import React from 'react';
 
 import { GridColDef } from '@mui/x-data-grid-pro';
 
-import { DataGridEditCellEdit, DataGridEditCellView, IconButton, StatusIndicator } from '../../index';
+import { DataGridEditCellEdit, DataGridEditCellView, DataGridSelectCellView, IconButton, StatusIndicator } from '../../index';
 
 export const dataTableDescription = `Data tables are an excellent way to organize vast amounts of data. Data tables should be easy to scan, 
             allowing the user to look for patterns and develop insights.
@@ -133,11 +133,21 @@ export const dummyIconColumns: GridColDef<DummyRowsProps>[] = [
 
 export const dummyIconRows: DummyRowsProps[] = [{ id: '1' }];
 
-export const dummyEditCellsColumns: GridColDef<DummyRowsProps>[] = [
+export const dummyEditCellRows: DummyRowsProps[] = [
+    { id: '1', col1: 'Editable Cell', col2: 'Editable Cell', col3: 'Select Cell', col4: 'Select Cell' },
+    { id: '2', col1: 'Editable Cell', col2: 'Editable Cell', col3: 'Select Cell', col4: 'Select Cell' },
+    { id: '3', col1: 'Editable Cell', col2: 'Editable Cell', col3: 'Select Cell', col4: 'Select Cell' },
+    { id: '4', col1: 'Editable Cell', col2: 'Editable Cell', col3: 'Select Cell', col4: 'Select Cell' },
+];
+
+const selectValueOptions = [{ value: 'Option 1', label: 'Option 1' }, { value: 'Option 2', label: 'Option 2' }];
+
+export const dummyEditCellColumns: GridColDef<DummyRowsProps>[] = [
     {
         field: 'col1',
         headerName: 'Column 1',
         sortable: false,
+        headerAlign: 'center',
         minWidth: 150,
         flex: 1,
         editable: true,
@@ -148,6 +158,7 @@ export const dummyEditCellsColumns: GridColDef<DummyRowsProps>[] = [
         field: 'col2',
         headerName: 'Column 2',
         sortable: false,
+        headerAlign: 'center',
         minWidth: 150,
         flex: 1,
         editable: true,
@@ -158,20 +169,24 @@ export const dummyEditCellsColumns: GridColDef<DummyRowsProps>[] = [
         field: 'col3',
         headerName: 'Column 3',
         sortable: false,
+        headerAlign: 'center',
         minWidth: 150,
         flex: 1,
         editable: true,
-        renderCell: DataGridEditCellView,
-        renderEditCell: DataGridEditCellEdit,
+        type: 'singleSelect',
+        valueOptions: selectValueOptions,
+        renderCell: DataGridSelectCellView,
     },
     {
         field: 'col4',
         headerName: 'Column 4',
         sortable: false,
+        headerAlign: 'center',
         minWidth: 150,
         flex: 1,
         editable: true,
-        renderCell: DataGridEditCellView,
-        renderEditCell: DataGridEditCellEdit,
+        type: 'singleSelect',
+        valueOptions: selectValueOptions,
+        renderCell: DataGridSelectCellView,
     },
 ];
