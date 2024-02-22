@@ -6,8 +6,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { DataGridProProps } from '@mui/x-data-grid-pro';
 
-import { dataTableDescription } from './helpers';
-import { dummyColumns, dummyEditCellsColumns, dummyIconColumns, dummyIconRows, dummyRows } from '../../helpers/DummyContents';
+import { dataTableDescription, dummyColumns, dummyIconRows, dummyRows, dummyEditCellsColumns, dummyIconColumns } from './helpers';
+import { } from '../../helpers/DummyContents';
 
 import { DataGrid, dataGridDefaultProps } from './DataGrid';
 
@@ -63,8 +63,8 @@ export const Default: Story = {
         columns: dummyColumns,
         checkboxSelection: false,
         loading: false,
-        onRowClick: () => action('onRowClick'),
-        onCellClick: () => action('onCellClick'),
+        onRowClick: action('Row Clicked!'),
+        onCellClick: action('Cell Clicked!'),
     },
 };
 
@@ -79,7 +79,7 @@ IconCells.parameters = {
     docs: {
         description: {
             story: `Icon buttons is found inside their own column in the table that cause a specific action to a specific row of data.<br/>
-            Use Icon to display a specific icon in the table.`
+            Use Icon to display a specific status in the table.`
         },
     },
 };
@@ -112,7 +112,7 @@ EditableCells.parameters = {
 // export const ScrollableDataGrid = () => {};
 // export const RowEditMode = () => {};
 
-// TODOS:
+// TODO:
 // Add into description what is needed in every Data Table.
 // Add sorting guidance.
 // Add alignment guidance.
