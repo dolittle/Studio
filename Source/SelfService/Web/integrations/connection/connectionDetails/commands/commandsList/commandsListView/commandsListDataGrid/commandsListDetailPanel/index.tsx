@@ -16,6 +16,10 @@ const styles = {
         '& .MuiSelect-select': { p: '5px 15px' },
         '& fieldset': { border: 'none' },
     },
+    // Hide the filter icon in the column header.
+    '& .MuiDataGrid-columnHeader--filtered .MuiDataGrid-iconButtonContainer': {
+        display: 'none',
+    },
 };
 
 const commandsListDetailPanelRows = [
