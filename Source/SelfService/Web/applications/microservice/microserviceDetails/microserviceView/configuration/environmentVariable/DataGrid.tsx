@@ -15,9 +15,9 @@ import { RestartInfoBox } from '../../../../components/restartInfoBox';
 import { dataGridColumns } from './DataGridColumns';
 
 const styles = {
+    // Hack for secret cell active state. Otherwise size is going to be different.
     '& .MuiOutlinedInput-root': {
-        // Hack for secret cell active state. Otherwise size is going to be different.
-        '& .MuiSelect-select': { p: '10px 15px' },
+        '& .MuiSelect-select': { p: '5px 15px' },
         '& fieldset': { border: 'none' },
     },
 };
