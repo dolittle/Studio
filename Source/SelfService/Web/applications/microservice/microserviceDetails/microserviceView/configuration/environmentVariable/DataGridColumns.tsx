@@ -5,7 +5,7 @@ import React from 'react';
 
 import { GridColDef } from '@mui/x-data-grid-pro';
 
-import { Button, DataGridEditCellEdit, DataGridEditCellView } from '@dolittle/design-system';
+import { Button, DataGridEditCellView } from '@dolittle/design-system';
 
 import { EnvironmentVariableTableRowParams } from './DataGrid';
 
@@ -16,7 +16,6 @@ export const dataGridColumns: GridColDef<EnvironmentVariableTableRowParams>[] = 
         width: 330,
         editable: true,
         renderCell: DataGridEditCellView,
-        renderEditCell: DataGridEditCellEdit,
     },
     {
         field: 'value',
@@ -24,7 +23,6 @@ export const dataGridColumns: GridColDef<EnvironmentVariableTableRowParams>[] = 
         width: 330,
         editable: true,
         renderCell: DataGridEditCellView,
-        renderEditCell: DataGridEditCellEdit,
     },
     {
         field: 'isSecret',

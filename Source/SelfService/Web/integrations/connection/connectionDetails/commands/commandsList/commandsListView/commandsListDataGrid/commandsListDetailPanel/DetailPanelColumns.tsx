@@ -3,7 +3,7 @@
 
 import { GridColDef, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid-pro';
 
-import { DataGridEditCellEdit, DataGridEditCellView, DataGridSelectCellView } from '@dolittle/design-system';
+import { DataGridEditCellView, DataGridSelectCellView } from '@dolittle/design-system';
 
 const parameterModeOptions = [
     {
@@ -35,7 +35,6 @@ export const commandsListDetailPanelColumns: GridColDef[] = [
         headerName: 'Description',
         editable: true,
         renderCell: DataGridEditCellView,
-        renderEditCell: DataGridEditCellEdit,
         minWidth: 200,
         flex: 1,
     },
@@ -44,7 +43,6 @@ export const commandsListDetailPanelColumns: GridColDef[] = [
         headerName: 'Parameter Name',
         editable: true,
         renderCell: DataGridEditCellView,
-        renderEditCell: DataGridEditCellEdit,
         minWidth: 200,
         flex: 1,
     },
@@ -53,7 +51,6 @@ export const commandsListDetailPanelColumns: GridColDef[] = [
         headerName: 'Default Value',
         editable: true,
         renderCell: DataGridEditCellView,
-        renderEditCell: DataGridEditCellEdit,
         minWidth: 200,
         flex: 1,
     },

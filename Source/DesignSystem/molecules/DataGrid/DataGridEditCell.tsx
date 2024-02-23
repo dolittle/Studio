@@ -21,6 +21,7 @@ const textFieldBorderStyles = {
     },
 };
 
+// TODO: Gives an error at the moment.
 /**
  * Renders a editable text field cell in 'edit' mode in the DataGrid.
  */

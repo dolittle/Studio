@@ -5,7 +5,7 @@ import React from 'react';
 
 import { GridColDef } from '@mui/x-data-grid-pro';
 
-import { DataGridEditCellEdit, DataGridEditCellView, DataGridSelectCellView, IconButton, StatusIndicator } from '../../index';
+import { DataGridEditCellView, DataGridSelectCellView, IconButton, StatusIndicator } from '../../index';
 
 export const dataTableDescription = `Data tables are an excellent way to organize vast amounts of data. Data tables should be easy to scan, 
             allowing the user to look for patterns and develop insights.
@@ -152,7 +152,6 @@ export const dummyEditCellColumns: GridColDef<DummyRowsProps>[] = [
         flex: 1,
         editable: true,
         renderCell: DataGridEditCellView,
-        renderEditCell: DataGridEditCellEdit,
     },
     {
         field: 'col2',
@@ -163,7 +162,6 @@ export const dummyEditCellColumns: GridColDef<DummyRowsProps>[] = [
         flex: 1,
         editable: true,
         renderCell: DataGridEditCellView,
-        renderEditCell: DataGridEditCellEdit,
     },
     {
         field: 'col3',
