@@ -5,7 +5,7 @@ import React from 'react';
 
 import { GridRenderCellParams, useGridApiContext } from '@mui/x-data-grid-pro';
 
-import { TextField } from '@dolittle/design-system';
+import { TextField } from '../../index';
 
 const textFieldBorderStyles = {
     '& .MuiOutlinedInput-root': {
@@ -21,7 +21,11 @@ const textFieldBorderStyles = {
     },
 };
 
-export const EditTextFieldCell = (params: GridRenderCellParams<HTMLInputElement>) => {
+// TODO: Gives an error at the moment.
+/**
+ * Renders a editable text field cell in 'edit' mode in the DataGrid.
+ */
+export const DataGridEditCellEdit = (params: GridRenderCellParams<HTMLInputElement>) => {
     const { id, value, field } = params;
     const apiRef = useGridApiContext();
 
@@ -42,7 +46,10 @@ export const EditTextFieldCell = (params: GridRenderCellParams<HTMLInputElement>
     );
 };
 
-export const EditCell = (params: GridRenderCellParams) =>
+/**
+ * Renders a editable text field cell in the 'view' mode in the DataGrid.
+ */
+export const DataGridEditCellView = (params: GridRenderCellParams) =>
     <TextField
         value={params.value}
         placeholder='Edit...'

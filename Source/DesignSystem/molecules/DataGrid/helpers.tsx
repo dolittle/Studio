@@ -1,6 +1,12 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import React from 'react';
+
+import { GridColDef } from '@mui/x-data-grid-pro';
+
+import { DataGridEditCellView, DataGridSelectCellView, IconButton, StatusIndicator } from '../../index';
+
 export const dataTableDescription = `Data tables are an excellent way to organize vast amounts of data. Data tables should be easy to scan, 
             allowing the user to look for patterns and develop insights.
 
@@ -17,9 +23,168 @@ If rows are clickable, then they should display a hover state change. Always pro
 such as in columns that contain action icons. Sorting icons should always be displayed to the right of the column label.
 
 * Expandable rows: Data rows can be expandable by utilizing the arrow icon button component. Expanded rows should show additional data as it pertains to the row above.
-Only allow for one row to expand at a time so as not to overwhelm the user. 
+Only allow for one row to expand at a time so as not to overwhelm the user.`;
 
-**Structure**
+type DummyRowsProps = {
+    id: string;
+    col1?: string;
+    col2?: string;
+    col3?: string;
+    col4?: string;
+};
 
-* Row: Rows can be expandable and collapsable offering the opportunity to include more subsequent data beneath. Content in rows should be spaced evenly apart. Text should left align vertically within its column
-and numbers, including dates, should right align for better scanning.`;
+export const dummyColumns: GridColDef<DummyRowsProps>[] = [
+    {
+        field: 'col1',
+        headerName: 'Column 1',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+    },
+    {
+        field: 'col2',
+        headerName: 'Column 2',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+    },
+    {
+        field: 'col3',
+        headerName: 'Column 3',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+    },
+    {
+        field: 'col4',
+        headerName: 'Column 4',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+    },
+];
+
+export const dummyRows: DummyRowsProps[] = [
+    { id: '1', col1: 'Row 1', col2: 'Row 1', col3: 'Row 1', col4: 'Row 1' },
+    { id: '2', col1: 'Row 2', col2: 'Row 2', col3: 'Row 2', col4: 'Row 2' },
+    { id: '3', col1: 'Row 3', col2: 'Row 3', col3: 'Row 3', col4: 'Row 3' },
+    { id: '4', col1: 'Row 4', col2: 'Row 4', col3: 'Row 4', col4: 'Row 4' },
+];
+
+export const dummyIconColumns: GridColDef<DummyRowsProps>[] = [
+    {
+        field: 'success',
+        headerName: 'Status success',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        headerAlign: 'center',
+        align: 'center',
+        renderCell: () => <StatusIndicator status='table-success' />,
+    },
+    {
+        field: 'warning',
+        headerName: 'Status warning',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        headerAlign: 'center',
+        align: 'center',
+        renderCell: () => <StatusIndicator status='warning' />,
+    },
+    {
+        field: 'error',
+        headerName: 'Status error',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        headerAlign: 'center',
+        align: 'center',
+        renderCell: () => <StatusIndicator status='error' />,
+    },
+    {
+        field: 'unknown',
+        headerName: 'Status unknown',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        headerAlign: 'center',
+        align: 'center',
+        renderCell: () => <StatusIndicator status='unknown' />,
+    },
+    {
+        field: 'download',
+        headerName: 'Download file',
+        sortable: false,
+        minWidth: 150,
+        flex: 1,
+        headerAlign: 'center',
+        align: 'center',
+        renderCell: () => (
+            <IconButton
+                tooltipText='Download'
+                icon='DownloadRounded'
+                href={URL.createObjectURL(new Blob([], { type: 'text/plain' }))}
+                download='sample.log'
+            />
+        ),
+    },
+];
+
+export const dummyIconRows: DummyRowsProps[] = [{ id: '1' }];
+
+export const dummyEditCellRows: DummyRowsProps[] = [
+    { id: '1', col1: 'Editable Cell', col2: 'Editable Cell', col3: 'Select Cell', col4: 'Select Cell' },
+    { id: '2', col1: 'Editable Cell', col2: 'Editable Cell', col3: 'Select Cell', col4: 'Select Cell' },
+    { id: '3', col1: 'Editable Cell', col2: 'Editable Cell', col3: 'Select Cell', col4: 'Select Cell' },
+    { id: '4', col1: 'Editable Cell', col2: 'Editable Cell', col3: 'Select Cell', col4: 'Select Cell' },
+];
+
+const selectValueOptions = [{ value: 'Option 1', label: 'Option 1' }, { value: 'Option 2', label: 'Option 2' }];
+
+export const dummyEditCellColumns: GridColDef<DummyRowsProps>[] = [
+    {
+        field: 'col1',
+        headerName: 'Column 1',
+        sortable: false,
+        headerAlign: 'center',
+        minWidth: 150,
+        flex: 1,
+        editable: true,
+        renderCell: DataGridEditCellView,
+    },
+    {
+        field: 'col2',
+        headerName: 'Column 2',
+        sortable: false,
+        headerAlign: 'center',
+        minWidth: 150,
+        flex: 1,
+        editable: true,
+        renderCell: DataGridEditCellView,
+    },
+    {
+        field: 'col3',
+        headerName: 'Column 3',
+        sortable: false,
+        headerAlign: 'center',
+        minWidth: 150,
+        flex: 1,
+        editable: true,
+        type: 'singleSelect',
+        valueOptions: selectValueOptions,
+        renderCell: DataGridSelectCellView,
+    },
+    {
+        field: 'col4',
+        headerName: 'Column 4',
+        sortable: false,
+        headerAlign: 'center',
+        minWidth: 150,
+        flex: 1,
+        editable: true,
+        type: 'singleSelect',
+        valueOptions: selectValueOptions,
+        renderCell: DataGridSelectCellView,
+    },
+];

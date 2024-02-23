@@ -7,7 +7,7 @@ import { DataGridPro, DataGridProProps, GridRowId } from '@mui/x-data-grid-pro';
 
 import { dataGridDefaultProps, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon } from '@dolittle/design-system';
 
-import { CommandsListDetailPanel } from './CommandsListDetailPanel';
+import { CommandsListDetailPanel } from './commandsListDetailPanel';
 
 const dummyData = [
     { name: 'Update Facility' },

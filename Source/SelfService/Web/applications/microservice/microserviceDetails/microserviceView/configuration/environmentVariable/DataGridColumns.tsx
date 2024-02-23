@@ -5,7 +5,7 @@ import React from 'react';
 
 import { GridColDef } from '@mui/x-data-grid-pro';
 
-import { Button, EditCell, EditTextFieldCell } from '@dolittle/design-system';
+import { Button, DataGridEditCellView } from '@dolittle/design-system';
 
 import { EnvironmentVariableTableRowParams } from './DataGrid';
 
@@ -15,28 +15,24 @@ export const dataGridColumns: GridColDef<EnvironmentVariableTableRowParams>[] = 
         headerName: 'Name',
         width: 330,
         editable: true,
-        renderCell: EditCell,
-        renderEditCell: EditTextFieldCell,
+        renderCell: DataGridEditCellView,
     },
     {
         field: 'value',
         headerName: 'Value',
         width: 330,
         editable: true,
-        renderCell: EditCell,
-        renderEditCell: EditTextFieldCell,
+        renderCell: DataGridEditCellView,
     },
     {
         field: 'isSecret',
         headerName: 'Secret',
+        width: 120,
+        editable: true,
         type: 'singleSelect',
         valueOptions: [{ value: true, label: 'Yes' }, { value: false, label: 'No' }],
-        editable: true,
         renderCell: ({ value }) => (
             <Button label={value ? 'Yes' : 'No'} color='subtle' endWithIcon='ArrowDropDownRounded' sx={{ width: 1, height: 1 }} />
         ),
-        // TODO: Implement this.
-        //renderEditCell: ({ id, value, api }) => ();
-        width: 120,
     },
 ];

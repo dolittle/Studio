@@ -5,7 +5,7 @@ import React from 'react';
 
 import { GridColDef, GridRowId, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid-pro';
 
-import { EditCell, EditTextFieldCell, Tooltip } from '@dolittle/design-system';
+import { DataGridEditCellView, Tooltip } from '@dolittle/design-system';
 
 import { MappableTableColumn } from '../../../../../../../../../apis/integrations/generated';
 
@@ -45,8 +45,7 @@ export const getMessageMappingDataGridColumns = (disabledRows: GridRowId[]) => {
             headerName: 'Remapped Name',
             editable: true,
             flex: 1,
-            renderCell: EditCell,
-            renderEditCell: EditTextFieldCell,
+            renderCell: DataGridEditCellView,
         },
     ] as GridColDef<DataGridTableListingEntry>[];
 };
