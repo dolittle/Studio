@@ -1,7 +1,7 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import { GridColDef } from '@mui/x-data-grid-pro';
+import { GridColDef, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid-pro';
 
 import { DataGridEditCellEdit, DataGridEditCellView, DataGridSelectCellView } from '@dolittle/design-system';
 
@@ -21,6 +21,9 @@ const parameterModeOptions = [
 ];
 
 export const commandsListDetailPanelColumns: GridColDef[] = [
+    {
+        ...GRID_CHECKBOX_SELECTION_COL_DEF,
+    },
     {
         field: 'm3Argument',
         headerName: 'M3 Argument',

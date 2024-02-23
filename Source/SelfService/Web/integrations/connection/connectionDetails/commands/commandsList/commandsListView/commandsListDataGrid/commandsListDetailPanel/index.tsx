@@ -1,12 +1,12 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Paper, Typography } from '@mui/material';
-import { DataGridPro } from '@mui/x-data-grid-pro';
+import { DataGridPro, GRID_CHECKBOX_SELECTION_FIELD, GridFilterModel, GridSelectionModel } from '@mui/x-data-grid-pro';
 
-import { Button, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, Form, InlineWrapper, Input } from '@dolittle/design-system';
+import { Button, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, Form, InlineWrapper, Input, NewSwitch } from '@dolittle/design-system';
 
 import { commandsListDetailPanelColumns } from './DetailPanelColumns';
 
@@ -48,6 +48,20 @@ type CommandEditParametersProps = {
 };
 
 export const CommandsListDetailPanel = ({ row }: any) => {
+    const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>([]);
+    const [hideUnselectedRows, setHideUnselectedRows] = useState(false);
+
+    const gridFilters: GridFilterModel = {
+        // Hide unselected rows.
+        items: hideUnselectedRows ? [
+            {
+                columnField: GRID_CHECKBOX_SELECTION_FIELD,
+                operatorValue: 'is',
+                value: 'true',
+            },
+        ] : [],
+    };
+
     return (
         <Paper sx={{ p: 2, pl: 7.5 }}>
             <Typography variant='h4' gutterBottom>{row.name}</Typography>
@@ -72,11 +86,24 @@ export const CommandsListDetailPanel = ({ row }: any) => {
                         columns={commandsListDetailPanelColumns}
                         getRowId={row => row.m3Argument}
                         autoHeight={false}
+                        checkboxSelection
+                        keepNonExistentRowsSelected
+                        selectionModel={selectedRowIds}
+                        onSelectionModelChange={newSelectionModel => setSelectedRowIds(newSelectionModel)}
+                        filterModel={gridFilters}
                         components={{
-                            Toolbar: () => <DataGridCustomToolbar title='Parameters'>
-                                <Button label='Add Parameters' startWithIcon='AddCircle' />
-                                <Button label='Save Changes' startWithIcon='AddCircle' />
-                            </DataGridCustomToolbar>
+                            Toolbar: () => (
+                                <DataGridCustomToolbar title='Parameters'>
+                                    <NewSwitch
+                                        id='hideUnselectedRows'
+                                        label='Hide Unselected Rows'
+                                        checked={hideUnselectedRows}
+                                        onChange={() => setHideUnselectedRows(!hideUnselectedRows)}
+                                    />
+
+                                    <Button label='Save Changes' startWithIcon='AddCircle' onClick={() => { }} />
+                                </DataGridCustomToolbar>
+                            )
                         }}
                         experimentalFeatures={{ newEditingApi: true }}
                         sx={styles}

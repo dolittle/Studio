@@ -185,7 +185,7 @@ export const MessageMappingDataGrid = ({ tableName, mode, mappableTableDataGridR
                 experimentalFeatures={{ newEditingApi: true }}
                 components={{
                     Toolbar: () => (
-                        <DataGridCustomToolbar title={`${tableName} Table`}>
+                        <DataGridCustomToolbar title={`${tableName} table fields`}>
                             <NewSwitch
                                 id='hideUnselectedRows'
                                 label='Hide Unselected Rows'
