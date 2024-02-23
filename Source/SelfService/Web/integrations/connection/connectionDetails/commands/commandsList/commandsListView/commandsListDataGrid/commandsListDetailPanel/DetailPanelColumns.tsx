@@ -36,7 +36,7 @@ export const commandsListDetailPanelColumns: GridColDef[] = [
         editable: true,
         renderCell: DataGridEditCellView,
         renderEditCell: DataGridEditCellEdit,
-        minWidth: 230,
+        minWidth: 200,
         flex: 1,
     },
     {
@@ -45,7 +45,7 @@ export const commandsListDetailPanelColumns: GridColDef[] = [
         editable: true,
         renderCell: DataGridEditCellView,
         renderEditCell: DataGridEditCellEdit,
-        minWidth: 230,
+        minWidth: 200,
         flex: 1,
     },
     {
@@ -54,7 +54,7 @@ export const commandsListDetailPanelColumns: GridColDef[] = [
         editable: true,
         renderCell: DataGridEditCellView,
         renderEditCell: DataGridEditCellEdit,
-        minWidth: 230,
+        minWidth: 200,
         flex: 1,
     },
     {
