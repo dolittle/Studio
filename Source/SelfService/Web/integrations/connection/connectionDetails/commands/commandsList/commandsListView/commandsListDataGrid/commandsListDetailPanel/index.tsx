@@ -78,6 +78,7 @@ export const CommandsListDetailPanel = ({ row }: any) => {
                                 <Button label='Save Changes' startWithIcon='AddCircle' />
                             </DataGridCustomToolbar>
                         }}
+                        experimentalFeatures={{ newEditingApi: true }}
                         sx={styles}
                     />
                 </DataGridWrapper>

@@ -3,7 +3,7 @@
 
 import { GridColDef } from '@mui/x-data-grid-pro';
 
-import { DataGridSelectCellView } from '@dolittle/design-system';
+import { DataGridEditCellEdit, DataGridEditCellView, DataGridSelectCellView } from '@dolittle/design-system';
 
 const parameterModeOptions = [
     {
@@ -30,18 +30,27 @@ export const commandsListDetailPanelColumns: GridColDef[] = [
     {
         field: 'description',
         headerName: 'Description',
+        editable: true,
+        renderCell: DataGridEditCellView,
+        renderEditCell: DataGridEditCellEdit,
         minWidth: 230,
         flex: 1,
     },
     {
         field: 'parameterName',
         headerName: 'Parameter Name',
+        editable: true,
+        renderCell: DataGridEditCellView,
+        renderEditCell: DataGridEditCellEdit,
         minWidth: 230,
         flex: 1,
     },
     {
         field: 'defaultValue',
         headerName: 'Default Value',
+        editable: true,
+        renderCell: DataGridEditCellView,
+        renderEditCell: DataGridEditCellEdit,
         minWidth: 230,
         flex: 1,
     },
