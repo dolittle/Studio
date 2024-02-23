@@ -25,6 +25,9 @@ const styles = {
 //     },
 // };
 
+// TODO: Styles should be moved to the theme.
+// TODO: How to display the selected value label in the select cell?
+
 /**
  * Renders a select cell in 'view' mode in the DataGrid.
  */
