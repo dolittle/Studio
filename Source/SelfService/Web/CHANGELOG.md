@@ -1,3 +1,22 @@
+# [3.19.6] - 2024-2-23 [PR: #505](https://github.com/dolittle/Studio/pull/505)
+## Summary
+
+Improve appearance of command parameters.
+
+### Added
+
+- 'DataGridSelectCell' to Design System
+
+### Changed
+
+- Rename 'EditCell' to 'DataGridEditCellView' for better readability
+- Rename 'EditTextFieldCell to 'DataGridEditCellEdit' for better readability
+
+### Removed
+
+- 'DataGridEditCellEdit' from DataGrids because it throws an error
+
+
 # [3.19.5] - 2024-2-16 [PR: #504](https://github.com/dolittle/Studio/pull/504)
 ## Summary
 
