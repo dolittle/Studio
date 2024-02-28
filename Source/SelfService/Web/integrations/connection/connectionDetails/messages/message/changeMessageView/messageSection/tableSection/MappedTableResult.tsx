@@ -1,7 +1,7 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useDebounce } from 'use-debounce';
 
@@ -28,6 +28,7 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
     const [isAigonSearchActive, setIsAigonSearchActive] = useState(false);
     const [fieldSearchTerm, setFieldSearchTerm] = useState('');
     const [aigonSearchTerm, setAigonSearchTerm] = useState('');
+    const [hideUnselectedRows, setHideUnselectedRows] = useState(mode === 'edit');
 
     const [debouncedAigonSearchTerm] = useDebounce(aigonSearchTerm, 2000);
 
@@ -40,7 +41,15 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
 
     const allMappableTableRows = mappableTableResult?.value?.columns || [];
     const aiFilteredRows = allMappableTableRows.filter(row => aiSearchResult?.recommendations?.find(({ name }) => row.m3ColumnName === name));
-    const mappableTableDataGridRows = isAigonSearchActive && aigonSearchTerm.trim().length > 5 ? aiFilteredRows : allMappableTableRows;
+    const validAISearch = isAigonSearchActive && aigonSearchTerm.trim().length > 5;
+    const mappableTableDataGridRows = validAISearch ? aiFilteredRows : allMappableTableRows;
+
+    useEffect(() => {
+        // If the AI search term is valid, we want to show all rows, otherwise we want to hide unselected rows in edit mode.
+        if (validAISearch) {
+            setHideUnselectedRows(false);
+        }
+    }, [debouncedAigonSearchTerm]);
 
     const handleAigonSearchActivate = () => {
         setFieldSearchTerm('');
@@ -66,8 +75,9 @@ export const MappedTableResult = ({ connectionId, selectedTableName, mode, initi
                 ? <LinearProgress />
                 : <MessageMappingDataGrid
                     tableName={selectedTableName}
-                    mode={mode}
                     mappableTableDataGridRows={mappableTableDataGridRows}
+                    shouldHideUnselectedRows={hideUnselectedRows}
+                    onHideUnselectedRowsChange={setHideUnselectedRows}
                     quickFilterValue={fieldSearchTerm}
                     initialSelectedFields={initialSelectedFields}
                     mappableTableResult={mappableTableResult}
