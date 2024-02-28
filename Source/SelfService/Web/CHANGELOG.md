@@ -1,3 +1,9 @@
+# [3.19.7] - 2024-2-28 [PR: #506](https://github.com/dolittle/Studio/pull/506)
+## Summary
+
+Show unselected messages DataGrid rows, when AI search is active.
+
+
 # [3.19.6] - 2024-2-23 [PR: #505](https://github.com/dolittle/Studio/pull/505)
 ## Summary
 
