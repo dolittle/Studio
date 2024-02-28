@@ -11,7 +11,6 @@ import { FieldMapping, MappedField } from '../../../../../../../../../apis/integ
 
 import { DataGridTableListingEntry, getMessageMappingDataGridColumns } from './MessageMappingDataGridColumns';
 
-import { ViewMode } from '../../../../ViewMode';
 import { generateMappedFieldNameFrom } from '../../../../components/generateMappedFieldNameFrom';
 import { useUpdateMappedFieldsInForm } from '../../../../components/useUpdateMappedFieldsInForm';
 
@@ -19,15 +18,16 @@ import { generateUniqueFieldName } from './helpers';
 
 export type MessageMappingDataGridProps = {
     tableName: string;
-    mode: ViewMode;
     mappableTableDataGridRows: any;
+    shouldHideUnselectedRows: boolean;
+    onHideUnselectedRowsChange: (hideUnselectedRows: boolean) => void;
     quickFilterValue: string;
     initialSelectedFields: MappedField[];
     mappableTableResult: any;
     isLoading: boolean;
 };
 
-export const MessageMappingDataGrid = ({ tableName, mode, mappableTableDataGridRows, quickFilterValue, initialSelectedFields, mappableTableResult, isLoading }: MessageMappingDataGridProps) => {
+export const MessageMappingDataGrid = ({ tableName, mappableTableDataGridRows, shouldHideUnselectedRows, onHideUnselectedRowsChange, quickFilterValue, initialSelectedFields, mappableTableResult, isLoading }: MessageMappingDataGridProps) => {
     const gridApiRef = useGridApiRef();
     const setMappedFieldsInForm = useUpdateMappedFieldsInForm();
 
@@ -49,7 +49,6 @@ export const MessageMappingDataGrid = ({ tableName, mode, mappableTableDataGridR
 
     const [hasSetInitialState, setHasSetInitialState] = useState(false);
     const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>(initialSelectedRowIds);
-    const [hideUnselectedRows, setHideUnselectedRows] = useState(mode === 'edit');
     const [mappedFields, setMappedFields] = useState<Map<string, FieldMapping>>(initialMappedFields);
 
     if (!hasSetInitialState) {
@@ -94,7 +93,7 @@ export const MessageMappingDataGrid = ({ tableName, mode, mappableTableDataGridR
     const gridFilters: GridFilterModel = useMemo(() => {
         return {
             // Hide unselected rows. In 'edit' mode, this is initially set to true.
-            items: hideUnselectedRows ? [
+            items: shouldHideUnselectedRows ? [
                 {
                     columnField: GRID_CHECKBOX_SELECTION_FIELD,
                     operatorValue: 'is',
@@ -104,7 +103,7 @@ export const MessageMappingDataGrid = ({ tableName, mode, mappableTableDataGridR
             // Apply search term if provided.
             quickFilterValues: [quickFilterValue?.trim() || undefined],
         };
-    }, [quickFilterValue, hideUnselectedRows]);
+    }, [quickFilterValue, shouldHideUnselectedRows]);
 
     /**
      * Callback for when the user changes the selection in the grid.
@@ -189,8 +188,8 @@ export const MessageMappingDataGrid = ({ tableName, mode, mappableTableDataGridR
                             <NewSwitch
                                 id='hideUnselectedRows'
                                 label='Hide Unselected Rows'
-                                checked={hideUnselectedRows}
-                                onChange={() => setHideUnselectedRows(!hideUnselectedRows)}
+                                checked={shouldHideUnselectedRows}
+                                onChange={event => onHideUnselectedRowsChange(event.target.checked)}
                             />
                         </DataGridCustomToolbar>
                     )
