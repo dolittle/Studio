@@ -5,11 +5,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import { DataGridPro, GridFilterModel, GridSelectionModel, useGridApiRef, GRID_CHECKBOX_SELECTION_FIELD } from '@mui/x-data-grid-pro';
 
-import { dataGridDefaultProps, DataGridWrapper, DataGridCustomToolbar, NewSwitch } from '@dolittle/design-system';
+import { dataGridDefaultProps, DataGridWrapper } from '@dolittle/design-system';
 
 import { FieldMapping, MappedField } from '../../../../../../../../../apis/integrations/generated';
 
 import { DataGridTableListingEntry, getMessageMappingDataGridColumns } from './MessageMappingDataGridColumns';
+import { MessageMappingDataGridToolbar } from './MessageMappingDataGridToolbar';
 
 import { generateMappedFieldNameFrom } from '../../../../components/generateMappedFieldNameFrom';
 import { useUpdateMappedFieldsInForm } from '../../../../components/useUpdateMappedFieldsInForm';
@@ -183,16 +184,8 @@ export const MessageMappingDataGrid = ({ tableName, mappableTableDataGridRows, s
                 keepNonExistentRowsSelected
                 experimentalFeatures={{ newEditingApi: true }}
                 components={{
-                    Toolbar: () => (
-                        <DataGridCustomToolbar title={`${tableName} table fields`}>
-                            <NewSwitch
-                                id='hideUnselectedRows'
-                                label='Hide Unselected Rows'
-                                checked={shouldHideUnselectedRows}
-                                onChange={event => onHideUnselectedRowsChange(event.target.checked)}
-                            />
-                        </DataGridCustomToolbar>
-                    )
+                    Toolbar: () =>
+                        <MessageMappingDataGridToolbar tableName={tableName} shouldHideUnselectedRows={shouldHideUnselectedRows} onHideUnselectedRowsChange={onHideUnselectedRowsChange} />,
                 }}
                 sx={{
                     // Hide the filter icon in the column header.
