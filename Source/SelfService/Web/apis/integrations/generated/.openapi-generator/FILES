@@ -2,6 +2,7 @@
 apis/AsyncApiApi.ts
 apis/BaseMetadataApi.ts
 apis/CommandApi.ts
+apis/CommandMappingApi.ts
 apis/ConnectionConfigurationApi.ts
 apis/ConnectionRestApiApi.ts
 apis/ConnectionWebhookApi.ts
@@ -23,9 +24,13 @@ apis/TableMetadataAssistantApi.ts
 apis/index.ts
 index.ts
 models/AccountAccess.ts
+models/ApiParameter.ts
 models/ColumnMetadata.ts
 models/ColumnRecommendation.ts
 models/ColumnRecommendations.ts
+models/CommandHeader.ts
+models/CommandMappingModel.ts
+models/CommandMappingModelIEnumerableResult.ts
 models/ConnectionConfiguration.ts
 models/ConnectionConfigurationResult.ts
 models/ConnectionModel.ts
@@ -33,6 +38,7 @@ models/ConnectionModelArrayResult.ts
 models/ConnectionModelResult.ts
 models/ConnectionPrograms.ts
 models/ConnectionStatus.ts
+models/CreateCommand.ts
 models/CredentialStatus.ts
 models/DescribedJqDto.ts
 models/DescribedLinqDto.ts
@@ -58,6 +64,7 @@ models/MappableTable.ts
 models/MappableTableColumn.ts
 models/MappableTableResult.ts
 models/MappedField.ts
+models/MappedParameter.ts
 models/MappingReference.ts
 models/MdpConfiguration.ts
 models/MdpConfigurationResult.ts
@@ -69,6 +76,7 @@ models/ModelIndex.ts
 models/NoSuchReadModelResult.ts
 models/NotFoundResult.ts
 models/Parameter.ts
+models/ParameterMode.ts
 models/ProblemDetails.ts
 models/ProgramDetails.ts
 models/ProgramMetadataHeader.ts
@@ -95,6 +103,8 @@ models/TableListingEntryIEnumerableResult.ts
 models/TableSummaryDto.ts
 models/TopicAccess.ts
 models/TopicAccessDto.ts
+models/UpdateCommandNames.ts
+models/UpdateCommandParameters.ts
 models/WebhookServiceStatus.ts
 models/WebhookStatusDto.ts
 models/WebhookTargetStatus.ts

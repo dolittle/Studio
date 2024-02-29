@@ -34,12 +34,7 @@ export const useConnectionsIdMetadataProgramsSearchGet = (params: ConnectionsIdM
 export const useConnectionsIdMetadataProgramsProgramProgramGet = (params: ConnectionsIdMetadataProgramsProgramProgramGetRequest) => {
     const api = getOrCreateApi();
     return useQuery({
-        queryKey: [
-            CACHE_KEYS.ConnectionProgramMetadata_GET,
-            CACHE_KEYS.ConnectionProgramMetadataProgram_GET,
-            params.id,
-            params.program,
-        ],
+        queryKey: [CACHE_KEYS.ConnectionProgramMetadataProgram_GET, params.id, params.program],
         queryFn: api.connectionsIdMetadataProgramsProgramProgramGet.bind(api, params),
         staleTime: 60000,
         enabled: !!params.id && !!params.program,

@@ -10,7 +10,7 @@ import { dataGridDefaultProps, DataGridWrapper, DetailPanelExpandIcon, DetailPan
 import { CommandsListDetailPanel } from './commandsListDetailPanel';
 
 const dummyData = [
-    { name: 'Update Facility' },
+    { name: 'Update Supplier' },
     { name: 'Update Customer' },
     { name: 'Delete Customer' },
 ];
