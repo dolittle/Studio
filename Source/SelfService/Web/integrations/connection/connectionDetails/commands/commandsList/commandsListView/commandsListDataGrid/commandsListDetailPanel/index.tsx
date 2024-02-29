@@ -46,6 +46,156 @@ const commandsListDetailPanelRows = [
     },
 ];
 
+const commandsListDetailPanelRows2 = [
+    {
+        name: 'ABSK',
+        description: 'ABCclass-supplier',
+        type: 'StringType',
+        length: 1,
+        required: false
+    },
+    {
+        name: 'ABSM',
+        description: 'ABCmethod-supplier',
+        type: 'StringType',
+        length: 1,
+        required: false
+    },
+    {
+        name: 'ACRF',
+        description: 'User-definedaccountingcontrolobject',
+        type: 'StringType',
+        length: 8,
+        required: false
+    },
+    {
+        name: 'AGNT',
+        description: 'Agent',
+        type: 'StringType',
+        length: 10,
+        required: false
+    },
+    {
+        name: 'ALSU',
+        description: 'Searchkey',
+        type: 'StringType',
+        length: 10,
+        required: false
+    },
+    {
+        name: 'ATPR',
+        description: 'Attributepricingrule',
+        type: 'StringType',
+        length: 1,
+        required: false
+    },
+    {
+        name: 'AVCD',
+        description: 'Activitycode',
+        type: 'StringType',
+        length: 3,
+        required: false
+    },
+    {
+        name: 'BUYE',
+        description: 'Buyer',
+        type: 'StringType',
+        length: 10,
+        required: false
+    },
+    {
+        name: 'CF10',
+        description: 'User-definedfield5-purchase/financial',
+        type: 'StringType',
+        length: 1,
+        required: false
+    },
+    // {
+    //     "name": "CFI1",
+    //     "description": "User-definedfield1-supplier",
+    //     "type": "StringType",
+    //     "length": 10,
+    //     "required": false
+    // },
+    // {
+    //     "name": "CFI2",
+    //     "description": "User-definedfield2-supplier",
+    //     "type": "StringType",
+    //     "length": 17,
+    //     "required": false
+    // },
+    // {
+    //     "name": "CFI3",
+    //     "description": "User-definedfield3-supplier",
+    //     "type": "StringType",
+    //     "length": 3,
+    //     "required": false
+    // },
+    // {
+    //     "name": "CFI4",
+    //     "description": "User-definedfield4-supplier",
+    //     "type": "StringType",
+    //     "length": 5,
+    //     "required": false
+    // },
+    // {
+    //     "name": "CFI5",
+    //     "description": "User-definedfield5-supplier",
+    //     "type": "StringType",
+    //     "length": 1,
+    //     "required": false
+    // },
+    // {
+    //     "name": "CFI6",
+    //     "description": "User-definedfield1-purchase/financial",
+    //     "type": "StringType",
+    //     "length": 10,
+    //     "required": false
+    // },
+    // {
+    //     "name": "CFI7",
+    //     "description": "User-definedfield2-purchase/financial",
+    //     "type": "StringType",
+    //     "length": 17,
+    //     "required": false
+    // },
+    // {
+    //     "name": "CFI8",
+    //     "description": "User-definedfield3-purchase/financial",
+    //     "type": "StringType",
+    //     "length": 3,
+    //     "required": false
+    // },
+    // {
+    //     "name": "CFI9",
+    //     "description": "User-definedfield4-purchase/financial",
+    //     "type": "StringType",
+    //     "length": 5,
+    //     "required": false
+    // },
+    // {
+    //     "name": "CGRP",
+    //     "description": "Consolidation group",
+    //     "type": "StringType",
+    //     "length": 10,
+    //     "required": false
+    // },
+    // {
+    //     "name": "COBI",
+    //     "description": "Groupofcompanies",
+    //     "type": "StringType",
+    //     "length": 10,
+    //     "required": false
+    // },
+    // {
+    //     "name": "COR2",
+    //     "description": "Organizationnumber2",
+    //     "type": "StringType",
+    //     "length": 11,
+    //     "required": false
+    // },
+];
+
 type CommandEditParametersProps = {
     namespace: string;
     description: string;
@@ -69,7 +219,7 @@ export const CommandsListDetailPanel = ({ row }: any) => {
     return (
         <Paper sx={{ p: 2, pl: 7.5 }}>
             <Typography variant='h4' gutterBottom>{row.name}</Typography>
-            <Typography variant='body1' color='text.secondary'>{`Transaction: ${'MSN051MI > GetPaymentReq'}`}</Typography>
+            <Typography variant='body1' color='text.secondary'>{`Transaction: ${'CRS620MI > UpdSupplier'}`}</Typography>
 
             <Form<CommandEditParametersProps>
                 initialValues={{
@@ -105,7 +255,7 @@ export const CommandsListDetailPanel = ({ row }: any) => {
                                         onChange={() => setHideUnselectedRows(!hideUnselectedRows)}
                                     />
 
-                                    <Button label='Save Changes' startWithIcon='AddCircle' onClick={() => { }} />
+                                    <Button label='Save Changes' startWithIcon='AddCircle' disabled onClick={() => { }} />
                                 </DataGridCustomToolbar>
                             )
                         }}

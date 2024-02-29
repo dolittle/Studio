@@ -52,8 +52,8 @@ export const CommandForm = ({ connectionId, selectedProgramName, selectedTransac
         //         commandName: values.commandName,
         //         commandDescription: values.commandDescription,
         //         namespace: values.namespace,
-        //         m3Program: selectedProgramName,
-        //         m3Transaction: selectedTransactionName,
+        //         m3Program: 'AAS350MI', //SelectedProgramName
+        //         m3Transaction: 'LstVoucherHeads',//SelectedTransactionName
         //     },
         // }, {
         //     onSuccess() {
