@@ -1,3 +1,9 @@
+# [3.19.8] - 2024-2-29 [PR: #507](https://github.com/dolittle/Studio/pull/507)
+## Summary
+
+Start connecting commands page frontend with backend.
+
+
 # [3.19.7] - 2024-2-28 [PR: #506](https://github.com/dolittle/Studio/pull/506)
 ## Summary
 
