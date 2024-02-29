@@ -151,14 +151,12 @@ export const CommandSection = ({ connectionId, selectedProgramName, selectedTran
     const [quickFilterValue, setQuickFilterValue] = useState<string>('');
 
     // TODO: Needs error handling.
-    const query = useConnectionsIdMetadataProgramsProgramProgramGet({ id: connectionId, program: selectedProgramName });
+    const { data: programTransactionsResult, isLoading, isInitialLoading } = useConnectionsIdMetadataProgramsProgramProgramGet({
+        id: connectionId,
+        program: 'AAS350MI', //selectedProgramName
+    });
 
-    // const { data: mappableTableResult, isLoading, isInitialLoading } = useConnectionsIdMessageMappingsTablesTableGet({
-    //     id: connectionId,
-    //     table: selectedTableName,
-    // });
-
-    const searchResults = query.data || [];
+    console.log('programTransactionsResult', programTransactionsResult);
 
     const gridFilters: GridFilterModel = useMemo(() => {
         return {
@@ -169,8 +167,6 @@ export const CommandSection = ({ connectionId, selectedProgramName, selectedTran
     }, [quickFilterValue]);
 
     const displaySelectedTransactionName = selectedTransactionName.length ? `Selected transaction: ${selectedTransactionName[0]}` : '';
-
-    console.log('searchResults', searchResults);
 
     return (
         <ContentWithSubtitle
