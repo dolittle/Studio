@@ -2,6 +2,9 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 export enum CACHE_KEYS {
+    //CommandMappingApi
+    ConnectionCommandMappings_GET = 'connection_command_get',
+
     //ConnectionsApi
     Connections_GET = 'connections_get',
     ConnectionsConnectorDeployment_GET = 'connections_connector_deployment_get',
