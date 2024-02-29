@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+import { GridRowId } from '@mui/x-data-grid-pro';
+
 import { AlertBox, Button, ContentContainer, ContentHeader } from '@dolittle/design-system';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
@@ -20,6 +22,7 @@ export const CommandView = () => {
 
     const [searchInputValue, setSearchInputValue] = useState('');
     const [selectedProgramName, setSelectedProgramName] = useState('');
+    const [selectedTransactionName, setSelectedTransactionName] = useState<GridRowId[]>([]);
 
     const handleCommandCancel = () => {
         navigate('..');
@@ -39,12 +42,18 @@ export const CommandView = () => {
                 sx={{ pb: 0 }}
             />
 
-            <CommandForm>
+            <CommandForm connectionId={connectionId} selectedProgramName={selectedProgramName} selectedTransactionName={selectedTransactionName[0] as string}>
                 <CommandDetailSection />
 
                 {!selectedProgramName
                     ? <CommandSearchSection connectionId={connectionId} searchInputValue={searchInputValue} onSearchInputValueChange={setSearchInputValue} onRowClick={handleRowClick} />
-                    : <CommandSection connectionId={connectionId} selectedProgramName={selectedProgramName} onBackToSearchResultsClicked={() => setSelectedProgramName('')} />
+                    : <CommandSection
+                        connectionId={connectionId}
+                        selectedProgramName={selectedProgramName}
+                        selectedTransactionName={selectedTransactionName}
+                        onSelectedTransactionNameChanged={setSelectedTransactionName}
+                        onBackToSearchResultsClicked={() => setSelectedProgramName('')}
+                    />
                 }
             </CommandForm>
         </ContentContainer>

@@ -142,12 +142,13 @@ const programTransactionDummyData: ProgramTransaction[] = [
 export type CommandSectionProps = {
     connectionId: string;
     selectedProgramName: string;
+    selectedTransactionName: GridRowId[];
+    onSelectedTransactionNameChanged: (newSelectedTransactionName: GridRowId[]) => void;
     onBackToSearchResultsClicked: () => void;
 };
 
-export const CommandSection = ({ connectionId, selectedProgramName, onBackToSearchResultsClicked }: CommandSectionProps) => {
+export const CommandSection = ({ connectionId, selectedProgramName, selectedTransactionName, onSelectedTransactionNameChanged, onBackToSearchResultsClicked }: CommandSectionProps) => {
     const [quickFilterValue, setQuickFilterValue] = useState<string>('');
-    const [selectionModel, setSelectionModel] = useState<GridRowId[]>([]);
 
     // TODO: Needs error handling.
     const query = useConnectionsIdMetadataProgramsProgramProgramGet({ id: connectionId, program: selectedProgramName });
@@ -167,7 +168,7 @@ export const CommandSection = ({ connectionId, selectedProgramName, onBackToSear
         };
     }, [quickFilterValue]);
 
-    const selectedRowName = selectionModel.length ? `Selected transaction: ${selectionModel[0]}` : '';
+    const displaySelectedTransactionName = selectedTransactionName.length ? `Selected transaction: ${selectedTransactionName[0]}` : '';
 
     console.log('searchResults', searchResults);
 
@@ -197,17 +198,17 @@ export const CommandSection = ({ connectionId, selectedProgramName, onBackToSear
                     autoHeight={false}
                     disableSelectionOnClick={false}
                     filterModel={gridFilters}
-                    selectionModel={selectionModel}
-                    onSelectionModelChange={setSelectionModel}
+                    selectionModel={selectedTransactionName}
+                    onSelectionModelChange={newSelection => onSelectedTransactionNameChanged(newSelection)}
                     components={{
-                        Toolbar: () => <DataGridCustomToolbar title='Transactions'>{selectedRowName}</DataGridCustomToolbar>
+                        Toolbar: () => <DataGridCustomToolbar title='Transactions'>{displaySelectedTransactionName}</DataGridCustomToolbar>
                     }}
                 />
             </DataGridWrapper>
 
             <ContentDivider sx={{ mt: 3 }} />
 
-            <Button label='Save New Command' variant='fullwidth' type='submit' disabled={!selectionModel.length} sx={{ mt: 2 }} />
+            <Button label='Save New Command' variant='fullwidth' type='submit' disabled={!selectedTransactionName.length} sx={{ mt: 2 }} />
         </ContentWithSubtitle>
     );
 };
