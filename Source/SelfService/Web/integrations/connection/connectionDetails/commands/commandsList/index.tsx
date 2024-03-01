@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+import { AlertBox, LoadingSpinner } from '@dolittle/design-system';
+
 import { useConnectionsIdCommandsGet } from '../../../../../apis/integrations/commandMappingApi.hooks';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
@@ -18,9 +20,9 @@ export const CommandsView = () => {
 
     const [hasRows, setHasRows] = useState(true);
 
-    const { data, isError, isLoading } = useConnectionsIdCommandsGet({ id: connectionId });
+    //const { data, isError, isLoading } = useConnectionsIdCommandsGet({ id: connectionId });
 
-    console.log(data, 'commands data');
+    //console.log(data, 'commands data');
 
     // const messageTypesRows = useMemo(() => {
     //     const mappedRows = data?.value || [];
@@ -44,8 +46,8 @@ export const CommandsView = () => {
     //     return mappedRows;
     // }, [data?.value]);
 
-    // if (isLoading) return <LoadingSpinner />;
-    // if (isError) return <AlertBox />;
+    //if (isLoading) return <LoadingSpinner />;
+    //if (isError) return <AlertBox />;
 
     const handleCreateNewCommand = () => {
         navigate('new');
