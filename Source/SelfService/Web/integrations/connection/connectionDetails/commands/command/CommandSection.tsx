@@ -151,12 +151,12 @@ export const CommandSection = ({ connectionId, selectedProgramName, selectedTran
     const [quickFilterValue, setQuickFilterValue] = useState<string>('');
 
     // TODO: Needs error handling.
-    const { data: programTransactionsResult, isLoading, isInitialLoading } = useConnectionsIdMetadataProgramsProgramProgramGet({
-        id: connectionId,
-        program: 'AAS350MI', //selectedProgramName
-    });
+    // const { data: programTransactionsResult, isLoading, isInitialLoading } = useConnectionsIdMetadataProgramsProgramProgramGet({
+    //     id: connectionId,
+    //     program: selectedProgramName, //'AAS350MI'
+    // });
 
-    console.log('programTransactionsResult', programTransactionsResult);
+    // console.log('programTransactionsResult', programTransactionsResult);
 
     const gridFilters: GridFilterModel = useMemo(() => {
         return {

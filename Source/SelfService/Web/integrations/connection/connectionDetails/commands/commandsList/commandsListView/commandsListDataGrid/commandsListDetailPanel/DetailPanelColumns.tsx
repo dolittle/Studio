@@ -1,9 +1,11 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+import React from 'react';
+
 import { GridColDef, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid-pro';
 
-import { DataGridEditCellView, DataGridSelectCellView } from '@dolittle/design-system';
+import { Button, DataGridEditCellView, DataGridSelectCellView } from '@dolittle/design-system';
 
 const parameterModeOptions = [
     {
@@ -25,7 +27,7 @@ export const commandsListDetailPanelColumns: GridColDef[] = [
         ...GRID_CHECKBOX_SELECTION_COL_DEF,
     },
     {
-        field: 'm3Argument',
+        field: 'name',
         headerName: 'M3 Argument',
         minWidth: 160,
         flex: 1,
@@ -61,7 +63,11 @@ export const commandsListDetailPanelColumns: GridColDef[] = [
         editable: true,
         type: 'singleSelect',
         valueOptions: parameterModeOptions,
-        renderCell: DataGridSelectCellView,
+        // This is for demo purposes only, in a real application you would use the commented line below.
+        //renderCell: DataGridSelectCellView,
+        renderCell: ({ value }) => (
+            <Button label={value ? value : 'Optional'} color='subtle' endWithIcon='ArrowDropDownRounded' sx={{ width: 1, height: 1 }} />
+        ),
         minWidth: 200,
         flex: 1,
     },
