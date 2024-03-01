@@ -24,30 +24,6 @@ const styles = {
 
 const commandsListDetailPanelRows = [
     {
-        m3Argument: 'CFAB',
-        description: 'Description',
-        parameterName: 'Parameter Name',
-        mode: 'Optional',
-        defaultValue: 'Default Value',
-    },
-    {
-        m3Argument: 'FACI',
-        description: 'Description',
-        parameterName: 'Parameter Name',
-        mode: 'Required',
-        defaultValue: 'Default Value',
-    },
-    {
-        m3Argument: 'CHID',
-        description: 'Description',
-        parameterName: 'Parameter Name',
-        mode: 'Hardcoded value',
-        defaultValue: 'Default Value',
-    },
-];
-
-const commandsListDetailPanelRows2 = [
-    {
         name: 'ABSK',
         description: 'ABCclass-supplier',
         type: 'StringType',
@@ -238,7 +214,7 @@ export const CommandsListDetailPanel = ({ row }: any) => {
                         {...dataGridDefaultProps}
                         rows={commandsListDetailPanelRows}
                         columns={commandsListDetailPanelColumns}
-                        getRowId={row => row.m3Argument}
+                        getRowId={row => row.name}
                         autoHeight={false}
                         checkboxSelection
                         keepNonExistentRowsSelected
