@@ -1,3 +1,9 @@
+# [3.19.9] - 2024-3-1 [PR: #508](https://github.com/dolittle/Studio/pull/508)
+## Summary
+
+Show dummy data in commands page for now.
+
+
 # [3.19.8] - 2024-2-29 [PR: #507](https://github.com/dolittle/Studio/pull/507)
 ## Summary
 
