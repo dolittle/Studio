@@ -7,14 +7,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { GridRowId } from '@mui/x-data-grid-pro';
 
-import { AlertBox, Button, ContentContainer, ContentHeader } from '@dolittle/design-system';
+import { Button, ContentContainer, ContentHeader } from '@dolittle/design-system';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
 import { CommandForm } from './CommandForm';
 import { CommandDetailSection } from './CommandDetailSection';
 import { CommandSearchSection, ProgramsListingEntry } from './CommandSearchSection';
-import { CommandSection } from './CommandSection';
+import { CommandSection } from './commandSection';
 
 export const CommandView = () => {
     const navigate = useNavigate();
@@ -36,9 +36,7 @@ export const CommandView = () => {
         <ContentContainer>
             <ContentHeader
                 title='Create New Command'
-                buttonsSlot={
-                    <Button label='Cancel' startWithIcon='CancelRounded' color='subtle' onClick={handleCommandCancel} />
-                }
+                buttonsSlot={<Button label='Cancel' startWithIcon='CancelRounded' color='subtle' onClick={handleCommandCancel} />}
                 sx={{ pb: 0 }}
             />
 
@@ -48,7 +46,6 @@ export const CommandView = () => {
                 {!selectedProgramName
                     ? <CommandSearchSection connectionId={connectionId} searchInputValue={searchInputValue} onSearchInputValueChange={setSearchInputValue} onRowClick={handleRowClick} />
                     : <CommandSection
-                        connectionId={connectionId}
                         selectedProgramName={selectedProgramName}
                         selectedTransactionName={selectedTransactionName}
                         onSelectedTransactionNameChanged={setSelectedTransactionName}

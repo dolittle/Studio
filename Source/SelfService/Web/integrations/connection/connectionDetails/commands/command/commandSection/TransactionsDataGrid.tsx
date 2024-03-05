@@ -3,40 +3,25 @@
 
 import React, { useMemo, useState } from 'react';
 
-import { Typography } from '@mui/material';
-import { DataGridPro, GridColDef, GridFilterModel, GridRowId } from '@mui/x-data-grid-pro';
+import { DataGridPro, GridFilterModel, GridRowId } from '@mui/x-data-grid-pro';
 
-import { AlertBox, Button, ContentDivider, ContentWithSubtitle, DataGridCustomToolbar, DataGridWrapper, dataGridDefaultProps, TextField } from '@dolittle/design-system';
+import { AlertBox, DataGridCustomToolbar, DataGridWrapper, dataGridDefaultProps, TextField } from '@dolittle/design-system';
 
-import { useConnectionsIdMetadataProgramsProgramProgramGet } from '../../../../../apis/integrations/programMetadataApi.hooks';
+import { useConnectionsIdMetadataProgramsProgramProgramGet } from '../../../../../../apis/integrations/programMetadataApi.hooks';
 
-type ProgramTransaction = {
-    name: string;
-    description: string;
-};
+import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
 
-const programTransactionColumns: GridColDef<ProgramTransaction>[] = [
-    {
-        field: 'name',
-        headerName: 'Transaction name',
-        minWidth: 400,
-    },
-    {
-        field: 'description',
-        headerName: 'Description',
-        minWidth: 400,
-    },
-];
+import { programTransactionColumns } from './TransactionsDataGridColumns';
 
-export type CommandSectionProps = {
-    connectionId: string;
+export type TransactionsDataGridProps = {
     selectedProgramName: string;
     selectedTransactionName: GridRowId[];
     onSelectedTransactionNameChanged: (newSelectedTransactionName: GridRowId[]) => void;
-    onBackToSearchResultsClicked: () => void;
 };
 
-export const CommandSection = ({ connectionId, selectedProgramName, selectedTransactionName, onSelectedTransactionNameChanged, onBackToSearchResultsClicked }: CommandSectionProps) => {
+export const TransactionsDataGrid = ({ selectedProgramName, selectedTransactionName, onSelectedTransactionNameChanged }: TransactionsDataGridProps) => {
+    const connectionId = useConnectionIdFromRoute();
+
     const [quickFilterValue, setQuickFilterValue] = useState('');
 
     const { data: programTransactionsResult, isLoading, isError } = useConnectionsIdMetadataProgramsProgramProgramGet({
@@ -56,15 +41,10 @@ export const CommandSection = ({ connectionId, selectedProgramName, selectedTran
         };
     }, [quickFilterValue]);
 
-    return (
-        <ContentWithSubtitle
-            title={`Selected program: ${selectedProgramName}`}
-            rightAction={
-                <Button label='Back To Search Results' startWithIcon='ArrowBack' color='subtle' onClick={onBackToSearchResultsClicked} />
-            }
-        >
-            <Typography sx={{ mb: 4 }}>{`This displays all the transactions that are available for '${selectedProgramName}' program.`}</Typography>
+    if (isError) return <AlertBox />;
 
+    return (
+        <>
             <TextField
                 placeholder='Search API (transaction)'
                 isFullWidth
@@ -90,10 +70,6 @@ export const CommandSection = ({ connectionId, selectedProgramName, selectedTran
                     }}
                 />
             </DataGridWrapper>
-
-            <ContentDivider sx={{ mt: 3 }} />
-
-            <Button label='Save New Command' variant='fullwidth' type='submit' disabled={!selectedTransactionName.length} sx={{ mt: 2 }} />
-        </ContentWithSubtitle>
+        </>
     );
 };
