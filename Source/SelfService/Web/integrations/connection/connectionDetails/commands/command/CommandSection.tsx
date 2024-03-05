@@ -28,117 +28,6 @@ const programTransactionColumns: GridColDef<ProgramTransaction>[] = [
     },
 ];
 
-const programTransactionDummyData: ProgramTransaction[] = [
-    {
-        name: 'GetCustomer',
-        description: 'Get customer details',
-    },
-    {
-        name: 'GetPayment',
-        description: 'Get payment details',
-    },
-    {
-        name: 'GetProduct',
-        description: 'Get product details',
-    },
-    {
-        name: 'GetOrder',
-        description: 'Get order details',
-    },
-    {
-        name: 'GetInvoice',
-        description: 'Get invoice details',
-    },
-    {
-        name: 'GetShipment',
-        description: 'Get shipment details',
-    },
-    {
-        name: 'GetSupplier',
-        description: 'Get supplier details',
-    },
-    {
-        name: 'GetEmployee',
-        description: 'Get employee details',
-    },
-    {
-        name: 'GetWarehouse',
-        description: 'Get warehouse details',
-    },
-    {
-        name: 'GetInventory',
-        description: 'Get inventory details',
-    },
-    {
-        name: 'GetPrice',
-        description: 'Get price details',
-    },
-    {
-        name: 'GetCurrency',
-        description: 'Get currency details',
-    },
-    {
-        name: 'GetTax',
-        description: 'Get tax details',
-    },
-    {
-        name: 'GetPaymentTerm',
-        description: 'Get payment term details',
-    },
-    {
-        name: 'GetCustomerGroup',
-        description: 'Get customer group details',
-    },
-    {
-        name: 'GetSalesOrder',
-        description: 'Get sales order details',
-    },
-    {
-        name: 'GetPurchaseOrder',
-        description: 'Get purchase order details',
-    },
-    {
-        name: 'GetSalesInvoice',
-        description: 'Get sales invoice details',
-    },
-    {
-        name: 'GetPurchaseInvoice',
-        description: 'Get purchase invoice details',
-    },
-    {
-        name: 'GetSalesShipment',
-        description: 'Get sales shipment details',
-    },
-    {
-        name: 'GetPurchaseShipment',
-        description: 'Get purchase shipment details',
-    },
-    {
-        name: 'GetSalesReturn',
-        description: 'Get sales return details',
-    },
-    {
-        name: 'GetPurchaseReturn',
-        description: 'Get purchase return details',
-    },
-    {
-        name: 'GetSalesCreditNote',
-        description: 'Get sales credit note details',
-    },
-    {
-        name: 'GetPurchaseCreditNote',
-        description: 'Get purchase credit note details',
-    },
-    {
-        name: 'GetSalesDebitNote',
-        description: 'Get sales debit note details',
-    },
-    {
-        name: 'GetPurchaseDebitNote',
-        description: 'Get purchase debit note details',
-    },
-];
-
 export type CommandSectionProps = {
     connectionId: string;
     selectedProgramName: string;
@@ -148,15 +37,16 @@ export type CommandSectionProps = {
 };
 
 export const CommandSection = ({ connectionId, selectedProgramName, selectedTransactionName, onSelectedTransactionNameChanged, onBackToSearchResultsClicked }: CommandSectionProps) => {
-    const [quickFilterValue, setQuickFilterValue] = useState<string>('');
+    const [quickFilterValue, setQuickFilterValue] = useState('');
 
-    // TODO: Needs error handling.
-    // const { data: programTransactionsResult, isLoading, isInitialLoading } = useConnectionsIdMetadataProgramsProgramProgramGet({
-    //     id: connectionId,
-    //     program: selectedProgramName, //'AAS350MI'
-    // });
+    const { data: programTransactionsResult, isLoading, isError } = useConnectionsIdMetadataProgramsProgramProgramGet({
+        id: connectionId,
+        program: selectedProgramName,
+    });
 
-    // console.log('programTransactionsResult', programTransactionsResult);
+    const transactionRows = programTransactionsResult?.transactions || [];
+
+    const displaySelectedTransactionName = selectedTransactionName.length ? `Selected transaction: ${selectedTransactionName[0]}` : '';
 
     const gridFilters: GridFilterModel = useMemo(() => {
         return {
@@ -165,8 +55,6 @@ export const CommandSection = ({ connectionId, selectedProgramName, selectedTran
             quickFilterValues: [quickFilterValue?.trim() || undefined],
         };
     }, [quickFilterValue]);
-
-    const displaySelectedTransactionName = selectedTransactionName.length ? `Selected transaction: ${selectedTransactionName[0]}` : '';
 
     return (
         <ContentWithSubtitle
@@ -188,10 +76,11 @@ export const CommandSection = ({ connectionId, selectedProgramName, selectedTran
             <DataGridWrapper background='dark' sx={{ height: 300, mt: 3 }}>
                 <DataGridPro
                     {...dataGridDefaultProps}
-                    rows={programTransactionDummyData}
+                    rows={transactionRows}
                     columns={programTransactionColumns}
                     getRowId={row => row.name}
                     autoHeight={false}
+                    loading={isLoading}
                     disableSelectionOnClick={false}
                     filterModel={gridFilters}
                     selectionModel={selectedTransactionName}
