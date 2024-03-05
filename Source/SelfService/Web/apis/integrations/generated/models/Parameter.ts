@@ -40,6 +40,12 @@ export interface Parameter {
     description?: string;
     /**
      * 
+     * @type {string}
+     * @memberof Parameter
+     */
+    readonly key?: string;
+    /**
+     * 
      * @type {FieldType}
      * @memberof Parameter
      */
@@ -79,6 +85,7 @@ export function ParameterFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'key': !exists(json, 'key') ? undefined : json['key'],
         'type': !exists(json, 'type') ? undefined : FieldTypeFromJSON(json['type']),
         'length': !exists(json, 'length') ? undefined : json['length'],
         'required': !exists(json, 'required') ? undefined : json['required'],

@@ -16,9 +16,9 @@
 import * as runtime from '../runtime';
 import type {
   CommandHeader,
-  CommandMappingModelIEnumerableResult,
+  CommandMappingModel,
+  CommandParameters,
   CreateCommand,
-  NoSuchReadModelResult,
   ProblemDetails,
   UpdateCommandNames,
   UpdateCommandParameters,
@@ -26,12 +26,12 @@ import type {
 import {
     CommandHeaderFromJSON,
     CommandHeaderToJSON,
-    CommandMappingModelIEnumerableResultFromJSON,
-    CommandMappingModelIEnumerableResultToJSON,
+    CommandMappingModelFromJSON,
+    CommandMappingModelToJSON,
+    CommandParametersFromJSON,
+    CommandParametersToJSON,
     CreateCommandFromJSON,
     CreateCommandToJSON,
-    NoSuchReadModelResultFromJSON,
-    NoSuchReadModelResultToJSON,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
     UpdateCommandNamesFromJSON,
@@ -233,9 +233,9 @@ export class CommandMappingApi extends runtime.BaseAPI {
     }
 
     /**
-     * GET all command mappings of program to command(s) for a connection.
+     * GET a command mapping for a connection.
      */
-    async connectionsIdCommandsCommandIdGetRaw(requestParameters: ConnectionsIdCommandsCommandIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CommandMappingModelIEnumerableResult>> {
+    async connectionsIdCommandsCommandIdGetRaw(requestParameters: ConnectionsIdCommandsCommandIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CommandMappingModel>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdCommandsCommandIdGet.');
         }
@@ -267,13 +267,13 @@ export class CommandMappingApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => CommandMappingModelIEnumerableResultFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => CommandMappingModelFromJSON(jsonValue));
     }
 
     /**
-     * GET all command mappings of program to command(s) for a connection.
+     * GET a command mapping for a connection.
      */
-    async connectionsIdCommandsCommandIdGet(requestParameters: ConnectionsIdCommandsCommandIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CommandMappingModelIEnumerableResult> {
+    async connectionsIdCommandsCommandIdGet(requestParameters: ConnectionsIdCommandsCommandIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CommandMappingModel> {
         const response = await this.connectionsIdCommandsCommandIdGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -281,7 +281,7 @@ export class CommandMappingApi extends runtime.BaseAPI {
     /**
      * GET the mapped parameters for a command
      */
-    async connectionsIdCommandsCommandIdParametersGetRaw(requestParameters: ConnectionsIdCommandsCommandIdParametersGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async connectionsIdCommandsCommandIdParametersGetRaw(requestParameters: ConnectionsIdCommandsCommandIdParametersGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CommandParameters>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling connectionsIdCommandsCommandIdParametersGet.');
         }
@@ -313,14 +313,15 @@ export class CommandMappingApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => CommandParametersFromJSON(jsonValue));
     }
 
     /**
      * GET the mapped parameters for a command
      */
-    async connectionsIdCommandsCommandIdParametersGet(requestParameters: ConnectionsIdCommandsCommandIdParametersGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.connectionsIdCommandsCommandIdParametersGetRaw(requestParameters, initOverrides);
+    async connectionsIdCommandsCommandIdParametersGet(requestParameters: ConnectionsIdCommandsCommandIdParametersGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CommandParameters> {
+        const response = await this.connectionsIdCommandsCommandIdParametersGetRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**

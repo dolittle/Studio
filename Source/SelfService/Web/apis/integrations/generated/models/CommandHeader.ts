@@ -42,7 +42,7 @@ export interface CommandHeader {
      * @type {string}
      * @memberof CommandHeader
      */
-    id?: string;
+    commandId?: string;
     /**
      * 
      * @type {string}
@@ -112,7 +112,7 @@ export function CommandHeaderFromJSONTyped(json: any, ignoreDiscriminator: boole
         'connection': !exists(json, 'connection') ? undefined : json['connection'],
         'm3Program': !exists(json, 'm3Program') ? undefined : json['m3Program'],
         'm3Transaction': !exists(json, 'm3Transaction') ? undefined : json['m3Transaction'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
+        'commandId': !exists(json, 'commandId') ? undefined : json['commandId'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
@@ -135,7 +135,7 @@ export function CommandHeaderToJSON(value?: CommandHeader | null): any {
         'connection': value.connection,
         'm3Program': value.m3Program,
         'm3Transaction': value.m3Transaction,
-        'id': value.id,
+        'commandId': value.commandId,
         'name': value.name,
         'description': value.description,
         'namespace': value.namespace,
