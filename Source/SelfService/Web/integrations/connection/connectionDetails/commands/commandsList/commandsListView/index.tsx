@@ -1,50 +1,28 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useMemo, useState } from 'react';
-
-//import { useQueryClient } from '@tanstack/react-query';
+import React from 'react';
 
 import { ContentContainer, ContentDivider, ContentHeader, CreateButton } from '@dolittle/design-system';
 
-//import { CACHE_KEYS } from '../../../../../../apis/integrations/CacheKeys';
+import { CommandHeader } from '../../../../../../apis/integrations/generated';
 
 import { CommandsListDataGrid } from './commandsListDataGrid';
 
 export type CommandsListViewProps = {
-    //connectionId: string;
-    //messageTypesRows: any[];
+    commandListRows: CommandHeader[];
     onNewCommandCreated: () => void;
 };
 
-export const CommandsListView = ({ onNewCommandCreated }: CommandsListViewProps) => {
-    // const queryClient = useQueryClient();
+export const CommandsListView = ({ commandListRows, onNewCommandCreated }: CommandsListViewProps) =>
+    <>
+        <ContentContainer>
+            <ContentHeader title='Your Commands' titleTextVariant='subtitle' />
 
-    // const [selectedMessageTypeIds, setSelectedMessageTypeIds] = useState<string[]>([]);
+            <ContentDivider sx={{ mb: 2 }} />
 
-    // const selectedMessageTypeRows = useMemo(() =>
-    //     messageTypesRows.filter(row => selectedMessageTypeIds.includes(row.id))
-    //     , [messageTypesRows, selectedMessageTypeIds]);
+            <CommandsListDataGrid commandListRows={commandListRows} />
+        </ContentContainer>
 
-    // const handleActionCompleted = () => {
-    //     setSelectedMessageTypeIds([]);
-
-    //     window.setTimeout(() => {
-    //         queryClient.invalidateQueries({ queryKey: [CACHE_KEYS.ConnectionMessageMappings_GET, connectionId] });
-    //     }, 300);
-    // };
-
-    return (
-        <>
-            <ContentContainer>
-                <ContentHeader title='Your Commands' titleTextVariant='subtitle' />
-
-                <ContentDivider sx={{ mb: 2 }} />
-
-                <CommandsListDataGrid />
-            </ContentContainer>
-
-            <CreateButton label='Create New Command' icon='AddCircle' onCreate={onNewCommandCreated} sx={{ maxWidth: 1200, mt: 0 }} />
-        </>
-    );
-};
+        <CreateButton label='Create New Command' icon='AddCircle' onCreate={onNewCommandCreated} sx={{ maxWidth: 1200, mt: 0 }} />
+    </>;

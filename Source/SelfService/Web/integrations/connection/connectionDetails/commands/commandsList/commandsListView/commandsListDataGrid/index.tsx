@@ -7,26 +7,16 @@ import { DataGridPro, DataGridProProps, GridRowId } from '@mui/x-data-grid-pro';
 
 import { dataGridDefaultProps, DataGridWrapper, DetailPanelExpandIcon, DetailPanelCollapseIcon } from '@dolittle/design-system';
 
+import { CommandHeader } from '../../../../../../../apis/integrations/generated';
+
+import { commandListDataGridColumns } from './CommandListDataGridColumns';
 import { CommandsListDetailPanel } from './commandsListDetailPanel';
 
-const dummyData = [
-    { name: 'Update Supplier' },
-    { name: 'Update Customer' },
-    { name: 'Delete Customer' },
-];
-
-const commandsDataGridColumns = [
-    {
-        field: 'name',
-        headerName: 'Command Name',
-        flex: 1,
-    },
-];
-
 export type CommandsListDataGridProps = {
+    commandListRows: CommandHeader[];
 };
 
-export const CommandsListDataGrid = ({ }: CommandsListDataGridProps) => {
+export const CommandsListDataGrid = ({ commandListRows }: CommandsListDataGridProps) => {
     const [detailPanelExpandedRowIds, setDetailPanelExpandedRowIds] = useState<GridRowId[]>([]);
 
     const handleDetailPanelExpandedRowIdsChange = (newIds: GridRowId[]) => {
@@ -48,8 +38,8 @@ export const CommandsListDataGrid = ({ }: CommandsListDataGridProps) => {
         <DataGridWrapper>
             <DataGridPro
                 {...dataGridDefaultProps}
-                rows={dummyData}
-                columns={commandsDataGridColumns}
+                rows={commandListRows}
+                columns={commandListDataGridColumns}
                 getRowId={row => row.name}
                 getDetailPanelContent={getDetailPanelContent}
                 getDetailPanelHeight={getDetailPanelHeight}
