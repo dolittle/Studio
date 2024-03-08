@@ -7,7 +7,7 @@ export * from './ColumnRecommendation';
 export * from './ColumnRecommendations';
 export * from './CommandHeader';
 export * from './CommandMappingModel';
-export * from './CommandMappingModelIEnumerableResult';
+export * from './CommandParameters';
 export * from './ConnectionConfiguration';
 export * from './ConnectionConfigurationResult';
 export * from './ConnectionModel';

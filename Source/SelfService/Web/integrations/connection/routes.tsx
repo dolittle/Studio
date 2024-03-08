@@ -55,6 +55,10 @@ export const routes: RouteObject[] = [
                         path: 'new',
                         element: <CommandView />,
                     },
+                    {
+                        path: 'edit/:commandName',
+                        element: <CommandView />,
+                    },
                 ],
             },
             {

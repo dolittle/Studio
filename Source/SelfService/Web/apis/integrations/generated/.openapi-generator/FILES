@@ -30,7 +30,7 @@ models/ColumnRecommendation.ts
 models/ColumnRecommendations.ts
 models/CommandHeader.ts
 models/CommandMappingModel.ts
-models/CommandMappingModelIEnumerableResult.ts
+models/CommandParameters.ts
 models/ConnectionConfiguration.ts
 models/ConnectionConfigurationResult.ts
 models/ConnectionModel.ts
