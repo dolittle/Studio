@@ -3,15 +3,14 @@
 
 import React, { useState } from 'react';
 
-import { Paper, Typography } from '@mui/material';
 import { DataGridPro, GRID_CHECKBOX_SELECTION_FIELD, GridFilterModel, GridSelectionModel } from '@mui/x-data-grid-pro';
 
-import { Button, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, Form, InlineWrapper, Input, NewSwitch } from '@dolittle/design-system';
+import { Button, ContentDivider, ContentWithSubtitle, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, Form, NewSwitch } from '@dolittle/design-system';
 
 import { commandsListDetailPanelColumns } from './DetailPanelColumns';
 
 const styles = {
-    // Hack for secret cell active state. Otherwise size is going to be different.
+    // Hack for select cell active state. Otherwise size is going to be different.
     '& .MuiOutlinedInput-root': {
         '& .MuiSelect-select': { p: '5px 15px' },
         '& fieldset': { border: 'none' },
@@ -86,90 +85,6 @@ const commandsListDetailPanelRows = [
         length: 1,
         required: false
     },
-    // {
-    //     "name": "CFI1",
-    //     "description": "User-definedfield1-supplier",
-    //     "type": "StringType",
-    //     "length": 10,
-    //     "required": false
-    // },
-    // {
-    //     "name": "CFI2",
-    //     "description": "User-definedfield2-supplier",
-    //     "type": "StringType",
-    //     "length": 17,
-    //     "required": false
-    // },
-    // {
-    //     "name": "CFI3",
-    //     "description": "User-definedfield3-supplier",
-    //     "type": "StringType",
-    //     "length": 3,
-    //     "required": false
-    // },
-    // {
-    //     "name": "CFI4",
-    //     "description": "User-definedfield4-supplier",
-    //     "type": "StringType",
-    //     "length": 5,
-    //     "required": false
-    // },
-    // {
-    //     "name": "CFI5",
-    //     "description": "User-definedfield5-supplier",
-    //     "type": "StringType",
-    //     "length": 1,
-    //     "required": false
-    // },
-    // {
-    //     "name": "CFI6",
-    //     "description": "User-definedfield1-purchase/financial",
-    //     "type": "StringType",
-    //     "length": 10,
-    //     "required": false
-    // },
-    // {
-    //     "name": "CFI7",
-    //     "description": "User-definedfield2-purchase/financial",
-    //     "type": "StringType",
-    //     "length": 17,
-    //     "required": false
-    // },
-    // {
-    //     "name": "CFI8",
-    //     "description": "User-definedfield3-purchase/financial",
-    //     "type": "StringType",
-    //     "length": 3,
-    //     "required": false
-    // },
-    // {
-    //     "name": "CFI9",
-    //     "description": "User-definedfield4-purchase/financial",
-    //     "type": "StringType",
-    //     "length": 5,
-    //     "required": false
-    // },
-    // {
-    //     "name": "CGRP",
-    //     "description": "Consolidation group",
-    //     "type": "StringType",
-    //     "length": 10,
-    //     "required": false
-    // },
-    // {
-    //     "name": "COBI",
-    //     "description": "Groupofcompanies",
-    //     "type": "StringType",
-    //     "length": 10,
-    //     "required": false
-    // },
-    // {
-    //     "name": "COR2",
-    //     "description": "Organizationnumber2",
-    //     "type": "StringType",
-    //     "length": 11,
-    //     "required": false
-    // },
 ];
 
 type CommandEditParametersProps = {
@@ -177,7 +92,7 @@ type CommandEditParametersProps = {
     description: string;
 };
 
-export const CommandsListDetailPanel = ({ row }: any) => {
+export const EditCommandSection = ({ row }: any) => {
     const [selectedRowIds, setSelectedRowIds] = useState<GridSelectionModel>([]);
     const [hideUnselectedRows, setHideUnselectedRows] = useState(false);
 
@@ -193,22 +108,14 @@ export const CommandsListDetailPanel = ({ row }: any) => {
     };
 
     return (
-        <Paper sx={{ p: 2, pl: 7.5 }}>
-            <Typography variant='h4' gutterBottom>{row.name}</Typography>
-            <Typography variant='body1' color='text.secondary'>{`Transaction: ${'CRS620MI > UpdSupplier'}`}</Typography>
-
+        <ContentWithSubtitle title={`Transaction: ${'CRS620MI > UpdSupplier'}`}>
             <Form<CommandEditParametersProps>
                 initialValues={{
-                    namespace: row.nameSpace,
-                    description: row.description,
+                    namespace: '',
+                    description: '',
                 }}
                 onSubmit={() => { }}
             >
-                <InlineWrapper sx={{ my: 4 }}>
-                    <Typography>Namespace:</Typography>
-                    <Input id='namespace' label='Namespace' sx={{ '& .MuiOutlinedInput-root': { width: 220 } }} />
-                </InlineWrapper>
-
                 <DataGridWrapper background='dark' sx={{ height: 300 }}>
                     <DataGridPro
                         {...dataGridDefaultProps}
@@ -230,8 +137,6 @@ export const CommandsListDetailPanel = ({ row }: any) => {
                                         checked={hideUnselectedRows}
                                         onChange={() => setHideUnselectedRows(!hideUnselectedRows)}
                                     />
-
-                                    <Button label='Save Changes' startWithIcon='AddCircle' disabled onClick={() => { }} />
                                 </DataGridCustomToolbar>
                             )
                         }}
@@ -239,7 +144,11 @@ export const CommandsListDetailPanel = ({ row }: any) => {
                         sx={styles}
                     />
                 </DataGridWrapper>
+
+                <ContentDivider sx={{ mt: 3, mb: 2 }} />
+
+                <Button label='Save Changes' startWithIcon='AddCircle' variant='fullwidth' disabled onClick={() => { }} />
             </Form>
-        </Paper>
+        </ContentWithSubtitle>
     );
 };
