@@ -1,3 +1,9 @@
+# [3.19.10] - 2024-3-8 [PR: #509](https://github.com/dolittle/Studio/pull/509)
+## Summary
+
+Add 'commands' page functionality.
+
+
 # [3.19.9] - 2024-3-1 [PR: #508](https://github.com/dolittle/Studio/pull/508)
 ## Summary
 
