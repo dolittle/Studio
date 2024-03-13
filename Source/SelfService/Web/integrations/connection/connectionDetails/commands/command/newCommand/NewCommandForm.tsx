@@ -6,26 +6,26 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { enqueueSnackbar } from 'notistack';
 
-import { CreateCommand } from '../../../../../apis/integrations/generated';
-import { useConnectionsIdCommandsCommandIdCreatePostRequest } from '../../../../../apis/integrations/commandMappingApi.hooks';
+import { CreateCommand } from '../../../../../../apis/integrations/generated';
+import { useConnectionsIdCommandsCommandIdCreatePostRequest } from '../../../../../../apis/integrations/commandMappingApi.hooks';
 
 import { Form } from '@dolittle/design-system';
 
-import { generateUUID } from '../../../../../utils/generateUUID';
+import { generateUUID } from '../../../../../../utils/generateUUID';
 
 type NewCommandFormParameters = CreateCommand & {
     id?: string;
     commandId?: string;
 };
 
-export type CommandFormProps = {
+export type NewCommandFormProps = {
     connectionId: string;
     selectedProgramName: string;
     selectedTransactionName: string;
     children: React.ReactNode;
 };
 
-export const CommandForm = ({ connectionId, selectedProgramName, selectedTransactionName, children }: CommandFormProps) => {
+export const NewCommandForm = ({ connectionId, selectedProgramName, selectedTransactionName, children }: NewCommandFormProps) => {
     const navigate = useNavigate();
     const saveCommandMutation = useConnectionsIdCommandsCommandIdCreatePostRequest();
 

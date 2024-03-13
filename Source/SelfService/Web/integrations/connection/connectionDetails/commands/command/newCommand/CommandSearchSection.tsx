@@ -10,7 +10,7 @@ import { DataGridPro, GridColDef } from '@mui/x-data-grid-pro';
 
 import { AlertBox, ContentWithSubtitle, DataGridCustomToolbar, DataGridWrapper, dataGridDefaultProps, TextField } from '@dolittle/design-system';
 
-import { useConnectionsIdMetadataProgramsSearchGet } from '../../../../../apis/integrations/programMetadataApi.hooks';
+import { useConnectionsIdMetadataProgramsSearchGet } from '../../../../../../apis/integrations/programMetadataApi.hooks';
 
 export type ProgramsListingEntry = {
     name: string;

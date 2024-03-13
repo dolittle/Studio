@@ -1,21 +1,18 @@
 // Copyright (c) Aigonix. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
-
-import { GridRowId } from '@mui/x-data-grid-pro';
 
 import { Button, ContentContainer, ContentHeader, Form } from '@dolittle/design-system';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
-import { CommandForm } from './CommandForm';
-import { CommandDetailSection } from './CommandDetailSection';
-import { CommandSearchSection, ProgramsListingEntry } from './CommandSearchSection';
-import { CommandSection } from './commandSection';
+import { NewCommandDetailSection } from './newCommand/NewCommandDetailSection';
 import { EditCommandSection } from './commandsListDetailPanel';
+
+import { NewCommandView } from './newCommand';
 
 export type ViewMode = 'new' | 'edit';
 
@@ -24,20 +21,12 @@ export const CommandView = () => {
     const connectionId = useConnectionIdFromRoute();
     const { commandName = '' } = useParams();
 
-    const [searchInputValue, setSearchInputValue] = useState('');
-    const [selectedProgramName, setSelectedProgramName] = useState('');
-    const [selectedTransactionName, setSelectedTransactionName] = useState<GridRowId[]>([]);
-
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
     const title = mode === 'new' ? 'Create New Command' : `Edit Command - ${commandName}`;
     //const showTable = !!table || mode === 'edit';
 
     const handleCommandCancel = () => {
         navigate('..');
-    };
-
-    const handleRowClick = (row: ProgramsListingEntry) => {
-        setSelectedProgramName(row.name);
     };
 
     const handleEditCommandSave = (values: any) => {
@@ -53,28 +42,7 @@ export const CommandView = () => {
             />
 
             {mode === 'new'
-                ? <CommandForm
-                    connectionId={connectionId}
-                    selectedProgramName={selectedProgramName}
-                    selectedTransactionName={selectedTransactionName[0] as string}
-                >
-                    <CommandDetailSection />
-
-                    {selectedProgramName
-                        ? <CommandSection
-                            selectedProgramName={selectedProgramName}
-                            selectedTransactionName={selectedTransactionName}
-                            onSelectedTransactionNameChanged={setSelectedTransactionName}
-                            onBackToSearchResultsClicked={() => setSelectedProgramName('')}
-                        />
-                        : <CommandSearchSection
-                            connectionId={connectionId}
-                            searchInputValue={searchInputValue}
-                            onSearchInputValueChange={setSearchInputValue}
-                            onRowClick={handleRowClick}
-                        />
-                    }
-                </CommandForm>
+                ? <NewCommandView connectionId={connectionId} />
                 : <Form
                     initialValues={{
                         commandName: commandName || '',
@@ -83,7 +51,7 @@ export const CommandView = () => {
                     }}
                     onSubmit={handleEditCommandSave}
                 >
-                    <CommandDetailSection />
+                    <NewCommandDetailSection />
 
                     <EditCommandSection />
                 </Form>
