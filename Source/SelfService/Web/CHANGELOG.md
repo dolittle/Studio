@@ -1,3 +1,9 @@
+# [3.19.11] - 2024-3-15 [PR: #510](https://github.com/dolittle/Studio/pull/510)
+## Summary
+
+Add command 'edit' view.
+
+
 # [3.19.10] - 2024-3-8 [PR: #509](https://github.com/dolittle/Studio/pull/509)
 ## Summary
 
