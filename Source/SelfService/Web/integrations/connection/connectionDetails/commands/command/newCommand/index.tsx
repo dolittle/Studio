@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { GridRowId } from '@mui/x-data-grid-pro';
 
 import { NewCommandForm } from './NewCommandForm';
-import { NewCommandDetailSection } from './NewCommandDetailSection';
+import { CommandDetailSection } from '../CommandDetailSection';
 import { CommandSearchSection, ProgramsListingEntry } from './CommandSearchSection';
 import { CommandSection } from './commandSection';
 
@@ -29,7 +29,7 @@ export const NewCommandView = ({ connectionId }: NewCommandViewProps) => {
             selectedProgramName={selectedProgramName}
             selectedTransactionName={selectedTransactionName[0] as string}
         >
-            <NewCommandDetailSection />
+            <CommandDetailSection />
 
             {selectedProgramName
                 ? <CommandSection

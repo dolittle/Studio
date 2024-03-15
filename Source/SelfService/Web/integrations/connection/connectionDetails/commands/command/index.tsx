@@ -5,25 +5,37 @@ import React from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Button, ContentContainer, ContentHeader, Form } from '@dolittle/design-system';
+import { AlertBox, Button, ContentContainer, ContentHeader, Form, LoadingSpinner } from '@dolittle/design-system';
+
+import { useConnectionsIdCommandsCommandIdGet } from '../../../../../apis/integrations/commandMappingApi.hooks';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
-import { NewCommandDetailSection } from './newCommand/NewCommandDetailSection';
-import { EditCommandSection } from './commandsListDetailPanel';
-
 import { NewCommandView } from './newCommand';
+import { CommandDetailSection } from './CommandDetailSection';
+import { EditCommandSection } from './editCommand';
 
 export type ViewMode = 'new' | 'edit';
+
+export type EditCommandFormParameters = {
+    commandName: string;
+    description: string;
+    namespace: string;
+};
 
 export const CommandView = () => {
     const navigate = useNavigate();
     const connectionId = useConnectionIdFromRoute();
-    const { commandName = '' } = useParams();
+    const { commandId = '' } = useParams();
 
     const mode: ViewMode = location.pathname.endsWith('new') ? 'new' : 'edit';
-    const title = mode === 'new' ? 'Create New Command' : `Edit Command - ${commandName}`;
-    //const showTable = !!table || mode === 'edit';
+
+    if (mode === 'edit' && (!commandId)) return <AlertBox />;
+
+    const { data, isError, isLoading } = useConnectionsIdCommandsCommandIdGet({ id: connectionId, commandId });
+
+    if (mode === 'edit' && isError) return <AlertBox />;
+    if (mode === 'edit' && isLoading) return <LoadingSpinner />;
 
     const handleCommandCancel = () => {
         navigate('..');
@@ -32,6 +44,8 @@ export const CommandView = () => {
     const handleEditCommandSave = (values: any) => {
         console.log(values);
     };
+
+    const title = mode === 'new' ? 'Create New Command' : `Edit Command - ${data?.name || 'N/A'}`;
 
     return (
         <ContentContainer>
@@ -43,17 +57,17 @@ export const CommandView = () => {
 
             {mode === 'new'
                 ? <NewCommandView connectionId={connectionId} />
-                : <Form
+                : <Form<EditCommandFormParameters>
                     initialValues={{
-                        commandName: commandName || '',
-                        commandDescription: '',
-                        namespace: '',
+                        commandName: data?.name || '',
+                        description: data?.description || '',
+                        namespace: data?.namespace || '',
                     }}
                     onSubmit={handleEditCommandSave}
                 >
-                    <NewCommandDetailSection />
+                    <CommandDetailSection isDisabled={mode === 'edit'} />
 
-                    <EditCommandSection />
+                    <EditCommandSection commandData={data} />
                 </Form>
             }
         </ContentContainer>

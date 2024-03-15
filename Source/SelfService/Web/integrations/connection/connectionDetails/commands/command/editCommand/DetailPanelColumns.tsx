@@ -7,6 +7,8 @@ import { GridColDef, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid-pr
 
 import { Button, DataGridEditCellView, DataGridSelectCellView } from '@dolittle/design-system';
 
+import { MappedParameter } from '../../../../../../apis/integrations/generated';
+
 const parameterModeOptions = [
     {
         value: 'Optional',
@@ -22,30 +24,31 @@ const parameterModeOptions = [
     },
 ];
 
-export const commandsListDetailPanelColumns: GridColDef[] = [
+export const commandsListDetailPanelColumns: GridColDef<MappedParameter>[] = [
     {
         ...GRID_CHECKBOX_SELECTION_COL_DEF,
     },
     {
-        field: 'name',
+        field: 'mappedName',
         headerName: 'M3 Argument',
         minWidth: 160,
         flex: 1,
     },
     {
-        field: 'description',
+        field: 'mappedDescription',
         headerName: 'Description',
         editable: true,
         renderCell: DataGridEditCellView,
-        minWidth: 200,
+        minWidth: 250,
         flex: 1,
     },
     {
-        field: 'parameterName',
+        field: 'description',
         headerName: 'Parameter Name',
         editable: true,
+        valueGetter: (params) => (params.row.parameter?.description || ''),
         renderCell: DataGridEditCellView,
-        minWidth: 200,
+        minWidth: 250,
         flex: 1,
     },
     {
@@ -66,7 +69,7 @@ export const commandsListDetailPanelColumns: GridColDef[] = [
         // This is for demo purposes only, in a real application you would use the commented line below.
         //renderCell: DataGridSelectCellView,
         renderCell: ({ value }) => (
-            <Button label={value ? value : 'Optional'} color='subtle' endWithIcon='ArrowDropDownRounded' sx={{ width: 1, height: 1 }} />
+            <Button label={'Optional'} color='subtle' disabled endWithIcon='ArrowDropDownRounded' sx={{ width: 1, height: 1 }} />
         ),
         minWidth: 200,
         flex: 1,
