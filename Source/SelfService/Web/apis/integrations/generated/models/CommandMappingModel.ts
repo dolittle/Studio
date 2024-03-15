@@ -79,7 +79,7 @@ export interface CommandMappingModel {
      * @type {Array<MappedParameter>}
      * @memberof CommandMappingModel
      */
-    parameterMappings: Array<MappedParameter>;
+    parameters: Array<MappedParameter>;
     /**
      * The last time (if any) the command mapping was deployed. May be null if
      * it has never been deployed
@@ -112,7 +112,7 @@ export function instanceOfCommandMappingModel(value: object): boolean {
     isInstance = isInstance && "id" in value;
     isInstance = isInstance && "createdAt" in value;
     isInstance = isInstance && "name" in value;
-    isInstance = isInstance && "parameterMappings" in value;
+    isInstance = isInstance && "parameters" in value;
 
     return isInstance;
 }
@@ -135,7 +135,7 @@ export function CommandMappingModelFromJSONTyped(json: any, ignoreDiscriminator:
         'namespace': !exists(json, 'namespace') ? undefined : json['namespace'],
         'm3Program': !exists(json, 'm3Program') ? undefined : json['m3Program'],
         'm3Transaction': !exists(json, 'm3Transaction') ? undefined : json['m3Transaction'],
-        'parameterMappings': ((json['parameterMappings'] as Array<any>).map(MappedParameterFromJSON)),
+        'parameters': ((json['parameters'] as Array<any>).map(MappedParameterFromJSON)),
         'deployedAt': !exists(json, 'deployedAt') ? undefined : (json['deployedAt'] === null ? null : new Date(json['deployedAt'])),
         'deployedVersion': !exists(json, 'deployedVersion') ? undefined : json['deployedVersion'],
         'confirmedDeployedVersion': !exists(json, 'confirmedDeployedVersion') ? undefined : json['confirmedDeployedVersion'],
@@ -159,7 +159,7 @@ export function CommandMappingModelToJSON(value?: CommandMappingModel | null): a
         'namespace': value.namespace,
         'm3Program': value.m3Program,
         'm3Transaction': value.m3Transaction,
-        'parameterMappings': ((value.parameterMappings as Array<any>).map(MappedParameterToJSON)),
+        'parameters': ((value.parameters as Array<any>).map(MappedParameterToJSON)),
         'deployedAt': value.deployedAt === undefined ? undefined : (value.deployedAt === null ? null : value.deployedAt.toISOString()),
         'deployedVersion': value.deployedVersion,
         'confirmedDeployedVersion': value.confirmedDeployedVersion,

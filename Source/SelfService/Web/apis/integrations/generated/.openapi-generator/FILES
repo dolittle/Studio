@@ -7,6 +7,7 @@ apis/ConnectionConfigurationApi.ts
 apis/ConnectionRestApiApi.ts
 apis/ConnectionWebhookApi.ts
 apis/ConnectionsApi.ts
+apis/ConnectionsController2Api.ts
 apis/DeploymentApi.ts
 apis/EnvironmentApi.ts
 apis/JqAssistantApi.ts

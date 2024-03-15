@@ -8,6 +8,7 @@ export * from './ConnectionConfigurationApi';
 export * from './ConnectionRestApiApi';
 export * from './ConnectionWebhookApi';
 export * from './ConnectionsApi';
+export * from './ConnectionsController2Api';
 export * from './DeploymentApi';
 export * from './EnvironmentApi';
 export * from './JqAssistantApi';
