@@ -5,7 +5,12 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 
 import { API_CONFIGURATION } from './api';
 import { CACHE_KEYS } from './CacheKeys';
-import { ConnectionsIdCommandsGetRequest, ConnectionsIdCommandsCommandIdCreatePostRequest, CommandMappingApi } from './generated';
+import {
+    ConnectionsIdCommandsGetRequest,
+    ConnectionsIdCommandsCommandIdGetRequest,
+    ConnectionsIdCommandsCommandIdCreatePostRequest,
+    CommandMappingApi,
+} from './generated';
 
 let apiInstance: CommandMappingApi | undefined;
 
@@ -19,9 +24,19 @@ const getOrCreateApi = () => {
 export const useConnectionsIdCommandsGet = (params: ConnectionsIdCommandsGetRequest) => {
     const api = getOrCreateApi();
     return useQuery({
-        queryKey: [CACHE_KEYS.ConnectionCommandMappings_GET, params.id],
+        queryKey: [CACHE_KEYS.ConnectionCommands_GET, params.id],
         queryFn: api.connectionsIdCommandsGet.bind(api, params),
         staleTime: 60000,
+    });
+};
+
+export const useConnectionsIdCommandsCommandIdGet = (params: ConnectionsIdCommandsCommandIdGetRequest) => {
+    const api = getOrCreateApi();
+    return useQuery({
+        queryKey: [CACHE_KEYS.ConnectionCommand_GET, params.id, params.commandId],
+        queryFn: api.connectionsIdCommandsCommandIdGet.bind(api, params),
+        staleTime: 60000,
+        enabled: !!params.id && !!params.commandId,
     });
 };
 

@@ -7,9 +7,9 @@ import { DataGridPro, GridFilterModel, GridRowId } from '@mui/x-data-grid-pro';
 
 import { AlertBox, DataGridCustomToolbar, DataGridWrapper, dataGridDefaultProps, TextField } from '@dolittle/design-system';
 
-import { useConnectionsIdMetadataProgramsProgramProgramGet } from '../../../../../../apis/integrations/programMetadataApi.hooks';
+import { useConnectionsIdMetadataProgramsProgramProgramGet } from '../../../../../../../apis/integrations/programMetadataApi.hooks';
 
-import { useConnectionIdFromRoute } from '../../../../../routes.hooks';
+import { useConnectionIdFromRoute } from '../../../../../../routes.hooks';
 
 import { programTransactionColumns } from './TransactionsDataGridColumns';
 

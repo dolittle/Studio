@@ -21,7 +21,7 @@ export const CommandsListDataGrid = ({ commandListRows }: CommandsListDataGridPr
     const navigate = useNavigate();
 
     const onTableRowClick = (row: CommandHeader): void => {
-        navigate(`edit/${row.name}`);
+        navigate(`edit/${row.commandId}/${row.name}`);
     };
 
     return (
@@ -30,8 +30,8 @@ export const CommandsListDataGrid = ({ commandListRows }: CommandsListDataGridPr
                 {...dataGridDefaultProps}
                 rows={commandListRows}
                 columns={commandListDataGridColumns}
-                getRowId={row => row.name} // Change this to the correct row id
-                onRowClick={({ row }) => onTableRowClick(row as CommandHeader)}
+                getRowId={row => row.commandId}
+                onRowClick={({ row }) => onTableRowClick(row)}
                 components={{
                     DetailPanelExpandIcon,
                     DetailPanelCollapseIcon,
