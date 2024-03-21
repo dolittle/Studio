@@ -7,7 +7,7 @@ import { GridColDef, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid-pr
 
 import { Button, DataGridEditCellView, DataGridSelectCellView } from '@dolittle/design-system';
 
-import { MappedParameter } from '../../../../../../apis/integrations/generated';
+import { MappedParameter } from '../../../../../../../apis/integrations/generated';
 
 const parameterModeOptions = [
     {
@@ -24,7 +24,7 @@ const parameterModeOptions = [
     },
 ];
 
-export const commandsListDetailPanelColumns: GridColDef<MappedParameter>[] = [
+export const editCommandColumns: GridColDef<MappedParameter>[] = [
     {
         ...GRID_CHECKBOX_SELECTION_COL_DEF,
     },

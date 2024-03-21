@@ -5,11 +5,11 @@ import React, { useState } from 'react';
 
 import { DataGridPro, GRID_CHECKBOX_SELECTION_FIELD, GridFilterModel, GridSelectionModel } from '@mui/x-data-grid-pro';
 
-import { Button, ContentDivider, ContentWithSubtitle, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, NewSwitch } from '@dolittle/design-system';
+import { ContentWithSubtitle, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, NewSwitch } from '@dolittle/design-system';
 
-import { CommandMappingModel } from '../../../../../../apis/integrations/generated';
+import { CommandMappingModel } from '../../../../../../../apis/integrations/generated';
 
-import { commandsListDetailPanelColumns } from './DetailPanelColumns';
+import { editCommandColumns } from './EditCommandColumns';
 
 const styles = {
     // Hack for select cell active state. Otherwise size is going to be different.
@@ -48,7 +48,7 @@ export const EditCommandSection = ({ commandData }: EditCommandSectionProps) => 
                 <DataGridPro
                     {...dataGridDefaultProps}
                     rows={commandData?.parameters || []}
-                    columns={commandsListDetailPanelColumns}
+                    columns={editCommandColumns}
                     getRowId={row => row.mappedName}
                     autoHeight={false}
                     checkboxSelection
@@ -72,11 +72,6 @@ export const EditCommandSection = ({ commandData }: EditCommandSectionProps) => 
                     sx={styles}
                 />
             </DataGridWrapper>
-
-            <ContentDivider sx={{ mt: 3, mb: 2 }} />
-
-            <Button label='Save Changes' startWithIcon='AddCircle' variant='fullwidth' disabled onClick={() => { }} />
-
         </ContentWithSubtitle>
     );
 };
