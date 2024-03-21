@@ -3,14 +3,15 @@
 
 import React from 'react';
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import { AlertBox, Button, ContentContainer, ContentHeader, Form, LoadingSpinner } from '@dolittle/design-system';
+import { AlertBox, Button, ContentContainer, ContentDivider, ContentHeader, Form, LoadingSpinner } from '@dolittle/design-system';
 
 import { useConnectionsIdCommandsCommandIdGet } from '../../../../../apis/integrations/commandMappingApi.hooks';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
+import { CommandCancelButton } from './CommandCancelButton';
 import { NewCommandView } from './newCommand';
 import { CommandDetailSection } from './CommandDetailSection';
 import { EditCommandSection } from './editCommand';
@@ -24,7 +25,6 @@ export type EditCommandFormParameters = {
 };
 
 export const CommandView = () => {
-    const navigate = useNavigate();
     const connectionId = useConnectionIdFromRoute();
     const { commandId = '' } = useParams();
 
@@ -37,10 +37,6 @@ export const CommandView = () => {
     if (mode === 'edit' && isError) return <AlertBox />;
     if (mode === 'edit' && isLoading) return <LoadingSpinner />;
 
-    const handleCommandCancel = () => {
-        navigate('..');
-    };
-
     const handleEditCommandSave = (values: any) => {
         console.log(values);
     };
@@ -49,11 +45,7 @@ export const CommandView = () => {
 
     return (
         <ContentContainer>
-            <ContentHeader
-                title={title}
-                buttonsSlot={<Button label='Cancel' startWithIcon='CancelRounded' color='subtle' onClick={handleCommandCancel} />}
-                sx={{ pb: 0 }}
-            />
+            <ContentHeader title={title} buttonsSlot={<CommandCancelButton />} sx={{ pb: 0 }} />
 
             {mode === 'new'
                 ? <NewCommandView connectionId={connectionId} />
