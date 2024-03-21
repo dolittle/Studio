@@ -6,7 +6,7 @@ import React from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 
-import { CreateButton } from '@dolittle/design-system';
+import { AlertBox, CreateButton } from '@dolittle/design-system';
 
 import { useConnectionsGet, useConnectionsIdPost } from '../../apis/integrations/connectionsApi.hooks';
 
@@ -61,7 +61,7 @@ export const Connections = () => {
             <PageTitle title='Connections' />
 
             {isError
-                ? `We can't show your connections at this time. Please try again later.`
+                ? <AlertBox message={`We can't show your connections at this time. Please try again later.`} severity='info' />
                 : isLoading || connections.length
                     ? (
                         <>
