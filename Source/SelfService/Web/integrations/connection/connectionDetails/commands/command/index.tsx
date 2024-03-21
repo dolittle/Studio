@@ -3,12 +3,13 @@
 
 import React from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { enqueueSnackbar } from 'notistack';
 
 import { AlertBox, Button, ContentContainer, ContentDivider, ContentHeader, Form, LoadingSpinner } from '@dolittle/design-system';
 
-import { useConnectionsIdCommandsCommandIdGet } from '../../../../../apis/integrations/commandMappingApi.hooks';
-import { CommandMappingModel } from '../../../../../apis/integrations/generated';
+import { useConnectionsIdCommandsCommandIdGet, useConnectionsIdCommandsCommandIdParametersPostRequest } from '../../../../../apis/integrations/commandMappingApi.hooks';
+import { CommandMappingModel, MappedParameter } from '../../../../../apis/integrations/generated';
 
 import { useConnectionIdFromRoute } from '../../../../routes.hooks';
 
@@ -40,7 +41,7 @@ export const CommandView = () => {
 
             {mode === 'new'
                 ? <NewCommandView connectionId={connectionId} />
-                : <EditCommandForm commandData={data}>
+                : <EditCommandForm connectionId={connectionId} commandId={commandId} commandData={data}>
                     <CommandDetailSection isDisabled={mode === 'edit'} />
 
                     <EditCommandSection commandData={data} />
@@ -52,38 +53,63 @@ export const CommandView = () => {
     );
 };
 
-export const SubmitButtonSection = () => {
-    return (
-        <>
-            <ContentDivider sx={{ mt: 3, mb: 2 }} />
+export const SubmitButtonSection = () =>
+    <>
+        <ContentDivider sx={{ mt: 3, mb: 2 }} />
+        <Button label='Save Changes' type='submit' startWithIcon='AddCircle' variant='fullwidth' />
+    </>;
 
-            <Button label='Save Changes' type='submit' startWithIcon='AddCircle' variant='fullwidth' />
-        </>
-    );
-};
-
-export type EditCommandFormParameters = {
-    commandName: string;
-    description: string;
-    namespace: string;
+export type EditCommandFormParameters = MappedParameter & {
+    id?: string;
+    commandId?: string;
 };
 
 export type EditCommandFormProps = {
+    connectionId: string;
+    commandId: string;
     commandData: CommandMappingModel | undefined;
     children: React.ReactNode;
 };
 
-export const EditCommandForm = ({ commandData, children }: EditCommandFormProps) => {
-    const handleEditCommandSave = (values: any) => {
-        console.log(values);
+export const EditCommandForm = ({ connectionId, commandId, commandData, children }: EditCommandFormProps) => {
+    const navigate = useNavigate();
+
+    const saveCommandMappingMutation = useConnectionsIdCommandsCommandIdParametersPostRequest();
+
+    const handleEditCommandSave = (values: MappedParameter) => {
+        //console.log(values);
+
+        saveCommandMappingMutation.mutate({
+            id: connectionId,
+            commandId,
+            updateCommandParameters: {
+                parameters: [{
+                    mappedName: values.mappedName,
+                    mappedDescription: values.mappedDescription,
+                    defaultValue: values.defaultValue,
+                    mode: values.mode,
+                }],
+            },
+        }, {
+            onSuccess() {
+                navigate(`..`);
+                enqueueSnackbar('Command successfully updated.');
+            },
+            onError() {
+                enqueueSnackbar('Something went wrong when trying to save the command.', { variant: 'error' });
+            },
+        });
     };
 
     return (
         <Form<EditCommandFormParameters>
             initialValues={{
-                commandName: commandData?.name || '',
-                description: commandData?.description || '',
-                namespace: commandData?.namespace || '',
+                parameter: commandData?.parameters?.map(parameter => ({
+                    name: parameter.mappedName || 'N/A',
+                    description: parameter.mappedDescription || 'N/A',
+                    defaultValue: parameter.defaultValue || 'N/A',
+                    mode: parameter.mode || 'N/A',
+                })) || [],
             }}
             onSubmit={handleEditCommandSave}
         >

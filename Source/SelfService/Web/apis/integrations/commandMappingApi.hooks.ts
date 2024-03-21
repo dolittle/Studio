@@ -9,6 +9,7 @@ import {
     ConnectionsIdCommandsGetRequest,
     ConnectionsIdCommandsCommandIdGetRequest,
     ConnectionsIdCommandsCommandIdCreatePostRequest,
+    ConnectionsIdCommandsCommandIdParametersPostRequest,
     CommandMappingApi,
 } from './generated';
 
@@ -45,5 +46,13 @@ export const useConnectionsIdCommandsCommandIdCreatePostRequest = () => {
     return useMutation({
         mutationFn: (params: ConnectionsIdCommandsCommandIdCreatePostRequest) =>
             api.connectionsIdCommandsCommandIdCreatePost(params),
+    });
+};
+
+export const useConnectionsIdCommandsCommandIdParametersPostRequest = () => {
+    const api = getOrCreateApi();
+    return useMutation({
+        mutationFn: (params: ConnectionsIdCommandsCommandIdParametersPostRequest) =>
+            api.connectionsIdCommandsCommandIdParametersPost(params),
     });
 };
