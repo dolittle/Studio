@@ -47,6 +47,13 @@ export const editCommandColumns: GridColDef<MappedParameter>[] = [
         headerName: 'Parameter Name',
         editable: true,
         valueGetter: (params) => (params.row.parameter?.description || ''),
+        valueSetter: (params) => {
+            params.row.parameter = {
+                ...params.row.parameter,
+                description: params.value,
+            };
+            return params.row;
+        },
         renderCell: DataGridEditCellView,
         minWidth: 250,
         flex: 1,

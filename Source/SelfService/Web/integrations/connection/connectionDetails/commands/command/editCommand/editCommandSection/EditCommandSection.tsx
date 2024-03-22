@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 
-import { DataGridPro, GRID_CHECKBOX_SELECTION_FIELD, GridFilterModel, GridSelectionModel } from '@mui/x-data-grid-pro';
+import { DataGridPro, GRID_CHECKBOX_SELECTION_FIELD, GridFilterModel, GridRowModel, GridSelectionModel } from '@mui/x-data-grid-pro';
 
 import { ContentWithSubtitle, DataGridCustomToolbar, dataGridDefaultProps, DataGridWrapper, NewSwitch } from '@dolittle/design-system';
 
@@ -42,6 +42,14 @@ export const EditCommandSection = ({ commandData }: EditCommandSectionProps) => 
         ] : [],
     };
 
+    // TODO: Implement processRowUpdate function.
+    const processRowUpdate = (newRow: GridRowModel) => {
+        const updatedRow = { ...newRow, isNew: false };
+        console.log('Updated row:', updatedRow);
+        //setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+        //return updatedRow;
+    };
+
     return (
         <ContentWithSubtitle title={`Transaction: ${'CRS620MI > UpdSupplier'}`}>
             <DataGridWrapper background='dark' sx={{ height: 300 }}>
@@ -55,6 +63,7 @@ export const EditCommandSection = ({ commandData }: EditCommandSectionProps) => 
                     keepNonExistentRowsSelected
                     selectionModel={selectedRowIds}
                     onSelectionModelChange={newSelectionModel => setSelectedRowIds(newSelectionModel)}
+                    processRowUpdate={processRowUpdate}
                     filterModel={gridFilters}
                     components={{
                         Toolbar: () => (
