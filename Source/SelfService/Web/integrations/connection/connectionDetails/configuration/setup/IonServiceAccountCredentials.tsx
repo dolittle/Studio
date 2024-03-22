@@ -25,12 +25,12 @@ function isIonConfigRequest(o: any): o is IonConfigRequest {
         'sask' in o &&
         'ci' in o &&
         'cs' in o;
-};
+}
 
 export const instructions = [
     `1. Open Infor ION API. Open the menu from the upper left corner and select 'Infor ION API'.`,
     `2. Select 'Authorized Apps' from the left hand menu followed by the '+' icon to add a new account.`,
-    `3. Provide a name. Example: "Dolittle_Bridge".`,
+    `3. Provide a name. Example: "Aigonix_Bridge".`,
     `4. Under 'Type', select 'Backend Service'.`,
     `5. Provide a description. Example: "Integration Connector".`,
     `6. Toggle on 'Use Bridge Authentication. Optional: You can toggle on ‘User Impersonation' if you would like to monitor specific user activity.`,

@@ -76,7 +76,7 @@ export const ProblemPage = ({ variant }: ProblemPageProps) =>
 
         <Box>
             <Button label='Return home' startWithIcon='HomeRounded' href='/' sx={{ mr: 3 }} />
-            <Button label='Send us an email' startWithIcon='EmailRounded' href='mailto:support@dolittle.com' />
+            <Button label='Send us an email' startWithIcon='EmailRounded' href='mailto:support@aigonix.com' />
         </Box>
 
         <Box sx={{ mt: 18, mb: 8, cursor: 'pointer' }} onClick={() => window.location.pathname = '/'}>

@@ -24,7 +24,7 @@ kubectl -n ${namespace} get ${resource} ${name}
 ~~~
 `;
     return markdown.trim();
-};
+}
 
 function template(vars: Vars): string {
     const namespace = `application-${vars.applicationId}`;
@@ -59,7 +59,7 @@ az login
 ~~~
 
 # Azure Kubernetes Service
-## Get credentials from Dolittle’s AKS cluster
+## Get credentials from Aigonix’s AKS cluster
 
 ~~~sh
 az aks get-credentials -g ${vars.resourceGroup} -n ${vars.clusterName} --subscription ${vars.subscriptionId}
@@ -127,7 +127,7 @@ ${secrets.join('\n')}
 
 `;
     return markdown.trim();
-};
+}
 
 export type VerifyKubernetesAccessProps = {
     info: Info;

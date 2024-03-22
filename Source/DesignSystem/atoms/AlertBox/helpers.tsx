@@ -9,12 +9,12 @@ export const AlertBoxErrorTitle = 'Oops, something went wrong';
 
 export const AlertBoxErrorMessage = () =>
     <>
-        Please try again later. If problem persists, please contact <Link label='Dolittle support' href='#'
+        Please try again later. If problem persists, please contact <Link label='Aigonix support' href='#'
             ariaLabel='To learn more, visit our website which opens in a new window.' />.
     </>;
 
 export const AlertBoxInfoMessage = () =>
     <>
-        For more information, please contact <Link label='Dolittle support' href='#'
+        For more information, please contact <Link label='Aigonix support' href='#'
             ariaLabel='To learn more, visit our website which opens in a new window.' />.
     </>;

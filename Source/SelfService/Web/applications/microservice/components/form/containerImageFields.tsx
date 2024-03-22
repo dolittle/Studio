@@ -10,7 +10,7 @@ import { FormFieldTooltip, Input, Link } from '@dolittle/design-system';
 import { HeadArguments } from './headArguments';
 import { alphaNumericLowerCasedCharsRegex } from '../../../../utils/helpers/regex';
 
-const portDescription = `By default, your mircroservice will be hosted on port 80 within the secure Dolittle cluster,
+const portDescription = `By default, your service will be hosted on port 80 within the secure Aigonix cluster,
 but this can be overridden if your image requires it.`;
 
 const EntrypointDescription = () =>

@@ -27,7 +27,7 @@ metadata.args = {
 export const Default = createStory();
 
 export const ExternalLink = createStory({
-    label: 'Go to Dolittle website',
+    label: 'Go to documentation website',
     href: 'https://dolittle.io',
     target: true,
     ariaLabel: 'To learn more, visit our website which opens in a new window.',

@@ -18,6 +18,6 @@ export const NoConnections = ({ onCreateNew }: NoConnectionsProps) =>
             onCreateEntity: onCreateNew,
         }}
         description='After you set up your first connection it will appear here.'
-        subDescription='The Dolittle platform currently supports M3 integrations. We are looking to expand this in the future to other ERP systems,
+        subDescription='The Aigonix platform currently supports M3 integrations. We are looking to expand this in the future to other ERP systems,
             so be sure to check back in or let us know what your needs are!'
     />;
